@@ -1,0 +1,28 @@
+<% weblink_entry = entry.instance %>
+
+<% remote_form_for(weblink_entry, :url => sem_app_entry_url(entry.sem_app.id, entry.id), :method => :put) do |f| %>
+  <fieldset>
+    <ol>
+      <li>
+        <%= f.label      :url, "Url" %>
+        <%= f.text_field :url %>
+      </li>
+      <li>
+        <%= f.label      :comment, "Kommentar" %>
+        <%= f.text_area  :comment, :rows => 8, :cols => 50 %>
+      </li>
+    </ol>
+  </fieldset>
+  <fieldset class="submit">
+    <%= f.submit "Speichern" %>
+    <%= link_to_remote('Abbrechen',
+      :url => sem_app_entry_url(entry.sem_app.id, entry.id),
+      :method => :get) %>
+  </fieldset>
+<% end %>
+
+<script type="text/javascript">
+  jQuery(function() {
+    jQuery("input[type=text]:first").focus();
+  });
+</script>

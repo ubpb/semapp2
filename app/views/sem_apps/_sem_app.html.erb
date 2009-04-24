@@ -1,0 +1,210 @@
+<% content_for :header do %>
+  <script type="text/javascript">
+
+    function open_new_entry_dialog() {
+      jQuery('#create_entry_dialog').dialog('open');
+      return false;
+    }
+
+    function close_new_entry_dialog() {
+      jQuery('#create_entry_dialog').dialog('close');
+      return false;
+    }
+
+    /*
+     * The app is in edit mode if an entry is in edit mode or waiting
+     * for a delete confirmation.
+     */
+    var _edit_mode = false;
+
+    jQuery(function() {
+      /**
+       * Setup the tabbar
+       */
+      jQuery("#tabbar").tabs({
+        cookie: { expires: 30 }
+      });
+
+      /**
+       * Setup the import dialog
+       */
+      jQuery("#ubdok-import-dialog").dialog({
+        modal: true,
+        autoOpen: false,
+        width: 550,
+        height: 280,
+        buttons: {
+          "Importieren": function() {
+            jQuery("#ubdok-import-form").submit();
+          },
+          "Abbrechen": function() {
+            jQuery(this).dialog("close");
+          }
+        }
+      });
+
+      /**
+       * The user closes the import dialog
+       */
+      jQuery("#ubdok-import-dialog-button").click(function() {
+        jQuery('#ubdok-import-dialog').dialog('open');
+        return false;
+      });
+
+      /**
+       * Setup the new entry dialog
+       */
+      jQuery("#create_entry_dialog").dialog({
+        modal: true,
+        autoOpen: false,
+        width: 550,
+        buttons: {
+          "Speichern": function() {
+            new Ajax.Request('<%= sem_app_entries_path(sem_app)  %>', {
+              asynchronous:true,
+              evalScripts:true,
+              parameters:Form.serialize('create_entry_form')
+            });
+            return false;
+          },
+          "Abbrechen": function() {
+            jQuery(this).dialog("close");
+          }
+        }
+      });
+
+      /**
+       * If the user hovers over entries with the mouse, show/hide
+       * a toolbar and highlight the entry. Ignore this event if the
+       * app is in edit mode.
+       */
+      jQuery(".sem-app-entries .sem-app-entry").hover(function() {
+        if (_edit_mode == true) return;
+        jQuery(this).addClass("highlight");
+        jQuery(this).find(".toolbar").show();
+      }, function() {
+        if (_edit_mode == true) return;
+        jQuery(this).removeClass("highlight");
+        jQuery(this).find(".toolbar").hide();
+      });
+
+      /**
+       * Handle delete event of an entry. If the user clicks the trash icon
+       * we will hide the toolbar an show a confirmation panel instead.
+       */
+      jQuery(".sem-app-entries .sem-app-entry .toolbar .toolbar-item.delete").click(function() {
+        _edit_mode = true;
+        jQuery(this).parent().parent().find(".toolbar").hide();
+        jQuery(this).parent().parent().find(".confirmation-panel.delete").fadeIn("slow");
+        return false;
+      });
+
+      /**
+       * User clicks cancel on the (delete) confirmation panel.
+       */
+      jQuery(".sem-app-entries .sem-app-entry .confirmation-panel .link-button.delete-cancel").click(function() {
+        _edit_mode = false;
+        jQuery(this).parent().parent().find(".toolbar").show();
+        jQuery(this).parent().parent().find(".confirmation-panel.delete").fadeOut("slow");
+        return false;
+      });
+
+      /**
+       * Handle add event of an entry. If the user clicks the plus icon
+       * we will hide the toolbar an show a confirmation panel instead.
+       */
+      jQuery(".sem-app-entries .sem-app-entry .toolbar .toolbar-item.add").click(function() {
+        _edit_mode = true;
+        jQuery(this).parent().parent().find(".toolbar").hide();
+        jQuery(this).parent().parent().find(".confirmation-panel.add").fadeIn("slow");
+        return false;
+      });
+
+      /**
+       * User clicks cancel on the (add) confirmation panel.
+       */
+      jQuery(".sem-app-entries .sem-app-entry .confirmation-panel .link-button.add-cancel").click(function() {
+        _edit_mode = false;
+        jQuery(this).parent().parent().find(".toolbar").show();
+        jQuery(this).parent().parent().find(".confirmation-panel.add").fadeOut("slow");
+        return false;
+      });
+    });
+  </script>
+<% end # content_for :header %>
+
+<div class="sem-app">
+
+  <div id="tabbar">
+    <ul>
+      <li><a href="#books"><span>Bücher</span></a></li>
+      <li><a href="#media"><span>Texte und Medien</span></a></li>
+    </ul>
+
+    <!-- Books Tab -->
+    <div id="books">
+      <!-- Toolbar Panel -->
+      <div class="panel info ui-corner-all">
+        <span><strong>Standort:</strong> Ebene 1 - Fachbibliothek Kunstwissenschaften</span>
+      </div>
+
+      <!-- Book entries -->
+      <ol id="sem_app_book_entries" class="sem-app-entries">
+        <% sem_app.book_entries.each do |e| %>
+          <%= render 'sem_app_entry', 
+            :entry   => e,
+            :sem_app => sem_app,
+            :toolbar => [:edit] %>          
+        <% end %>
+      </ol>
+    </div>
+
+
+    <!-- Media Tab -->
+    <div id="media">
+      <!-- Toolbar Panel -->
+      <div class="panel toolbar">
+        <%= button_link_to 'Importieren', 'ui-icon-arrowreturnthick-1-s', '#', :id => 'ubdok-import-dialog-button' %>
+      </div>
+
+      <!-- Media entries -->
+      <ol id="sem_app_media_entries" class="sem-app-entries">
+        <% sem_app.media_entries.each do |e| %>
+          <%= render 'sem_app_entry',
+            :entry   => e,
+            :sem_app => sem_app,
+            :toolbar => [:move, :edit, :delete, :add] %>
+        <% end %>
+      </ol>
+
+      <!-- Make the media entries sortable -->
+      <%= sortable_element('sem_app_media_entries',
+        :url      => reorder_sem_app_entries_url(sem_app),
+        :method   => :put,
+        :ghosting => true,
+        :handle   => 'toolbar-item.move') %>
+    </div>
+  </div>
+</div>
+
+<!-- Dialog panel for creating a new entry -->
+<div id="create_entry_dialog" title="Einen neuen Eintrag erstellen..." style="display:none">
+</div>
+
+<!-- Dialog panel for importing a semapp -->
+<div id="ubdok-import-dialog" title="Einen alten eSeminarapparat importieren..." style="display:none">
+  <% form_tag(ubdok_sem_app_import_url, :id => "ubdok-import-form") do %>
+    <p>
+      <div style="padding: 10px;" class="ui-state-highlight ui-corner-all">
+        <span style="float: left; margin-right: 0.3em;" class="ui-icon ui-icon-info"></span>
+        Um einen eSeminarapparat aus dem alten System zu importieren, geben Sie bitte dessen URL
+        in das nachfolgenden Feld ein und drücken auf "Importieren".
+      </div>
+    </p>
+    <p>
+      <label>UBDok URL:</label>
+      <%= text_field_tag(:ubdok_sem_app_url, '', :size => 40) %>
+      <%= hidden_field_tag :sem_app_id, sem_app.id %>
+    </p>
+  <% end %>
+</div>

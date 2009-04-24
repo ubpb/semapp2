@@ -1,0 +1,8 @@
+<% weblink_entry = entry.instance %>
+
+<div class="weblink">
+  <a href="<%= weblink_entry.url -%>"><%= weblink_entry.url -%></a>
+  <% if weblink_entry.comment %>
+    <div class="comment"><%= weblink_entry.comment %></div>
+  <% end %>
+</div>

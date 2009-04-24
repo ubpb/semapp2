@@ -1,0 +1,19 @@
+<% file_entry = entry.instance %>
+
+<div class="file">
+
+  <div style="float:left; width: 120px">
+    <%= link_to '<span class="ui-icon ui-icon-circle-triangle-s"></span>Download',
+      file_entry.sem_app_file_attachment.attachment.url,
+      :class=> 'link-button ui-state-default ui-corner-all' %>
+  </div>
+
+  <div class="clear" style="margin-left: 110px; padding-left: 5px; border-left: 1px solid #ccc">
+    <p><strong>Datei:</strong> <%= file_entry.sem_app_file_attachment.attachment_file_name %></p>
+    <% if file_entry.comment %>
+      <p class="comment">
+        <%= file_entry.comment %>
+      </p>
+    <% end %>
+  </div>
+</div>

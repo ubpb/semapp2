@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="Content-Language" content="de"/>
+    <meta http-equiv="expires" content="0"/>
+
+    <%= javascript_include_tag :defaults  %>
+    <%= javascript_include_tag('jquery/jquery-1.3.2.min.js') %>
+    <%= javascript_include_tag('jquery/jquery-cookie.js') %>
+    <%= javascript_include_tag('jquery/ui/jquery-ui-1.7.1.custom.min.js') %>
+    <script type="text/javascript">jQuery.noConflict();</script>
+    <%= stylesheet_link_tag('jquery/themes/smoothness/theme.css', :media => "all") %>
+    <%= stylesheet_link_tag("main.css", :media => "all") %>
+
+    <title>UB Paderborn - eSeminarapparate</title>
+    <%= yield :header %>
+  </head>
+
+  <body>
+    <!-- Header -->
+    <div id="raster">
+      <p class="invisible"><a href="#anchor2" id="anchor1" name="anchor1">Weiter zum Menü</a></p>
+      <a href="http://www.uni-paderborn.de/" accesskey="H" tabindex="1">
+        <img src="/images/page/campus.png" title="Universität Paderborn - Home" alt="Universität Paderborn - Home" id="campus"/>
+      </a>
+      <img src="/images/page/unipad2.png" title="Universität Paderborn" alt="Universität Paderborn" id="unipad"/>
+    </div>
+    <div id="bluestripe">
+      <img id="uniinf" src="/images/page/uniinf2.png" title="Die Universität der Informationsgesellschaft" alt="Die Universität der Informationsgesellschaft"/>
+    </div>
+    <div id="breadcrumb">
+      <a href="http://www.uni-paderborn.de/">Universität</a> &gt;
+      <a href="http://www.ub.uni-paderborn.de/">Bibliothek</a> &gt;
+      <span id="location">eSeminarapprate</span>
+    </div>
+    <!-- Content area -->
+    <div id="page_margins">
+      <div id="page">
+        <div id="main">
+          <div id="col1">
+            <div id="col1_content" class="clearfix">
+              <div id="applogo">
+                <h3 class="invisible">eSeminarapparate</h3>
+              </div>
+              <ul class="nav">
+                <li><%= link_to('Gesamtliste', sem_apps_url) %></li>
+                <li><a href="#" class="selected">Meine eSeminarapparate</a></li>
+              </ul>
+              <ul class="nav">
+                <li><a href="#">eSeminarappart beantragen</a></li>
+              </ul>
+            </div>
+          </div>
+          <div id="col3">
+            <div id="col3_content" class="clearfix">
+              <%= yield :layout %>
+            </div>
+            <!-- IE Column Clearing -->
+            <div id="ie_clearing">  &#160; </div>
+          </div>
+        </div>
+        <div id="footer">
+          &copy; <%= Time.now.year %> <a href="http://www.ub.uni-paderborn.de">Universitätsbibliothek Paderborn</a> |
+          <a href="http://www.ub.uni-paderborn.de/sitemap/" tabindex="400">Sitemap</a> |
+          <a href="http://www.ub.uni-paderborn.de/impressum/" tabindex="401">Impressum</a> |
+          <a href="mailto:webmaster@ub.uni-paderborn.de" tabindex="402">Webmaster</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+page.replace_html "sem_app_entry_#{@sem_app_entry.id}_content",
+  :partial => 'sem_app_entries/' + @sem_app_entry.instance_type.underscore.concat('_form'),
+  :locals => {:entry => @sem_app_entry}
+
+page["sem_app_entry_#{@sem_app_entry.id}_toolbar"].hide()
+page["sem_app_entry_#{@sem_app_entry.id}"].addClassName('highlight')
+page.assign "_edit_mode", true

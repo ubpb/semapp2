@@ -1,0 +1,36 @@
+<div class="panel info ui-corner-all">
+  <h3>eSeminarapparate: Gesamtliste</h3>
+
+  <% if @semester %>
+    <span>Angezeigtes Semester:</span>
+    <strong><%= @semester.title %></strong> |
+    <%= link_to('Alle anzeigen', sem_apps_url) %>
+  <% else %>
+    <% form_tag(sem_apps_url, :method => :get) do %>
+      <span>Semester:</span>
+      <%= select_tag(
+        :semester,
+        '<option>Alle</option>' +
+          options_from_collection_for_select(Semester.find(:all), "permalink", "title"),
+        :onchange => 'this.form.submit()') %>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="panel" style="text-align: right; height:25px">
+  <% if @filter %>
+    <span>Anzeige gefiltert nach Titel</span>:
+    <strong><%= @filter %></strong> |
+    <%= link_to('Suche löschen', sem_apps_url) %>
+  <% else %>
+    <% form_tag(sem_apps_url, :method => :get) do %>
+      <span>Suche nach Titel:</span>
+      <%= text_field_tag(:filter) %>
+      <%= submit_tag('Suchen') %>
+    <% end %>
+  <% end %>
+</div>
+
+<%= render 'sem_app_listing', :sem_apps => @sem_apps %>
+
+<%= will_paginate @sem_apps %>

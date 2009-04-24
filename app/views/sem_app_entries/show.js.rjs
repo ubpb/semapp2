@@ -1,0 +1,6 @@
+page.replace_html "sem_app_entry_#{@sem_app_entry.id}_content",
+  :partial => 'sem_app_entries/' + @sem_app_entry.instance_type.underscore,
+  :locals => {:entry => @sem_app_entry}
+
+page["sem_app_entry_#{@sem_app_entry.id}"].removeClassName('highlight')
+page.assign "_edit_mode", false

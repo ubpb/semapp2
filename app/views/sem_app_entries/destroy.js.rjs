@@ -1,0 +1,3 @@
+page.visual_effect "DropOut", "sem_app_entry_#{@sem_app_entry.id}", :duration => 0.8
+#page.remove "sem_app_entry_#{@sem_app_entry.id}"
+page.assign "_edit_mode", false

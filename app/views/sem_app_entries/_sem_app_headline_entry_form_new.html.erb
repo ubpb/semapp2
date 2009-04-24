@@ -1,0 +1,21 @@
+<% headline_entry = entry.instance %>
+
+<% form_for(headline_entry,
+  :url => sem_app_entries_path(entry.sem_app.id),
+  :html => {:id => "create_entry_form"}) do |f| %>
+  <%= hidden_field_tag :instance_type, entry.instance_type %>
+  <fieldset>
+    <ol>
+      <li>
+        <%= f.label      :headline, "Überschrift" %>
+        <%= f.text_field :headline %>
+      </li>
+    </ol>
+  </fieldset>
+<% end %>
+
+<script type="text/javascript">
+  jQuery(function() {
+    jQuery("input[type=text]:first").focus();
+  });
+</script>

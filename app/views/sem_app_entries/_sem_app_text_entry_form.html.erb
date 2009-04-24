@@ -1,0 +1,24 @@
+<% text_entry = entry.instance %>
+
+<% remote_form_for(text_entry, :url => sem_app_entry_url(entry.sem_app.id, entry.id), :method => :put) do |f| %>
+  <fieldset>
+    <ol>
+      <li>
+        <%= f.label     :body_text, "Text" %>
+        <%= f.text_area :body_text, :rows => 20, :cols => 73 %>
+      </li>
+    </ol>
+  </fieldset>
+  <fieldset class="submit">
+    <%= f.submit    "Speichern" %>
+    <%= link_to_remote('Abbrechen',
+      :url => sem_app_entry_url(entry.sem_app.id, entry.id),
+      :method => :get) %>
+  </fieldset>
+<% end %>
+
+<script type="text/javascript">
+  jQuery(function() {
+    jQuery("textarea:first").focus();
+  });
+</script>

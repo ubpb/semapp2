@@ -1,0 +1,10 @@
+.svn
+log/*
+tmp/*
+config/database.yml
+db/schema.rb
+.svn
+log/*
+tmp/*
+config/database.yml
+db/schema.rb

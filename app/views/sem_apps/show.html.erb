@@ -1,0 +1,8 @@
+<div class="panel info ui-corner-all">
+  <h3><%= @sem_app.title %></h3>
+  <div><strong>Semester:</strong> <%= link_to h(@sem_app.semester.title), sem_app_url(@sem_app.id) %></div>
+  <div><strong>Dozent/in:</strong> Grotjahn, Rebecca</div>
+  <div><strong>BID:</strong> <%= h(@sem_app.bid || "-") %></div>
+</div>
+
+<%= render 'sem_app', :sem_app => @sem_app %>
