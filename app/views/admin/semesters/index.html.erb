@@ -1,0 +1,27 @@
+<a id="dialog_link" class="ui-state-default ui-corner-all" href="#">
+  <span class="ui-icon ui-icon-newwin"></span>Open Dialog
+</a>
+
+<h3>Semester</h3>
+<div class="browser">
+  <table>
+    <tr>
+      <th width="30" align="center">#</th>
+      <th>Name</th>
+      <th width="200">Permalink</th>
+    </tr>
+    <% @semesters.each do |s| %>
+      <tr>
+        <td align="center">
+          <%= s.id %>
+        </td>
+        <td>
+          <%= h s.title %>
+        </td>
+        <td>
+          <%= h s.permalink %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
