@@ -1,3 +1,9 @@
 [submodule "vendor/plugins/pui"]
+        path = vendor/plugins/plugin_utils
+        url = git@github.com:provideal/plugin_utils.git
+[submodule "vendor/plugins/pui"]
 	path = vendor/plugins/pui
 	url = git@github.com:provideal/pui.git
+[submodule "vendor/plugins/plugin_utils"]
+	path = vendor/plugins/plugin_utils
+	url = git@github.com:provideal/plugin_utils.git
