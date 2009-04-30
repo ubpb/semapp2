@@ -8,11 +8,13 @@
     <meta http-equiv="expires" content="0"/>
 
     <%= javascript_include_tag :defaults  %>
-    <%= javascript_include_tag('jquery/jquery-1.3.2.min.js') %>
-    <%= javascript_include_tag('jquery/jquery-cookie.js') %>
-    <%= javascript_include_tag('jquery/ui/jquery-ui-1.7.1.custom.min.js') %>
+
+    <%= javascript_include_tag('jquery/jquery-1.3.2.min.js', :plugin => 'pui') %>
+    <%= javascript_include_tag('jquery/ui/jquery-ui-1.7.1.custom.min.js', :plugin => 'pui') %>
+    <%= javascript_include_tag('jquery/jquery-cookie.js', :plugin => 'pui') %>
     <script type="text/javascript">jQuery.noConflict();</script>
-    <%= stylesheet_link_tag('jquery/themes/smoothness/theme.css', :media => "all") %>
+    <%= stylesheet_link_tag('jquery/ui/themes/smoothness/theme.css', :media => "all", :plugin => 'pui') %>
+
     <%= stylesheet_link_tag("main.css", :media => "all") %>
 
     <title>UB Paderborn - eSeminarapparate</title>
