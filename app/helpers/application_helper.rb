@@ -14,23 +14,6 @@ module ApplicationHelper
     link_to_remote('<span class="ui-icon '+icon_class+'"></span>', *args, &block)
   end
 
-  def button_link_to(label, icon_class, *args, &block)
-    link_classes  = "link-button ui-state-default ui-corner-all"
-    link_classes += " icon" if icon_class
-    span_classes  = "ui-icon #{icon_class}" if icon_class
-    
-    if args.last.is_a?(Hash)
-      link_classes += " " + args.last[:class] if args.last[:class]
-      args.last.merge!({:class => link_classes})
-    end
-
-    _label  = ''
-    _label += '<span class="'+span_classes+'"></span>' if span_classes
-    _label += label
-    
-    link_to(_label, *args, &block)
-  end
-
   def button_link_to_remote(label, icon_class, *args, &block)
     link_classes  = "link-button ui-state-default ui-corner-all"
     link_classes += " icon" if icon_class

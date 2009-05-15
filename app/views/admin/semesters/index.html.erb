@@ -1,27 +1,34 @@
-<a id="dialog_link" class="ui-state-default ui-corner-all" href="#">
-  <span class="ui-icon ui-icon-newwin"></span>Open Dialog
-</a>
+<% pui_panel :style => 'text-align: right' do %>
+  <%= pui_link_button 'Neues Semester anlegen', new_admin_semester_path, :icon => 'plusthick' %>
+<% end %>
+
+<% pui_panel :panel_style => 'highlight' do %>
+  <p>
+    Mit diesem Formular kann ein neues Semester angelegt werden. eSeminarapparate
+    werden mit einem Semester verknüpft.
+  </p>
+<% end %>
 
 <h3>Semester</h3>
-<div class="browser">
-  <table>
+
+<table class="pui-datagrid">
+  <tr>
+    <th width="30" align="center">#</th>
+    <th>Titel</th>
+    <th></th>
+  </tr>
+  <% @semesters.each do |s| %>
     <tr>
-      <th width="30" align="center">#</th>
-      <th>Name</th>
-      <th width="200">Permalink</th>
+      <td align="center">
+        <%= s.id %>
+      </td>
+      <td>
+        <%= s.title %>
+      </td>
+      <td align="right">
+        <%= pui_link_button 'Bearbeiten', edit_admin_semester_path(s), :icon => 'pencil' %>
+        <%= pui_link_button 'Löschen', admin_semester_path(s), :icon => 'trash', :method => :delete, :confirm => "Soll das Semester #{s.title} wirklich gelöscht werden?" %>
+      </td>
     </tr>
-    <% @semesters.each do |s| %>
-      <tr>
-        <td align="center">
-          <%= s.id %>
-        </td>
-        <td>
-          <%= h s.title %>
-        </td>
-        <td>
-          <%= h s.permalink %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
-</div>
+  <% end %>
+</table>

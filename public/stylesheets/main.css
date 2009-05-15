@@ -90,33 +90,6 @@ a:hover {
 /*
 ** YAML overrides
 */
-#page_margins {
-  width: 100%;
-  background: #fff;
-}
-
-#page {
-  padding: 0;
-  margin: 0;
-}
-
-#main {
-  margin: 10px 0;
-  background: #fff;
-}
-
-#footer {
-  font-size: 90%;
-  padding: 10px 0 0 255px;
-  border-top: 3px solid #e0e0e0;
-  height: 8em;
-  background-color: #f8f8f8;
-}
-
-#footer a {
-  /*color: #fff;*/
-}
-
 #col1 {
   float: left;
   width: 230px;
@@ -137,12 +110,23 @@ a:hover {
 
 #col1_content {
   padding: 20px 10px 0 10px;
-  border-right: 1px solid #e0e0e0;
+  border-right: 1px solid #eaf2f5;
 }
 
 #col3_content {
   padding: 20px 25px 20px 25px;
-  line-height: 1.5em;
+  line-height: 1.6em;
+}
+
+/*
+** Footer
+*/
+#footer {
+  font-size: 90%;
+  padding: 10px 0 0 255px;
+  border-top: 3px solid #e0e0e0;
+  height: 8em;
+  background-color: #f8f8f8;
 }
 
 /*
@@ -179,12 +163,12 @@ div.panel.highlight {
 /*
 ** Navigation (Main)
 */
-#col1_content ul.nav {
+ul.nav {
   margin: 0 0 15px 0;
   padding: 0;
 }
 
-#col1_content ul.nav li {
+ul.nav li {
   margin: 0 0 5px 0;
   padding: 0;
   list-style: none;
@@ -192,123 +176,16 @@ div.panel.highlight {
   border-left: 5px solid #eaf2f5;
 }
 
-#col1_content ul.nav li a {
+ul.nav li a {
   font-weight: normal;
   padding: 10px 5px 5px 5px;
   display: block;
 }
 
-#col1_content ul.nav li a:hover {
+ul.nav li a:hover {
   text-decoration: none;
   background-color: #eaf2f5;
 }
-
-/*******************************************************************
-**
-** form
-**
-*******************************************************************/
-
-fieldset {
-  float: left;
-  clear: left;
-  width: 100%;
-  padding: 0;
-  border: none;
-}
-
-fieldset ol {
-  padding: 1em 1em 0 1em;
-  list-style: none;
-}
-
-fieldset li {
-  float: left;
-  clear: left;
-  width: 100%;
-  padding-bottom: 1em;
-}
-
-fieldset li div.fieldWithErrors {
-  padding: 1px;
-  background-color: red;
-  display: inline-block;
-  vertical-align: top-line;
-}
-
-fieldset.submit {
-  float: none;
-  width: auto;
-  border-style: none;
-  text-align: center;
-  padding: 8px 12px;
-}
-
-fieldset.submit a {
-}
-
-legend {
-  font-family: "Lucida Grande", Helvetica, Verdana, Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  color: #454a51;
-  font-size: 120%;
-  font-weight: bold;
-  border-bottom: 1px solid #dbdddf;
-  width: 100%;
-}
-
-label {
-  float: left;
-  width: 10em;
-  margin-right: 1em;
-  font-weight: bold;
-  text-align: right;
-}
-
-input[type="text"], input[type="password"] {
-  padding: 4px;
-  color: #000;
-  border: 1px solid #ccc;
-}
-
-textarea {
-  line-height: 1.5;
-  padding: 3px;
-  border: 1px solid #ccc;
-}
-
-
-/*
-** List Browser
-*/
-.browser {
-  margin: 0.5em 0;
-}
-
-.browser table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: #f9f9f9;
-  border: 1px solid #e0e0e0;
-}
-
-.browser th {
-  font-weight: normal;
-  padding: 8px 5px;
-  background-color: #eaeaea;
-  color: #555555;
-}
-
-.browser td {
-  padding: 6px 5px;
-  background: #f8f8f8 url(../images/modules/list_browser/row_bg.png) repeat-x bottom;
-}
-
-.browser tr {
-  border-bottom: 1px solid #e0e0e0;
-}
-
 
 /*
 ** Pagination
@@ -386,8 +263,8 @@ ol.sem-app-entries li.sem-app-entry .toolbar {
 
 ol.sem-app-entries li.sem-app-entry .confirmation-panel {
   background: url(../images/modules/sem_app_entry/confirmation-panel-bg.png) no-repeat;
-	width: 232px;
-	height: 112px;
+  width: 232px;
+  height: 112px;
   padding: 5px;
   position: absolute;
   z-index: 100;

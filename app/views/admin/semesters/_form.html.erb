@@ -1,0 +1,20 @@
+<% form_for [:admin, @semester], :html => {:class => 'pui-form columnar'} do |f| %>
+  <fieldset>
+    <legend>Semester</legend>
+    <ol>
+      <li>
+        <%= f.label      :title, "Titel" %>
+        <%= f.text_field :title, :info_message => 'Bitte den Titel des Semsters eingeben' %>
+      </li>
+      <li>
+        <%= f.label      :permalink, "Permalink" %>
+        <%= f.text_field :permalink %>
+      </li>
+    </ol>
+  </fieldset>
+  <fieldset class="submit">
+    <%= f.submit 'Speichern' %>
+    <%= link_to 'Abbrechen', admin_semesters_path %>
+  </fieldset>
+<% end %>
+
