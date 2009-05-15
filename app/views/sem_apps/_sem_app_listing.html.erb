@@ -18,8 +18,8 @@
     </table>
   </div>
 <% else %>
-  <div class="panel highlight ui-corner-all">
+  <% pui_panel :panel_style => 'highlight', :style => "text-align: center" do %>
     <p>Keine eSeminarapparate gefunden</p>
-  </div>
+  <% end %>
 <% end %>
 

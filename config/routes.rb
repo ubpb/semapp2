@@ -3,6 +3,7 @@ ActionController::Routing::Routes.draw do |map|
   # Admin routes
   map.namespace :admin do |admin|
     admin.resources :semesters
+    admin.resources :sem_apps
   end
 
   # Login / Logout

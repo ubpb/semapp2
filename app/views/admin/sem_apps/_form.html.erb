@@ -1,0 +1,24 @@
+<% form_for [:admin, @sem_app], :html => {:class => 'pui-form columnar'} do |f| %>
+  <fieldset>
+    <legend>eSeminarapparat</legend>
+    <ol>
+      <li>
+        <%= f.label            :semester, "Semester" %>
+        <%= collection_select  :sem_app, :semester_id, Semester.find(:all), :id, :title %>
+      </li>
+      <li>
+        <%= f.label      :title, "Titel" %>
+        <%= f.text_field :title %>
+      </li>
+      <li>
+        <%= f.label      :permalink, "Permalink" %>
+        <%= f.text_field :permalink %>
+      </li>
+    </ol>
+  </fieldset>
+  <fieldset class="submit">
+    <%= f.submit 'Speichern' %>
+    <%= link_to 'Abbrechen', admin_sem_apps_path %>
+  </fieldset>
+<% end %>
+
