@@ -2,33 +2,31 @@
   <%= pui_link_button 'Neues Semester anlegen', new_admin_semester_path, :icon => 'plusthick' %>
 <% end %>
 
-<% pui_panel :panel_style => 'highlight' do %>
-  <p>
-    Mit diesem Formular kann ein neues Semester angelegt werden. eSeminarapparate
-    werden mit einem Semester verknüpft.
-  </p>
-<% end %>
-
 <h3>Semester</h3>
 
-<table class="pui-datagrid">
-  <tr>
-    <th width="30" align="center">#</th>
-    <th>Titel</th>
-    <th></th>
-  </tr>
-  <% @semesters.each do |s| %>
+<% if @semesters and not @semesters.empty?  %>
+  <table class="pui-datagrid">
     <tr>
-      <td align="center">
-        <%= s.id %>
-      </td>
-      <td>
-        <%= s.title %>
-      </td>
-      <td align="right">
-        <%= pui_link_button 'Bearbeiten', edit_admin_semester_path(s), :icon => 'pencil' %>
-        <%= pui_link_button 'Löschen', admin_semester_path(s), :icon => 'trash', :method => :delete, :confirm => "Soll das Semester #{s.title} wirklich gelöscht werden?" %>
-      </td>
+      <th>Titel</th>
+      <th></th>
     </tr>
+    <% @semesters.each do |s| %>
+      <tr>
+        <td>
+          <%= s.title %>
+          <%= '<b>(aktuelles Semester)</b>' if s.current  %>
+        </td>
+        <td align="right">
+          <%= pui_link_button 'Bearbeiten', edit_admin_semester_path(s), :icon => 'pencil' %>
+          <%= pui_link_button 'Löschen', admin_semester_path(s), :icon => 'trash', :method => :delete, :confirm => "Soll das Semester #{s.title} wirklich gelöscht werden?" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <% pui_panel :panel_style => 'highlight' do %>
+    <p>
+      Keine Semester eingerichtet. Bitte erstellen Sie ein neues Semester.
+    </p>
   <% end %>
-</table>
+<% end %>

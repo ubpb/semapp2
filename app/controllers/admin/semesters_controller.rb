@@ -3,7 +3,7 @@ class Admin::SemestersController < Admin::ApplicationController
   before_filter :setup_breadcrumb_for_all_actions
   
   def index
-    @semesters = Semester.find(:all)
+    @semesters = Semester.find(:all, :order => 'created_at DESC')
   end
 
   def new
@@ -33,6 +33,7 @@ class Admin::SemestersController < Admin::ApplicationController
     setup_breadcrumb_for_edit_and_update(@semester)
 
     @semester.update_attributes(params[:semester])
+      
     if @semester.save
       flash[:success] = "Semester erfolgreich aktualisiert"
       redirect_to :action => 'index'

@@ -3,6 +3,10 @@
     <legend>Semester</legend>
     <ol>
       <li>
+        <%= f.label      :current, "Aktuelles Semester?" %>
+        <%= f.check_box  :current, :info_message => 'Dieses Semester ist das aktuelle Semester' %>
+      </li>
+      <li>
         <%= f.label      :title, "Titel" %>
         <%= f.text_field :title, :info_message => 'Beschreibender Titel des Semsters (z.B. Wintersemester 2009/2010)' %>
       </li>
