@@ -24,17 +24,13 @@ class Semester < ActiveRecord::Base
   end
 
   def current=(value)
-    write_attribute(:current, nil) if value == 0 or value == nil or value == "0" or value == false
-
-    if (value == 1 or value == "1" or value == true)
-      Semester.transaction do
-        Semester.find(:all).each do |s|
-          s.current = nil
-          s.save!
-        end
+    if value == 0 or value == nil or value == "0" or value == false
+      write_attribute(:current, nil)
+    else
+      unless current
+        connection.execute('update semesters set current = NULL')
+        write_attribute(:current, true)
       end
-
-      write_attribute(:current, true)
     end
   end
 
