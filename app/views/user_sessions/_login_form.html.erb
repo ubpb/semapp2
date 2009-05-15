@@ -1,0 +1,23 @@
+<% form_for @user_session, :html => {:class => 'pui-form columnar'} do |f| %>
+  <fieldset>
+    <legend>Anmelden</legend>
+    <ol>
+      <li>
+        <%= f.label :login %>
+        <%= f.text_field :login %>
+      </li>
+      <li>
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+      </li>
+      <li>
+        <%= f.label :remember_me, 'Angemeldet bleiben?' %>
+        <%= f.check_box :remember_me %>
+      </li>
+    </ol>
+  </fieldset>
+  <fieldset class="submit">
+    <%= f.submit "Login" %>
+    <%= link_to 'Abbrechen', root_path %>
+  </fieldset>
+<% end %>

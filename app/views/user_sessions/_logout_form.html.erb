@@ -1,0 +1,14 @@
+<% form_for @user_session, :html => {:method => :delete, :class => 'pui-form columnar'} do |f| %>
+  <fieldset>
+    <legend>Abmelden</legend>
+    <% pui_panel :panel_style => 'highlight', :style => "text-align: center" do %>
+      <p>
+        Sie sind aktuell angemeldet als Benutzer <b><%= current_user.login %></b>
+      </p>
+    <% end %>
+  </fieldset>
+  <fieldset class="submit">
+    <%= f.submit "Abmelden" %>
+    <%= link_to 'Abbrechen', root_path %>
+  </fieldset>
+<% end %>

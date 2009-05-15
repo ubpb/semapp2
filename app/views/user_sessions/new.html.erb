@@ -1,0 +1,5 @@
+<% if current_user %>
+  <%= render :partial => 'logout_form' %>
+<% else %>
+  <%= render :partial => 'login_form' %>
+<% end %>

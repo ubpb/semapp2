@@ -53,6 +53,16 @@
                 <h3 class="invisible">eSeminarapparate</h3>
               </div>
 
+              <div style="text-align: center; margin-bottom: 2em;">
+                <% if current_user %>
+                  <div>Angemeldet als: <b><%= current_user.login %></b></div>
+                  <%= pui_link_button('Abmelden', login_path) %>
+                <% else %>
+                  <div>Sie sind nicht angemeldet</div>
+                  <%= pui_link_button('Anmelden', login_path) %>
+                <% end %>
+              </div>
+
               <!-- skiplink anchor: navigation -->
               <a id="navigation" name="navigation"></a>
               <ul class="nav">
