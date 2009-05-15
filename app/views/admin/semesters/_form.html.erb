@@ -4,11 +4,11 @@
     <ol>
       <li>
         <%= f.label      :title, "Titel" %>
-        <%= f.text_field :title, :info_message => 'Bitte den Titel des Semsters eingeben' %>
+        <%= f.text_field :title, :info_message => 'Beschreibender Titel des Semsters (z.B. Wintersemester 2009/2010)' %>
       </li>
       <li>
         <%= f.label      :permalink, "Permalink" %>
-        <%= f.text_field :permalink %>
+        <%= f.text_field :permalink, :info_message => 'Kurzbezeichnung für Web-Links (z.B. ss2008). Nur a-z, 0-9, keine Leerzeichen.' %>
       </li>
     </ol>
   </fieldset>
