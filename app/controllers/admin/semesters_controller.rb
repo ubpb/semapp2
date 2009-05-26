@@ -7,9 +7,6 @@ class Admin::SemestersController < Admin::ApplicationController
   create do
     wants.html {redirect_to :action => 'index'}
     flash "Semester erfolgreich erstellt"
-    failure do
-      flash ""
-    end
   end
 
   update do
