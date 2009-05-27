@@ -55,7 +55,7 @@
 
               <div style="text-align: center; margin-bottom: 2em;">
                 <% if current_user %>
-                  <div>Angemeldet als: <b><%= current_user.login %></b></div>
+                  <div>Angemeldet als<br/><b><%= current_user.login %></b></div>
                   <%= pui_link_button('Abmelden', login_path) %>
                 <% else %>
                   <div>Sie sind nicht angemeldet</div>
