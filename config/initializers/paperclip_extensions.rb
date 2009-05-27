@@ -7,7 +7,7 @@ Paperclip::Attachment.default_options[:url]  = '/download/:hashed_path/:id/:styl
 
 # Make use of a hashed path for paperclip
 # see http://mediumexposure.com/techblog/set-paperclip-use-hashed-file-paths
-Paperclip::Attachment.interpolations[:hashed_path] = lambda do |attachment, style|
+Paperclip.interpolates :hashed_path do |attachment|
   hash = Digest::MD5.hexdigest(attachment.instance.id.to_s + 'df8jsafg23756fg9g734jk5heg7843oisfdofg907834u')
   
   hash_path = hash.slice!(0..1)
