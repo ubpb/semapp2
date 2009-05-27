@@ -22,4 +22,20 @@ class User < ActiveRecord::Base
     self.password_confirmation = password
   end
 
+  #
+  # Checks for the ROLE_ADMIN authority
+  #
+  def is_admin?
+    has_authority?('ROLE_ADMIN')
+  end
+
+  #
+  # Checks if the user has a certain authority
+  #
+  def has_authority?(name)
+    authorities.each do |a|
+      return true if a.name == name
+    end
+  end
+
 end
