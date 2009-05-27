@@ -1,6 +1,6 @@
 <% form_for [:admin, @sem_app], :html => {:class => 'pui-form columnar'} do |f| %>
   <fieldset>
-    <legend>eSeminarapparat</legend>
+    <legend>Basisdaten</legend>
     <ol>
       <li>
         <%= f.label     :active, "Aktiv?" %>
@@ -20,7 +20,17 @@
       </li>
     </ol>
   </fieldset>
+  <fieldset>
+    <legend>Bibliotheksdaten (optional)</legend>
+    <ol>
+      <li>
+        <%= f.label      :bid, "Bibliotheks ID" %>
+        <%= f.text_field :bid, :info_message => 'z.B. Aleph Ausweisnummer' %>
+      </li>
+    </ol>
+  </fieldset>
   <fieldset class="submit">
+    <legend>Speichern</legend>
     <%= f.submit 'Speichern' %>
     <%= link_to 'Abbrechen', admin_sem_apps_path %>
   </fieldset>

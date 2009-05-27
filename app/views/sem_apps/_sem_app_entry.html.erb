@@ -3,30 +3,30 @@
   <div id="sem_app_entry_<%=entry.id-%>_toolbar" class="toolbar" style="display: none;">
     <!-- move -->
     <% if toolbar and toolbar.include?(:move) %>
-      <%= icon_link_to('ui-icon-carat-2-n-s', '#', :class => 'toolbar-item move') %>
+      <%= link_to('ui-icon-carat-2-n-s', '#', :class => 'toolbar-item move') %>
     <% end %>
 
     <!-- edit -->
     <% if toolbar and toolbar.include?(:edit) %>
-      <%= icon_link_to_remote('ui-icon-pencil', :url => edit_sem_app_entry_url(sem_app.id, entry.id), :method => :get) %>
+      <%= link_to_remote('ui-icon-pencil', :url => edit_sem_app_entry_url(sem_app.id, entry.id), :method => :get) %>
     <% end %>
 
     <!-- delete -->
     <% if toolbar and toolbar.include?(:delete) %>
-      <%= icon_link_to('ui-icon-trash', '#', :class => 'toolbar-item delete') %>
+      <%= link_to('ui-icon-trash', '#', :class => 'toolbar-item delete') %>
     <% end %>
 
     <!-- add (below) -->
     <% if toolbar and toolbar.include?(:add) %>
-      <%= icon_link_to('ui-icon-plus', '#', :class => 'toolbar-item add') %>
+      <%= link_to('ui-icon-plus', '#', :class => 'toolbar-item add') %>
     <% end %>
   </div>
 
   <!-- Confirmation panel (delete entry) -->
   <div id="sem_app_entry_<%=entry.id-%>_confirmation_panel_delete" class="confirmation-panel delete" style="display: none;">
     <p><strong>Diesen Eintrag wirklich löschen?</strong></p>
-    <%= button_link_to_remote('Löschen!', 'ui-icon-trash', :url => sem_app_entry_url(sem_app.id, entry.id), :method => :delete) %>
-    <%= button_link_to('Abbrechen!', 'ui-icon-arrowreturn-1-w', '#', :class => 'delete-cancel') %>
+    <%= link_to_remote('Löschen!', :url => sem_app_entry_url(sem_app.id, entry.id), :method => :delete) %>
+    <%= link_to('Abbrechen!', '#', :class => 'delete-cancel') %>
   </div>
 
   <!-- Confirmation panel (add entry below) -->

@@ -1,22 +1,20 @@
 <% if sem_apps and not sem_apps.empty? %>
-  <div class="browser">
-    <table>
+  <table class="pui-datagrid">
+    <tr>
+      <th width="30" align="center">#</th>
+      <th>Title</th>
+      <th width="200">Semester</th>
+    </tr>
+    <% for sem_app in sem_apps %>
       <tr>
-        <th width="30" align="center">#</th>
-        <th>Title</th>
-        <th width="200">Semester</th>
+        <td align="center"><%= sem_app.id %></td>
+        <td>
+          <%= link_to(sem_app.title, sem_app_url(sem_app.id)) %>
+        </td>
+        <td><%= sem_app.semester.title %></td>
       </tr>
-      <% for sem_app in sem_apps %>
-        <tr>
-          <td align="center"><%= sem_app.id %></td>
-          <td>
-            <%= link_to(sem_app.title, sem_app_url(sem_app.id)) %>
-          </td>
-          <td><%= sem_app.semester.title %></td>
-        </tr>
-      <% end %>
-    </table>
-  </div>
+    <% end %>
+  </table>
 <% else %>
   <% pui_panel :panel_style => 'highlight', :style => "text-align: center" do %>
     <p>Keine eSeminarapparate gefunden</p>
