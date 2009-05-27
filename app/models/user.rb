@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
     authorities.each do |a|
       return true if a.name == name
     end
+    return false
   end
 
 end
