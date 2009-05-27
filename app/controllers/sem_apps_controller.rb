@@ -8,6 +8,9 @@ class SemAppsController < ApplicationController
     # filter conditions
     conditions = ["", {}]
 
+    # only active sem apps
+    add_condition(conditions, "active = :active", {:active => true})
+
     # try to filter by semester
     if params[:semester]
       @semester = Semester.find_by_permalink!(params[:semester])

@@ -3,6 +3,10 @@
     <legend>eSeminarapparat</legend>
     <ol>
       <li>
+        <%= f.label     :active, "Aktiv?" %>
+        <%= f.check_box :active %>
+      </li>
+      <li>
         <%= f.label            :semester, "Semester" %>
         <%= collection_select  :sem_app, :semester_id, Semester.find(:all), :id, :title %>
       </li>
