@@ -2,6 +2,7 @@ class CreateSemApps < ActiveRecord::Migration
   def self.up
     create_table :sem_apps do |t|
       t.references :semester, :null => false
+      t.boolean  :active, :null => false, :default => false
       t.string   :title
       t.string   :permalink
       t.string   :bid
