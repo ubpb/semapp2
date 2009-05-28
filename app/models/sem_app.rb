@@ -55,7 +55,7 @@ class SemApp < ActiveRecord::Base
   end
 
   def sync_books
-    if (self.bid and (!self.books_synced_at or Time.now - self.books_synced_at > 30.minutes))
+    if (self.bid and self.bid.present? and (!self.books_synced_at or Time.now - self.books_synced_at > 30.minutes))
       SemApp.transaction do
         aleph_books = Aleph::BookImporter.import_books(self.bid)
 

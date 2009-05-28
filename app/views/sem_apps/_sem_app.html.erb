@@ -143,20 +143,26 @@
 
     <!-- Books Tab -->
     <div id="books">
-      <!-- Toolbar Panel -->
-      <div class="panel info ui-corner-all">
-        <span><strong>Standort:</strong> Ebene 1 - Fachbibliothek Kunstwissenschaften</span>
-      </div>
+      <% if @sem_app.bid and @sem_app.bid.present? %>
+        <!-- Toolbar Panel -->
+        <div class="panel info ui-corner-all">
+          <span><strong>Standort:</strong> XXX</span>
+        </div>
 
-      <!-- Book entries -->
-      <ol id="sem_app_book_entries" class="sem-app-entries">
-        <% sem_app.book_entries.each do |e| %>
-          <%= render 'sem_app_entry', 
-            :entry   => e,
-            :sem_app => sem_app,
-            :toolbar => [:edit] %>          
+        <!-- Book entries -->
+        <ol id="sem_app_book_entries" class="sem-app-entries">
+          <% sem_app.book_entries.each do |e| %>
+            <%= render 'sem_app_entry',
+              :entry   => e,
+              :sem_app => sem_app,
+              :toolbar => [:edit] %>
+          <% end %>
+        </ol>
+      <% else %>
+        <% pui_panel :panel_style => 'highlight', :style => 'text-align: center' do %>
+        <p>Für diesen eSeminarapparat sind aktuell <strong>keine</strong> Bücher in der Bibliothek aufgestellt.</p>
         <% end %>
-      </ol>
+      <% end %>
     </div>
 
 
@@ -195,16 +201,16 @@
 <div id="ubdok-import-dialog" title="Einen alten eSeminarapparat importieren..." style="display:none">
   <% form_tag(ubdok_sem_app_import_url, :id => "ubdok-import-form") do %>
     <p>
-      <div style="padding: 10px;" class="ui-state-highlight ui-corner-all">
-        <span style="float: left; margin-right: 0.3em;" class="ui-icon ui-icon-info"></span>
-        Um einen eSeminarapparat aus dem alten System zu importieren, geben Sie bitte dessen URL
-        in das nachfolgenden Feld ein und drücken auf "Importieren".
-      </div>
-    </p>
-    <p>
-      <label>UBDok URL:</label>
-      <%= text_field_tag(:ubdok_sem_app_url, '', :size => 40) %>
-      <%= hidden_field_tag :sem_app_id, sem_app.id %>
-    </p>
-  <% end %>
+    <div style="padding: 10px;" class="ui-state-highlight ui-corner-all">
+      <span style="float: left; margin-right: 0.3em;" class="ui-icon ui-icon-info"></span>
+      Um einen eSeminarapparat aus dem alten System zu importieren, geben Sie bitte dessen URL
+      in das nachfolgenden Feld ein und drücken auf "Importieren".
+    </div>
+  </p>
+  <p>
+    <label>UBDok URL:</label>
+    <%= text_field_tag(:ubdok_sem_app_url, '', :size => 40) %>
+    <%= hidden_field_tag :sem_app_id, sem_app.id %>
+  </p>
+<% end %>
 </div>
