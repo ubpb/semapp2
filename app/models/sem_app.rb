@@ -17,6 +17,9 @@ class SemApp < ActiveRecord::Base
 
   belongs_to :semester
 
+  has_many :ownerships
+  has_many :owners, :through => :ownerships, :source => :user
+
   validates_presence_of   :semester
   validates_presence_of   :title
   validates_presence_of   :permalink

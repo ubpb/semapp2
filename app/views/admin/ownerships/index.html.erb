@@ -1,0 +1,33 @@
+<% pui_append_to_breadcrumb("eSeminarapparat bearbeiten", edit_admin_sem_app_url(@sem_app)) %>
+<% pui_append_to_breadcrumb("Besitzer", admin_sem_app_ownerships_path(@sem_app))  %>
+
+<% pui_panel :style => 'text-align: right' do %>
+  <%= pui_link_button 'Neuen Besitzer anlegen', new_admin_sem_app_ownership_path(@sem_app), :icon => 'plusthick' %>
+<% end %>
+
+<h3>Besitzer</h3>
+
+<% if @ownerships and not @ownerships.empty?  %>
+  <table class="pui-datagrid">
+    <tr>
+      <th>Login</th>
+      <th></th>
+    </tr>
+    <% @ownerships.each do |o| %>
+      <tr>
+        <td>
+          <%= h(o.user.login) %>
+        </td>
+        <td align="right">
+          <%= pui_link_button 'Löschen', admin_sem_app_ownership_path(@sem_app, o), :icon => 'trash', :method => :delete, :confirm => "Soll der Besitzer #{o.user.login} wirklich gelöscht werden?" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <% pui_panel :panel_style => 'highlight', :style => 'text-align:center' do %>
+    <p>
+      Keine Besitzer eingerichtet.
+    </p>
+  <% end %>
+<% end %>

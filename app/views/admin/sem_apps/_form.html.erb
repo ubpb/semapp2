@@ -7,8 +7,8 @@
         <%= f.check_box :active %>
       </li>
       <li>
-        <%= f.label            :semester, "Semester" %>
-        <%= collection_select  :sem_app, :semester_id, Semester.find(:all), :id, :title %>
+        <%= f.label             :semester, "Semester" %>
+        <%= f.collection_select :semester_id, Semester.find(:all), :id, :title %>
       </li>
       <li>
         <%= f.label      :title, "Titel" %>
@@ -28,6 +28,19 @@
         <%= f.text_field :bid, :info_message => 'z.B. Aleph Ausweisnummer' %>
       </li>
     </ol>
+  </fieldset>
+  <fieldset>
+    <legend>Besitzer (<%= link_to 'bearbeiten', admin_sem_app_ownerships_path(@sem_app) %>)</legend>
+    <ul>
+      <% @sem_app.ownerships.each do |ownership| %>
+        <li>
+          <b><%= h(ownership.user.login) %></b>
+          <% if ownership.can_write or ownership.user.is_admin? %>
+          (kann den eSeminarapparat bearbeiten)
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
   </fieldset>
   <fieldset class="submit">
     <legend>Speichern</legend>
