@@ -1,12 +1,11 @@
+<h3>Abmelden</h3>
 <% form_for @user_session, :html => {:method => :delete, :class => 'puiform'} do |f| %>
-  <fieldset>
-    <legend>Abmelden</legend>
-    <% pui_panel :panel_style => 'highlight', :style => "text-align: center" do %>
-      <p>
-        Sie sind aktuell angemeldet als Benutzer <b><%= current_user.login %></b>
-      </p>
-    <% end %>
-  </fieldset>
+  <% pui_panel :panel_style => 'highlight', :style => "text-align: center" do %>
+    <p>
+      Sie sind aktuell angemeldet als Benutzer <b><%= current_user.login %></b>
+    </p>
+  <% end %>
+
   <fieldset class="submit">
     <%= f.submit "Abmelden" %>
     <%= link_to 'Abbrechen', root_path %>

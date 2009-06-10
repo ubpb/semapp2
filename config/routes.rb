@@ -3,7 +3,9 @@ ActionController::Routing::Routes.draw do |map|
   # Admin routes
   map.namespace :admin do |admin|
     admin.resources :semesters
-    admin.resources :sem_apps, :has_many => :ownerships
+    admin.resources :sem_apps, :as => 'apps' do |sem_app|
+      sem_app.resources :ownerships, :only => [:create, :destroy]
+    end
   end
 
   # Login / Logout
@@ -12,9 +14,9 @@ ActionController::Routing::Routes.draw do |map|
   map.logout 'logout', :controller => 'user_sessions', :action => 'destroy'
 
   # Sem Apps
-  map.resources :sem_apps, :as => 'semapps', :controller => 'sem_apps', :only => [:index, :show] do |sem_app|
+  map.resources :sem_apps, :as => 'apps', :controller => 'sem_apps', :only => [:index, :show] do |sem_app|
     sem_app.resources :entries, :controller => 'sem_app_entries', 
-      :only => [:show, :new, :create, :edit, :update, :destroy], :collection => {:reorder => :put}
+      :except => [:index], :collection => {:reorder => :put}
   end
 
   # ubdok import

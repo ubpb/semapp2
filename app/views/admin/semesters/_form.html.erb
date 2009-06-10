@@ -3,16 +3,24 @@
     <legend>Semester</legend>
     <ol>
       <li>
-        <%= f.label      :current, "Aktuelles Semester?" %>
-        <%= f.check_box  :current, :info_message => 'Dieses Semester ist das aktuelle Semester' %>
+        <div class="container">
+          <%= f.check_box  :current %>
+          <%= f.label      :current, "Aktuelles Semester?" %>
+        </div>
       </li>
       <li>
         <%= f.label      :title, "Titel" %>
-        <%= f.text_field :title, :info_message => 'Beschreibender Titel des Semsters (z.B. Wintersemester 2009/2010)' %>
+        <%= f.text_field :title %>
+        <div class="pui-tooltip">
+          Beschreibender Titel des Semsters (z.B. Wintersemester 2009/2010)
+        </div>
       </li>
       <li>
         <%= f.label      :permalink, "Permalink" %>
-        <%= f.text_field :permalink, :info_message => 'Kurzbezeichnung für Web-Links (z.B. ss2008). Nur a-z, 0-9, keine Leerzeichen.' %>
+        <%= f.text_field :permalink %>
+        <div class="pui-tooltip">
+          Kurzbezeichnung für Web-Links (z.B. ss2008). Nur a-z, 0-9, keine Leerzeichen.
+        </div>
       </li>
     </ol>
   </fieldset>

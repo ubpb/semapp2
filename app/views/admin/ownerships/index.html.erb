@@ -1,6 +1,3 @@
-<% pui_append_to_breadcrumb("eSeminarapparat bearbeiten", edit_admin_sem_app_url(@sem_app)) %>
-<% pui_append_to_breadcrumb("Besitzer", admin_sem_app_ownerships_path(@sem_app))  %>
-
 <% pui_panel :style => 'text-align: right' do %>
   <%= pui_link_button 'Neuen Besitzer anlegen', new_admin_sem_app_ownership_path(@sem_app), :icon => 'plusthick' %>
 <% end %>
