@@ -8,5 +8,5 @@ log/*
 tmp/*
 config/database.yml
 db/schema.rb
-public/_plugins
+public/plugins
 nbproject
