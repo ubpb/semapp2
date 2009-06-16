@@ -4,7 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   map.namespace :admin do |admin|
     admin.resources :semesters
     admin.resources :sem_apps, :as => 'apps' do |sem_app|
-      sem_app.resources :ownerships, :only => [:create, :destroy]
+      sem_app.resources :ownerships #, :only => [:create, :destroy]
     end
   end
 

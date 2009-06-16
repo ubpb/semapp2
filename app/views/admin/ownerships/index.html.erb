@@ -1,8 +1,20 @@
+<ul class="pui-nonajax-tabbar">
+  <li><%= link_to('eSeminarapparat', edit_admin_sem_app_path(@sem_app)) %></li>
+  <li class="active"><%= link_to('Besitzer', admin_sem_app_ownerships_path(@sem_app)) %></li>
+</ul>
+
 <% pui_panel :style => 'text-align: right' do %>
   <%= pui_link_button 'Neuen Besitzer anlegen', new_admin_sem_app_ownership_path(@sem_app), :icon => 'plusthick' %>
 <% end %>
 
 <h3>Besitzer</h3>
+
+<p style="font-style: italic">
+  Folgende Nutzer sind mit dem eSeminarapparat als Besitzer verknüpft.
+  Besitzer können die Inhalte des eSeminarapparats bearbeiten. Ist der
+  Nutzer zusätzlich als 'admin' gekennzeichnet, kann er diesen eSeminarapparat
+  verwalten (PIN ändern etc.)
+</p>
 
 <% if @ownerships and not @ownerships.empty?  %>
   <table class="pui-datagrid">

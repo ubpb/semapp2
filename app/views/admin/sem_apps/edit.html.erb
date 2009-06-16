@@ -1,35 +1,7 @@
+<ul class="pui-nonajax-tabbar">
+  <li class="active"><%= link_to('eSeminarapparat', edit_admin_sem_app_path(@sem_app)) %></li>
+  <li><%= link_to('Besitzer', admin_sem_app_ownerships_path(@sem_app)) %></li>
+</ul>
+
 <h3>eSeminarapprat '<%= link_to h(@sem_app.title), sem_app_url(@sem_app) %>' bearbeiten</h3>
-<div class="subcolumns">
-  <div class="c75l">
-    <div class="subcl">
-      <%= render :partial => 'form' %>
-    </div>
-  </div>
-  <div class="c25r">
-    <% form_for :ownership, :html => {:class => 'puiform'} do |f| %>
-      <fieldset>
-        <legend>Besitzer</legend>
-        <ol>
-          <li>
-            <p style="font-style: italic">
-              Folgende Nutzer sind mit dem eSeminarapparat als Besitzer verknüpft.
-              Besitzer können die Inhalte des eSeminarapparats bearbeiten. Ist der
-              Nutzer zusätzlich als 'admin' gekennzeichnet, kann er diesen eSeminarapparat
-              verwalten (PIN ändern etc.)
-            </p>
-          </li>
-          <% @sem_app.ownerships.each do |ownership| %>
-            <li>
-              <div class="container">
-                <b><%= h(ownership.user.login) %></b>
-                <% if ownership.can_write or ownership.user.is_admin? %>
-                  (kann den eSeminarapparat bearbeiten)
-                <% end %>
-              </div>
-            </li>
-          <% end %>
-        </ol>
-      </fieldset>
-    <% end %>
-  </div>
-</div>
+<%= render :partial => 'form' %>

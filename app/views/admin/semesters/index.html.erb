@@ -17,8 +17,8 @@
           <%= '<b>(aktuelles Semester)</b>' if s.current  %>
         </td>
         <td align="right">
-          <%= pui_link_button 'Bearbeiten', edit_admin_semester_path(s), :icon => 'pencil' %>
-          <%= pui_link_button 'Löschen', admin_semester_path(s), :icon => 'trash', :method => :delete, :confirm => "Soll das Semester #{s.title} wirklich gelöscht werden?" %>
+          <%= pui_link_icon 'Bearbeiten', 'pencil', edit_admin_semester_path(s) %>
+          <%= pui_link_icon 'Löschen', 'trash', edit_admin_semester_path(s), :method => :delete, :confirm => "Soll das Semester #{s.title} wirklich gelöscht werden?" %>
         </td>
       </tr>
     <% end %>
