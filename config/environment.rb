@@ -19,13 +19,13 @@ Rails::Initializer.run do |config|
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
-  config.gem 'RedCloth',             :version => '4.1.9'
-  config.gem 'authlogic',            :version => '2.0.13'
+  config.gem 'RedCloth',             :version => '4.2.0'
+  config.gem 'authlogic',            :version => '2.0.14'
   config.gem 'thoughtbot-paperclip', :version => '2.2.9.1', :lib => 'paperclip', :source => 'http://gems.github.com'
-  config.gem 'mislav-will_paginate', :version => '2.3.10', :lib => 'will_paginate', :source => 'http://gems.github.com'
+  config.gem 'mislav-will_paginate', :version => '2.3.11', :lib => 'will_paginate', :source => 'http://gems.github.com'
   config.gem 'libxml-ruby',          :version => '1.1.3', :lib => 'libxml'
   config.gem 'bcrypt-ruby',          :version => '2.0.5', :lib => 'bcrypt'
-  config.gem 'giraffesoft-resource_controller', :version => '0.6.1', :lib => 'resource_controller', :source => 'http://gems.github.com'
+  config.gem 'giraffesoft-resource_controller', :version => '0.6.5', :lib => 'resource_controller', :source => 'http://gems.github.com'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
