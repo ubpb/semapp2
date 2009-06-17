@@ -1,20 +1,17 @@
-<ul class="pui-nonajax-tabbar">
-  <li><%= link_to('eSeminarapparat', edit_admin_sem_app_path(@sem_app)) %></li>
-  <li class="active"><%= link_to('Besitzer', admin_sem_app_ownerships_path(@sem_app)) %></li>
-</ul>
+<%= render 'admin/shared_partials/sem_app_edit_tabbar', :sem_app => @sem_app, :active_tab => :ownerships %>
 
 <% pui_panel :style => 'text-align: right' do %>
   <%= pui_link_button 'Neuen Besitzer anlegen', new_admin_sem_app_ownership_path(@sem_app), :icon => 'plusthick' %>
 <% end %>
 
-<h3>Besitzer</h3>
-
-<p style="font-style: italic">
-  Folgende Nutzer sind mit dem eSeminarapparat als Besitzer verknüpft.
-  Besitzer können die Inhalte des eSeminarapparats bearbeiten. Ist der
-  Nutzer zusätzlich als 'admin' gekennzeichnet, kann er diesen eSeminarapparat
-  verwalten (PIN ändern etc.)
-</p>
+<% pui_panel :panel_style => 'highlight' do %>
+  <p style="font-size: 90%">
+    Folgende Nutzer sind mit dem eSeminarapparat als Besitzer verknüpft.
+    Besitzer können die Inhalte des eSeminarapparats bearbeiten. Ist der
+    Nutzer zusätzlich als 'admin' gekennzeichnet, kann er diesen eSeminarapparat
+    verwalten (PIN ändern etc.)
+  </p>
+<% end %>
 
 <% if @ownerships and not @ownerships.empty?  %>
   <table class="pui-datagrid">
@@ -28,7 +25,7 @@
           <%= h(o.user.login) %>
         </td>
         <td align="right">
-          <%= pui_link_button 'Löschen', admin_sem_app_ownership_path(@sem_app, o), :icon => 'trash', :method => :delete, :confirm => "Soll der Besitzer #{o.user.login} wirklich gelöscht werden?" %>
+          <%= pui_link_icon 'Löschen', 'trash', admin_sem_app_ownership_path(@sem_app, o), :method => :delete, :confirm => "Soll der Besitzer #{o.user.login} wirklich gelöscht werden?" %>
         </td>
       </tr>
     <% end %>

@@ -1,7 +1,4 @@
-<ul class="pui-nonajax-tabbar">
-  <li class="active"><%= link_to('eSeminarapparat', edit_admin_sem_app_path(@sem_app)) %></li>
-  <li><%= link_to('Besitzer', admin_sem_app_ownerships_path(@sem_app)) %></li>
-</ul>
+<%= render 'admin/shared_partials/sem_app_edit_tabbar', :sem_app => @sem_app, :active_tab => :sem_app %>
 
 <h3>eSeminarapprat '<%= link_to h(@sem_app.title), sem_app_url(@sem_app) %>' bearbeiten</h3>
 <%= render :partial => 'form' %>
