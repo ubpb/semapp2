@@ -5,6 +5,10 @@ class Admin::OwnershipsController < Admin::ApplicationController
   resource_controller
   belongs_to :sem_app
 
+  index.before do
+    pui_append_to_breadcrumb("<strong>#{h(@sem_app.title)}</strong> bearbeiten", edit_admin_sem_app_path(@sem_app))
+  end
+
   create do
     wants.html {redirect_to :action => 'index'}
     flash "Besitzer erfolgreich zugeordnet"

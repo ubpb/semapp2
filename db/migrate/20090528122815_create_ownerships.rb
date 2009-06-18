@@ -7,7 +7,7 @@ class CreateOwnerships < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :ownerships, [:user_id, :sem_app_id], :unique => true
+    add_index :ownerships, [:user_id, :sem_app_id]
   end
 
   def self.down

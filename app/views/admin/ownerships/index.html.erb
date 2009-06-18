@@ -1,17 +1,25 @@
+<h3>eSeminarapprat '<%= link_to h(@sem_app.title), sem_app_url(@sem_app) %>' bearbeiten</h3>
 <%= render 'admin/shared_partials/sem_app_edit_tabbar', :sem_app => @sem_app, :active_tab => :ownerships %>
 
-<% pui_panel :style => 'text-align: right' do %>
-  <%= pui_link_button 'Neuen Besitzer anlegen', new_admin_sem_app_ownership_path(@sem_app), :icon => 'plusthick' %>
+<% if @ownerships and not @ownerships.empty?  %>
+  <% pui_panel :panel_style => 'highlight' do %>
+    <p style="font-size: 90%">
+      Folgende Nutzer sind mit dem eSeminarapparat als Besitzer verknüpft.
+      Besitzer können die Inhalte des eSeminarapparats bearbeiten. Ist der
+      Nutzer zusätzlich als 'admin' gekennzeichnet, kann er diesen eSeminarapparat
+      verwalten (PIN ändern etc.)
+    </p>
+  <% end %>
 <% end %>
 
-<% pui_panel :panel_style => 'highlight' do %>
-  <p style="font-size: 90%">
-    Folgende Nutzer sind mit dem eSeminarapparat als Besitzer verknüpft.
-    Besitzer können die Inhalte des eSeminarapparats bearbeiten. Ist der
-    Nutzer zusätzlich als 'admin' gekennzeichnet, kann er diesen eSeminarapparat
-    verwalten (PIN ändern etc.)
-  </p>
-<% end %>
+<div style="text-align: right">
+  <% form_for [:admin, @sem_app, Ownership.new] do |f| %>
+    <%= f.collection_select :user_id, User.find(:all), :id, :login, :prompt => 'Bitte wählen Sie einen Nutzer' %>
+    <%= f.check_box :can_write %>
+    <span>Bearbeiten erlauben?</span>
+    <%= f.submit 'Als Besitzer hinzufügen' %>
+  <% end %>
+</div>
 
 <% if @ownerships and not @ownerships.empty?  %>
   <table class="pui-datagrid">
@@ -23,6 +31,9 @@
       <tr>
         <td>
           <%= h(o.user.login) %>
+          <% if o.can_write %>
+            <strong>(kann den eSeminarapparat bearbeiten)</strong>
+          <% end %>
         </td>
         <td align="right">
           <%= pui_link_icon 'Löschen', 'trash', admin_sem_app_ownership_path(@sem_app, o), :method => :delete, :confirm => "Soll der Besitzer #{o.user.login} wirklich gelöscht werden?" %>
