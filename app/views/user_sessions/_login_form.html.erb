@@ -1,23 +1,93 @@
-<% form_for @user_session, :html => {:class => 'puiform'} do |f| %>
-  <fieldset>
-    <legend>Anmelden</legend>
-    <ol>
-      <li>
-        <%= f.label :login %>
-        <%= f.text_field :login %>
-      </li>
-      <li>
-        <%= f.label :password %>
-        <%= f.password_field :password %>
-      </li>
-      <li>
-        <%= f.label :remember_me, 'Angemeldet bleiben?' %>
-        <%= f.check_box :remember_me %>
-      </li>
-    </ol>
-  </fieldset>
-  <fieldset class="submit">
-    <%= f.submit "Login" %>
-    <%= link_to 'Abbrechen', root_path %>
-  </fieldset>
+<% pui_panel :panel_style => 'highlight' do %>
+  <p>
+    Um eSeminarapparate nutzen zu können ist u.U. eine Anmeldung erforderlich.
+  </p>
+  <p>
+    Wenn Sie spezielle Zugangsdaten für dieses System haben verwenden Sie die
+    <strong>Lokale Anmeldung</strong>. Wenn Sie über eine IMT Kennung verfügen
+    können Sie sich an diesem System mit Ihren IMT Zugangsdaten anmelden.
+    Verwenden Sie dazu die <strong>IMT Anmeldung</strong>.
+  </p>
+  <p>
+    Benötigen Sie Zugangsdaten für dieses System (<a href="#">Wann benötige ich Zugangsdaten?</a>)
+    können Sie <a href="#">&raquo; hier einen Zugang einrichten</a>.
+  </p>
 <% end %>
+
+<ul class="pui-tabbar tabs">
+  <li><a href="#local">Lokale Anmeldung</a></li>
+  <li><a href="#imt">IMT Anmeldung</a></li>
+</ul>
+
+<div class="panels">
+
+  <div id="local-login-panel">
+    <% form_for @user_session, :html => {:class => 'puiform'} do |f| %>
+      <fieldset>
+        <legend>Anmelden (mit lokalen Nutzerdaten)</legend>
+        <ol>
+          <li>
+            <%= f.label :login, "Login" %>
+            <%= f.text_field :login %>
+          </li>
+          <li>
+            <%= f.label :password, "Passwort" %>
+            <%= f.password_field :password %>
+          </li>
+          <li>
+            <%= f.label :remember_me, 'Angemeldet bleiben?' %>
+            <%= f.check_box :remember_me %>
+          </li>
+        </ol>
+      </fieldset>
+      <fieldset class="submit">
+        <%= f.submit "Login" %>
+        <%= link_to 'Abbrechen', root_path %>
+      </fieldset>
+    <% end %>
+  </div>
+
+  <div id="imt-login-panel">
+    <% form_for @user_session, :html => {:class => 'puiform'} do |f| %>
+      <fieldset>
+        <legend>Anmelden (mit IMT Zugangsdaten)</legend>
+        <ol>
+          <li>
+            <strong>
+              Mit dieser Anmeldung bestätige ich, dass folgende Daten zwischen
+              diesem System und Systemen des IMTs übertragen werden: login,
+              Vorname, Nachname, E-Mail Adresse, Passwort.
+            </strong>
+          </li>
+          <li>
+            <%= f.label :login, "IMT Login" %>
+            <%= f.text_field :login %>
+          </li>
+          <li>
+            <%= f.label :password, "IMT Passwort" %>
+            <%= f.password_field :password %>
+          </li>
+          <li>
+            <%= f.label :remember_me, 'Angemeldet bleiben?' %>
+            <%= f.check_box :remember_me %>
+          </li>
+        </ol>
+      </fieldset>
+      <fieldset class="submit">
+        <%= f.submit "Login" %>
+        <%= link_to 'Abbrechen', root_path %>
+      </fieldset>
+    <% end %>
+  </div>
+</div>
+
+<% content_for :header do %>
+  <script type="text/javascript">
+    jQuery(function() {
+      jQuery("ul.tabs").tabs("div.panels > div", {
+        history: true
+      });
+    });
+  </script>
+<% end %>
+

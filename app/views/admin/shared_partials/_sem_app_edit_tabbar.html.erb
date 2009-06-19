@@ -1,18 +1,18 @@
 <%
-  links = {
-     :sem_app    => ['eSeminarapparat', edit_admin_sem_app_path(sem_app)],
-     :ownerships => ['Besitzer', admin_sem_app_ownerships_path(sem_app)]
-  }
+links = {
+  :sem_app    => ['eSeminarapparat', edit_admin_sem_app_path(sem_app)],
+  :ownerships => ['Besitzer', admin_sem_app_ownerships_path(sem_app)]
+}
 %>
 
-<ul class="pui-nonajax-tabbar">
+<ul class="pui-tabbar">
   <% links.each do |k,v| %>
-    <% if active_tab == k %>
-      <li class="active">
-    <% else %>
-      <li>
-    <% end %>
-    <%= link_to(v[0], v[1]) %>
+    <li>
+      <% if active_tab == k %>
+        <%= link_to(v[0], v[1], :class => 'current') %>
+      <% else %>
+        <%= link_to(v[0], v[1]) %>
+      <% end %>
     </li>
   <% end %>
 </ul>
