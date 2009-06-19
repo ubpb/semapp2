@@ -13,6 +13,9 @@ ActionController::Routing::Routes.draw do |map|
   map.login 'login', :controller => 'user_sessions', :action => 'new'
   map.logout 'logout', :controller => 'user_sessions', :action => 'destroy'
 
+  # User registration / User profiles
+  map.resource :user
+
   # Sem Apps
   map.resources :sem_apps, :as => 'apps', :controller => 'sem_apps', :only => [:index, :show] do |sem_app|
     sem_app.resources :entries, :controller => 'sem_app_entries', 

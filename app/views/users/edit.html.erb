@@ -1,0 +1,43 @@
+<h3>Mein Konto bearbeiten</h3>
+
+<% form_for @user, :html => {:class => 'puiform'} do |f| %>
+  <%= f.error_messages %>
+  <fieldset>
+    <legend>Login Daten</legend>
+    <ol>
+      <li>
+        <%= f.label :login, "Login" %>
+        <span><strong><%= @user.login %></strong></span>
+      </li>
+      <li>
+        <%= f.label :password, "Passwort" %>
+        <%= f.password_field :password %>
+      </li>
+      <li>
+        <%= f.label :password_confirmation, "Passwort bestätigen" %>
+        <%= f.password_field :password_confirmation %>
+      </li>
+    </ol>
+  </fieldset>
+  <fieldset>
+    <legend>Persönliche Daten</legend>
+    <ol>
+      <li>
+        <%= f.label :login, "Vorname" %>
+        <span>[TBD.]</span>
+      </li>
+      <li>
+        <%= f.label :login, "Nachname" %>
+        <span>[TBD.]</span>
+      </li>
+      <li>
+        <%= f.label :email, "E-Mail" %>
+        <%= f.text_field :email %>
+      </li>
+    </ol>
+  </fieldset>
+  <fieldset class="submit">
+    <%= f.submit "Login" %>
+    <%= link_to 'Abbrechen', user_path %>
+  </fieldset>
+<% end %>

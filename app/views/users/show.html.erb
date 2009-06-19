@@ -1,0 +1,73 @@
+<h3>Mein Konto</h3>
+
+<% pui_panel do %>
+  <p>
+    Sie sind aktuell angemeldet als Benutzer
+    <strong><%= @user.login %></strong>.
+    (<%= link_to 'Abmelden', logout_path, :confirm => 'Wirklich abmelden?' %>)
+  </p>
+<% end %>
+
+<div class="subcolumns">
+  <div class="c50l">
+    <div class="subcl">
+      <h4>Ihre Daten (<%= link_to 'Bearbeiten', edit_user_path %>)</h4>
+      <table class="pui-datagrid">
+        <tr>
+          <td>Login</td>
+          <td><%= @user.login %></td>
+        </tr>
+        <tr>
+          <td>Vor-/Nachname</td>
+          <td>[TBD.]</td>
+        </tr>
+        <tr>
+          <td>E-Mail</td>
+          <td><%= @user.email || '-' %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="c50r">
+    <div class="subcl">
+      <h4>Sie besitzen folgende eSeminarapparate</h4>
+      <% if @user.ownerships and not @user.ownerships.empty?%>
+        <table class="pui-datagrid">
+          <% @user.ownerships.each do |o| %>
+            <tr>
+              <td>
+                <% link_to sem_app_path(o.sem_app) do %>
+                  <%= h(o.sem_app.title) %>
+                  (<%= h(o.sem_app.semester.title) %>)
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% else %>
+        <% pui_panel :panel_style => 'highlight' do %>
+          <p>Sie besitzen keine eSeminarapparate</p>
+        <% end %>
+      <% end %>
+
+      <h4>Ihre eSeminarapparate</h4>
+      <% if @user.ownerships and not @user.ownerships.empty?%>
+        <table class="pui-datagrid">
+          <% @user.ownerships.each do |o| %>
+            <tr>
+              <td>
+                <% link_to sem_app_path(o.sem_app) do %>
+                  <%= h(o.sem_app.title) %>
+                  (<%= h(o.sem_app.semester.title) %>)
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% else %>
+        <% pui_panel :panel_style => 'highlight' do %>
+          <p>Sie besitzen keine eSeminarapparate</p>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
