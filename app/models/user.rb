@@ -1,13 +1,26 @@
 class User < ActiveRecord::Base
 
+  DEFAULT_AUTHID = 'internal'
+
+  # Relations
   has_and_belongs_to_many :authorities
+  has_many                :ownerships
+  has_many                :sem_apps, :through => :ownerships
 
-  has_many :ownerships
-  has_many :sem_apps, :through => :ownerships
+  # Validations
+  validates_presence_of :authid
+  # ... more validation is done by AuthLogic
 
+  # Setup Authlogic
   acts_as_authentic do |c|
     # for available options see documentation in: Authlogic::ActsAsAuthentic
-    c.crypto_provider = Authlogic::CryptoProviders::BCrypt
+    c.crypto_provider   = Authlogic::CryptoProviders::BCrypt
+    c.validations_scope = :authid
+  end
+
+  # Callback: Before save
+  def before_validation
+    self.authid = DEFAULT_AUTHID unless authid
   end
 
   #
@@ -40,6 +53,21 @@ class User < ActiveRecord::Base
       return true if a.name == name
     end
     return false
+  end
+
+  #
+  # Checks if the user is managed in an external
+  # system.
+  #
+  def externally_managed?
+    self.authid != DEFAULT_AUTHID
+  end
+
+  #
+  # Returns the full name in one call
+  #
+  def full_name
+    return "#{firstname} #{lastname}"
   end
 
 end

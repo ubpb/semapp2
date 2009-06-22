@@ -1,6 +1,6 @@
 <h3>Mein Konto bearbeiten</h3>
 
-<% form_for @user, :html => {:class => 'puiform'} do |f| %>
+<% form_for @user, :action => 'edit', :html => {:class => 'puiform'} do |f| %>
   <%= f.error_messages %>
   <fieldset>
     <legend>Login Daten</legend>
@@ -12,6 +12,12 @@
       <li>
         <%= f.label :password, "Passwort" %>
         <%= f.password_field :password %>
+        <% unless @user.new_record? %>
+          <div class="container" style="font-size: 90%; font-style: italic">
+            Um das Passwort zu ändern geben Sie das neue Passwort
+            bitte ein. Ansonsten lassen Sie die Felder bitte leer.
+          </div>
+        <% end %>
       </li>
       <li>
         <%= f.label :password_confirmation, "Passwort bestätigen" %>
@@ -23,12 +29,12 @@
     <legend>Persönliche Daten</legend>
     <ol>
       <li>
-        <%= f.label :login, "Vorname" %>
-        <span>[TBD.]</span>
+        <%= f.label :firstname, "Vorname" %>
+        <%= f.text_field :firstname %>
       </li>
       <li>
-        <%= f.label :login, "Nachname" %>
-        <span>[TBD.]</span>
+        <%= f.label :lastname, "Nachname" %>
+        <%= f.text_field :lastname %>
       </li>
       <li>
         <%= f.label :email, "E-Mail" %>

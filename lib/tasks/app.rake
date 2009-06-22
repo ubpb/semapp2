@@ -6,6 +6,18 @@ end
 
 namespace :app do
 
+  #
+  # Inits an new installtion. Required after installation.
+  #
+  desc "inits a new installation"
+  task(:init => :environment) do
+    # Create default user authorities
+    Authority.new(:name => 'ROLE_ADMIN').save!
+  end
+
+  #
+  # Creates a new admin user
+  #
   desc "creates an admin user"
   task(:create_admin => :environment) do
     admin_login = ask("Admin Login? (e.g. 'admin')")

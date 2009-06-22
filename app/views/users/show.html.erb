@@ -11,7 +11,7 @@
 <div class="subcolumns">
   <div class="c50l">
     <div class="subcl">
-      <h4>Ihre Daten (<%= link_to 'Bearbeiten', edit_user_path %>)</h4>
+      <h4>Ihre Daten</h4>
       <table class="pui-datagrid">
         <tr>
           <td>Login</td>
@@ -19,13 +19,20 @@
         </tr>
         <tr>
           <td>Vor-/Nachname</td>
-          <td>[TBD.]</td>
+          <td><%= h(@user.full_name) %></td>
         </tr>
         <tr>
           <td>E-Mail</td>
           <td><%= @user.email || '-' %></td>
         </tr>
       </table>
+      <div>
+        <% if @user.externally_managed? %>
+          <span style="font-size: 90%; font-style: italic">Ihr Login wird extern verwaltet. Sie Können diese Daten hier nicht bearbeiten.</span>
+        <% else %>
+          <%= link_to '&raquo; Bearbeiten', edit_user_path %>
+        <% end %>
+      </div>
     </div>
   </div>
   <div class="c50r">
