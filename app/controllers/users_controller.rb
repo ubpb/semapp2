@@ -1,11 +1,26 @@
 class UsersController < ApplicationController
 
-  before_filter :require_user
-  before_filter :load_current_user
+  before_filter :require_user, :only => [:edit, :update]
   before_filter :check_editable, :only => [:edit, :update]
-  before_filter :setup_breadcrumb_base
+  before_filter :load_current_user, :only => [:edit, :update]
+  before_filter :setup_breadcrumb_base, :only => [:edit, :update]
 
   def show    
+  end
+
+  def new
+    pui_append_to_breadcrumb("Mein Konto erstellen", new_user_path)
+    @user = User.new
+  end
+
+  def create
+    @user = User.new(params[:user])
+    if (@user.save)
+      flash[:notice] = "Ihr Benutzerkonto wurde erfolgreich eingerichtet. Bitte beachten Sie:
+      <b>Wir müssen Ihr Konto zunächst überprüfen und freischalten bevor Sie sich anmelden können</b>."
+    else
+      render :action => :new
+    end
   end
 
   def edit

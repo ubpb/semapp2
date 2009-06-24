@@ -1,23 +1,17 @@
-<h3>Mein Konto bearbeiten</h3>
+<h3>Ein neues Benutzerkonto einrichten</h3>
 
-<% form_for @user, :html => {:class => 'puiform'} do |f| %>
+<% form_for @user, :url => user_path, :html => {:class => 'puiform'} do |f| %>
   <%= f.error_messages %>
   <fieldset>
     <legend>Login Daten</legend>
     <ol>
       <li>
         <%= f.label :login, "Login" %>
-        <span><strong><%= @user.login %></strong></span>
+        <%= f.text_field :login %>
       </li>
       <li>
         <%= f.label :password, "Passwort" %>
         <%= f.password_field :password %>
-        <% unless @user.new_record? %>
-          <div class="container" style="font-size: 90%; font-style: italic">
-            Um das Passwort zu ändern geben Sie das neue Passwort
-            bitte ein. Ansonsten lassen Sie die Felder bitte leer.
-          </div>
-        <% end %>
       </li>
       <li>
         <%= f.label :password_confirmation, "Passwort bestätigen" %>
@@ -43,7 +37,7 @@
     </ol>
   </fieldset>
   <fieldset class="submit">
-    <%= f.submit "Speichern" %>
-    <%= link_to 'Abbrechen', user_path %>
+    <%= f.submit "Konto einrichten" %>
+    <%= link_to 'Abbrechen', root_path %>
   </fieldset>
 <% end %>
