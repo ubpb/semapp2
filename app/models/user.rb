@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
 
   # Validations
   validates_presence_of :authid
+  validates_presence_of :firstname
+  validates_presence_of :lastname
   # ... more validation is done by AuthLogic
 
   # Setup Authlogic

@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
 
   before_filter :require_user, :only => [:show, :edit, :update]
-  before_filter :check_editable, :only => [:edit, :update]
   before_filter :load_current_user, :only => [:show, :edit, :update]
+  before_filter :check_editable, :only => [:edit, :update]  
   before_filter :setup_breadcrumb_base, :only => [:show, :edit, :update]
 
   def new
@@ -12,9 +12,16 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
+    # For now we don't have a seperate approval process.
+    # So approve and activate the user.
+    # This may change in the future
+    @user.approved = true
+    @user.active   = true
+
     if (@user.save)
-      flash[:notice] = "Ihr Benutzerkonto wurde erfolgreich eingerichtet. Bitte beachten Sie:
-      <b>Wir müssen Ihr Konto zunächst überprüfen und freischalten bevor Sie sich anmelden können</b>."
+      flash[:notice] = "Ihr Benutzerkonto wurde erfolgreich eingerichtet und sie wurden bereits angemeldet."
+      UserSession.create(@user, false)
+      redirect_to user_path
     else
       render :action => :new
     end

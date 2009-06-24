@@ -20,11 +20,19 @@ namespace :app do
   #
   desc "creates an admin user"
   task(:create_admin => :environment) do
-    admin_login = ask("Admin Login? (e.g. 'admin')")
-    password    = ask("Admin Password?")
-    email       = ask("Admin E-Mail?")
+    admin_login = ask("Login? (e.g. 'admin')")
+    password    = ask("Password?")
+    email       = ask("E-Mail?")
+    firstname   = ask("First name?")
+    lastname    = ask("Last name?")
 
-    u = User.new(:login => admin_login, :email => email, :active => true, :approved => true)
+    u = User.new(
+      :login => admin_login,
+      :email => email,
+      :firstname => firstname,
+      :lastname => lastname, 
+      :active => true,
+      :approved => true)
     u.set_password(password)
     u.save!
     u.authorities << Authority.find_by_name('ROLE_ADMIN')
