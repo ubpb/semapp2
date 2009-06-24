@@ -24,12 +24,12 @@ namespace :app do
     password    = ask("Admin Password?")
     email       = ask("Admin E-Mail?")
 
-    u = User.new(:login => admin_login, :email => email)
+    u = User.new(:login => admin_login, :email => email, :active => true, :approved => true)
     u.set_password(password)
     u.save!
     u.authorities << Authority.find_by_name('ROLE_ADMIN')
 
-    say "Admin account created."
+    say "Admin account created and activated."
   end
 
 end

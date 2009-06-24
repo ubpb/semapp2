@@ -2,6 +2,8 @@ class User < ActiveRecord::Migration
   def self.up
     create_table :users do |t|
       t.string    :authid,              :null => false                # the authentication system
+      t.boolean   :active,              :null => false, :default => false
+      t.boolean   :approved,            :bull => false, :default => false
 
       # Authlogic stuff
       t.string    :login,               :null => false                # optional, you can use email instead, or both

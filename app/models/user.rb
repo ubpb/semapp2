@@ -70,4 +70,18 @@ class User < ActiveRecord::Base
     return "#{firstname} #{lastname}"
   end
 
+  #
+  # AuthLogic state callback
+  #
+  def active?
+    false
+  end
+
+  #
+  # AuthLogic state callback
+  #
+  def approved?
+    false
+  end
+
 end
