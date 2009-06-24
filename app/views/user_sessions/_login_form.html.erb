@@ -74,7 +74,7 @@
     <div class="subcl">
       <% pui_panel :panel_style => 'highlight' do %>
         <p>
-          Um eSeminarapparate nutzen zu können ist u.U. eine Anmeldung erforderlich.
+          Um eSeminarapparate nutzen zu können ist u.U. eine persönliche Anmeldung erforderlich.
         </p>
         <p>
           Wenn Sie spezielle Zugangsdaten für dieses System haben verwenden Sie die
@@ -83,9 +83,18 @@
           Verwenden Sie dazu die <strong>IMT Anmeldung</strong>.
         </p>
         <p>
-          Benötigen Sie Zugangsdaten für dieses System (<a href="#">Wann benötige ich Zugangsdaten?</a>)
-          können Sie <a href="#">&raquo; hier einen Zugang einrichten</a>.
+          Benötigen Sie persönliche Zugangsdaten für dieses System
+          (<a href="#" rel="#login-required-help">Wann benötige ich Zugangsdaten?</a>) können Sie
+          <a href="#">&raquo; hier einen Zugang einrichten</a>.
         </p>
+        <div class="pui-overlay" id="login-required-help">
+          <h3>Wann benötige ich Zugangsdaten?</h3>
+          <p>
+            Sie benötigen für die eSeminarapparate nur in folgenden Fällen einen persönlichen
+            Zugang.
+            [TBD.]
+          </p>
+        </div>
       <% end %>
     </div>
   </div>
@@ -96,6 +105,14 @@
     jQuery(function() {
       jQuery("ul.tabs").tabs("div.panels > div", {
         history: true
+      });
+
+      jQuery("a[rel]").overlay({
+        expose: {
+          color: '#222',
+          opacity: 0.7,
+          closeSpeed: 1000
+        }
       });
     });
   </script>
