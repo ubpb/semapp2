@@ -1,12 +1,9 @@
 class UsersController < ApplicationController
 
-  before_filter :require_user, :only => [:edit, :update]
+  before_filter :require_user, :only => [:show, :edit, :update]
   before_filter :check_editable, :only => [:edit, :update]
-  before_filter :load_current_user, :only => [:edit, :update]
-  before_filter :setup_breadcrumb_base, :only => [:edit, :update]
-
-  def show    
-  end
+  before_filter :load_current_user, :only => [:show, :edit, :update]
+  before_filter :setup_breadcrumb_base, :only => [:show, :edit, :update]
 
   def new
     pui_append_to_breadcrumb("Mein Konto erstellen", new_user_path)
@@ -21,6 +18,9 @@ class UsersController < ApplicationController
     else
       render :action => :new
     end
+  end
+
+  def show
   end
 
   def edit

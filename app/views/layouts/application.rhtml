@@ -86,13 +86,13 @@
         <div id="col3">
           <div id="col3_content" class="clearfix">
             <% if flash[:notice] and not flash[:notice].empty? %>
-              <% pui_panel :panel_style => 'success', :style => 'margin: 0 0 20px 0; padding: 12px; text-align:center' do %>
+              <% pui_panel :panel_style => 'notice' do %>
                 <%= flash[:notice] %>
               <% end %>
             <% end %>
 
             <% if flash[:error] and not flash[:error].empty? %>
-              <% pui_panel :panel_style => 'error', :style => 'margin: 0 0 20px 0; padding: 12px; text-align:center' do %>
+              <% pui_panel :panel_style => 'error' do %>
                 <%= flash[:error] %>
               <% end %>
             <% end %>

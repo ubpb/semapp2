@@ -74,14 +74,14 @@ class User < ActiveRecord::Base
   # AuthLogic state callback
   #
   def active?
-    false
+    return self.active
   end
 
   #
   # AuthLogic state callback
   #
   def approved?
-    false
+    return self.approved
   end
 
 end
