@@ -6,15 +6,15 @@
     <legend>Login Daten</legend>
     <ol>
       <li>
-        <%= f.label :login, "Login" %>
+        <%= f.label :login, "Login*" %>
         <%= f.text_field :login %>
       </li>
       <li>
-        <%= f.label :password, "Passwort" %>
+        <%= f.label :password, "Passwort*" %>
         <%= f.password_field :password %>
       </li>
       <li>
-        <%= f.label :password_confirmation, "Passwort bestätigen" %>
+        <%= f.label :password_confirmation, "Passwort bestätigen*" %>
         <%= f.password_field :password_confirmation %>
       </li>
     </ol>
@@ -23,19 +23,20 @@
     <legend>Persönliche Daten</legend>
     <ol>
       <li>
-        <%= f.label :firstname, "Vorname" %>
+        <%= f.label :firstname, "Vorname*" %>
         <%= f.text_field :firstname %>
       </li>
       <li>
-        <%= f.label :lastname, "Nachname" %>
+        <%= f.label :lastname, "Nachname*" %>
         <%= f.text_field :lastname %>
       </li>
       <li>
-        <%= f.label :email, "E-Mail" %>
+        <%= f.label :email, "E-Mail*" %>
         <%= f.text_field :email %>
       </li>
     </ol>
   </fieldset>
+  <div style="font-size: 90%">* Plfichtfelder</div>
   <fieldset class="submit">
     <%= f.submit "Konto einrichten" %>
     <%= link_to 'Abbrechen', root_path %>

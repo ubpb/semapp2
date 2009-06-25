@@ -1,6 +1,6 @@
 <h3>Mein Konto bearbeiten</h3>
 
-<% form_for @user, :html => {:class => 'puiform'} do |f| %>
+<% form_for @user, :url => user_path, :html => {:class => 'puiform'} do |f| %>
   <%= f.error_messages %>
   <fieldset>
     <legend>Login Daten</legend>
@@ -8,16 +8,18 @@
       <li>
         <%= f.label :login, "Login" %>
         <span><strong><%= @user.login %></strong></span>
+        <span style="font-size: 90%; font-style: italic;">(Ihr Login kann nachträglich nicht geändert werden)</span>
       </li>
       <li>
+        <% unless @user.new_record? %>
+          <p style="font-size: 90%; font-style: italic; text-align: center">
+            Um das Passwort zu ändern geben Sie das neue Passwort (und die Bestätigung)
+            bitte ein.<br/>
+            Ansonsten lassen Sie die Felder einfach leer.
+          </p>
+        <% end %>
         <%= f.label :password, "Passwort" %>
         <%= f.password_field :password %>
-        <% unless @user.new_record? %>
-          <div class="container" style="font-size: 90%; font-style: italic">
-            Um das Passwort zu ändern geben Sie das neue Passwort
-            bitte ein. Ansonsten lassen Sie die Felder bitte leer.
-          </div>
-        <% end %>
       </li>
       <li>
         <%= f.label :password_confirmation, "Passwort bestätigen" %>
@@ -29,19 +31,20 @@
     <legend>Persönliche Daten</legend>
     <ol>
       <li>
-        <%= f.label :firstname, "Vorname" %>
+        <%= f.label :firstname, "Vorname*" %>
         <%= f.text_field :firstname %>
       </li>
       <li>
-        <%= f.label :lastname, "Nachname" %>
+        <%= f.label :lastname, "Nachname*" %>
         <%= f.text_field :lastname %>
       </li>
       <li>
-        <%= f.label :email, "E-Mail" %>
+        <%= f.label :email, "E-Mail*" %>
         <%= f.text_field :email %>
       </li>
     </ol>
   </fieldset>
+  <div style="font-size: 90%">* Plfichtfelder</div>
   <fieldset class="submit">
     <%= f.submit "Speichern" %>
     <%= link_to 'Abbrechen', user_path %>

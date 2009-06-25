@@ -1,17 +1,21 @@
 <h3>Mein Konto</h3>
 
-<% pui_panel do %>
+<% pui_panel :panel_style => 'highlight' do %>
   <p>
     Sie sind aktuell angemeldet als Benutzer
     <strong><%= @user.login %></strong>.
-    (<%= link_to 'Abmelden', logout_path, :confirm => 'Wirklich abmelden?' %>)
+    (<%= link_to '&raquo; Abmelden', logout_path, :confirm => 'Wirklich abmelden?' %>)
   </p>
 <% end %>
 
 <div class="subcolumns">
   <div class="c50l">
     <div class="subcl">
-      <h4>Ihre Daten</h4>
+      <% if @user.externally_managed? %>
+        <h4>Ihre Daten</h4>
+      <% else %>
+        <h4>Ihre Daten <span style="font-weight: normal;">(<%= link_to '&raquo; Bearbeiten', edit_user_path %>)</span></h4>
+      <% end %>
       <table class="pui-datagrid">
         <tr>
           <td>Login</td>
@@ -26,13 +30,11 @@
           <td><%= @user.email || '-' %></td>
         </tr>
       </table>
-      <div>
-        <% if @user.externally_managed? %>
+      <% if @user.externally_managed? %>
+        <div>
           <span style="font-size: 90%; font-style: italic">Ihr Login wird extern verwaltet. Sie Können diese Daten hier nicht bearbeiten.</span>
-        <% else %>
-          <%= link_to '&raquo; Bearbeiten', edit_user_path %>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
     </div>
   </div>
   <div class="c50r">
