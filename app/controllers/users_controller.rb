@@ -18,7 +18,7 @@ class UsersController < ApplicationController
     @user.approved = true
     @user.active   = true
 
-    if (@user.save)
+    if (validate_recap(params, @user.errors) and @user.save)
       flash[:notice] = "Ihr Benutzerkonto wurde erfolgreich eingerichtet und sie wurden bereits angemeldet."
       UserSession.create(@user, false)
       redirect_to user_path

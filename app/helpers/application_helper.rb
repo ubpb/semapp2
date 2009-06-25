@@ -1,5 +1,8 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  # includes
+  include ReCaptcha::ViewHelper
+
 
   def render_sem_app_entry(sem_app_entry)
     partial_name = sem_app_entry.instance_type.underscore

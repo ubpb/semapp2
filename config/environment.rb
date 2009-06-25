@@ -26,6 +26,7 @@ Rails::Initializer.run do |config|
   config.gem 'libxml-ruby',          :version => '1.1.3', :lib => 'libxml'
   config.gem 'bcrypt-ruby',          :version => '2.0.5', :lib => 'bcrypt'
   config.gem 'giraffesoft-resource_controller', :version => '0.6.5', :lib => 'resource_controller', :source => 'http://gems.github.com'
+  config.gem 'ruby-recaptcha',       :version => '1.0.0'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
@@ -45,4 +46,5 @@ Rails::Initializer.run do |config|
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
+
 end
