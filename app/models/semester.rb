@@ -16,8 +16,6 @@ class Semester < ActiveRecord::Base
 
   # validators
   validates_presence_of :title
-  validates_presence_of :permalink
-  validates_uniqueness_of :permalink
 
   def to_s()
     title

@@ -1,9 +1,7 @@
 class SemAppsController < ApplicationController
 
-  #
-  # Displays a list of sem apps defined by the
-  # given filter
-  #
+  before_filter :require_user, :only => [:create]
+
   def index
     # filter conditions
     conditions = ["", {}]
@@ -12,16 +10,16 @@ class SemAppsController < ApplicationController
     add_condition(conditions, "active = :active", {:active => true})
 
     # try to filter by semester
-    if params[:semester]
-      @semester = Semester.find_by_permalink!(params[:semester])
-      conditions = ["semester_id = :semester_id", {:semester_id => @semester.id}]
-    end
-
-    # try to filter by filter term
-    if params[:filter] and not params[:filter].empty?
-      @filter = params[:filter]
-      add_condition(conditions, "title like :title", {:title => @filter + "%"})
-    end
+#    if params[:semester]
+#      @semester = Semester.find(params[:semester])
+#      conditions = ["semester_id = :semester_id", {:semester_id => @semester.id}]
+#    end
+#
+#    # try to filter by filter term
+#    if params[:filter] and not params[:filter].empty?
+#      @filter = params[:filter]
+#      add_condition(conditions, "title like :title", {:title => @filter + "%"})
+#    end
 
     # find sem apps
     @sem_apps = SemApp.paginate(
@@ -31,15 +29,34 @@ class SemAppsController < ApplicationController
       :order => 'semester_id, id DESC')
   end
 
-  #
-  # Shows a single sem app.
-  #
+
   def show
     @sem_app = SemApp.find(params[:id])
   end
 
+
+  def new
+    pui_append_to_breadcrumb("Einen neuen eSeminarapparat beantragen", new_sem_app_path)
+    @sem_app = SemApp.new
+  end
+
+
+  def create
+    @sem_app = SemApp.new(params[:sem_app])
+    @sem_app.add_ownership(current_user)
+    if @sem_app.save
+      flash[:notice] = "Ihr eSeminarapparat wurde erfolgreich beantragt. Wir prüfen die Angaben und schalten
+        den eSeminarappat nach erfolgter Prüfung frei. Sie sehen den Status in Ihrem Benutzerkonto."
+      redirect_to user_path
+    else
+      render :action => :new
+    end
+  end
+
+
   private
 
+  
   def add_condition(conditions, condition_str, values)
     if conditions[0].empty?
       conditions[0] = conditions[0].concat(condition_str)

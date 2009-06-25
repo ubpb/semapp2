@@ -22,8 +22,7 @@ class SemApp < ActiveRecord::Base
 
   validates_presence_of   :semester
   validates_presence_of   :title
-  validates_presence_of   :permalink
-  validates_uniqueness_of :permalink, :scope => :semester_id
+  validates_uniqueness_of :title, :scope => :semester_id
 
   def book_entries
     # sync books
@@ -35,6 +34,10 @@ class SemApp < ActiveRecord::Base
   def media_entries
     # return media entries
     do_get_media_entries
+  end
+
+  def add_ownership(user)
+    Ownership.new(:user => user, :sem_app => self).save!
   end
 
   private

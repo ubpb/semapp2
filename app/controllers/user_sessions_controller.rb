@@ -15,7 +15,7 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
       flash[:notice] = "Sie haben sich erfolgreich als '#{current_user.login}' angemeldet."
-      redirect_back_or_default root_url
+      redirect_back_or_default user_url
     else
       render :action => :new
     end

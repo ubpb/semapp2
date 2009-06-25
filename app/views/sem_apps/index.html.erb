@@ -11,7 +11,7 @@
       <%= select_tag(
         :semester,
         '<option>Alle</option>' +
-          options_from_collection_for_select(Semester.find(:all), "permalink", "title"),
+          options_from_collection_for_select(Semester.find(:all), "id", "title"),
         :onchange => 'this.form.submit()') %>
     <% end %>
   <% end %>
