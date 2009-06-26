@@ -1,13 +1,14 @@
-<% pui_panel :style => 'text-align: right' do %>
-  <%= pui_link_button 'Neuen eSeminarapparat anlegen', new_admin_sem_app_path, :icon => 'plusthick' %>
-<% end %>
-
 <h3>eSeminarapparate</h3>
 
 <div class="subcolumns">
   <div class="c75l">
     <div class="subcl">
       <% if @sem_apps and not @sem_apps.empty?  %>
+        <div style="text-align: right">
+          <%= select_tag(:org_unit,
+            '<option>Alle</option>' +
+              options_from_collection_for_select(OrgUnit.find(:all), "id", "title")) %>
+        </div>
         <table class="pui-datagrid">
           <tr>
             <th>Titel</th>
@@ -36,7 +37,15 @@
   </div>
   <div class="c25r">
     <div class="subcr" style="border-left: 1px solid #ddd">
-      Menü
+      <div style="text-align: center; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd">
+        <%= pui_link_button 'Neuen Sem.App', new_admin_sem_app_path, :icon => 'plusthick' %>
+      </div>
+      
+      <h4>Filter</h4>
+      <ul class="nav">
+        <li><%= link_to('Alle', '#') %></li>
+        <li><%= link_to('Zu prüfen', '#') %></li>
+      </ul>
     </div>
   </div>
 </div>

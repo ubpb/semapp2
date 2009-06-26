@@ -2,6 +2,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Admin routes
   map.namespace :admin do |admin|
+    admin.resources :org_units
     admin.resources :semesters
     admin.resources :sem_apps, :as => 'apps' do |sem_app|
       sem_app.resources :ownerships, :only => [:index, :create, :destroy]

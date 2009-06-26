@@ -14,12 +14,12 @@
         <%= f.collection_select :semester_id, Semester.find(:all), :id, :title %>
       </li>
       <li>
-        <%= f.label      :title, "Titel" %>
-        <%= f.text_field :title %>
+        <%= f.label             :org_unit, "Organisationseinheit" %>
+        <%= f.collection_select :org_unit_id, OrgUnit.find(:all), :id, :title, :prompt => '-- Bitte auswählen --' %>
       </li>
       <li>
-        <%= f.label      :permalink, "Permalink" %>
-        <%= f.text_field :permalink %>
+        <%= f.label      :title, "Titel" %>
+        <%= f.text_field :title %>
       </li>
     </ol>
   </fieldset>

@@ -1,0 +1,43 @@
+<h3>Organisationseinheiten verwalten</h3>
+
+<div class="subcolumns">
+  <div class="c75l">
+    <div class="subcl">
+      <% if @org_units and not @org_units.empty?  %>
+        <table class="pui-datagrid">
+          <tr>
+            <th>Titel</th>
+            <th></th>
+          </tr>
+          <% @org_units.each do |o| %>
+            <tr>
+              <td>
+                <%= h(o.title) %>
+                (<%= o.count %>)
+              </td>
+              <td align="right">
+                <%= pui_link_icon 'Bearbeiten', 'pencil', edit_admin_org_unit_path(o) %>
+                <% unless o.used? %>
+                  <%= pui_link_icon 'Löschen', 'trash', admin_org_unit_path(o), :method => :delete, :confirm => "Soll die Organisationseinheit wirklich gelöscht werden?" %>
+                <% end  %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% else %>
+        <% pui_panel :panel_style => 'highlight', :style => 'text-align:center' do %>
+          <p>
+            Keine Besitzer eingerichtet.
+          </p>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="c25r">
+    <div class="subcr" style="border-left: 1px solid #ddd">
+      <div style="text-align: center; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd">
+        <%= pui_link_button 'Neu Org. Einheit', new_admin_org_unit_path, :icon => 'plusthick' %>
+      </div>
+    </div>
+  </div>
+</div>
