@@ -1,7 +1,8 @@
 class CreateOrgUnits < ActiveRecord::Migration
   def self.up
     create_table :org_units do |t|
-      t.string :title, :null => false
+      t.string  :title, :null => false
+      t.integer :position
       t.timestamps
     end
   end

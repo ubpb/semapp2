@@ -5,39 +5,59 @@
     <div class="subcl">
       <% if @org_units and not @org_units.empty?  %>
         <table class="pui-datagrid">
-          <tr>
-            <th>Titel</th>
-            <th></th>
-          </tr>
-          <% @org_units.each do |o| %>
+          <thead>
             <tr>
-              <td>
+              <th></th>
+              <th>Titel</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="org_units">
+            <% @org_units.each do |o| %>
+              <% content_tag_for(:tr, o) do %>
+              <td class="drag_handle" nowrap="true">
+                <span class="ui-icon ui-icon-grip-dotted-horizontal"></span>
+              </td>
+              <td width="100%">
                 <%= h(o.title) %>
                 (<%= o.count %>)
               </td>
-              <td align="right">
+              <td align="right" nowrap="true">
                 <%= pui_link_icon 'Bearbeiten', 'pencil', edit_admin_org_unit_path(o) %>
                 <% unless o.used? %>
                   <%= pui_link_icon 'Löschen', 'trash', admin_org_unit_path(o), :method => :delete, :confirm => "Soll die Organisationseinheit wirklich gelöscht werden?" %>
                 <% end  %>
               </td>
-            </tr>
+              <% end %> 
           <% end %>
+          </tbody>
         </table>
       <% else %>
         <% pui_panel :panel_style => 'highlight', :style => 'text-align:center' do %>
           <p>
-            Keine Besitzer eingerichtet.
+            Keine Organisationseinheiten eingerichtet.
           </p>
         <% end %>
       <% end %>
     </div>
   </div>
   <div class="c25r">
-    <div class="subcr" style="border-left: 1px solid #ddd">
-      <div style="text-align: center; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd">
-        <%= pui_link_button 'Neu Org. Einheit', new_admin_org_unit_path, :icon => 'plusthick' %>
-      </div>
+    <div class="subcr pui-subcr highlight ui-corner-right">
+      <h4>Aktionen</h4>
+      <ul class="pui-subnav-v">
+        <li>
+          <% link_to(new_admin_org_unit_path) do %>
+            <span class="ui-icon ui-icon-plus"></span>Neu Org. Einheit
+          <% end %>
+        </li>
+      </ul>
     </div>
   </div>
 </div>
+
+<%= sortable_element('org_units',
+  :url      => reorder_admin_org_units_path,
+  :method   => :put,
+  :tag      => :tr,
+  :handle   => :drag_handle,
+  :ghosting => true) %>

@@ -2,6 +2,8 @@ class OrgUnit < ActiveRecord::Base
 
   validates_presence_of :title
 
+  acts_as_list
+
   def used?
     count > 0
   end

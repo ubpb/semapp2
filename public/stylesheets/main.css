@@ -161,33 +161,6 @@ div.panel.highlight {
 }
 
 /*
-** Navigation (Main)
-*/
-ul.nav {
-  margin: 0 0 15px 0;
-  padding: 0;
-}
-
-ul.nav li {
-  margin: 0 0 5px 0;
-  padding: 0;
-  list-style: none;
-  border-bottom: 1px solid #eaf2f5;
-  border-left: 5px solid #eaf2f5;
-}
-
-ul.nav li a {
-  font-weight: normal;
-  padding: 10px 5px 5px 5px;
-  display: block;
-}
-
-ul.nav li a:hover {
-  text-decoration: none;
-  background-color: #eaf2f5;
-}
-
-/*
 ** Pagination
 */
 div.pagination {

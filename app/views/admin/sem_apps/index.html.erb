@@ -36,13 +36,20 @@
     </div>
   </div>
   <div class="c25r">
-    <div class="subcr" style="border-left: 1px solid #ddd">
-      <div style="text-align: center; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd">
-        <%= pui_link_button 'Neuen Sem.App', new_admin_sem_app_path, :icon => 'plusthick' %>
-      </div>
-      
+    <div class="subcr pui-subcr highlight ui-corner-right">
+      <h4>Aktionen</h4>
+      <ul class="pui-subnav-v">
+        <li>
+          <% link_to(new_admin_sem_app_path) do %>
+          <span class="ui-icon ui-icon-plus"></span>Neuen Sem.App
+          <% end %>
+        </li>
+      </ul>
+    </div>
+
+    <div class="subcr pui-subcr highlight ui-corner-right">
       <h4>Filter</h4>
-      <ul class="nav">
+      <ul class="pui-subnav-v">
         <li><%= link_to('Alle', '#') %></li>
         <li><%= link_to('Zu prüfen', '#') %></li>
       </ul>
