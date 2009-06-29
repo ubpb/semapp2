@@ -4,6 +4,28 @@ class Admin::OrgUnitsController < Admin::ApplicationController
 
   resource_controller
 
+  new_action.before do
+    pui_append_to_breadcrumb("Ein neue Organisationseinheit erstellen", new_admin_org_unit_path)
+  end
+
+  create do
+    wants.html {redirect_to :action => 'index'}
+    flash "Organisationseinheit erfolgreich erstellt"
+  end
+
+  edit.before do
+    pui_append_to_breadcrumb("<strong>#{h(@org_unit.title)}</strong> bearbeiten", edit_admin_org_unit_path(@org_unit))
+  end
+
+  update do
+    wants.html {redirect_to :action => 'index'}
+    flash "Organisationseinheit erfolgreich aktualisiert"
+  end
+
+  destroy do
+    flash "Organisationseinheit erfolgreich gelöscht"
+  end
+
   def reorder
     org_units = params[:org_units]
     if org_units

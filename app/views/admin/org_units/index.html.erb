@@ -3,42 +3,7 @@
 <div class="subcolumns">
   <div class="c75l">
     <div class="subcl">
-      <% if @org_units and not @org_units.empty?  %>
-        <table class="pui-datagrid">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Titel</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody id="org_units">
-            <% @org_units.each do |o| %>
-              <% content_tag_for(:tr, o) do %>
-              <td class="drag_handle" nowrap="true">
-                <span class="ui-icon ui-icon-grip-dotted-horizontal"></span>
-              </td>
-              <td width="100%">
-                <%= h(o.title) %>
-                (<%= o.count %>)
-              </td>
-              <td align="right" nowrap="true">
-                <%= pui_link_icon 'Bearbeiten', 'pencil', edit_admin_org_unit_path(o) %>
-                <% unless o.used? %>
-                  <%= pui_link_icon 'Löschen', 'trash', admin_org_unit_path(o), :method => :delete, :confirm => "Soll die Organisationseinheit wirklich gelöscht werden?" %>
-                <% end  %>
-              </td>
-              <% end %> 
-          <% end %>
-          </tbody>
-        </table>
-      <% else %>
-        <% pui_panel :panel_style => 'highlight', :style => 'text-align:center' do %>
-          <p>
-            Keine Organisationseinheiten eingerichtet.
-          </p>
-        <% end %>
-      <% end %>
+      <%= render 'listing' %>
     </div>
   </div>
   <div class="c25r">
@@ -56,8 +21,8 @@
 </div>
 
 <%= sortable_element('org_units',
-  :url      => reorder_admin_org_units_path,
-  :method   => :put,
   :tag      => :tr,
   :handle   => :drag_handle,
-  :ghosting => true) %>
+  :ghosting => true,
+  :url      => reorder_admin_org_units_path,
+  :method   => :put) %>
