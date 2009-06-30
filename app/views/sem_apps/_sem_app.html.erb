@@ -21,8 +21,8 @@
       /**
        * Setup the tabbar
        */
-      jQuery("#tabbar").tabs({
-        cookie: { expires: 30 }
+      jQuery("ul.tabs").tabs("div.panels > div", {
+        history: true
       });
 
       /**
@@ -135,12 +135,12 @@
 
 <div class="sem-app">
 
-  <div id="tabbar">
-    <ul>
-      <li><a href="#books"><span>Bücher</span></a></li>
-      <li><a href="#media"><span>Texte und Medien</span></a></li>
-    </ul>
+  <ul class="pui-tabbar tabs">
+    <li><a href="#books"><span>Bücher</span></a></li>
+    <li><a href="#media"><span>Texte und Medien</span></a></li>
+  </ul>
 
+  <div class="panels">
     <!-- Books Tab -->
     <div id="books">
       <% if @sem_app.bid and @sem_app.bid.present? %>
@@ -160,7 +160,7 @@
         </ol>
       <% else %>
         <% pui_panel :panel_style => 'highlight', :style => 'text-align: center' do %>
-        <p>Für diesen eSeminarapparat sind aktuell <strong>keine</strong> Bücher in der Bibliothek aufgestellt.</p>
+          <p>Für diesen eSeminarapparat sind aktuell <strong>keine</strong> Bücher in der Bibliothek aufgestellt.</p>
         <% end %>
       <% end %>
     </div>
