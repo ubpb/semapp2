@@ -37,3 +37,10 @@
     <% end %>
   <% end %>
 </div>
+
+<%= sortable_element('org_units',
+  :tag      => :tr,
+  :handle   => :drag_handle,
+  :ghosting => true,
+  :url      => reorder_admin_org_units_path,
+  :method   => :put) %>

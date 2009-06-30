@@ -14,6 +14,9 @@ class Semester < ActiveRecord::Base
   # model relations
   has_many :sem_apps, :dependent => :destroy
 
+  # acts as ...
+  acts_as_list
+
   # validators
   validates_presence_of :title
 
