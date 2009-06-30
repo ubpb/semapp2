@@ -4,6 +4,7 @@ class CreateSemApps < ActiveRecord::Migration
       t.references :semester, :null => false
       t.references :org_unit, :null => false
       t.boolean    :active,   :null => false, :default => false
+      t.boolean    :approved, :null => false, :default => false
       t.string     :title,    :null => false
       t.string     :bid
       t.datetime   :books_synced_at

@@ -18,7 +18,7 @@
         </td>
         <td align="right">
           <%= pui_link_icon 'Bearbeiten', 'pencil', edit_admin_semester_path(s) %>
-          <%= pui_link_icon 'Löschen', 'trash', edit_admin_semester_path(s), :method => :delete, :confirm => "Soll das Semester #{s.title} wirklich gelöscht werden?" %>
+          <%= pui_link_icon 'Löschen', 'trash', admin_semester_path(s), :method => :delete, :confirm => "Soll das Semester #{s.title} wirklich gelöscht werden? Alle an dem Semester hängenden eSeminarapparate werden ebenfalls gelöscht. Das kann nicht Rückgängig gemacht werden." %>
         </td>
       </tr>
     <% end %>

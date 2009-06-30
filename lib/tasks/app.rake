@@ -10,21 +10,28 @@ namespace :app do
   # Inits an new installtion. Required after installation.
   #
   desc "inits a new installation"
-  task(:init => :environment) do
+  task(:init => [:load_authorities, :create_user])
+
+  #
+  # Loads the default authorities
+  #
+  desc "loads authorities into the database"
+  task(:load_authorities => :environment) do
     # Create default user authorities
     Authority.new(:name => 'ROLE_ADMIN').save!
   end
 
   #
-  # Creates a new admin user
+  # Creates a new user
   #
-  desc "creates an admin user"
-  task(:create_admin => :environment) do
-    admin_login = ask("Login? (e.g. 'admin')")
+  desc "creates a new user"
+  task(:create_user => :environment) do
+    admin_login = ask("Login?")
     password    = ask("Password?")
     email       = ask("E-Mail?")
     firstname   = ask("First name?")
     lastname    = ask("Last name?")
+    is_admin    = agree("Admin?")
 
     u = User.new(
       :login => admin_login,
@@ -35,9 +42,39 @@ namespace :app do
       :approved => true)
     u.set_password(password)
     u.save!
-    u.authorities << Authority.find_by_name('ROLE_ADMIN')
+
+    if (is_admin)
+      u.authorities << Authority.find_by_name('ROLE_ADMIN')
+    end
 
     say "Admin account created and activated."
+  end
+
+  namespace :dummydata do
+    desc "creates dummy data to play with"
+    task(:create => [:create_semesters, :create_org_units, :create_semapps])
+
+    desc "creates semesters"
+    task(:create_semesters => :environment) do
+      Semester.new(:title => "Testsemester XXX").save!
+    end
+
+    desc "creates org units"
+    task(:create_org_units => :environment) do
+      OrgUnit.new(:title => "Testabteilung XXX").save!
+    end
+
+    desc "creates 100 sem apps"
+    task(:create_semapps => :environment) do
+      100.times do |i|
+        s          = SemApp.new
+        s.title    = "SemApp #{i}"
+        s.active   = true
+        s.semester = Semester.find_by_title("Testsemester XXX")
+        s.org_unit = OrgUnit.find_by_title("Testabteilung XXX")
+        s.save! if s.valid?
+      end
+    end
   end
 
 end

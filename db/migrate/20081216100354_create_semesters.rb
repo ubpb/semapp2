@@ -1,8 +1,9 @@
 class CreateSemesters < ActiveRecord::Migration
   def self.up
     create_table :semesters do |t|
-      t.boolean :current, :null => true, :default => nil
-      t.string :title, :null => false
+      t.boolean :current,  :null => true, :default => nil
+      t.string  :title,    :null => false
+      t.integer :position, :null => true
       t.timestamps
     end
 
