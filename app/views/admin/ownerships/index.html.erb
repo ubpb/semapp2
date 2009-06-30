@@ -15,8 +15,6 @@
 <div style="text-align: right">
   <% form_for [:admin, @sem_app, Ownership.new] do |f| %>
     <%= f.collection_select :user_id, User.find(:all), :id, :login, :prompt => 'Bitte wählen Sie einen Nutzer' %>
-    <%= f.check_box :can_write %>
-    <span>Bearbeiten erlauben?</span>
     <%= f.submit 'Als Besitzer hinzufügen' %>
   <% end %>
 </div>

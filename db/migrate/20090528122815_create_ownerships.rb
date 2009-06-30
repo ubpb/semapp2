@@ -3,7 +3,6 @@ class CreateOwnerships < ActiveRecord::Migration
     create_table :ownerships do |t|
       t.references :user, :null => false
       t.references :sem_app, :null => false
-      t.boolean    :can_write, :null => false, :default => false
       t.timestamps
     end
 
