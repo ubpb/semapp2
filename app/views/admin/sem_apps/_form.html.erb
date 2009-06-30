@@ -5,6 +5,8 @@
     <ol>
       <li>
         <div class="container">
+          <%= f.check_box :approved %>
+          <%= f.label     :approved, "Geprüft?" %>
           <%= f.check_box :active %>
           <%= f.label     :active, "Aktiv?" %>
         </div>

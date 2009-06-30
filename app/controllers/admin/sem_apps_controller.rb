@@ -28,6 +28,19 @@ class Admin::SemAppsController < Admin::ApplicationController
 
   private
 
+  def collection
+    conditions = {}
+    # state filters
+    conditions.merge!({:active => false}) if params[:sf] == 'inactive'
+    conditions.merge!({:approved => false}) if params[:sf] == 'non-approved'
+    # org units
+    conditions.merge!({:org_unit_id => params[:ou]}) if params[:ou]
+
+    @collection ||= end_of_association_chain.paginate(:page => params[:page], :per_page => 20,
+      :conditions => conditions)
+  end
+
+
   def setup_breadcrumb_for_all_actions
     pui_append_to_breadcrumb("eSeminarapparate verwalten", admin_sem_apps_path)
   end

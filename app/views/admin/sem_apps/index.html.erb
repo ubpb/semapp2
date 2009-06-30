@@ -4,11 +4,8 @@
   <div class="c75l">
     <div class="subcl">
       <% if @sem_apps and not @sem_apps.empty?  %>
-        <div style="text-align: right">
-          <%= select_tag(:org_unit,
-            '<option>Alle</option>' +
-              options_from_collection_for_select(OrgUnit.find(:all), "id", "title")) %>
-        </div>
+        <%= will_paginate @sem_apps, :style => "text-align: left" %>
+
         <table class="pui-datagrid">
           <tr>
             <th>Titel</th>
@@ -29,7 +26,7 @@
       <% else %>
         <% pui_panel :panel_style => 'highlight' do %>
           <p>
-            Keine eSeminarapparate eingerichtet.
+            Keine eSeminarapparate gefunden.
           </p>
         <% end %>
       <% end %>
@@ -41,17 +38,31 @@
       <ul class="pui-subnav-v">
         <li>
           <% link_to(new_admin_sem_app_path) do %>
-          <span class="ui-icon ui-icon-plus"></span>Neuen Sem.App
+            <span class="ui-icon ui-icon-plus"></span>Neuen Sem.App
           <% end %>
         </li>
       </ul>
     </div>
 
+    <% org_units = OrgUnit.find(:all, :order => 'position') %>
+    <% if org_units and not org_units.empty? %>
+      <div class="subcr pui-subcr highlight ui-corner-right">
+        <h4>Org. Filter</h4>
+        <ul class="pui-subnav-v">
+          <li><%= link_to('Alle', :ou => nil, :sf => params[:sf]) %></li>
+          <% org_units.each do |ou| %>
+            <li><%= link_to(h(ou.title), :ou => ou.id, :sf => params[:sf]) %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
     <div class="subcr pui-subcr highlight ui-corner-right">
-      <h4>Filter</h4>
+      <h4>Status Filter</h4>
       <ul class="pui-subnav-v">
-        <li><%= link_to('Alle', '#') %></li>
-        <li><%= link_to('Zu prüfen', '#') %></li>
+        <li><%= link_to('Alle',      :sf => nil,            :ou => params[:ou]) %></li>
+        <li><%= link_to('Zu prüfen', :sf => 'non-approved', :ou => params[:ou]) %></li>
+        <li><%= link_to('Inaktiv',   :sf => 'inactive',     :ou => params[:ou]) %></li>
       </ul>
     </div>
   </div>
