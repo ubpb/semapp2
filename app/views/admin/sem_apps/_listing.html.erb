@@ -2,21 +2,31 @@
   <% if @sem_apps and not @sem_apps.empty?  %>
     <%= will_paginate @sem_apps, :style => "text-align: left" %>
     <table class="pui-datagrid">
-      <tr>
-        <th>Titel</th>
-        <th></th>
-      </tr>
-      <% @sem_apps.each do |s| %>
+      <thead>
         <tr>
-          <td>
-            <%= link_to h(s.title), sem_app_url(s) %>
-          </td>
-          <td align="right">
-            <%= pui_link_icon 'Bearbeiten', 'pencil', edit_admin_sem_app_path(s) %>
-            <%= pui_link_icon 'Löschen', 'trash', admin_sem_app_path(s), :method => :delete, :confirm => "Soll der eSeminarapparat #{s.id} wirklich gelöscht werden?" %>
-          </td>
+          <th></th>
+          <th>Titel</th>
+          <th></th>
         </tr>
-      <% end %>
+      </thead>
+      <tbody>
+        <% @sem_apps.each do |s| %>
+          <tr>
+            <td nowrap="true" valign="middle">
+              <% if s.approved? %><%= image_tag('common/state_green.gif', :title => 'Geprüft') %><% else %><%= image_tag('common/state_red.gif', :title => 'NICHT Geprüft') %><% end %>
+              <% if s.active? %><%= image_tag('common/state_green.gif', :title => 'Aktiviert') %><% else %><%= image_tag('common/state_red.gif', :title => 'NICHT Aktiviert') %><% end %>
+            </td>
+            <td width="100%">
+              <%= link_to h(s.title), sem_app_url(s) %>
+              (<%= h(s.semester.title) %>)
+            </td>
+            <td align="right" nowrap="true">
+              <%= pui_link_icon 'Bearbeiten', 'pencil', edit_admin_sem_app_path(s) %>
+              <%= pui_link_icon 'Löschen', 'trash', admin_sem_app_path(s), :method => :delete, :confirm => "Soll der eSeminarapparat #{s.id} wirklich gelöscht werden?" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
     </table>
   <% else %>
     <% pui_panel :panel_style => 'highlight' do %>
