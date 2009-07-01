@@ -13,12 +13,15 @@
 <a href="#" id="new_ownership_link">Neuen Besitzer hinzufügen</a>
 <script type="text/javascript">
   jQuery(function() {
+    jQuery('#user_finder_dialog').dialog({
+      modal: true,
+      autoOpen: false,
+      width: 450,
+      height: 350
+    });
+
     jQuery("#new_ownership_link").click(function() {
-      jQuery('#user_finder_dialog').dialog({
-        modal: true,
-        width: 450,
-        height: 350
-      });
+      jQuery('#user_finder_dialog').dialog('open');
     });
   });
 </script>
