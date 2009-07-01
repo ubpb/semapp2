@@ -5,8 +5,8 @@
       <thead>
         <tr>
           <th></th>
-          <th nowrap="true">Auth Sys.</th>
           <th>Login</th>
+          <th>Name</th>
           <th></th>
         </tr>
       </thead>
@@ -18,13 +18,13 @@
               <% if s.active? %><%= image_tag('common/state_green.gif', :title => 'Aktiviert') %><% else %><%= image_tag('common/state_red.gif', :title => 'NICHT Aktiviert') %><% end %>
             </td>
             <td nowrap="true">
-              <%= s.authid %>
-            </td>
-            <td width="100%">
-              <%= h(s.login) %>
+              <%= h(s) %>
               <% if s == current_user %>
                 <span style="font-style:italic; font-size:90%">(das sind sie)</span>
               <% end %>
+            </td>
+            <td width="100%">
+              <%= h(s.full_name) %>
             </td>
             <td align="right" nowrap="true">
               <%= pui_link_icon 'Bearbeiten', 'pencil', edit_admin_user_path(s) %>

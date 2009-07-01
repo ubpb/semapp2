@@ -3,6 +3,7 @@ class Admin::UsersController < Admin::ApplicationController
   resource_controller
 
   before_filter :check_editable, :only => [:edit, :update]
+  before_filter :check_deleteable, :only => [:destroy]
   before_filter :setup_breadcrumb_for_all_actions
 
   new_action.before do
@@ -36,6 +37,13 @@ class Admin::UsersController < Admin::ApplicationController
   def check_editable
     unless (object.authid == User::DEFAULT_AUTHID)
       flash[:error] = "Das Konto wird extern verwaltet und kann daher hier nicht bearbeitet werden."
+      redirect_to admin_users_path
+    end
+  end
+
+  def check_deleteable
+    if (object == current_user)
+      flash[:error] = "Sie können Ihr eigenes Konto nicht löschen."
       redirect_to admin_users_path
     end
   end
