@@ -1,0 +1,21 @@
+<h3>Benutzer</h3>
+
+<div class="subcolumns">
+  <div class="c75l">
+    <div class="subcl">
+      <%= render 'listing' %>
+    </div>
+  </div>
+  <div class="c25r">
+    <div class="subcr pui-subcr highlight ui-corner-right">
+      <h4>Aktionen</h4>
+      <ul class="pui-subnav-v">
+        <li>
+          <% link_to(new_admin_user_path) do %>
+            <span class="ui-icon ui-icon-plus"></span>Neuen Benutzer
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -86,4 +86,11 @@ class User < ActiveRecord::Base
     return self.approved
   end
 
+  #
+  # To string
+  #
+  def to_s
+    return "#{self.login}@#{self.authid}"
+  end
+
 end
