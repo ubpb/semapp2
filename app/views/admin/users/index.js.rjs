@@ -1,0 +1,1 @@
+page.replace_html "users_listing_content", :partial => 'admin/ownerships/user_listing', :locals => {:users => @users}

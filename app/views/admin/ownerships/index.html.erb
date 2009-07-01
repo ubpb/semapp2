@@ -5,19 +5,23 @@
   <% pui_panel :panel_style => 'highlight' do %>
     <p style="font-size: 90%">
       Folgende Nutzer sind mit dem eSeminarapparat als Besitzer verknüpft.
-      Besitzer können die Inhalte des eSeminarapparats bearbeiten. Ist der
-      Nutzer zusätzlich als 'admin' gekennzeichnet, kann er diesen eSeminarapparat
-      verwalten (PIN ändern etc.)
+      Besitzer können den eSeminarapparat bearbeiten und verwalten.
     </p>
   <% end %>
 <% end %>
 
-<div style="text-align: right">
-  <% form_for [:admin, @sem_app, Ownership.new] do |f| %>
-    <%= f.collection_select :user_id, User.find(:all), :id, :login, :prompt => 'Bitte wählen Sie einen Nutzer' %>
-    <%= f.submit 'Als Besitzer hinzufügen' %>
-  <% end %>
-</div>
+<a href="#" id="new_ownership_link">Neuen Besitzer hinzufügen</a>
+<script type="text/javascript">
+  jQuery(function() {
+    jQuery("#new_ownership_link").click(function() {
+      jQuery('#user_finder_dialog').dialog({
+        modal: true,
+        width: 450,
+        height: 350
+      });
+    });
+  });
+</script>
 
 <% if @ownerships and not @ownerships.empty?  %>
   <table class="pui-datagrid">
@@ -28,10 +32,7 @@
     <% @ownerships.each do |o| %>
       <tr>
         <td>
-          <%= h(o.user.login) %>
-          <% if o.can_write %>
-            <strong>(kann den eSeminarapparat bearbeiten)</strong>
-          <% end %>
+          <%= h(o.user) %>
         </td>
         <td align="right">
           <%= pui_link_icon 'Löschen', 'trash', admin_sem_app_ownership_path(@sem_app, o), :method => :delete, :confirm => "Soll der Besitzer #{o.user.login} wirklich gelöscht werden?" %>
@@ -46,3 +47,5 @@
     </p>
   <% end %>
 <% end %>
+
+<%= render 'user_finder_dialog' %>

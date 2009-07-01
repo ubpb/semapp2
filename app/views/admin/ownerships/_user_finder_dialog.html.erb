@@ -1,3 +1,10 @@
 <div id="user_finder_dialog" title="Benutzer suchen..." style="display:none">
+  <% form_remote_tag :url => admin_users_path, :method => :get do %>
+    <%= text_field_tag :filter %>
+    <%= submit_tag 'Suchen' %>
+  <% end %>
 
+  <div id="users_listing_content">
+    <%= render 'user_listing', :users => @users %>
+  </div>
 </div>

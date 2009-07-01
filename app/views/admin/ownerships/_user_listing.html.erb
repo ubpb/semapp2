@@ -1,12 +1,39 @@
-<% form_tag(ubdok_sem_app_import_url, :id => "ubdok-import-form") do %>
-  <div style="padding: 10px;" class="ui-state-highlight ui-corner-all">
-    <span style="float: left; margin-right: 0.3em;" class="ui-icon ui-icon-info"></span>
-    Um einen eSeminarapparat aus dem alten System zu importieren, geben Sie bitte dessen URL
-    in das nachfolgenden Feld ein und drücken auf "Importieren".
-  </div>
-  <p>
-    <label>UBDok URL:</label>
-    <%= text_field_tag(:ubdok_sem_app_url, '', :size => 40) %>
-    <%= hidden_field_tag :sem_app_id, sem_app.id %>
-  </p>
-<% end %>
+<div id="users_listing">
+  <% if users and not users.empty?  %>
+    <%= will_paginate users, :style => "text-align: left" %>
+    <table class="pui-datagrid">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Login</th>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.each do |s| %>
+          <tr>
+            <td nowrap="true" valign="middle">
+              <% if s.approved? %><%= image_tag('common/state_green.gif', :title => 'Geprüft') %><% else %><%= image_tag('common/state_red.gif', :title => 'NICHT Geprüft') %><% end %>
+              <% if s.active? %><%= image_tag('common/state_green.gif', :title => 'Aktiviert') %><% else %><%= image_tag('common/state_red.gif', :title => 'NICHT Aktiviert') %><% end %>
+            </td>
+            <td nowrap="true">
+              <%= h(s) %>
+              <% if s == current_user %>
+                <span style="font-style:italic; font-size:90%">(das sind sie)</span>
+              <% end %>
+            </td>
+            <td width="100%">
+              <%= h(s.full_name) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <% pui_panel :panel_style => 'highlight' do %>
+      <p>
+        Keine Benutzer gefunden.
+      </p>
+    <% end %>
+  <% end %>
+</div>
