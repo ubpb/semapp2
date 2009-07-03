@@ -1,0 +1,19 @@
+<%= render 'shared_partials/ajax_flash_message', :style => 'notice', :message => flash[:notice] %>
+<%= render 'shared_partials/ajax_flash_message', :style => 'error',  :message => flash[:error] %>
+
+<script type="text/javascript">
+  jQuery(function() {
+    notices = jQuery("#_ajax_flash_notice").html();
+    errors  = jQuery("#_ajax_flash_error").html();
+
+    if (notices || errors) {
+      messages = "";
+      if (notices != null) messages = messages + notices;
+      if (errors != null) messages = messages + errors;
+ 
+      jQuery("#flash_messages").empty().append(messages);
+      jQuery("#_ajax_flash_notice").remove();
+      jQuery("#_ajax_flash_error").remove();
+    }
+  });
+</script>

@@ -9,12 +9,20 @@ class Admin::OwnershipsController < Admin::ApplicationController
     pui_append_to_breadcrumb("<strong>#{h(@sem_app.title)}</strong> bearbeiten", edit_admin_sem_app_path(@sem_app))
   end
 
+  index do
+    wants.html
+    wants.js   { render :partial => 'admin/ownerships/listing' }
+  end
+
   create do
-    wants.html {redirect_to :action => 'index'}
+    wants.html { redirect_to :action => 'index' }
+    wants.js   { redirect_to :action => 'index', :format => 'js' }
     flash "Besitzer erfolgreich zugeordnet"
   end
 
   destroy do
+    wants.html { redirect_to :action => 'index' }
+    wants.js   { redirect_to :action => 'index', :format => 'js' }
     flash "Besitzer erfolgreich entfernt"
   end
 

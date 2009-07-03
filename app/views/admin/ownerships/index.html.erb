@@ -10,45 +10,6 @@
   <% end %>
 <% end %>
 
-<a href="#" id="new_ownership_link">Neuen Besitzer hinzufügen</a>
-<script type="text/javascript">
-  jQuery(function() {
-    jQuery('#user_finder_dialog').dialog({
-      modal: true,
-      autoOpen: false,
-      width: 450,
-      height: 350
-    });
+<%= render 'users_picker_dialog' %>
 
-    jQuery("#new_ownership_link").click(function() {
-      jQuery('#user_finder_dialog').dialog('open');
-    });
-  });
-</script>
-
-<% if @ownerships and not @ownerships.empty?  %>
-  <table class="pui-datagrid">
-    <tr>
-      <th>Login</th>
-      <th></th>
-    </tr>
-    <% @ownerships.each do |o| %>
-      <tr>
-        <td>
-          <%= h(o.user) %>
-        </td>
-        <td align="right">
-          <%= pui_link_icon 'Löschen', 'trash', admin_sem_app_ownership_path(@sem_app, o), :method => :delete, :confirm => "Soll der Besitzer #{o.user.login} wirklich gelöscht werden?" %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
-<% else %>
-  <% pui_panel :panel_style => 'highlight', :style => 'text-align:center' do %>
-    <p>
-      Keine Besitzer eingerichtet.
-    </p>
-  <% end %>
-<% end %>
-
-<%= render 'user_finder_dialog' %>
+<%= render 'listing' %>

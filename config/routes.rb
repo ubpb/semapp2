@@ -8,6 +8,9 @@ ActionController::Routing::Routes.draw do |map|
       sem_app.resources :ownerships, :only => [:index, :create, :destroy]
     end
     admin.resources :users
+    admin.namespace :utils do |utils|
+      utils.users_picker 'users_picker.:format', :controller => 'users_picker', :action => 'users_listing'
+    end
   end
 
   # Login / Logout

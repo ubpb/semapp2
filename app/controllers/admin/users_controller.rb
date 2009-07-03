@@ -6,11 +6,6 @@ class Admin::UsersController < Admin::ApplicationController
   before_filter :check_deleteable, :only => [:destroy]
   before_filter :setup_breadcrumb_for_all_actions
 
-  index do
-    wants.html
-    wants.js { render "index.js.rjs" }
-  end
-
   new_action.before do
     pui_append_to_breadcrumb("Ein neuen Benutzer erstellen", new_admin_user_path)
   end
@@ -36,8 +31,11 @@ class Admin::UsersController < Admin::ApplicationController
   protected
 
   def collection
-    conditions = {}
-    conditions.merge!({:login => params[:filter]}) if params[:filter]
+    conditions = ["", {}]
+    if (params[:filter] and not params[:filter].blank?)
+      conditions[0] << "login like :filter"
+      conditions[1].merge!({:filter => params[:filter]})
+    end
 
     @collection ||= end_of_association_chain.paginate(:page => params[:page], :per_page => 20, :conditions => conditions)
   end

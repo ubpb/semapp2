@@ -1,0 +1,68 @@
+<a href="#" id="users_picker_launcher">Neuen Besitzer hinzufügen</a>
+
+<div id="users_picker_dialog" title="Benutzer auswählen..." style="display:none">
+
+  <form id="filter_form" action="#">
+    <div style="text-align: right">
+      <span>Filter:</span>
+      <%= text_field_tag :filter %>
+      <%= submit_tag 'Suchen', :id => 'filter_button' %>
+    </div>
+  </form>
+
+  <div id="users_listing"></div>
+  
+</div>
+
+<script type="text/javascript">
+  jQuery(function() {
+    /* Build the dialog */
+    jQuery('#users_picker_dialog').dialog({
+      modal: true,
+      autoOpen: false,
+      width: 450,
+      height: 350
+    });
+
+    /* Listening for click events on #users_picker_launcher */
+    jQuery("#users_picker_launcher").click(function() {
+      jQuery('#users_picker_dialog').dialog('open');
+    });
+
+    /* Submit the filer form via ajax */
+    jQuery("#filter_form #filter_button").click(function() {
+      jQuery.ajax({
+        type: "GET",
+        url: '<%=admin_utils_users_picker_path("js")-%>',
+        data: jQuery("#filter_form").serialize(),
+        success: function(msg) {
+          jQuery("#users_listing").replaceWith(msg);
+        }
+      });
+      return false;
+    });
+
+    /* Listening for clicks on the 'picker' links in the users listing */
+    jQuery("a[rel=pick_user]").live("click", function() {
+      user_id = jQuery(this).attr('id');
+      add_ownership(user_id);
+      return false;
+    });
+
+    function add_ownership(user_id) {
+      jQuery('#users_picker_dialog').dialog('close');
+
+      jQuery.ajax({
+        type: "POST",
+        url: '<%=admin_sem_app_ownerships_path(@sem_app, "js")-%>',
+        data: "ownership[user_id]="+user_id,
+        success: function(msg) {
+          jQuery("#ownerships_listing").replaceWith(msg);
+        }
+      });
+      return false;
+    }
+
+  });
+</script>
+

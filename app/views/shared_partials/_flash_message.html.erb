@@ -1,0 +1,5 @@
+<% if message and not message.empty? %>
+  <% pui_panel :id => "flash_#{(style || 'notice')}", :class => "flash_message", :panel_style => (style || 'notice') do %>
+    <%= message %>
+  <% end %>
+<% end %>

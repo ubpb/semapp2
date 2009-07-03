@@ -7,6 +7,7 @@
           <th></th>
           <th>Login</th>
           <th>Name</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -25,12 +26,15 @@
             <td width="100%">
               <%= h(s.full_name) %>
             </td>
+            <td>
+              <a href="#" rel="pick_user" id="<%=s.id-%>">Hinzufügen</a>
+            </td>
           </tr>
         <% end %>
       </tbody>
     </table>
   <% else %>
-    <% pui_panel :panel_style => 'highlight' do %>
+    <% pui_panel :panel_style => 'highlight', :style => 'text-align: center' do %>
       <p>
         Keine Benutzer gefunden.
       </p>
