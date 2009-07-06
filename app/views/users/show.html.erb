@@ -39,36 +39,21 @@
   </div>
   <div class="c50r">
     <div class="subcr">
-      <h4>Sie besitzen folgende eSeminarapparate</h4>
-      <% if @user.ownerships and not @user.ownerships.empty?%>
-        <table class="pui-datagrid">
-          <% @user.ownerships.each do |o| %>
-            <tr>
-              <td>
-                <% link_to sem_app_path(o.sem_app) do %>
-                  <%= h(o.sem_app.title) %>
-                  (<%= h(o.sem_app.semester.title) %>)
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-        </table>
-      <% else %>
-        <% pui_panel :panel_style => 'highlight' do %>
-          <p>Sie besitzen keine eSeminarapparate</p>
-        <% end %>
-      <% end %>
-
       <h4>Ihre eSeminarapparate</h4>
       <% if @user.ownerships and not @user.ownerships.empty?%>
         <table class="pui-datagrid">
           <% @user.ownerships.each do |o| %>
             <tr>
               <td>
-                <% link_to sem_app_path(o.sem_app) do %>
-                  <%= h(o.sem_app.title) %>
-                  (<%= h(o.sem_app.semester.title) %>)
-                <% end %>
+                <%= link_to h(o.sem_app.title), sem_app_path(o.sem_app) %>
+                (<%= h(o.sem_app.semester.title) %>)
+                <div style="font-size:90%">
+                  <%= h(o.sem_app.tutors) %>
+                </div>
+                <div style="font-size:90%">
+                  <% unless o.sem_app.approved? %><%= image_tag('common/state_red.gif', :title => 'wird geprüft', :style => "vertical-align: middle") %> wird geprüft<% end %>
+                  <% unless o.sem_app.active? %><%= image_tag('common/state_red.gif', :title => 'inaktiv', :style => "vertical-align: middle") %> inaktiv<% end %>
+                </div>
               </td>
             </tr>
           <% end %>

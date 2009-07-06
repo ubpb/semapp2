@@ -25,6 +25,8 @@ class SemApp < ActiveRecord::Base
   validates_presence_of   :org_unit
   validates_presence_of   :title
   validates_uniqueness_of :title, :scope => :semester_id
+  validates_presence_of   :tutors
+  validates_presence_of   :shared_secret
 
   def book_entries
     # sync books
@@ -39,7 +41,7 @@ class SemApp < ActiveRecord::Base
   end
 
   def add_ownership(user)
-    Ownership.new(:user => user, :sem_app => self).save!
+    Ownership.new(:user => user, :sem_app => self).save
   end
 
   private

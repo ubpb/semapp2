@@ -28,8 +28,36 @@
           <%= f.collection_select :semester_id, Semester.find(:all), :id, :title %>
         </li>
         <li>
+          <%= f.label             :org_unit, "Organisationseinheit" %>
+          <%= f.collection_select :org_unit_id, OrgUnit.find(:all), :id, :title %>
+        </li>
+        <li>
           <%= f.label      :title, "Titel der Veranstaltung" %>
           <%= f.text_field :title %>
+        </li>
+        <li>
+          <%= f.label      :tutors, "Tutor(en)" %>
+          <%= f.text_field :tutors %>
+          <div class="container" style="font-size:90%">
+            Trennen Sie mehrere Tutoren durch Komma. (z.B. Prof. Reiner Müller, Dr. Heiner Schmidt)
+          </div>
+        </li>
+      </ol>
+    </fieldset>
+    <fieldset>
+      <legend>Zugriffsschutz</legend>
+      <ol>
+        <li>
+          <div class="container" style="font-size:90%">
+            <p>Bitte vergeben Sie ein Passwort für den Lesezugriff auf die elektronischen
+            Volltexte. Jeder der dieses Passwort kennt hat damit Lesezugriff auf die
+            in diesem eSeminarapparat hinterlegten Dateien. Die sollten dieses Passwort
+            nur dem begrenzten Teilnehmerkreis Ihrer Veranstaltung bekannt machen.</p>
+            <p style="font-style:italic">In einer späteren Programmversion werden ihre Studierenden sich
+            zusätzlich mittels ihrer persönlichen IMT Kennung anmelden können.</p>
+          </div>
+          <%= f.label      :shared_secret, "Passwort für den Lesezugriff*" %>
+          <%= f.text_field :shared_secret %>
         </li>
       </ol>
     </fieldset>
