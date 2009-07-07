@@ -10,6 +10,8 @@ class User < ActiveRecord::Migration
       t.string    :lastname,            :null => false
       t.string    :login,               :null => false
       t.string    :email,               :null => false
+      t.string    :phone,               :null => true
+      t.string    :department,          :null => true
       t.string    :crypted_password,    :null => false
       t.string    :password_salt,       :null => false
       t.string    :persistence_token,   :null => false

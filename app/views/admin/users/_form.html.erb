@@ -49,6 +49,19 @@
       </li>
     </ol>
   </fieldset>
+  <fieldset>
+    <legend>Kontaktdaten im Haus</legend>
+    <ol>
+      <li>
+        <%= f.label :phone, "Telefon" %>
+        <%= f.text_field :phone %>
+      </li>
+      <li>
+        <%= f.label :department, "Lehrstuhl" %>
+        <%= f.text_field :department %>
+      </li>
+    </ol>
+  </fieldset>
   <fieldset class="submit">
     <legend>Speichern</legend>
     <%= f.submit 'Speichern' %>
