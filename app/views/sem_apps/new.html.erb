@@ -12,35 +12,48 @@
       eSeminarapparate werden durch die Universitätsbibliothek <strong>überprüft</strong> und <strong>aktiviert</strong>.
       Jeder Hochschullehrer (oder eine im Auftrag handelne Person) kann einen eSeminrapparat
       für eine Veranstaltung beantragen. <strong>Vorraussetung ist, dass die Veranstaltung im Semester
-      offiziell stattfindet</strong> (nachweis im <a href="http://paul-uni-paderborn.de">Vorlesungsverzeichnis</a>).
+        offiziell stattfindet</strong> (nachweis im <a href="http://paul-uni-paderborn.de">Vorlesungsverzeichnis</a>).
     </p>
   <% end %>
 
 <% else %>
 
   <% form_for @sem_app, :html => {:class => 'puiform'} do |f| %>
+    <% @sem_app.tutors = h(current_user.full_name) if @sem_app.tutors.blank? %>
     <%= f.error_messages %>
     <fieldset>
       <legend>Basisdaten</legend>
       <ol>
         <li>
-          <%= f.label             :semester, "Semester" %>
+          <%= f.label             :semester, "Semester*" %>
           <%= f.collection_select :semester_id, Semester.find(:all), :id, :title %>
         </li>
         <li>
-          <%= f.label             :org_unit, "Organisationseinheit" %>
-          <%= f.collection_select :org_unit_id, OrgUnit.find(:all), :id, :title %>
-        </li>
-        <li>
-          <%= f.label      :title, "Titel der Veranstaltung" %>
+          <%= f.label      :title, "Titel*" %>
           <%= f.text_field :title %>
+          <div class="pui-tooltip">In der Regel der Titel Ihrer Veranstaltung.</div>
         </li>
         <li>
-          <%= f.label      :tutors, "Tutor(en)" %>
+          <%= f.label      :course_id, "Kurs ID" %>
+          <%= f.text_field :course_id %>
+          <div class="pui-tooltip">Wenn bekannt geben Sie hier bitte die eindeutige Kursnummer (z.B. aus Paul) ein.</div>
+        </li>
+        <li>
+          <%= f.label      :tutors, "Tutor(en)*" %>
           <%= f.text_field :tutors %>
+          <div class="pui-tooltip">Die Namen der beteiligten Dozierenden und/oder Tutoren.</div>
           <div class="container" style="font-size:90%">
             Trennen Sie mehrere Tutoren durch Komma. (z.B. Prof. Reiner Müller, Dr. Heiner Schmidt)
           </div>
+        </li>
+      </ol>
+    </fieldset>
+    <fieldset>
+      <legend>Bibliotheksdaten</legend>
+      <ol>
+        <li>
+          <%= f.label             :org_unit, "Organisationseinheit*" %>
+          <%= f.collection_select :org_unit_id, OrgUnit.find(:all), :id, :title, :prompt => '-- Bitte auswählen --' %>
         </li>
       </ol>
     </fieldset>
@@ -50,17 +63,18 @@
         <li>
           <div class="container" style="font-size:90%">
             <p style="font-weight:bold">Bitte vergeben Sie ein Passwort für den Lesezugriff auf die elektronischen
-            Volltexte. Jeder der dieses Passwort kennt hat damit Lesezugriff auf die
-            in diesem eSeminarapparat hinterlegten Dateien. Die sollten dieses Passwort
-            nur dem begrenzten Teilnehmerkreis Ihrer Veranstaltung bekannt machen.</p>
+              Volltexte. Jeder der dieses Passwort kennt hat damit Lesezugriff auf die
+              in diesem eSeminarapparat hinterlegten Dateien. Die sollten dieses Passwort
+              nur dem begrenzten Teilnehmerkreis Ihrer Veranstaltung bekannt machen.</p>
             <p style="font-style:italic">In einer späteren Programmversion werden ihre Studierenden sich
-            zusätzlich mittels ihrer persönlichen IMT Kennung anmelden können.</p>
+              zusätzlich mittels ihrer persönlichen IMT Kennung anmelden können.</p>
           </div>
           <%= f.label      :shared_secret, "Passwort für den Lesezugriff*" %>
           <%= f.text_field :shared_secret %>
         </li>
       </ol>
     </fieldset>
+    <div style="font-size: 90%">* Plfichtfelder</div>
     <fieldset class="submit">
       <legend>Speichern</legend>
       <%= f.submit 'eSeminarapparat beantragen' %>

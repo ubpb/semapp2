@@ -6,6 +6,7 @@ class CreateSemApps < ActiveRecord::Migration
       t.boolean    :active,        :null => false, :default => false
       t.boolean    :approved,      :null => false, :default => false
       t.string     :title,         :null => false
+      t.string     :course_id,     :null => true
       t.text       :tutors,        :null => false
       t.string     :shared_secret, :null => false
       t.string     :bid
@@ -15,7 +16,8 @@ class CreateSemApps < ActiveRecord::Migration
     end
 
     add_index :sem_apps, [:title, :semester_id], :unique => true
-    add_index :sem_apps, :bid
+    add_index :sem_apps, [:course_id, :semester_id], :unique => true
+    add_index :sem_apps, [:bid, :semester_id], :unique => true
   end
 
   def self.down

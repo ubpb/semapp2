@@ -12,22 +12,33 @@
         </div>
       </li>
       <li>
-        <%= f.label             :semester, "Semester" %>
+        <%= f.label             :semester, "Semester*" %>
         <%= f.collection_select :semester_id, Semester.find(:all), :id, :title %>
       </li>
       <li>
-        <%= f.label             :org_unit, "Organisationseinheit" %>
-        <%= f.collection_select :org_unit_id, OrgUnit.find(:all), :id, :title, :prompt => '-- Bitte auswählen --' %>
+        <%= f.label      :title, "Titel*" %>
+        <%= f.text_field :title %>
       </li>
       <li>
-        <%= f.label      :title, "Titel" %>
-        <%= f.text_field :title %>
+        <%= f.label      :course_id, "Kurs ID" %>
+        <%= f.text_field :course_id %>
+      </li>
+      <li>
+        <%= f.label      :tutors, "Tutor(en)*" %>
+        <%= f.text_field :tutors %>
+        <div class="container" style="font-size:90%">
+          Trennen Sie mehrere Tutoren durch Komma. (z.B. Prof. Reiner Müller, Dr. Heiner Schmidt)
+        </div>
       </li>
     </ol>
   </fieldset>
   <fieldset>
-    <legend>Bibliotheksdaten (optional)</legend>
+    <legend>Bibliotheksdaten</legend>
     <ol>
+      <li>
+        <%= f.label             :org_unit, "Organisationseinheit*" %>
+        <%= f.collection_select :org_unit_id, OrgUnit.find(:all), :id, :title, :prompt => '-- Bitte auswählen --' %>
+      </li>
       <li>
         <%= f.label      :bid, "Bibliotheks ID" %>
         <%= f.text_field :bid %>
@@ -40,6 +51,16 @@
       </li>
     </ol>
   </fieldset>
+  <fieldset>
+    <legend>Zugriffsschutz</legend>
+    <ol>
+      <li>
+        <%= f.label      :shared_secret, "Passwort für den Lesezugriff*" %>
+        <%= f.text_field :shared_secret %>
+      </li>
+    </ol>
+  </fieldset>
+  <div style="font-size: 90%">* Plfichtfelder</div>
   <fieldset class="submit">
     <legend>Speichern</legend>
     <%= f.submit 'Speichern' %>
