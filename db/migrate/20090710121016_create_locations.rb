@@ -1,6 +1,6 @@
-class CreateOrgUnits < ActiveRecord::Migration
+class CreateLocations < ActiveRecord::Migration
   def self.up
-    create_table :org_units do |t|
+    create_table :locations do |t|
       t.string  :title, :null => false
       t.integer :position
       t.timestamps
@@ -8,6 +8,6 @@ class CreateOrgUnits < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :org_units
+    drop_table :locations
   end
 end

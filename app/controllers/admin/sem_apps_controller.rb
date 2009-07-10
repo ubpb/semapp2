@@ -34,7 +34,7 @@ class Admin::SemAppsController < Admin::ApplicationController
     conditions.merge!({:active => false}) if params[:sf] == 'inactive'
     conditions.merge!({:approved => false}) if params[:sf] == 'non-approved'
     # org units
-    conditions.merge!({:org_unit_id => params[:ou]}) if params[:ou]
+    conditions.merge!({:location_id => params[:location]}) if params[:location]
 
     @collection ||= end_of_association_chain.paginate(:page => params[:page], :per_page => 20,
       :conditions => conditions)

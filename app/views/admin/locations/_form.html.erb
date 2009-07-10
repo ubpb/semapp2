@@ -1,4 +1,4 @@
-<% form_for [:admin, @org_unit], :html => {:class => 'puiform'} do |f| %>
+<% form_for [:admin, @location], :html => {:class => 'puiform'} do |f| %>
   <%= f.error_messages %>
   <fieldset>
     <legend>Basisdaten</legend>
@@ -12,7 +12,7 @@
   <fieldset class="submit">
     <legend>Speichern</legend>
     <%= f.submit 'Speichern' %>
-    <%= link_to 'Abbrechen', admin_org_units_path %>
+    <%= link_to 'Abbrechen', admin_locations_path %>
   </fieldset>
 <% end %>
 

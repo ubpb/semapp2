@@ -26,7 +26,7 @@
       <ol>
         <li>
           <%= f.label             :semester, "Semester*" %>
-          <%= f.collection_select :semester_id, Semester.find(:all), :id, :title %>
+          <%= f.collection_select :semester_id, Semester.find(:all), :id, :title, :prompt => '-- Bitte auswählen --' %>
         </li>
         <li>
           <%= f.label      :title, "Titel*" %>
@@ -36,7 +36,9 @@
         <li>
           <%= f.label      :course_id, "Kurs ID" %>
           <%= f.text_field :course_id %>
-          <div class="pui-tooltip">Wenn bekannt geben Sie hier bitte die eindeutige Kursnummer (z.B. aus Paul) ein.</div>
+          <div class="pui-tooltip">
+            Wenn bekannt geben Sie hier bitte die eindeutige Kursnummer (z.B. aus Paul) ein.
+          </div>
         </li>
         <li>
           <%= f.label      :tutors, "Tutor(en)*" %>
@@ -52,8 +54,8 @@
       <legend>Bibliotheksdaten</legend>
       <ol>
         <li>
-          <%= f.label             :org_unit, "Organisationseinheit*" %>
-          <%= f.collection_select :org_unit_id, OrgUnit.find(:all), :id, :title, :prompt => '-- Bitte auswählen --' %>
+          <%= f.label             :location, "Standort*" %>
+          <%= f.collection_select :location_id, Location.find(:all), :id, :title, :prompt => '-- Bitte auswählen --' %>
         </li>
       </ol>
     </fieldset>

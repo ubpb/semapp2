@@ -52,26 +52,29 @@ namespace :app do
 
   namespace :dummydata do
     desc "creates dummy data to play with"
-    task(:create => [:create_semesters, :create_org_units, :create_semapps])
+    task(:create => [:create_semesters, :create_locations, :create_semapps])
 
     desc "creates semesters"
     task(:create_semesters => :environment) do
       Semester.new(:title => "Testsemester XXX").save!
     end
 
-    desc "creates org units"
-    task(:create_org_units => :environment) do
-      OrgUnit.new(:title => "Testabteilung XXX").save!
+    desc "creates locations"
+    task(:create_locations => :environment) do
+      Location.new(:title => "Testabteilung XXX").save!
     end
 
     desc "creates 100 sem apps"
     task(:create_semapps => :environment) do
+      semester = Semester.find_by_title("Testsemester XXX")
+      location = Location.find_by_title("Testabteilung XXX")
+
       100.times do |i|
         s          = SemApp.new
         s.title    = "SemApp #{i}"
         s.active   = true
-        s.semester = Semester.find_by_title("Testsemester XXX")
-        s.org_unit = OrgUnit.find_by_title("Testabteilung XXX")
+        s.semester = semester
+        s.location = location
         s.save! if s.valid?
       end
     end

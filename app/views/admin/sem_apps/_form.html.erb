@@ -13,7 +13,7 @@
       </li>
       <li>
         <%= f.label             :semester, "Semester*" %>
-        <%= f.collection_select :semester_id, Semester.find(:all), :id, :title %>
+        <%= f.collection_select :semester_id, Semester.find(:all), :id, :title, :prompt => '-- Bitte auswählen --' %>
       </li>
       <li>
         <%= f.label      :title, "Titel*" %>
@@ -36,8 +36,8 @@
     <legend>Bibliotheksdaten</legend>
     <ol>
       <li>
-        <%= f.label             :org_unit, "Organisationseinheit*" %>
-        <%= f.collection_select :org_unit_id, OrgUnit.find(:all), :id, :title, :prompt => '-- Bitte auswählen --' %>
+        <%= f.label             :location, "Standort*" %>
+        <%= f.collection_select :location_id, Location.find(:all), :id, :title, :prompt => '-- Bitte auswählen --' %>
       </li>
       <li>
         <%= f.label      :bid, "Bibliotheks ID" %>

@@ -1,5 +1,5 @@
-<div id="org_units_listing">
-  <% if @org_units and not @org_units.empty?  %>
+<div id="locations-listing">
+  <% if @locations and not @locations.empty?  %>
     <table class="pui-datagrid">
       <thead>
         <tr>
@@ -8,20 +8,20 @@
           <th></th>
         </tr>
       </thead>
-      <tbody id="org_units">
-        <% @org_units.each do |o| %>
-          <% content_tag_for(:tr, o) do %>
+      <tbody id="locations">
+        <% @locations.each do |location| %>
+          <% content_tag_for(:tr, location) do %>
           <td class="drag_handle" nowrap="true">
             <span class="ui-icon ui-icon-grip-dotted-horizontal"></span>
           </td>
           <td width="100%">
-            <%= h(o.title) %>
-            (<%= o.count %>)
+            <%= h(location.title) %>
+            (<%= location.count %>)
           </td>
           <td align="right" nowrap="true">
-            <%= pui_link_icon 'Bearbeiten', 'pencil', edit_admin_org_unit_path(o) %>
-            <% unless o.used? %>
-              <%= pui_link_icon 'Löschen', 'trash', admin_org_unit_path(o), :method => :delete, :confirm => "Soll die Organisationseinheit wirklich gelöscht werden?" %>
+            <%= pui_link_icon 'Bearbeiten', 'pencil', edit_admin_location_path(location) %>
+            <% unless location.used? %>
+              <%= pui_link_icon 'Löschen', 'trash', admin_location_path(location), :method => :delete, :confirm => "Soll der Standort wirklich gelöscht werden?" %>
             <% end  %>
           </td>
         <% end %>
@@ -32,15 +32,15 @@
   <% else %>
     <% pui_panel :panel_style => 'highlight', :style => 'text-align:center' do %>
       <p>
-        Keine Organisationseinheiten eingerichtet.
+        Keine Standorte eingerichtet.
       </p>
     <% end %>
   <% end %>
 </div>
 
-<%= sortable_element('org_units',
+<%= sortable_element('locations',
   :tag      => :tr,
   :handle   => :drag_handle,
   :ghosting => true,
-  :url      => reorder_admin_org_units_path,
+  :url      => reorder_admin_locations_path,
   :method   => :put) %>

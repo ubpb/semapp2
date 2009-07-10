@@ -16,13 +16,13 @@
 class SemApp < ActiveRecord::Base
 
   belongs_to :semester
-  belongs_to :org_unit
+  belongs_to :location
 
   has_many :ownerships
   has_many :owners, :through => :ownerships, :source => :user
 
   validates_presence_of   :semester
-  validates_presence_of   :org_unit
+  validates_presence_of   :location
   validates_presence_of   :title
   validates_uniqueness_of :title, :scope => :semester_id
   validates_presence_of   :tutors

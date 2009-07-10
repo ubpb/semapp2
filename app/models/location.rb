@@ -1,4 +1,4 @@
-class OrgUnit < ActiveRecord::Base
+class Location < ActiveRecord::Base
 
   validates_presence_of :title
 
@@ -9,7 +9,7 @@ class OrgUnit < ActiveRecord::Base
   end
 
   def count
-    SemApp.count(:conditions => "org_unit_id = #{self.id}")
+    SemApp.count(:conditions => "location_id = #{self.id}")
   end
 
 end
