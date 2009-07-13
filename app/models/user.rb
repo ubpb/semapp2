@@ -93,4 +93,14 @@ class User < ActiveRecord::Base
     return "#{self.login}@#{self.authid}"
   end
 
+  def phone
+    t = read_attribute(:phone)
+    t unless t.blank?
+  end
+
+  def department
+    t = read_attribute(:department)
+    t unless t.blank?
+  end
+
 end

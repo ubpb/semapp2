@@ -1,67 +1,84 @@
-<h3>Mein Konto</h3>
+<h3>Meine Seite</h3>
 
-<% pui_panel :panel_style => 'highlight' do %>
+<% pui_panel :panel_style => 'highlight', :style => 'text-align: center' do %>
   <p>
     Sie sind aktuell angemeldet als Benutzer
-    <strong><%= @user.login %></strong>.
-    (<%= link_to '&raquo; Abmelden', logout_path, :confirm => 'Wirklich abmelden?' %>)
+    <strong><%= h(@user.full_name) %> (<%= @user.login %>)</strong>
+    <%= link_to '&raquo; Abmelden', logout_path, :confirm => 'Wirklich abmelden?' %>
   </p>
 <% end %>
 
-<div class="subcolumns">
-  <div class="c50l">
-    <div class="subcl">
-      <% if @user.externally_managed? %>
-        <h4>Ihre Daten</h4>
-      <% else %>
-        <h4>Ihre Daten <span style="font-weight: normal;">(<%= link_to '&raquo; Bearbeiten', edit_user_path %>)</span></h4>
-      <% end %>
+<ul class="pui-tabbar tabs">
+  <li><a href="#account">Mein Konto</a></li>
+  <li><a href="#apps">Meine eSeminarapparate</a></li>
+</ul>
+
+<div class="panels">
+
+  <div id="my-account-panel">
+    <% if @user.externally_managed? %>
+      <h4>Meine Daten</h4>
+    <% else %>
+      <h4>Meine Daten <span style="font-weight: normal;">(<%= link_to '&raquo; Bearbeiten', edit_user_path %>)</span></h4>
+    <% end %>
+
+    <dl>
+      <dt>Login</dt>
+      <dd><%= @user.login %></dd>
+      <dt>Vor-/Nachname</dt>
+      <dd><%= h(@user.full_name) %></dd>
+      <dt>E-Mail</dt>
+      <dd><%= @user.email %></dd>
+      <dt>Telefon im Haus</dt>
+      <dd><%= @user.phone || '-' %></dd>
+      <dt>Lehrstuhl</dt>
+      <dd><%= @user.department || '-' %></dd>
+    </dl>
+      
+    <% if @user.externally_managed? %>
+      <div>
+        <span style="font-size: 90%; font-style: italic">Ihr Login wird extern verwaltet. Sie Können diese Daten hier nicht bearbeiten.</span>
+      </div>
+    <% end %>
+  </div>
+
+  <div id="my-semapps-panel">
+    <h4>Meine eSeminarapparate</h4>
+    <% if @user.ownerships and not @user.ownerships.empty?%>
       <table class="pui-datagrid">
-        <tr>
-          <td>Login</td>
-          <td><%= @user.login %></td>
-        </tr>
-        <tr>
-          <td>Vor-/Nachname</td>
-          <td><%= h(@user.full_name) %></td>
-        </tr>
-        <tr>
-          <td>E-Mail</td>
-          <td><%= @user.email || '-' %></td>
-        </tr>
-      </table>
-      <% if @user.externally_managed? %>
-        <div>
-          <span style="font-size: 90%; font-style: italic">Ihr Login wird extern verwaltet. Sie Können diese Daten hier nicht bearbeiten.</span>
-        </div>
-      <% end %>
-    </div>
-  </div>
-  <div class="c50r">
-    <div class="subcr">
-      <h4>Ihre eSeminarapparate</h4>
-      <% if @user.ownerships and not @user.ownerships.empty?%>
-        <table class="pui-datagrid">
-          <% @user.ownerships.each do |o| %>
-            <tr>
-              <td>
-                <%= link_to h(o.sem_app.title), sem_app_path(o.sem_app) %>
-                (<%= h(o.sem_app.semester.title) %>)
-                <div style="font-size:90%">
-                  <%= h(o.sem_app.tutors) %>
-                </div>
-                <div style="font-size:90%">
-                  <% unless o.sem_app.approved? %><%= image_tag('common/state_red.gif', :title => 'wird geprüft', :style => "vertical-align: middle") %> wird geprüft<% end %>
-                  <% unless o.sem_app.active? %><%= image_tag('common/state_red.gif', :title => 'inaktiv', :style => "vertical-align: middle") %> inaktiv<% end %>
-                </div>
-              </td>
-            </tr>
-          <% end %>
-        </table>
-      <% else %>
-        <% pui_panel :panel_style => 'highlight' do %>
-          <p>Sie besitzen keine eSeminarapparate</p>
+        <% @user.ownerships.each do |o| %>
+          <tr>
+            <td>
+              <%= link_to h(o.sem_app.title), sem_app_path(o.sem_app) %>
+              (<%= h(o.sem_app.semester.title) %>)
+              <div style="font-size:90%">
+                <%= h(o.sem_app.tutors) %>
+              </div>
+              <div style="font-size:90%">
+                <% unless o.sem_app.approved? %><%= image_tag('common/state_red.gif', :title => 'wird geprüft', :style => "vertical-align: middle") %> wird geprüft<% end %>
+                <% unless o.sem_app.active? %><%= image_tag('common/state_red.gif', :title => 'inaktiv', :style => "vertical-align: middle") %> inaktiv<% end %>
+              </div>
+            </td>
+          </tr>
         <% end %>
+      </table>
+    <% else %>
+      <% pui_panel :panel_style => 'highlight', :style => 'text-align: center' do %>
+        <p>
+          Sie besitzen noch keine eSeminarapparate. <%= link_to '&raquo; eSeminarapparat beantragen', new_sem_app_path %>
+        </p>
       <% end %>
-    </div>
+    <% end %>
   </div>
+
+</div>
+
+<% content_for :header do %>
+  <script type="text/javascript">
+    jQuery(function() {
+      jQuery("ul.tabs").tabs("div.panels > div", {
+        history: true
+      });
+    });
+  </script>
+<% end %>

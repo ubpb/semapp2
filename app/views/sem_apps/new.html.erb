@@ -4,19 +4,22 @@
 
   <% pui_panel :panel_style => 'notice' do %>
     <p>
-      Um einen eSeminarapparat zu beantragen, müssen Sie sich hier anmelden.
-      Sie können dazu ein lokales Benutzerkonto verwenden oder sich mit Ihrer
-      vorhandenen IMT kennung anmelden. <%= link_to('&raquo; Anmelden', login_path) %>
-    </p>
-    <p>
-      eSeminarapparate werden durch die Universitätsbibliothek <strong>überprüft</strong> und <strong>aktiviert</strong>.
-      Jeder Hochschullehrer (oder eine im Auftrag handelne Person) kann einen eSeminrapparat
-      für eine Veranstaltung beantragen. <strong>Vorraussetung ist, dass die Veranstaltung im Semester
-        offiziell stattfindet</strong> (nachweis im <a href="http://paul-uni-paderborn.de">Vorlesungsverzeichnis</a>).
+      Um einen eSeminarapparat zu beantragen, müssen Sie sich zunächst anmelden.
+      <%= link_to('&raquo; Zur Anmeldung', login_path) %>
     </p>
   <% end %>
 
 <% else %>
+
+  <% pui_panel :panel_style => 'notice' do %>
+   <p>
+      eSeminarapparate werden durch die Universitätsbibliothek <strong>überprüft</strong> und <strong>aktiviert</strong>.
+      Jeder <strong>Hochschullehrer</strong> (oder eine im Auftrag handelnde Person) kann einen eSeminarapparat
+      für eine Veranstaltung beantragen.
+      <strong>Vorraussetzung ist, dass die Veranstaltung im Semester offiziell stattfindet</strong>
+      (z.B. Nachweis im <a href="http://paul-uni-paderborn.de">Vorlesungsverzeichnis</a>).
+    </p>
+  <% end %>
 
   <% form_for @sem_app, :html => {:class => 'puiform'} do |f| %>
     <% @sem_app.tutors = h(current_user.full_name) if @sem_app.tutors.blank? %>

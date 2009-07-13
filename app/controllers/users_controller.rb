@@ -58,7 +58,7 @@ class UsersController < ApplicationController
   end
 
   def setup_breadcrumb_base
-    pui_append_to_breadcrumb("Mein Konto", user_path)
+    pui_append_to_breadcrumb("Meine Seite", user_path)
   end
 
 end

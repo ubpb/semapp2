@@ -46,8 +46,9 @@ class SemAppsController < ApplicationController
     @sem_app = SemApp.new(params[:sem_app])
     if @sem_app.save and @sem_app.add_ownership(current_user)
       flash[:notice] = "Ihr eSeminarapparat wurde erfolgreich beantragt. Wir prüfen die Angaben und schalten
-        den eSeminarappat nach erfolgter Prüfung frei. Sie sehen den Status in Ihrem Benutzerkonto."
-      redirect_to user_path
+        den eSeminarappat nach erfolgter Prüfung frei. Sie sehen den Status auf Ihrer Konto Seite unter
+        <strong>Meine eSeminarapparate</strong>."
+      redirect_to user_path(:anchor => 'apps')
     else
       render :action => :new
     end

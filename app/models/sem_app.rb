@@ -28,7 +28,7 @@ class SemApp < ActiveRecord::Base
   validates_presence_of   :tutors
   validates_presence_of   :shared_secret
   validates_uniqueness_of :course_id, :scope => :semester_id
-  validates_uniqueness_of :bid, :scope => :semester_id
+  validates_uniqueness_of :bid, :scope => :semester_id, :allow_nil => true
 
   def book_entries
     # sync books
