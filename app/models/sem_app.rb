@@ -27,8 +27,8 @@ class SemApp < ActiveRecord::Base
   validates_uniqueness_of :title, :scope => :semester_id
   validates_presence_of   :tutors
   validates_presence_of   :shared_secret
-  validates_uniqueness_of :course_id, :scope => :semester_id
-  validates_uniqueness_of :bid, :scope => :semester_id, :allow_nil => true
+  validates_uniqueness_of :course_id, :scope => :semester_id, :allow_nil => true
+  validates_uniqueness_of :bid,       :scope => :semester_id, :allow_nil => true
 
   def book_entries
     # sync books
@@ -44,6 +44,33 @@ class SemApp < ActiveRecord::Base
 
   def add_ownership(user)
     Ownership.new(:user => user, :sem_app => self).save
+  end
+
+  def course_id
+    t = read_attribute(:course_id)
+    t unless t.blank?
+  end
+
+  def course_id=(value)
+    write_attribute :course_id, (value.blank? ? nil : value)
+  end
+
+  def bid
+    t = read_attribute(:bid)
+    t unless t.blank?
+  end
+
+  def bid=(value)
+    write_attribute :bid, (value.blank? ? nil : value)
+  end
+
+  def ref
+    t = read_attribute(:ref)
+    t unless t.blank?
+  end
+
+  def ref=(value)
+    write_attribute :ref, (value.blank? ? nil : value)
   end
 
   private
