@@ -35,4 +35,8 @@ class Semester < ActiveRecord::Base
     end
   end
 
+  def self.current
+    Semester.find(:first, :conditions => {:current => true})
+  end
+
 end

@@ -3,44 +3,50 @@ class SemAppsController < ApplicationController
   before_filter :require_user, :only => [:create]
 
   def index
-    # filter conditions
-    conditions = ["", {}]
+    pui_append_to_breadcrumb("Gesamtliste", sem_apps_path)
 
-    # only approved and active sem apps
-    add_condition(conditions, "AND", "approved = :approved", {:approved => true})
-    add_condition(conditions, "AND", "active = :active", {:active => true})
+    # filter by semster
+    @semester = Semester.find_by_id(params[:semester][:id]) unless params[:semester].blank?
+    # filter by location
+    @location = Location.find_by_id(params[:location][:id]) unless params[:location].blank?
+    # filter by title
+    @title = params[:title] unless params[:title].blank?
+    @title = "%#{@title}%" if @title and not @title.index('%')
+    # filter by tutors
+    @tutors = params[:tutors] unless params[:tutors].blank?
+    @tutors = "%#{@tutors}%" if @tutors and not @tutors.index('%')
 
-    # try to filter by semester
-#    if params[:semester]
-#      @semester = Semester.find(params[:semester])
-#      conditions = ["semester_id = :semester_id", {:semester_id => @semester.id}]
-#    end
-#
-#    # try to filter by filter term
-#    if params[:filter] and not params[:filter].empty?
-#      @filter = params[:filter]
-#      add_condition(conditions, "title like :title", {:title => @filter + "%"})
-#    end
+    # build the filter conditions
+    conditions = Condition.block do |c|
+     c.and "approved", true
+     c.and "active", true
+     c.and "semester_id", @semester.id if @semester
+     c.and "location_id", @location.id if @location
+     c.and "title", "like", @title if @title
+     c.and "tutors", "like", @tutors if @tutors
+    end
+
+    # marker that we use some user filter
+    @filtered          = true if @semester or @location or @title or @tutors
+    @advanced_filtered = true if @location or @title or @tutors
 
     # find sem apps
+    @count = SemApp.count(:conditions => conditions)
     @sem_apps = SemApp.paginate(
       :page => params[:page],
-      :per_page => 30,
+      :per_page => 10,
       :conditions => conditions,
-      :order => 'semester_id, id DESC')
+      :order => 'title, id DESC')
   end
-
 
   def show
     @sem_app = SemApp.find(params[:id])
   end
 
-
   def new
     pui_append_to_breadcrumb("Einen neuen eSeminarapparat beantragen", new_sem_app_path)
     @sem_app = SemApp.new
   end
-
 
   def create
     @sem_app = SemApp.new(params[:sem_app])
@@ -52,19 +58,6 @@ class SemAppsController < ApplicationController
     else
       render :action => :new
     end
-  end
-
-
-  private
-
-  
-  def add_condition(conditions, operand, condition_str, values)
-    if conditions[0].empty?
-      conditions[0] = conditions[0].concat(condition_str)
-    else
-      conditions[0] = conditions[0].concat(" #{operand || 'AND'} " + condition_str)
-    end
-    conditions[1] = conditions[1].merge(values)
   end
   
 end

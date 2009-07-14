@@ -1,35 +1,37 @@
-<div class="panel info ui-corner-all">
-  <h3>eSeminarapparate: Gesamtliste</h3>
-
-  <% if @semester %>
-    <span>Angezeigtes Semester:</span>
-    <strong><%= @semester.title %></strong> |
-    <%= link_to('Alle anzeigen', sem_apps_url) %>
-  <% else %>
-    <% form_tag(sem_apps_url, :method => :get) do %>
-      <span>Semester:</span>
-      <%= select_tag(
-        :semester,
-        '<option>Alle</option>' +
-          options_from_collection_for_select(Semester.find(:all), "id", "title"),
-        :onchange => 'this.form.submit()') %>
-    <% end %>
+<% pui_panel :panel_style => 'blue', :rounded => true, :style => 'padding: 1em;' do %>
+  <% form_tag(sem_apps_url, :method => :get) do %>
+    <table>
+      <tr>
+        <td>Angezeigtes Semester:</td>
+        <td><%= select("semester", "id", Semester.all.collect {|p| [ p.title, p.id ]}, {:include_blank => 'Alle'}) %></td>
+      </tr>
+      <tr>
+        <td>Standort:</td>
+        <td><%= select("location", "id", Location.all.collect {|p| [ p.title, p.id ]}, {:include_blank => 'Alle'}) %></td>
+      </tr>
+      <tr>
+        <td>Titel enthält:</td>
+        <td><%= text_field_tag 'title', @title %></td>
+      </tr>
+      <tr>
+        <td>Tutoren enthält:</td>
+        <td><%= text_field_tag 'tutors', @tutors %></td>
+      </tr>
+    </table>
+    <div style="text-align: center">
+      <%= submit_tag 'Filtern' %>
+      <% if @filtered %>
+        <%= link_to 'Filter zurücksetzen', sem_apps_path %>
+      <% end %>
+    </div>
   <% end %>
-</div>
+<% end %>
 
-<div class="panel" style="text-align: right; height:25px">
-  <% if @filter %>
-    <span>Anzeige gefiltert nach Titel</span>:
-    <strong><%= @filter %></strong> |
-    <%= link_to('Suche löschen', sem_apps_url) %>
-  <% else %>
-    <% form_tag(sem_apps_url, :method => :get) do %>
-      <span>Suche nach Titel:</span>
-      <%= text_field_tag(:filter) %>
-      <%= submit_tag('Suchen') %>
-    <% end %>
-  <% end %>
-</div>
+<% if @filtered %>
+  Anzahl der eSeminarapparate: <%= @count %> <strong>(Gefiltert)</strong>
+<% else %>
+  Anzahl der eSeminarapparate: <%= @count %> <strong>(Gesamt)</strong>
+<% end %>
 
 <%= render 'sem_app_listing', :sem_apps => @sem_apps %>
 

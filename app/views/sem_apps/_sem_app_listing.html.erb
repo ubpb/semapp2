@@ -2,12 +2,11 @@
   <table class="pui-datagrid">
     <% for sem_app in sem_apps %>
       <tr>
-        <td align="center"><%= sem_app.id %></td>
         <td width="100%">
-          <%= link_to(sem_app.title, sem_app_url(sem_app.id)) %>
+          <%= link_to(sem_app.title, sem_app_path(sem_app.id)) %>
           (<%= sem_app.semester.title %>)
           <div style="font-size: 90%">
-            <%= h(sem_app.tutors) %>
+            Tutoren: <%= h(sem_app.tutors) %>
           </div>
         </td>
       </tr>
