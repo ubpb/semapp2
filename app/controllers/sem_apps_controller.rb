@@ -3,7 +3,7 @@ class SemAppsController < ApplicationController
   before_filter :require_user, :only => [:create]
 
   def index
-    pui_append_to_breadcrumb("Gesamtliste", sem_apps_path)
+    pui_append_to_breadcrumb("eSeminarapparate", sem_apps_path)
 
     # filter by semster
     @semester = Semester.find_by_id(params[:semester][:id]) unless params[:semester].blank?
@@ -36,11 +36,14 @@ class SemAppsController < ApplicationController
       :page => params[:page],
       :per_page => 10,
       :conditions => conditions,
-      :order => 'title, id DESC')
+      :order => 'title, semester_id DESC')
   end
 
   def show
     @sem_app = SemApp.find(params[:id])
+    pui_append_to_breadcrumb("eSeminarapparate", sem_apps_path)
+    pui_append_to_breadcrumb(h(@sem_app.semester.title), sem_apps_path(:semester => {:id => @sem_app.semester.id}))
+    pui_append_to_breadcrumb(h(@sem_app.title), sem_app_path(@sem_app))
   end
 
   def new
