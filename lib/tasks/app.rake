@@ -66,16 +66,24 @@ namespace :app do
 
     desc "creates 100 sem apps"
     task(:create_semapps => :environment) do
-      semester = Semester.find_by_title("Testsemester XXX")
-      location = Location.find_by_title("Testabteilung XXX")
+      semester = Semester.find(:first)
+      location = Location.find(:first)
 
       100.times do |i|
-        s          = SemApp.new
-        s.title    = "SemApp #{i}"
-        s.active   = true
-        s.semester = semester
-        s.location = location
-        s.save! if s.valid?
+        s               = SemApp.new
+        s.title         = "SemApp #{i}"
+        s.active        = true
+        s.approved      = true
+        s.semester      = semester
+        s.location      = location
+        s.tutors        = "Prof. Dr. John Doe, Max Mustermann"
+        s.shared_secret = "12345"
+        if s.valid?
+          s.save!
+        else
+          puts "SemApp #{i} is not valid:"
+          s.errors.each {|attr,msg| puts "\t#{attr} - #{msg}"}
+        end
       end
     end
   end
