@@ -58,6 +58,16 @@ class User < ActiveRecord::Base
   end
 
   #
+  # checks if the user own the sem app
+  #
+  def owns_sem_app?(sem_app)
+    ownerships.each do |o|
+      return true if sem_app.id == o.sem_app.id
+    end
+    return false
+  end
+
+  #
   # Checks if the user is managed in an external
   # system.
   #

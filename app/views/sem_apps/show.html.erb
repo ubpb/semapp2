@@ -1,12 +1,71 @@
+<% unless @sem_app.approved? and @sem_app.active?  %>
+  <% pui_panel :panel_style => 'notice' do %>
+    <p>
+      Der eSeminarapparat ist <strong>nicht</strong> aktiv und/oder wurde noch nicht von der Bibliothek
+      freigegeben. Nur Sie als Beseitzer dieses eSemnarapparates können ihn sehen und
+      bearbeiten.
+    </p>
+  <% end %>
+<% end %>
+
 <h3><%= @sem_app.title %></h3>
 
 <% pui_panel :panel_style => 'blue', :rounded => true, :style => 'padding: 1em;' do %>
   <div>
-    <strong>Semester:</strong> <%= h(@sem_app.semester.title) %>
+    <strong>Semester:</strong>
+    <%= h(@sem_app.semester.title) %>
   </div>
   <div>
-    <strong>Tutor(en):</strong> <%= h(@sem_app.tutors) %>
+    <strong>Tutor(en):</strong>
+    <%= h(@sem_app.tutors) %>
+  </div>
+  <div>
+    <strong>Standort:</strong>
+    <% if @sem_app.bid.blank? or @sem_app.ref.blank? %>
+      <span style="font-style: italic">Dieser eSeminarapparat ist nur online verfügbar</span>
+    <% else %>
+      <%= h(@sem_app.location.title) %>,
+      # <%= h(@sem_app.ref) %>
+    <% end %>
   </div>
 <% end %>
 
-<%= render 'sem_app', :sem_app => @sem_app %>
+<div class="sem-app">
+  <ul class="pui-tabbar tabs">
+    <li><a href="#books"><span>Bücher</span></a></li>
+    <li><a href="#media"><span>Texte und Medien</span></a></li>
+  </ul>
+
+  <div class="panels">
+    <!-- Books Tab -->
+    <div id="books-tab">
+      <% if @sem_app.book_entries.present? and @sem_app.bid.present? and @sem_app.ref.present? %>
+        <ol id="sem-app-book-entries" class="sem-app-entries">
+          <% @sem_app.book_entries.each do |b| %>
+            <li><%= render 'entry', :entry => b, :sem_app => @sem_app %></li>
+          <% end %>
+        </ol>
+      <% else %>
+        <% pui_panel :panel_style => 'highlight', :style => 'text-align: center' do %>
+          <p>Für diesen eSeminarapparat sind aktuell <strong>keine</strong> Bücher in der Bibliothek aufgestellt.</p>
+        <% end %>
+      <% end %>
+    </div>
+
+    <!-- Media Tab -->
+    <div id="media-tab">
+      MEDIEN TAB
+    </div>
+  </div>
+</div>
+
+<% content_for :header do %>
+  <script type="text/javascript">
+    jQuery(function() {
+      /** Setup the tabbar */
+      jQuery("ul.tabs").tabs("div.panels > div", {
+        history: true
+      });
+    });
+  </script>
+<% end %>

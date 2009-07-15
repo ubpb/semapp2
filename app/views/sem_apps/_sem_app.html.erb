@@ -144,11 +144,6 @@
     <!-- Books Tab -->
     <div id="books">
       <% if @sem_app.bid and @sem_app.bid.present? %>
-        <!-- Toolbar Panel -->
-        <div class="panel info ui-corner-all">
-          <span><strong>Standort:</strong> XXX</span>
-        </div>
-
         <!-- Book entries -->
         <ol id="sem_app_book_entries" class="sem-app-entries">
           <% sem_app.book_entries.each do |e| %>
@@ -168,11 +163,6 @@
 
     <!-- Media Tab -->
     <div id="media">
-      <!-- Toolbar Panel -->
-      <div class="panel toolbar">
-        <%= pui_link_button 'Importieren', '#', :id => 'ubdok-import-dialog-button' %>
-      </div>
-
       <!-- Media entries -->
       <ol id="sem_app_media_entries" class="sem-app-entries">
         <% sem_app.media_entries.each do |e| %>
@@ -198,6 +188,7 @@
 </div>
 
 <!-- Dialog panel for importing a semapp -->
+<!--
 <div id="ubdok-import-dialog" title="Einen alten eSeminarapparat importieren..." style="display:none">
   <% form_tag(ubdok_sem_app_import_url, :id => "ubdok-import-form") do %>
     <p>
@@ -214,3 +205,4 @@
   </p>
 <% end %>
 </div>
+-->

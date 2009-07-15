@@ -18,12 +18,12 @@ class SemAppsController < ApplicationController
 
     # build the filter conditions
     conditions = Condition.block do |c|
-     c.and "approved", true
-     c.and "active", true
-     c.and "semester_id", @semester.id if @semester
-     c.and "location_id", @location.id if @location
-     c.and "title", "like", @title if @title
-     c.and "tutors", "like", @tutors if @tutors
+      c.and "approved", true
+      c.and "active", true
+      c.and "semester_id", @semester.id if @semester
+      c.and "location_id", @location.id if @location
+      c.and "title", "like", @title if @title
+      c.and "tutors", "like", @tutors if @tutors
     end
 
     # marker that we use some user filter
@@ -40,7 +40,22 @@ class SemAppsController < ApplicationController
   end
 
   def show
-    @sem_app = SemApp.find(params[:id])
+    @sem_app = SemApp.find_by_id(params[:id])
+    # Check existance
+    unless @sem_app
+      flash[:error] = "Dieser eSeminarapparat existiert nicht"
+      redirect_to sem_apps_path
+      return false
+    end
+
+    # Check common access
+    owner_access = true if current_user and current_user.owns_sem_app?(@sem_app)
+    if (not @sem_app.active? or not @sem_app.approved?) and not owner_access
+      flash[:error] = "Zugriff verweigert"
+      redirect_to sem_apps_path
+      return false
+    end
+    
     pui_append_to_breadcrumb("eSeminarapparate", sem_apps_path)
     pui_append_to_breadcrumb(h(@sem_app.semester.title), sem_apps_path(:semester => {:id => @sem_app.semester.id}))
     pui_append_to_breadcrumb(h(@sem_app.title), sem_app_path(@sem_app))
