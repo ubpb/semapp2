@@ -18,7 +18,7 @@ class SemApp < ActiveRecord::Base
   belongs_to :semester
   belongs_to :location
 
-  has_many :ownerships
+  has_many :ownerships, :dependent => :destroy
   has_many :owners, :through => :ownerships, :source => :user
 
   validates_presence_of   :semester

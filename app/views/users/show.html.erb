@@ -47,6 +47,7 @@
     <% if @user.ownerships and not @user.ownerships.empty?%>
       <table class="pui-datagrid">
         <% @user.ownerships.each do |o| %>
+          <% next unless o.sem_app %>
           <tr>
             <td>
               <%= link_to h(o.sem_app.title), sem_app_path(o.sem_app) %>*

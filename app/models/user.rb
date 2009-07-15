@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
 
   # Relations
   has_and_belongs_to_many :authorities
-  has_many                :ownerships
+  has_many                :ownerships, :dependent => :destroy
   has_many                :sem_apps, :through => :ownerships
 
   # Validations
