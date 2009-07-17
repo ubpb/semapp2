@@ -3,22 +3,27 @@
     <thead>
       <tr>
         <th>Buchauftrag</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       <% @book_orders.each do |book_order| %>
         <tr>
-          <td>
+          <td width="100%">
             <strong>(<%= h(book_order.book_signature) %>)</strong>
             <%= h(book_order.book_title) %><%= ', ' + h(book_order.book_author) if book_order.book_author.present? %><%= ', ' + h(book_order.book_year) if book_order.book_year.present? %><br/>
             Status:
             <% unless book_order.status_message.present? %>
-              <strong>In Bearbeitung</strong><br/>
+              <strong>Offen</strong><br/>
             <% else %>
               <strong><%= h(book_order.status_message) %></strong><br/>
             <% end %>
             Auftrag vom: <%= book_order.created_at.to_s(:long) %><br/>
             Ihre Nachricht an uns: <span style="font-style:italic"><%= h(book_order.message.present? ? book_order.message : '-') %></span>
+          </td>
+          <td valign="top" nowrap="true" align="right">
+            <%= link_to 'Bearbeiten', edit_admin_sem_app_book_order_path(@sem_app, book_order) %><br/>
+            <%= link_to 'Löschen', admin_sem_app_book_order_path(@sem_app, book_order), :method => :delete, :confirm => "Den Auftrag wirklich löschen?" %>
           </td>
         </tr>
       <% end %>

@@ -6,6 +6,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :locations, :collection => {:reorder => :put}
     admin.resources :sem_apps, :as => 'apps' do |sem_app|
       sem_app.resources :ownerships, :only => [:index, :create, :destroy]
+      sem_app.resources :book_orders, :as => 'book-orders'
     end
     admin.resources :users
     admin.namespace :utils do |utils|
