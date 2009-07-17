@@ -20,6 +20,7 @@ class SemApp < ActiveRecord::Base
 
   has_many :ownerships, :dependent => :destroy
   has_many :owners, :through => :ownerships, :source => :user
+  has_many :book_orders
 
   validates_presence_of   :semester
   validates_presence_of   :location

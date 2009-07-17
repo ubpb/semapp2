@@ -41,29 +41,32 @@ class SemAppsController < ApplicationController
 
   def show
     @sem_app = SemApp.find_by_id(params[:id])
-    # Check existance
+
+     # check existance
     unless @sem_app
       flash[:error] = "Dieser eSeminarapparat existiert nicht"
       redirect_to sem_apps_path
       return false
     end
 
-    # Check common access
+    # allow access to inactive or unapproved apps only for owners and admins
     owner_access = true if current_user and current_user.owns_sem_app?(@sem_app)
-    if (not @sem_app.active? or not @sem_app.approved?) and not owner_access
+    admin_access = true if current_user and current_user.is_admin?
+    if (not @sem_app.active? or not @sem_app.approved?) and not owner_access and not admin_access
       flash[:error] = "Zugriff verweigert"
       redirect_to sem_apps_path
       return false
     end
-    
+
+    # Setup breadcrumb
     pui_append_to_breadcrumb("eSeminarapparate", sem_apps_path)
-    pui_append_to_breadcrumb(h(@sem_app.semester.title), sem_apps_path(:semester => {:id => @sem_app.semester.id}))
-    pui_append_to_breadcrumb(h(@sem_app.title), sem_app_path(@sem_app))
+    pui_append_to_breadcrumb("eSeminarapparat #{@sem_app.id}", sem_app_path(@sem_app))
   end
 
   def new
-    pui_append_to_breadcrumb("Einen neuen eSeminarapparat beantragen", new_sem_app_path)
     @sem_app = SemApp.new
+    
+    pui_append_to_breadcrumb("Einen neuen eSeminarapparat beantragen", new_sem_app_path)
   end
 
   def create

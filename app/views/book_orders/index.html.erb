@@ -1,0 +1,7 @@
+<h3>Buchaufträge für eSeminarapparat '<%= h(@sem_app.title) %> (<%= h(@sem_app.semester.title) %>)'</h3>
+
+<% pui_panel :style => "text-align: center; text-align: right", :rounded => true do %>
+  <%= link_to('Neuer Buchauftrag', new_sem_app_book_order_path(@sem_app)) %>
+<% end %>
+
+<%= render 'listing' %>

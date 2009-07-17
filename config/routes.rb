@@ -23,8 +23,8 @@ ActionController::Routing::Routes.draw do |map|
 
   # Sem Apps
   map.resources :sem_apps, :as => 'apps', :controller => 'sem_apps', :only => [:index, :show, :new, :create] do |sem_app|
-    sem_app.resources :entries, :controller => 'sem_app_entries', 
-      :except => [:index], :collection => {:reorder => :put}
+    sem_app.resources :entries, :controller => 'sem_app_entries', :except => [:index], :collection => {:reorder => :put}
+    sem_app.resources :book_orders, :as => 'book-orders'
   end
 
   # ubdok import
