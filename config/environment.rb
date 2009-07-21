@@ -1,7 +1,7 @@
 # Be sure to restart your server when you modify this file
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.2' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.3' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -21,10 +21,10 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
   config.gem 'RedCloth',             :version => '4.2.2'
   config.gem 'authlogic',            :version => '2.1.1'
-  config.gem 'thoughtbot-paperclip', :version => '2.2.9.2', :lib => 'paperclip', :source => 'http://gems.github.com'
+  config.gem 'thoughtbot-paperclip', :version => '2.3.0',  :lib => 'paperclip', :source => 'http://gems.github.com'
   config.gem 'mislav-will_paginate', :version => '2.3.11', :lib => 'will_paginate', :source => 'http://gems.github.com'
-  config.gem 'libxml-ruby',          :version => '1.1.3', :lib => 'libxml'
-  config.gem 'bcrypt-ruby',          :version => '2.0.5', :lib => 'bcrypt'
+  config.gem 'libxml-ruby',          :version => '1.1.3',  :lib => 'libxml'
+  config.gem 'bcrypt-ruby',          :version => '2.0.5',  :lib => 'bcrypt'
   config.gem 'giraffesoft-resource_controller', :version => '0.6.5', :lib => 'resource_controller', :source => 'http://gems.github.com'
   config.gem 'ruby-recaptcha',       :version => '1.0.0'
 
