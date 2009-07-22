@@ -52,8 +52,9 @@ class User < ActiveRecord::Base
   # Returns the current (logged in) user. Returns null
   # if there is no user logged in
   def self.current
-    user_session = UserSession.find # TODO: we may cache this
-    return user_session.user if user_session
+    return @current_user if defined?(@current_user)
+    user_session = UserSession.find
+    @current_user = user_session.user if user_session and user_session.user
   end
 
   # Callback: Before save

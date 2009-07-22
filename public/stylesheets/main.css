@@ -211,31 +211,26 @@ div.sem-app .panel.toolbar {
   padding: 10px 0;
 }
 
-ol.sem-app-entries {
-  list-style: none;
+div.sem-app-entries {
   margin: 0;
   padding: 0;
 }
 
-ol.sem-app-entries li {
-  margin: 0 0 0.6em 0;
-  padding: 0;
-  position: relative;
-}
-
-ol.sem-app-entries li.sem-app-entry {
+div.sem-app-entries div.sem-app-entry {
   position: relative;
   padding: 0.5em;
   margin: 0;
+  border-bottom: 1px solid #f1f1f1;
 }
 
-ol.sem-app-entries li.sem-app-entry.highlight {
-  background-color: #f9f895;
+div.sem-app-entries div.sem-app-entry.highlight {
+  background-color: #f1f1f1;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
 }
 
-ol.sem-app-entries li.sem-app-entry .toolbar {
+div.sem-app-entries div.sem-app-entry .toolbar {
+  display: none;
   position: absolute;
   z-index: 100;
   height: 20px;
@@ -245,7 +240,8 @@ ol.sem-app-entries li.sem-app-entry .toolbar {
   padding: 6px 12px 0 12px;
 }
 
-ol.sem-app-entries li.sem-app-entry .confirmation-panel {
+
+div.sem-app-entries div.sem-app-entry .confirmation-panel {
   background: url(../images/modules/sem_app_entry/confirmation-panel-bg.png) no-repeat;
   width: 232px;
   height: 112px;

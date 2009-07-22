@@ -37,16 +37,24 @@ class SemApp < ActiveRecord::Base
   validates_uniqueness_of :course_id, :scope => :semester_id, :allow_nil => true
   validates_uniqueness_of :bid,       :scope => :semester_id, :allow_nil => true
 
-  def book_entries
-    # sync books
-    sync_books
-    # return book entries
-    do_get_book_entries
+  def book_entries(scheduled_for_removal = false)
+    SemAppEntry.find(
+      :all,
+      :include => [:instance],
+      :joins => "INNER JOIN sem_app_book_entries ON sem_app_book_entries.id = sem_app_entries.instance_id",
+      :conditions => ["sem_app_entries.sem_app_id = :sem_app_id AND sem_app_entries.instance_type = :instance_type AND sem_app_book_entries.scheduled_for_removal = :scheduled_for_removal", {
+          :sem_app_id            => id,
+          :instance_type         => "SemAppBookEntry",
+          :scheduled_for_removal => scheduled_for_removal}])
   end
 
   def media_entries
-    # return media entries
-    do_get_media_entries
+    SemAppEntry.find(
+      :all,
+      :include => [:instance],
+      :conditions => ["sem_app_id = :sem_app_id AND instance_type <> :instance_type",
+        {:sem_app_id => id, :instance_type => 'SemAppBookEntry'}],
+      :order => :position)
   end
 
   def add_ownership(user)
@@ -85,24 +93,6 @@ class SemApp < ActiveRecord::Base
   end
 
   private
-
-  def do_get_book_entries
-    SemAppEntry.find(
-      :all,
-      :include => [:instance],
-      :conditions => ["sem_app_id = :sem_app_id AND instance_type = :instance_type",
-        {:sem_app_id => id, :instance_type => 'SemAppBookEntry'}],
-      :order => :position)
-  end
-
-  def do_get_media_entries
-    SemAppEntry.find(
-      :all,
-      :include => [:instance],
-      :conditions => ["sem_app_id = :sem_app_id AND instance_type <> :instance_type",
-        {:sem_app_id => id, :instance_type => 'SemAppBookEntry'}],
-      :order => :position)
-  end
 
   def sync_books
     if (self.bid and self.bid.present? and (!self.books_synced_at or Time.now - self.books_synced_at > 30.minutes))

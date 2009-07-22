@@ -41,16 +41,14 @@
     <div id="books-tab">
       <% if @sem_app.editable? %>
         <%= render 'books_toolbar', :sem_app => @sem_app %>
-      <% else %>
-        mooooo
       <% end %>
-      
+
       <% if @sem_app.book_entries.present? and @sem_app.bid.present? and @sem_app.ref.present? %>
-        <ol id="sem-app-book-entries" class="sem-app-entries">
+        <div id="sem-app-book-entries" class="sem-app-entries">
           <% @sem_app.book_entries.each do |b| %>
-            <li><%= render 'entry', :entry => b, :sem_app => @sem_app %></li>
+            <%= render 'entry', :entry => b, :sem_app => @sem_app %>
           <% end %>
-        </ol>
+        </div>
       <% else %>
         <% pui_panel :panel_style => 'highlight', :style => 'text-align: center' do %>
           <p>Für diesen eSeminarapparat sind aktuell <strong>keine</strong> Bücher in der Bibliothek aufgestellt.</p>
@@ -74,4 +72,47 @@
       });
     });
   </script>
+
+  <% if @sem_app.editable? %>
+    <script type="text/javascript">
+      var edit_mode = false;
+
+      /***********************************************************************************
+       * Functions
+       **********************************************************************************/
+      
+      function showEntryToolbar() {
+        if (edit_mode == true) return;
+        jQuery(this).addClass("highlight");
+        jQuery(this).find(".toolbar").show();
+      }
+
+      function hideEntryToolbar() {
+        if (edit_mode == true) return;
+        jQuery(this).removeClass("highlight");
+        jQuery(this).find(".toolbar").hide();
+      }
+
+      function confirmEntryAction(message, success_function) {
+        this.invoke(success_function);
+      }
+
+      /***********************************************************************************
+       * Event hooks
+       **********************************************************************************/
+      jQuery(function() {
+      
+        /** If the user hovers over entries with the mouse, show/hide a toolbar. */
+        jQuery(".sem-app-entries .sem-app-entry").hover(showEntryToolbar, hideEntryToolbar);
+
+
+        jQuery(".button.toolbar-action").click(function() {
+          confirmEntryAction("hallo", function() {
+            alert("moo3");
+          })
+          return false;
+        });
+      });
+    </script>
+  <% end %>
 <% end %>

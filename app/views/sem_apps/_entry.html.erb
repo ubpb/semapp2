@@ -1,4 +1,17 @@
-<div  id="sem-app-entry-<%=entry.id-%>" class="sem-app-entry">
+<div id="sem-app-entry-<%=entry.id-%>" class="sem-app-entry">
+  <% if sem_app.editable? %>
+    <div class="toolbar">
+      <% if entry.instance_type == "SemAppBookEntry" %>
+        <button class="button toolbar-action">moo</button>
+        <ul style="padding: 30px; background-color: #ccc; display: none">
+          <li><%= link_to 'Buch entfernen', '#' %></li>
+        </ul>
+      <% else %>
+        MEDIA TOOLBAR
+      <% end %>
+    </div>
+  <% end %>
+
   <div id="sem-app-entry-<%=entry.id-%>-content">
     <%= render_sem_app_entry(entry) %>
   </div>
