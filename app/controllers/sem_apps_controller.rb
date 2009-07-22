@@ -50,8 +50,8 @@ class SemAppsController < ApplicationController
     end
 
     # allow access to inactive or unapproved apps only for owners and admins
-    owner_access = true if current_user and current_user.owns_sem_app?(@sem_app)
-    admin_access = true if current_user and current_user.is_admin?
+    owner_access = true if User.current and User.current.owns_sem_app?(@sem_app)
+    admin_access = true if User.current and User.current.is_admin?
     if (not @sem_app.active? or not @sem_app.approved?) and not owner_access and not admin_access
       flash[:error] = "Zugriff verweigert"
       redirect_to sem_apps_path
@@ -71,7 +71,7 @@ class SemAppsController < ApplicationController
 
   def create
     @sem_app = SemApp.new(params[:sem_app])
-    if @sem_app.save and @sem_app.add_ownership(current_user)
+    if @sem_app.save and @sem_app.add_ownership(User.current)
       flash[:notice] = "Ihr eSeminarapparat wurde erfolgreich beantragt. Wir prüfen die Angaben und schalten
         den eSeminarappat nach erfolgter Prüfung frei. Sie sehen den Status auf Ihrer Konto Seite unter
         <strong>Meine eSeminarapparate</strong>."
@@ -80,5 +80,5 @@ class SemAppsController < ApplicationController
       render :action => :new
     end
   end
-  
+
 end

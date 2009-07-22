@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20090110160902
+# Schema version: 20090721145838
 #
 # Table name: sem_app_file_attachments
 #

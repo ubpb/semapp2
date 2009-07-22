@@ -29,11 +29,13 @@
   <% end %>
 <% end %>
 
+<div style="text-align: right">
 <% if @filtered %>
   Anzahl der eSeminarapparate: <%= @count %> <strong>(Gefiltert)</strong>
 <% else %>
   Anzahl der eSeminarapparate: <%= @count %> <strong>(Gesamt)</strong>
 <% end %>
+</div>
 
 <%= render 'sem_app_listing', :sem_apps => @sem_apps %>
 

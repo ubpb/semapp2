@@ -47,7 +47,7 @@ class UsersController < ApplicationController
   private
 
   def load_current_user
-    @user = current_user
+    @user = User.current
   end
 
   def check_editable

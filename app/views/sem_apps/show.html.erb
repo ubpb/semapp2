@@ -39,8 +39,10 @@
   <div class="panels">
     <!-- Books Tab -->
     <div id="books-tab">
-      <% if current_user.owns_sem_app?(@sem_app) or current_user.is_admin? %>
+      <% if @sem_app.editable? %>
         <%= render 'books_toolbar', :sem_app => @sem_app %>
+      <% else %>
+        mooooo
       <% end %>
       
       <% if @sem_app.book_entries.present? and @sem_app.bid.present? and @sem_app.ref.present? %>

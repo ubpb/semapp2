@@ -1,3 +1,15 @@
+# == Schema Information
+# Schema version: 20090721145838
+#
+# Table name: locations
+#
+#  id         :integer(4)      not null, primary key
+#  title      :string(255)     not null
+#  position   :integer(4)
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class Location < ActiveRecord::Base
 
   validates_presence_of :title

@@ -1,13 +1,19 @@
 # == Schema Information
-# Schema version: 20090110160902
+# Schema version: 20090721145838
 #
 # Table name: sem_apps
 #
 #  id              :integer(4)      not null, primary key
 #  semester_id     :integer(4)      not null
-#  title           :string(255)
-#  permalink       :string(255)
+#  location_id     :integer(4)      not null
+#  active          :boolean(1)      not null
+#  approved        :boolean(1)      not null
+#  title           :string(255)     not null
+#  course_id       :string(255)
+#  tutors          :text            default(""), not null
+#  shared_secret   :string(255)     not null
 #  bid             :string(255)
+#  ref             :string(255)
 #  books_synced_at :datetime
 #  created_at      :datetime
 #  updated_at      :datetime
@@ -45,6 +51,10 @@ class SemApp < ActiveRecord::Base
 
   def add_ownership(user)
     Ownership.new(:user => user, :sem_app => self).save
+  end
+
+  def editable?
+    User.current and (User.current.is_admin? or User.current.owns_sem_app?(self))
   end
 
   def course_id

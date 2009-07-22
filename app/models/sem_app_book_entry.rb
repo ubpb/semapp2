@@ -1,21 +1,22 @@
 # == Schema Information
-# Schema version: 20090110160902
+# Schema version: 20090721145838
 #
 # Table name: sem_app_book_entries
 #
-#  id         :integer(4)      not null, primary key
-#  bid        :string(255)     not null
-#  signature  :string(255)     not null
-#  title      :string(255)     not null
-#  author     :string(255)     not null
-#  edition    :string(255)
-#  place      :string(255)
-#  publisher  :string(255)
-#  year       :string(255)
-#  isbn       :string(255)
-#  comment    :text
-#  created_at :datetime
-#  updated_at :datetime
+#  id                    :integer(4)      not null, primary key
+#  bid                   :string(255)     not null
+#  signature             :string(255)     not null
+#  title                 :string(255)     not null
+#  author                :string(255)     not null
+#  edition               :string(255)
+#  place                 :string(255)
+#  publisher             :string(255)
+#  year                  :string(255)
+#  isbn                  :string(255)
+#  comment               :text
+#  created_at            :datetime
+#  updated_at            :datetime
+#  scheduled_for_removal :boolean(1)
 #
 
 class SemAppBookEntry < ActiveRecord::Base

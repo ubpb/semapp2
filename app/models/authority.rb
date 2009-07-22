@@ -1,3 +1,14 @@
+# == Schema Information
+# Schema version: 20090721145838
+#
+# Table name: authorities
+#
+#  id         :integer(4)      not null, primary key
+#  name       :string(255)     not null
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class Authority < ActiveRecord::Base
 
   validates_presence_of   :name

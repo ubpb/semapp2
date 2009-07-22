@@ -14,7 +14,7 @@
             <td nowrap="true">
               <strong><%= h(u.full_name) %></strong><br/>
               <%= h(u) %>
-              <% if u == current_user %>
+              <% if u == User.current %>
                 <span style="font-style:italic; font-size:90%">(das sind Sie)</span>
               <% end %>
             </td>

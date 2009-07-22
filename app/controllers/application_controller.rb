@@ -19,22 +19,22 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password, :password_confirmation
 
   # Additional helper methods
-  helper_method :current_user_session, :current_user
+  #helper_method :User.current_session, :User.current
 
   private
 
-  def current_user_session
-    return @current_user_session if defined?(@current_user_session)
-    @current_user_session = UserSession.find
-  end
+  #def User.current_session
+  #  return @User.current_session if defined?(@User.current_session)
+  #  @User.current_session = UserSession.find
+  #end
 
-  def current_user
-    return @current_user if defined?(@current_user)
-    @current_user = current_user_session && current_user_session.user
-  end
+  #def User.current
+  #  return @User.current if defined?(@User.current)
+  #  @User.current = User.current_session && User.current_session.user
+  #end
 
   def require_user
-    unless current_user
+    unless User.current
       store_location
       flash[:notice] = "You must be logged in to access this page"
       redirect_to login_url

@@ -1,3 +1,32 @@
+# == Schema Information
+# Schema version: 20090721145838
+#
+# Table name: users
+#
+#  id                  :integer(4)      not null, primary key
+#  authid              :string(255)     not null
+#  active              :boolean(1)      not null
+#  approved            :boolean(1)
+#  firstname           :string(255)     not null
+#  lastname            :string(255)     not null
+#  login               :string(255)     not null
+#  email               :string(255)     not null
+#  phone               :string(255)
+#  department          :string(255)
+#  crypted_password    :string(255)     not null
+#  password_salt       :string(255)     not null
+#  persistence_token   :string(255)     not null
+#  single_access_token :string(255)     not null
+#  perishable_token    :string(255)     not null
+#  login_count         :integer(4)      default(0), not null
+#  failed_login_count  :integer(4)      default(0), not null
+#  last_request_at     :datetime
+#  current_login_at    :datetime
+#  last_login_at       :datetime
+#  current_login_ip    :string(255)
+#  last_login_ip       :string(255)
+#
+
 class User < ActiveRecord::Base
 
   DEFAULT_AUTHID = 'internal'
@@ -18,6 +47,13 @@ class User < ActiveRecord::Base
     # for available options see documentation in: Authlogic::ActsAsAuthentic
     c.crypto_provider   = Authlogic::CryptoProviders::BCrypt
     c.validations_scope = :authid
+  end
+
+  # Returns the current (logged in) user. Returns null
+  # if there is no user logged in
+  def self.current
+    user_session = UserSession.find # TODO: we may cache this
+    return user_session.user if user_session
   end
 
   # Callback: Before save

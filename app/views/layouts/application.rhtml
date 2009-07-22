@@ -65,14 +65,14 @@
                 <h3 class="invisible">eSeminarapparate</h3>
               </div>
 
-              <% if current_user %>
+              <% if User.current %>
                 <% pui_panel :style => "text-align: center;", :rounded => true do %>
                   Willkommen<br/>
-                  <strong><%= link_to h(current_user.full_name), user_path %></strong><br/>
+                  <strong><%= link_to h(User.current.full_name), user_path %></strong><br/>
                 <% end %>
               <% end %>
 
-              <% if current_user and current_user.is_admin? %>
+              <% if User.current and User.current.is_admin? %>
                 <div id="admin-menu" style="text-align: center; margin-bottom: 2em;">
                   <select id="admin-menu-selector">
                     <option value="default">-- Administration --</option>
@@ -118,7 +118,7 @@
 
               <h3>&raquo; für Lehrende</h3>
               <ul class="pui-nav-v">
-                <% if current_user %>
+                <% if User.current %>
                   <li><%= link_to('Meine Seite / Abmelden', user_path) %></li>
                   <li><%= link_to('Meine eSeminarapparate', user_path(:anchor => 'apps')) %></li>
                 <% else %>

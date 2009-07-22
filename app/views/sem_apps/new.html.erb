@@ -1,6 +1,6 @@
 <h3>Einen neuen eSeminarapparat beantragen</h3>
 
-<% unless current_user %>
+<% unless User.current %>
 
   <% pui_panel :panel_style => 'notice' do %>
     <p>
@@ -22,7 +22,7 @@
   <% end %>
 
   <% form_for @sem_app, :html => {:class => 'puiform'} do |f| %>
-    <% @sem_app.tutors = h(current_user.full_name) if @sem_app.tutors.blank? %>
+    <% @sem_app.tutors = h(User.current.full_name) if @sem_app.tutors.blank? %>
     <%= f.error_messages %>
     <fieldset>
       <legend>Basisdaten</legend>

@@ -1,11 +1,12 @@
 # == Schema Information
-# Schema version: 20090110160902
+# Schema version: 20090721145838
 #
 # Table name: semesters
 #
 #  id         :integer(4)      not null, primary key
+#  current    :boolean(1)
 #  title      :string(255)     not null
-#  permalink  :string(255)     not null
+#  position   :integer(4)
 #  created_at :datetime
 #  updated_at :datetime
 #

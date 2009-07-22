@@ -19,7 +19,7 @@
             </td>
             <td nowrap="true">
               <%= h(s) %>
-              <% if s == current_user %>
+              <% if s == User.current %>
                 <span style="font-style:italic; font-size:90%">(das sind sie)</span>
               <% end %>
             </td>
@@ -28,7 +28,7 @@
             </td>
             <td align="right" nowrap="true">
               <%= pui_link_icon 'Bearbeiten', 'pencil', edit_admin_user_path(s) %>
-              <% if current_user != s %>
+              <% if User.current != s %>
                 <%= pui_link_icon 'Löschen', 'trash', admin_user_path(s), :method => :delete, :confirm => "Soll der Benutzer #{s.login} wirklich gelöscht werden?" %>
               <% end %>
             </td>

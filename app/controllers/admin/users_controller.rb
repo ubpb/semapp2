@@ -48,7 +48,7 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def check_deleteable
-    if (object == current_user)
+    if (object == User.current)
       flash[:error] = "Sie können Ihr eigenes Konto nicht löschen."
       redirect_to admin_users_path
     end
