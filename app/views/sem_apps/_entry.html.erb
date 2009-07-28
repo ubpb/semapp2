@@ -2,11 +2,10 @@
   <% if sem_app.editable? %>
     <div class="toolbar">
       <% if entry.instance_type == "SemAppBookEntry" %>
-        <button class="button delete-action">Löschen</button>
-        <ul style="padding: 30px; background-color: #ccc; display: none">
-          <li><%= link_to 'Buch entfernen', '#' %></li>
-        </ul>
+        <!-- toobar for books -->
+        <%= link_to 'Löschen', sem_app_entry_path(sem_app, entry), :class => "delete-action" %>
       <% else %>
+        <!-- toolbar for media entries -->
         MEDIA TOOLBAR
       <% end %>
     </div>

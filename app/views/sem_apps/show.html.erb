@@ -45,8 +45,8 @@
 
       <% if @sem_app.book_entries.present? and @sem_app.bid.present? and @sem_app.ref.present? %>
         <div id="sem-app-book-entries" class="sem-app-entries">
-          <% @sem_app.book_entries.each do |b| %>
-            <%= render 'entry', :entry => b, :sem_app => @sem_app %>
+          <% @sem_app.book_entries.each do |entry| %>
+            <%= render 'entry', :entry => entry, :sem_app => @sem_app %>
           <% end %>
         </div>
       <% else %>
@@ -62,8 +62,6 @@
     </div>
   </div>
 </div>
-
-<div id="confirmation-dialog" style="display:none"></div>
 
 <% content_for :header do %>
   <script type="text/javascript">
@@ -99,62 +97,49 @@
         entry.find(".toolbar").hide();
       }
 
-      function confirmEntryAction(options) {
-        // build the settings
-        var settings = jQuery.extend({
-          title: "Bestätigen...",
-          message: "",
-          exposeElement: null,
-          onSuccess: function() {},
-          onAbort: function() {},
-          onClose: function() {}
-        }, options || {});
-
-        // expose
-        if (settings.exposeElement != null) {
-          var exposeApi = settings.exposeElement.expose({
-            api: true,
-            zIndex: 100,
-            closeOnClick: false,
-            closeOnEsc: false
-          });
-        }
-
-        // setup the confirmation dialog
-        jQuery("#confirmation-dialog").dialog({
-          modal: (exposeApi != null) ? false : true,
-          autoOpen: false,
-          width: 350,
-          title: settings.title,
-          close: function() {
-            if (exposeApi != null) {
-              exposeApi.close();
-            }
-            settings.onClose();
+      /**
+       * This function deletes an entry. It first requests a confirmation from the
+       * user.
+       */
+      function deleteEntry(entry, url) {
+        console.debug("Delete entry action triggered:", url);
+        // setup ui
+        edit_mode = true;
+        hideToolbar(entry);
+        // let the user confirm this action
+        confirm({
+          title: "Löschen bestätigen...",
+          message: "Soll der Eintrag wirklich gelöscht werden? (Gelöschte Bücher werden ebenfalls aus dem regal entfernt)",
+          onClose: function() {
+            edit_mode = false;
+            unhighlightEntry(entry);
           },
-          buttons: {
-            "Ja": function() {
-              jQuery(this).dialog("close");
-              settings.onSuccess();
-            },
-            "Nein": function() {
-              jQuery(this).dialog("close");
-              settings.onAbort();
-            }
+          onYes: function() {
+            // really delete the entry on the server
+            jQuery.ajax({
+              type: "delete",
+              data: "_method=delete",
+              async: false,
+              url: url,
+              success: function() {
+                console.debug("Entry deleted on server: ", url);
+                entry.slideUp(500, function() {
+                  edit_mode = false;
+                });
+              },
+              error: function() {
+                alert("Beim Versuch den Eintrag zu löschen ist ein Fehler aufgetreten. Laden Sie die Seite neu und versuchen Sie es erneut. Sollte es wiederholt zu einem Fehler kommen, kontaktieren Sie bitte den Supoort.");
+              }
+            });
+          },
+          onNo: function() {
+            edit_mode = false;
+            unhighlightEntry(entry);
           }
         });
 
-        if (exposeApi != null) {
-          exposeApi.load();
-        }
-        jQuery("#confirmation-dialog").html(settings.message)
-        jQuery("#confirmation-dialog").dialog("open");
-      }
-
-      function deleteEntry(entry) {
-        edit_mode = true;
-        hideToolbar(entry);
-
+        // let the user confirm the action
+        /*
         confirmEntryAction({
           title: "Löschen bestätigen...",
           message: "<p>Den hervorgehobenen Eintrag wirklich löschen?</p>",
@@ -169,6 +154,7 @@
             //deleteEntry(14);
           }
         });
+         */
         /*alert("mooo");
         jQuery.ajax({
           type: "DELETE",
@@ -180,6 +166,44 @@
         });*/
       }
       
+      /**
+       * Shows the a panel to confirm an operation (e.g. a delete operation)
+       */
+      function confirm(options) {
+        // build the settings
+        var settings = jQuery.extend({
+          title  : "Bestätigen...",
+          message: "Soll die Aktion durchgeführt werden?",
+          entry  : null,
+          onClose: function() {},
+          onYes  : function() {},
+          onNo   : function() {}
+        }, options || {});
+
+        // setup the confirmation dialog
+        jQuery('<div id="confirmation-dialog"></div>').dialog({
+          modal: true,
+          autoOpen: false,
+          width: 350,
+          title: settings.title,
+          closeOnEscape: true,
+          close: settings.onClose(),
+          buttons: {
+            "Ja": function() {
+              jQuery(this).dialog("close");
+              settings.onYes();
+            },
+            "Nein": function() {
+              jQuery(this).dialog("close");
+              settings.onNo();
+            }
+          }
+        })
+        .html(settings.message)
+        .dialog("open");
+      }
+
+
       /***********************************************************************************
        * Event hooks
        **********************************************************************************/
@@ -196,10 +220,12 @@
           hideToolbar(jQuery(this));
         });
 
-        /** If the user clicks the delete button of an entry */
-        jQuery(".button.delete-action").click(function() {
+        /** If the user clicks the delete link of an entry */
+        jQuery(".delete-action").click(function(event) {
+          event.preventDefault();
           var entry = jQuery(this).parent().parent();
-          deleteEntry(entry);
+          var url   = jQuery(this).attr("href");
+          deleteEntry(entry, url);
         });
       });
     </script>

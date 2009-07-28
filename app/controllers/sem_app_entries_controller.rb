@@ -56,12 +56,10 @@ class SemAppEntriesController < ApplicationController
     SemAppEntry.transaction do
       @sem_app_entry = SemAppEntry.find(params[:id])
       @sem_app_entry.instance.destroy
+      @sem_app_entry.destroy
       @sem_app_entry.remove_from_list
     end
-    
-    respond_to do |format|
-      format.js
-    end
+    render :nothing => true
   end
 
   #
