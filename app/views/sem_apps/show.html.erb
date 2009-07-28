@@ -77,29 +77,28 @@
     <script type="text/javascript">
       var edit_mode = false;
 
-      /***********************************************************************************
-       * Functions
-       **********************************************************************************/
-
+      /** Uighlights a given entry */
       function highlightEntry(entry) {
         entry.addClass("highlight");
       }
 
+      /** Unhighlights a given entry */
       function unhighlightEntry(entry) {
         entry.removeClass("highlight");
       }
 
+      /** Shows the toolbar for a given entry */
       function showToolbar(entry) {
         entry.find(".toolbar").show();
       }
 
+      /** Hides the toolbar for a given entry */
       function hideToolbar(entry) {
         entry.find(".toolbar").hide();
       }
 
       /**
-       * This function deletes an entry. It first requests a confirmation from the
-       * user.
+       * Deletes an entry. It first requests a confirmation from the user.
        */
       function deleteEntry(entry, url) {
         console.debug("Delete entry action triggered:", url);
@@ -123,7 +122,7 @@
               url: url,
               success: function() {
                 console.debug("Entry deleted on server: ", url);
-                entry.slideUp(500, function() {
+                entry.slideUp(700, function() {
                   edit_mode = false;
                 });
               },
@@ -137,33 +136,6 @@
             unhighlightEntry(entry);
           }
         });
-
-        // let the user confirm the action
-        /*
-        confirmEntryAction({
-          title: "Löschen bestätigen...",
-          message: "<p>Den hervorgehobenen Eintrag wirklich löschen?</p>",
-          exposeElement: entry,
-          onClose: function() {
-            alert("close");
-            edit_mode = false;
-            //hideToolbar(entry);
-            //unhighlightEntry(entry);
-          },
-          onSuccess: function() {
-            //deleteEntry(14);
-          }
-        });
-         */
-        /*alert("mooo");
-        jQuery.ajax({
-          type: "DELETE",
-          async: false,
-          url: "<%= sem_app_entries_path(@sem_app) -%>/"+entry_id,
-          success: function(msg) {
-            alert("Deleted: " + msg);
-          }
-        });*/
       }
       
       /**

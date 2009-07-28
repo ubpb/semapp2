@@ -54,10 +54,14 @@ class SemAppEntriesController < ApplicationController
 
   def destroy
     SemAppEntry.transaction do
-      @sem_app_entry = SemAppEntry.find(params[:id])
-      @sem_app_entry.instance.destroy
-      @sem_app_entry.destroy
-      @sem_app_entry.remove_from_list
+      entry = SemAppEntry.find(params[:id])
+      if (entry.instance.class == SemAppBookEntry)
+        entry.instance.update_attributes(:scheduled_for_removal => true)
+      else
+        entry.instance.destroy
+        entry.destroy
+        entry.remove_from_list
+      end
     end
     render :nothing => true
   end
