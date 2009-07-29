@@ -4,4 +4,27 @@
   <%= link_to('Neuer Buchauftrag', new_sem_app_book_order_path(@sem_app)) %>
 <% end %>
 
-<%= render 'listing' %>
+<ul class="pui-tabbar tabs">
+  <li><a href="#new"><span>Neuaufträge</span></a></li>
+  <li><a href="#removed"><span>Löschaufträge</span></a></li>
+</ul>
+
+<div class="panels">
+  <div>
+    <%= render 'new_orders', :book_orders => @book_orders %>
+  </div>
+  <div>
+    Löschaufträge
+  </div>
+</div>
+
+<% content_for :header do %>
+  <script type="text/javascript">
+    jQuery(function() {
+      /** Setup the tabbar */
+      jQuery("ul.tabs").tabs("div.panels > div", {
+        history: true
+      });
+    });
+  </script>
+<% end %>

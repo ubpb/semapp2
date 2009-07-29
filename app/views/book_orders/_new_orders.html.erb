@@ -1,12 +1,12 @@
-<% unless @book_orders.empty? %>
+<% unless book_orders.empty? %>
   <table class="pui-datagrid">
     <thead>
       <tr>
-        <th>Buchauftrag</th>
+        <th>Neue Buchaufträge</th>
       </tr>
     </thead>
     <tbody>
-      <% @book_orders.each do |book_order| %>
+      <% book_orders.each do |book_order| %>
         <tr>
           <td>
             <strong>(<%= h(book_order.book_signature) %>)</strong>
@@ -26,6 +26,6 @@
   </table>
 <% else %>
   <% pui_panel :panel_style => 'highlight', :style => 'text-align: center' do %>
-    <p>Für diesen eSeminarapparat sind aktuell <strong>keine</strong> Buchaufträge offen.</p>
+    <p>Aktuell sind <strong>keine</strong> neuen Buchaufträge offen.</p>
   <% end %>
 <% end %>
