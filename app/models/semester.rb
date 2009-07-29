@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20090721145838
+# Schema version: 20090729092414
 #
 # Table name: semesters
 #
