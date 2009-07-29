@@ -1,0 +1,26 @@
+<% unless entries.empty? %>
+  <table class="pui-datagrid">
+    <tbody>
+      <% entries.each do |entry| %>
+        <% entry = entry.instance %>
+        <tr>
+          <td>
+            Auftrag vom: <%= entry.created_at.to_s(:long) %><br/>
+            <strong>(<%= h(entry.signature) %>)</strong>
+            <%= h(entry.title) %><%= ', ' + h(entry.author) if entry.author.present? %><%= ', ' + h(entry.year) if entry.year.present? %><br/>
+            Status:
+            <% unless entry.order_status.present? %>
+              <strong>In Bearbeitung</strong><br/>
+            <% else %>
+              <strong><%= h(entry.order_status) %></strong><br/>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <% pui_panel :panel_style => 'highlight', :style => 'text-align: center' do %>
+    <p>Aktuell sind <strong>keine</strong> Aufträge offen.</p>
+  <% end %>
+<% end %>

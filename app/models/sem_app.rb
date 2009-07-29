@@ -26,7 +26,6 @@ class SemApp < ActiveRecord::Base
 
   has_many :ownerships, :dependent => :destroy
   has_many :owners, :through => :ownerships, :source => :user
-  has_many :book_orders
 
   validates_presence_of   :semester
   validates_presence_of   :location
@@ -37,15 +36,23 @@ class SemApp < ActiveRecord::Base
   validates_uniqueness_of :course_id, :scope => :semester_id, :allow_nil => true
   validates_uniqueness_of :bid,       :scope => :semester_id, :allow_nil => true
 
-  def book_entries(scheduled_for_removal = false)
+  def book_entries(options = {})
+    options = {
+      :scheduled_for_addition => false,
+      :scheduled_for_removal => false
+    }.merge(options)
+
     SemAppEntry.find(
       :all,
       :include => [:instance],
       :joins => "INNER JOIN sem_app_book_entries ON sem_app_book_entries.id = sem_app_entries.instance_id",
-      :conditions => ["sem_app_entries.sem_app_id = :sem_app_id AND sem_app_entries.instance_type = :instance_type AND sem_app_book_entries.scheduled_for_removal = :scheduled_for_removal", {
-          :sem_app_id            => id,
-          :instance_type         => "SemAppBookEntry",
-          :scheduled_for_removal => scheduled_for_removal}])
+      :conditions => ["sem_app_entries.sem_app_id = :sem_app_id AND sem_app_entries.instance_type = :instance_type AND " +
+                      "sem_app_book_entries.scheduled_for_addition = :scheduled_for_addition AND " +
+                      "sem_app_book_entries.scheduled_for_removal = :scheduled_for_removal", {
+          :sem_app_id             => id,
+          :instance_type          => "SemAppBookEntry",
+          :scheduled_for_addition => options[:scheduled_for_addition],
+          :scheduled_for_removal  => options[:scheduled_for_removal]}])
   end
 
   def media_entries

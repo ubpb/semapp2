@@ -25,9 +25,18 @@ class SemAppBookEntry < ActiveRecord::Base
 
   has_one :sem_app_entry, :as => :instance, :dependent => :destroy
 
-  validates_presence_of :bid
   validates_presence_of :signature
   validates_presence_of :title
   validates_presence_of :author
+
+  def scheduled_for_addition=(value)
+    write_attribute :scheduled_for_addition, value
+    write_attribute :scheduled_for_removal, !value
+  end
+
+  def scheduled_for_removal=(value)
+    write_attribute :scheduled_for_removal, value
+    write_attribute :scheduled_for_addition, !value
+  end
 
 end

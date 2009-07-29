@@ -1,32 +1,23 @@
-<% form_for [@sem_app, @book_order], :html => {:class => 'puiform'} do |f| %>
+<% form_for @sem_app_book_entry, :url => sem_app_book_orders_path(@sem_app), :html => {:class => 'puiform'} do |f| %>
   <%= f.error_messages %>
   <fieldset>
     <legend>Buch</legend>
     <ol>
       <li>
-        <%= f.label      :book_signature, "Signatur*" %>
-        <%= f.text_field :book_signature %>
+        <%= f.label      :signature, "Signatur*" %>
+        <%= f.text_field :signature %>
       </li>
       <li>
-        <%= f.label      :book_title, "Titel*" %>
-        <%= f.text_field :book_title %>
+        <%= f.label      :title, "Titel*" %>
+        <%= f.text_field :title %>
       </li>
       <li>
-        <%= f.label      :book_author, "Autor" %>
-        <%= f.text_field :book_author %>
+        <%= f.label      :author, "Autor" %>
+        <%= f.text_field :author %>
       </li>
       <li>
-        <%= f.label      :book_year, "Erscheinungsjahr" %>
-        <%= f.text_field :book_year, :size => 5 %>
-      </li>
-    </ol>
-  </fieldset>
-  <fieldset>
-    <legend>Nachricht</legend>
-    <ol>
-      <li>
-        <%= f.label     :message, "Ihre Nachricht an uns" %>
-        <%= f.text_area :message, :rows => 5, :cols => 50 %>
+        <%= f.label      :year, "Erscheinungsjahr" %>
+        <%= f.text_field :year, :size => 5 %>
       </li>
     </ol>
   </fieldset>

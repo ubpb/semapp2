@@ -5,16 +5,16 @@
 <% end %>
 
 <ul class="pui-tabbar tabs">
-  <li><a href="#new"><span>Neuaufträge</span></a></li>
-  <li><a href="#removed"><span>Löschaufträge</span></a></li>
+  <li><a href="#additions"><span>Neuaufträge</span></a></li>
+  <li><a href="#removals"><span>Löschaufträge</span></a></li>
 </ul>
 
 <div class="panels">
   <div>
-    <%= render 'new_orders', :book_orders => @book_orders %>
+    <%= render 'listing', :entries => @additions %>
   </div>
   <div>
-    Löschaufträge
+    <%= render 'listing', :entries => @removals %>
   </div>
 </div>
 
