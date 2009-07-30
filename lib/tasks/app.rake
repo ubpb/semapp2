@@ -50,6 +50,19 @@ namespace :app do
     say "Admin account created and activated."
   end
 
+  #
+  # Runs the book sync
+  #
+  desc "syncs the books"
+  task(:sync_books => :environment) do
+    connector = AlpehXserverConnector.new # TODO: make this configurable
+    engine    = BookSyncEngine.new(connector)
+    engine.sync
+  end
+
+  #
+  # Dummydata
+  #
   namespace :dummydata do
     desc "creates dummy data to play with"
     task(:create => [:create_semesters, :create_locations, :create_semapps])

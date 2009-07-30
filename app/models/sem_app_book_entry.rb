@@ -29,6 +29,10 @@ class SemAppBookEntry < ActiveRecord::Base
   validates_presence_of :title
   validates_presence_of :author
 
+  def base_signature
+    SemAppBookEntry.get_base_signature(signature)
+  end
+
   def scheduled_for_addition=(value)
     write_attribute :scheduled_for_addition, value
     write_attribute :scheduled_for_removal, !value
@@ -37,6 +41,13 @@ class SemAppBookEntry < ActiveRecord::Base
   def scheduled_for_removal=(value)
     write_attribute :scheduled_for_removal, value
     write_attribute :scheduled_for_addition, !value
+  end
+  
+  def self.get_base_signature(signature)
+    if signature.present?
+      m = signature.match(/(.+)(\(|\+|-).*/)
+      (m and m[1]) ? m[1] : signature
+    end
   end
 
 end
