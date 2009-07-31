@@ -101,7 +101,7 @@
        * Deletes an entry. It first requests a confirmation from the user.
        */
       function deleteEntry(entry, url) {
-        console.debug("Delete entry action triggered:", url);
+        //console.debug("Delete entry action triggered:", url);
         // setup ui
         edit_mode = true;
         hideToolbar(entry);
@@ -121,7 +121,7 @@
               async: false,
               url: url,
               success: function() {
-                console.debug("Entry deleted on server: ", url);
+                //console.debug("Entry deleted on server: ", url);
                 entry.slideUp(700, function() {
                   edit_mode = false;
                 });
