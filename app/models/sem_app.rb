@@ -66,6 +66,18 @@ class SemApp < ActiveRecord::Base
     end
   end
 
+  def book_by_signature(signature)
+    SemAppEntry.find(
+        :first,
+        :include => [:instance],
+        :joins => "INNER JOIN sem_app_book_entries ON sem_app_book_entries.id = sem_app_entries.instance_id",
+        :conditions => ["sem_app_entries.sem_app_id = :sem_app_id AND sem_app_entries.instance_type = :instance_type AND " +
+            "sem_app_book_entries.signature = :signature", {
+            :sem_app_id    => id,
+            :instance_type => "SemAppBookEntry",
+            :signature     => signature}])
+  end
+
   def media_entries
     SemAppEntry.find(
       :all,

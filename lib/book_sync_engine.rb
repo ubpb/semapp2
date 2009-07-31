@@ -36,8 +36,7 @@ class BookSyncEngine
         card_entries.each do |s, e|
           unless db_entries.include?(s)
             # found a book that is on the card AND NOT in the db
-            # TODO: create a new entry
-            puts "Create entry for #{s}"
+            create_entry(sem_app, s, e)
           else
             # found a book that is on the card AND in the db
             # do nothing
@@ -48,7 +47,7 @@ class BookSyncEngine
           unless db_entries.include?(s)
             # found a book that is in the db AND NOT on the card
             # TODO: Delete the entry in the db
-            puts "Delete entry for #{s}"
+            delete_entry(e)
           else
             # found a book that is in the db AND on the card
             # do nothing
@@ -66,6 +65,47 @@ class BookSyncEngine
     m = {}
     db_entries.each {|e| m[e.instance.signature] = e }
     return m
+  end
+
+  #
+  # Card Entry:
+  #   :title
+  #   :author
+  #   :edition
+  #   :place
+  #   :publisher
+  #   :year
+  #   :isbn
+  #
+  def create_entry(sem_app, signature, card_entry)
+    db_entry = sem_app.book_by_signature(signature)
+    if db_entry
+      update_entry(db_entry, card_entry)
+    else
+      book_entry = SemAppBookEntry.new
+      book_entry.signature = signature
+      book_entry.title     = card_entry[:title]
+      book_entry.author    = card_entry[:author]
+      book_entry.edition   = card_entry[:edition]
+      book_entry.place     = card_entry[:place]
+      book_entry.publisher = card_entry[:publisher]
+      book_entry.year      = card_entry[:year]
+      book_entry.isbn      = card_entry[:isbn]
+
+      sem_app_entry = SemAppEntry.new(:sem_app => sem_app, :instance => book_entry)
+
+      book_entry.save!
+      sem_app_entry.save!
+    end
+  end
+
+  def update_entry(db_entry, card_entry)
+    card_entry.merge!({:scheduled_for_addition => false})
+    db_entry.instance.update_attributes(card_entry).save!
+  end
+
+  def delete_entry(db_entry)
+    db_entry.destroy!
   end
 
 end

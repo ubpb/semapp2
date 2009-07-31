@@ -34,13 +34,13 @@ class SemAppBookEntry < ActiveRecord::Base
   end
 
   def scheduled_for_addition=(value)
-    write_attribute :scheduled_for_addition, value
-    write_attribute :scheduled_for_removal, !value
+      write_attribute :scheduled_for_addition, value
+      write_attribute :scheduled_for_removal, !value if (value == true)
   end
 
   def scheduled_for_removal=(value)
     write_attribute :scheduled_for_removal, value
-    write_attribute :scheduled_for_addition, !value
+    write_attribute :scheduled_for_addition, !value if (value == true)
   end
   
   def self.get_base_signature(signature)
