@@ -28,8 +28,6 @@ class BookSyncEngine
       card_entries = @connector.get_books(sem_app.bid)
       db_entries   = mergable_hash_from_db_entries(sem_app.book_entries(:all => true))
 
-      print " #{card_entries.size} items on card, #{db_entries.size} entries in db."
-      
       # sync the books
       SemApp.transaction do
         # iterate over all card entries
@@ -44,9 +42,8 @@ class BookSyncEngine
         end
         # iterate over all db entries
         db_entries.each do |s, e|
-          unless db_entries.include?(s)
+          unless card_entries.include?(s)
             # found a book that is in the db AND NOT on the card
-            # TODO: Delete the entry in the db
             delete_entry(e)
           else
             # found a book that is in the db AND on the card
@@ -105,7 +102,8 @@ class BookSyncEngine
   end
 
   def delete_entry(db_entry)
-    db_entry.destroy!
+    entry = SemAppEntry.find(db_entry.id)
+    entry.destroy if entry
   end
 
 end
