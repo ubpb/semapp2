@@ -24,7 +24,7 @@ Rails::Initializer.run do |config|
   config.gem 'thoughtbot-paperclip', :version => '2.3.0',  :lib => 'paperclip', :source => 'http://gems.github.com'
   config.gem 'mislav-will_paginate', :version => '2.3.11', :lib => 'will_paginate', :source => 'http://gems.github.com'
   config.gem 'libxml-ruby',          :version => '1.1.3',  :lib => 'libxml'
-  config.gem 'bcrypt-ruby',          :version => '2.0.5',  :lib => 'bcrypt'
+  config.gem 'bcrypt-ruby',          :version => '2.1.1',  :lib => 'bcrypt'
   config.gem 'giraffesoft-resource_controller', :version => '0.6.5', :lib => 'resource_controller', :source => 'http://gems.github.com'
   config.gem 'ruby-recaptcha',       :version => '1.0.0'
 
