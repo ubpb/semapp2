@@ -53,8 +53,13 @@ class User < ActiveRecord::Base
   # if there is no user logged in
   def self.current
     return @current_user if defined?(@current_user)
-    user_session = UserSession.find
+    user_session = current_session
     @current_user = user_session.user if user_session and user_session.user
+  end
+
+  # Returns the current user session
+  def self.current_session
+    UserSession.find
   end
 
   # Callback: Before save
