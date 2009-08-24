@@ -193,7 +193,7 @@ div.sem-app {
   margin: 2em 0;
 }
 
-div.sem-app #books-toolbar {
+div.sem-app .app-toolbar {
   padding: 0.3em 0.8em;
   background-color: #bedce7;
   margin-top: -20px;

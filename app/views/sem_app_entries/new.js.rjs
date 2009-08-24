@@ -1,9 +1,0 @@
-page.replace_html "create_entry_dialog",
-  :partial => 'sem_app_entries/' + @sem_app_entry.instance_type.underscore.concat('_form_new'),
-  :locals => {:entry => @sem_app_entry}
-
-page["sem_app_entry_#{@buddy_entry_id}_confirmation_panel_add"].hide()
-page["sem_app_entry_#{@buddy_entry_id}"].removeClassName('highlight')
-page.assign "_edit_mode", false
-
-page << "open_new_entry_dialog();"

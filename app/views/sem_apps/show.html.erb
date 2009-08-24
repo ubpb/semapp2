@@ -2,33 +2,17 @@
   <% pui_panel :panel_style => 'notice' do %>
     <p>
       Der eSeminarapparat ist <strong>nicht</strong> aktiv und/oder wurde noch nicht von der Bibliothek
-      freigegeben. Nur Sie als Beseitzer dieses eSemnarapparates können ihn sehen und
+      freigegeben. Nur Sie als Besitzer dieses eSemnarapparates können ihn sehen und
       bearbeiten.
     </p>
   <% end %>
 <% end %>
 
-<h3><%= @sem_app.title %></h3>
-
-<% pui_panel :panel_style => 'blue', :rounded => true, :style => 'padding: 1em;' do %>
-  <div>
-    <strong>Semester:</strong>
-    <%= h(@sem_app.semester.title) %>
-  </div>
-  <div>
-    <strong>Tutor(en):</strong>
-    <%= h(@sem_app.tutors) %>
-  </div>
-  <div>
-    <strong>Standort:</strong>
-    <% if @sem_app.bid.blank? or @sem_app.ref.blank? %>
-      <span style="font-style: italic">Dieser eSeminarapparat ist nur online verfügbar</span>
-    <% else %>
-      <%= h(@sem_app.location.title) %>,
-      # <%= h(@sem_app.ref) %>
-    <% end %>
-  </div>
-<% end %>
+<h3><%= @sem_app.title %> (<%= h(@sem_app.semester.title) -%>)</h3>
+<div>
+  Tutor(en):
+  <strong><%= h(@sem_app.tutors) %></strong>
+</div>
 
 <div class="sem-app">
   <ul class="pui-tabbar tabs">
@@ -44,21 +28,47 @@
       <% end %>
 
       <% if @sem_app.book_entries.present? and @sem_app.bid.present? and @sem_app.ref.present? %>
+        <% pui_panel do %>
+          <strong>Standort der Bücher:</strong>
+          <% if @sem_app.bid.blank? or @sem_app.ref.blank? %>
+            <span style="font-style: italic">Dieser eSeminarapparat ist nur online verfügbar</span>
+          <% else %>
+            <%= h(@sem_app.location.title) %>,
+            Nr. <%= h(@sem_app.ref) %>
+          <% end %>
+        <% end %>
+
         <div id="sem-app-book-entries" class="sem-app-entries">
           <% @sem_app.book_entries.each do |entry| %>
             <%= render 'entry', :entry => entry, :sem_app => @sem_app %>
           <% end %>
         </div>
       <% else %>
-        <% pui_panel :panel_style => 'highlight', :style => 'text-align: center' do %>
-          <p>Für diesen eSeminarapparat sind aktuell <strong>keine</strong> Bücher in der Bibliothek aufgestellt.</p>
-        <% end %>
+        <div id="sem-app-book-entries" class="sem-app-entries">
+          <% pui_panel :panel_style => 'highlight', :style => 'text-align: center', :id => 'no-book-entries' do %>
+            <p>Für diesen eSeminarapparat sind aktuell <strong>keine</strong> Bücher in der Bibliothek aufgestellt.</p>
+          <% end %>
+        </div>
       <% end %>
     </div>
 
     <!-- Media Tab -->
     <div id="media-tab">
-      MEDIEN TAB
+      <% if @sem_app.editable? %>
+        <%= render 'media_toolbar', :sem_app => @sem_app %>
+      <% end %>
+
+      <div id="sem-app-media-entries" class="sem-app-entries">
+        <% if @sem_app.media_entries.present? %>
+          <% @sem_app.media_entries.each do |entry| %>
+            <%= render 'entry', :entry => entry, :sem_app => @sem_app %>
+          <% end %>
+        <% else %>
+          <% pui_panel :panel_style => 'highlight', :style => 'text-align: center', :id => 'no-media-entries' do %>
+            <p>Für diesen eSeminarapparat sind aktuell <strong>keine</strong> elektronischen Texte und Medien verfügbar.</p>
+          <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
@@ -77,7 +87,7 @@
     <script type="text/javascript">
       var edit_mode = false;
 
-      /** Uighlights a given entry */
+      /** Highlights a given entry */
       function highlightEntry(entry) {
         entry.addClass("highlight");
       }
@@ -100,15 +110,21 @@
       /**
        * Deletes an entry. It first requests a confirmation from the user.
        */
-      function deleteEntry(entry, url) {
+      function deleteEntry(entry, url, options) {
+        // build the settings
+        var settings = jQuery.extend({
+          title  : "Löschen bestätigen...",
+          message: "Soll der Eintrag wirklich gelöscht werden?"
+        }, options || {});
+
         //console.debug("Delete entry action triggered:", url);
         // setup ui
         edit_mode = true;
         hideToolbar(entry);
         // let the user confirm this action
         confirm({
-          title: "Löschen bestätigen...",
-          message: "Soll der Eintrag wirklich gelöscht werden? (Gelöschte Bücher werden ebenfalls aus dem regal entfernt)",
+          title: settings.title,
+          message: settings.message,
           onClose: function() {
             edit_mode = false;
             unhighlightEntry(entry);
@@ -118,16 +134,16 @@
             jQuery.ajax({
               type: "delete",
               data: "_method=delete",
-              async: false,
+              async: true,
               url: url,
               success: function() {
                 //console.debug("Entry deleted on server: ", url);
-                entry.slideUp(700, function() {
+                entry.slideUp(500, function() {
                   edit_mode = false;
                 });
               },
               error: function() {
-                alert("Beim Versuch den Eintrag zu löschen ist ein Fehler aufgetreten. Laden Sie die Seite neu und versuchen Sie es erneut. Sollte es wiederholt zu einem Fehler kommen, kontaktieren Sie bitte den Supoort.");
+                alert("Beim Versuch den Eintrag zu löschen ist ein Fehler aufgetreten. Laden Sie die Seite neu und versuchen Sie es erneut. Sollte es wiederholt zu einem Fehler kommen, kontaktieren Sie bitte den Support.");
               }
             });
           },
@@ -175,6 +191,96 @@
         .dialog("open");
       }
 
+      function createEntry(url, instance_type) {
+        jQuery.get(url, {instance_type: instance_type}, function(data) {
+          entryDialog({
+            html: data,
+            onSave: function(dialog) {
+              var actionUrl = dialog.find("#entry-form").attr('action');
+              var data      = dialog.find("#entry-form").serialize();
+              jQuery.ajax({
+                type: "post",
+                async: true,
+                url: actionUrl,
+                data: data,
+                success: function(data) {
+                  dialog.dialog("close");
+                  // update the listing
+                  jQuery('#sem-app-media-entries').prepend(data);
+                  jQuery('#no-media-entries').hide();
+                },
+                error: function(response) {
+                  dialog.find("#entry-form").replaceWith(response.responseText);
+                }
+              });
+            }
+          });
+        }, 'script');
+      }
+
+      function editEntry(entry, url) {
+        jQuery.get(url, function(data) {
+          entryDialog({
+            html: data,
+            onSave: function(dialog) {
+              var actionUrl = dialog.find("#entry-form").attr('action');
+              var data      = dialog.find("#entry-form").serialize();
+              console.debug(data);
+              jQuery.ajax({
+                type: "post",
+                async: true,
+                url: actionUrl,
+                data: data,
+                success: function(data) {
+                  dialog.dialog("close");
+                  // update the listing
+                  entry.replaceWith(data);
+                },
+                error: function(response) {
+                  dialog.find("#entry-form").replaceWith(response.responseText);
+                }
+              });
+            }
+          });
+        });
+      }
+
+      function entryDialog(options) {
+        // build the settings
+        var settings = jQuery.extend({
+          title   : "Einen neuen Eintrag erstellen...",
+          onSave  : function(dialog) {},
+          onCancel: function(dialog) {},
+          html    : ""
+        }, options || {});
+
+        // (re)create the dialog
+        jQuery('#entry-dialog').remove();
+        jQuery('<div id="entry-dialog"></div>').dialog({
+          modal: true,
+          autoOpen: false,
+          width: 450,
+          title: settings.title,
+          closeOnEscape: true,
+          buttons: {
+            "Speichern": function() {
+              settings.onSave(jQuery(this));
+            },
+            "Abbrechen": function() {
+              jQuery(this).dialog("close");
+              settings.onCancel();
+            }
+          }
+        })
+        .html(settings.html)
+        .dialog("open");
+
+        // prevent the default form submit
+        jQuery('#entry-form').unbind("submit");
+        jQuery('#entry-form').bind("submit", function(event) {
+          event.preventDefault();
+        });
+      }
 
       /***********************************************************************************
        * Event hooks
@@ -182,22 +288,52 @@
       jQuery(function() {
       
         /** If the user hovers over entries with the mouse, show/hide a toolbar. */
-        jQuery(".sem-app-entries .sem-app-entry").hover(function() {
+        jQuery(".sem-app-entries .sem-app-entry").live('mouseover', function() {
           if (edit_mode == true) return;
           highlightEntry(jQuery(this));
           showToolbar(jQuery(this))
-        }, function() {
+        });
+        jQuery(".sem-app-entries .sem-app-entry").live('mouseout', function() {
           if (edit_mode == true) return;
           unhighlightEntry(jQuery(this));
           hideToolbar(jQuery(this));
         });
 
-        /** If the user clicks the delete link of an entry */
-        jQuery(".delete-action").click(function(event) {
+        /** If the user clicks the delete link of an book entry */
+        jQuery(".delete-book-entry-action").live('click', function(event) {
           event.preventDefault();
           var entry = jQuery(this).parent().parent();
           var url   = jQuery(this).attr("href");
-          deleteEntry(entry, url);
+          deleteEntry(entry, url, {
+            title  : "Löschen bestätigen...",
+            message: "Soll das Buch aus der Liste gelöscht werden? Wenn Sie diese Aktion bestätigen wird das Buch ebenfalls aus dem Regal in der Bibliothek entfernt und in den normalen Bestand aufgenommen."
+          });
+        });
+
+        /** If the user clicks the delete link of an media entry */
+        jQuery(".delete-media-entry-action").live('click', function(event) {
+          event.preventDefault();
+          var entry = jQuery(this).parent().parent();
+          var url   = jQuery(this).attr("href");
+          deleteEntry(entry, url, {
+            title  : "Löschen bestätigen...",
+            message: "Soll der Eintrag wirklich gelöscht werden?"
+          });
+        });
+
+        /** If the user clicks the edit link of an media entry */
+        jQuery(".edit-media-entry-action").live('click', function(event) {
+          event.preventDefault();
+          var entry = jQuery(this).parent().parent();
+          var url = jQuery(this).attr("href");
+          editEntry(entry, url);
+        });
+
+        /** If the user clicks the create entry link of an entry */
+        jQuery(".create-action").live('click', function(event) {
+          event.preventDefault();
+          var url = jQuery(this).attr("href");
+          createEntry(url, "SemAppHeadlineEntry");
         });
       });
     </script>

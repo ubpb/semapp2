@@ -1,53 +1,58 @@
 class SemAppEntriesController < ApplicationController
 
-  def show
-    @sem_app_entry = SemAppEntry.find(params[:id])
-    respond_to do |format|
-      format.js
-    end
-  end
+  #def show
+  #  @sem_app_entry = SemAppEntry.find(params[:id])
+  #  respond_to do |format|
+  #    format.js
+  #  end
+  #end
 
   def new
-    sem_app         = SemApp.find(params[:sem_app_id])
+    @sem_app         = SemApp.find(params[:sem_app_id])
     instance_type   = params[:instance_type].classify.constantize
     
     @buddy_entry_id = params[:buddy_entry_id]
-    @sem_app_entry = SemAppEntry.new(:sem_app => sem_app, :instance => instance_type.new)
+    @sem_app_entry = SemAppEntry.new(:sem_app => @sem_app, :instance => instance_type.new)
+    respond_to do |format|
+      format.js { render :layout => false }
+    end
   end
 
   def create
     sem_app       = SemApp.find(params[:sem_app_id])
     instance_type = params[:instance_type].classify.constantize
 
-    instance      = instance_type.new(params[instance_type.to_s.underscore.to_sym])
+    instance       = instance_type.new(params[instance_type.to_s.underscore.to_sym])
     @sem_app_entry = SemAppEntry.new(:sem_app => sem_app, :instance => instance)
 
-    if (@sem_app_entry.save!)
+    if (instance.save and @sem_app_entry.save and @sem_app_entry.insert_at(1))
       respond_to do |format|
-        format.js
+        format.js { render :layout => false }
       end
     else
-      render :action => 'new'
+      respond_to do |format|
+        format.js { render :action => :new, :layout => false, :status => 409 }
+      end
     end
   end
 
   def edit
     @sem_app_entry = SemAppEntry.find(params[:id])
     respond_to do |format|
-      format.js
+      format.js { render :layout => false }
     end
   end
 
   def update
     @sem_app_entry = SemAppEntry.find(params[:id])
-    type  = @sem_app_entry.instance_type.underscore
-    @sem_app_entry.instance.update_attributes(params[type.to_sym])
+    instance_type  = @sem_app_entry.instance_type.underscore
+    @sem_app_entry.instance.update_attributes(params[instance_type.to_sym])
 
     respond_to do |format|
-      if @sem_app_entry and @sem_app_entry.instance.save
-        format.js
+      if @sem_app_entry.instance.save and @sem_app_entry.save
+        format.js { render :layout => false }
       else
-        format.js { render :action => 'edit' }
+        format.js { render :action => :edit, :layout => false, :status => 409 }
       end
     end
   end
