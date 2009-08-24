@@ -191,8 +191,8 @@
         .dialog("open");
       }
 
-      function createEntry(url, instance_type) {
-        jQuery.get(url, {instance_type: instance_type}, function(data) {
+      function createEntry(instance_type) {
+        jQuery.get('<%= new_sem_app_entry_path(@sem_app) -%>', {instance_type: instance_type}, function(data) {
           entryDialog({
             html: data,
             onSave: function(dialog) {
@@ -330,10 +330,15 @@
         });
 
         /** If the user clicks the create entry link of an entry */
-        jQuery(".create-action").live('click', function(event) {
+        jQuery(".new-media-entry-action").change(function(event) {
           event.preventDefault();
-          var url = jQuery(this).attr("href");
-          createEntry(url, "SemAppHeadlineEntry");
+          var entry_type = jQuery(this).attr('value');
+          switch (entry_type) {
+            case "SemAppHeadlineEntry":
+              createEntry("SemAppHeadlineEntry");
+              break;
+          }
+          this.selectedIndex = 0;
         });
       });
     </script>
