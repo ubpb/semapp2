@@ -47,7 +47,7 @@ namespace :app do
       u.authorities << Authority.find_by_name('ROLE_ADMIN')
     end
 
-    say "Admin account created and activated."
+    say "Account created and activated."
   end
 
   #

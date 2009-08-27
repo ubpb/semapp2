@@ -1,10 +1,9 @@
 # == Schema Information
-# Schema version: 20090729092414
+# Schema version: 20090710121016
 #
 # Table name: sem_app_book_entries
 #
 #  id                     :integer(4)      not null, primary key
-#  bid                    :string(255)     not null
 #  signature              :string(255)     not null
 #  title                  :string(255)     not null
 #  author                 :string(255)     not null
@@ -14,11 +13,11 @@
 #  year                   :string(255)
 #  isbn                   :string(255)
 #  comment                :text
+#  scheduled_for_addition :boolean(1)      not null
+#  scheduled_for_removal  :boolean(1)      not null
+#  order_status           :text
 #  created_at             :datetime
 #  updated_at             :datetime
-#  scheduled_for_removal  :boolean(1)
-#  scheduled_for_addition :boolean(1)
-#  order_status           :text
 #
 
 class SemAppBookEntry < ActiveRecord::Base
@@ -34,8 +33,8 @@ class SemAppBookEntry < ActiveRecord::Base
   end
 
   def scheduled_for_addition=(value)
-      write_attribute :scheduled_for_addition, value
-      write_attribute :scheduled_for_removal, !value if (value == true)
+    write_attribute :scheduled_for_addition, value
+    write_attribute :scheduled_for_removal, !value if (value == true)
   end
 
   def scheduled_for_removal=(value)
