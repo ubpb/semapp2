@@ -11,6 +11,8 @@
 
     <%= pui_defaults_tag %>
 
+    <%= javascript_include_tag 'jquery/jquery.form.js' %>
+
     <%= stylesheet_link_tag("main.css", :media => "all") %>
 
     <%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
@@ -22,6 +24,17 @@
           settings.data = settings.data || "";
           settings.data += (settings.data ? "&" : "") + "authenticity_token=" + encodeURIComponent(AUTH_TOKEN);
         });
+
+        // Gracefully ignore firebug script errors when firebug not present.
+        // http://snippets.dzone.com/posts/show/6326
+        if (! ("console" in window) || !("firebug" in console)) {
+          var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
+          window.console = {};
+          var EmptyFn = function() {};
+          for (var i = 0; i <names.length; ++i) {
+            window.console[names[i]] = EmptyFn;
+          }
+        }
       });
     </script>
 

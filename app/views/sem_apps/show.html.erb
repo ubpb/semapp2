@@ -196,26 +196,21 @@
           entryDialog({
             html: data,
             onSave: function(dialog) {
-              var actionUrl = dialog.find("#entry-form").attr('action');
-              var data      = dialog.find("#entry-form").serialize();
-              jQuery.ajax({
-                type: "post",
-                async: true,
-                url: actionUrl,
-                data: data,
-                success: function(data) {
+              var form = jQuery('#entry-form');
+              submitForm(form, {
+                onSuccess: function(responseText) {
+                  console.debug(responseText);
                   dialog.dialog("close");
-                  // update the listing
-                  jQuery('#sem-app-media-entries').prepend(data);
+                  jQuery('#sem-app-media-entries').prepend(responseText);
                   jQuery('#no-media-entries').hide();
                 },
-                error: function(response) {
-                  dialog.find("#entry-form").replaceWith(response.responseText);
+                onError: function(responseText) {
+                  form.replaceWith(responseText);
                 }
               });
             }
           });
-        }, 'script');
+        });
       }
 
       function editEntry(entry, url) {
@@ -223,23 +218,19 @@
           entryDialog({
             html: data,
             onSave: function(dialog) {
-              var actionUrl = dialog.find("#entry-form").attr('action');
-              var data      = dialog.find("#entry-form").serialize();
-              console.debug(data);
-              jQuery.ajax({
-                type: "post",
-                async: true,
-                url: actionUrl,
-                data: data,
-                success: function(data) {
+              var form = jQuery('#entry-form');
+              submitForm(form, {
+                onSuccess: function(responseText) {
                   dialog.dialog("close");
-                  // update the listing
-                  entry.replaceWith(data);
+                  entry.replaceWith(responseText);
                 },
-                error: function(response) {
-                  dialog.find("#entry-form").replaceWith(response.responseText);
+                onError: function(responseText) {
+                  form.replaceWith(responseText);
                 }
               });
+            },
+            onCancel: function(dialog) {
+              dialog.dialog('close');
             }
           });
         });
@@ -256,7 +247,7 @@
 
         // (re)create the dialog
         jQuery('#entry-dialog').remove();
-        jQuery('<div id="entry-dialog"></div>').dialog({
+        var dialog = jQuery('<div id="entry-dialog"></div>').dialog({
           modal: true,
           autoOpen: false,
           width: 450,
@@ -267,19 +258,47 @@
               settings.onSave(jQuery(this));
             },
             "Abbrechen": function() {
-              jQuery(this).dialog("close");
-              settings.onCancel();
+              settings.onCancel(jQuery(this));
             }
           }
         })
         .html(settings.html)
         .dialog("open");
 
-        // prevent the default form submit
-        jQuery('#entry-form').unbind("submit");
-        jQuery('#entry-form').bind("submit", function(event) {
+        // (re)bind to the submit event of the form loaded into the
+        // dialog to prevent default form submit.
+        var form = jQuery('#entry-form');
+        form.unbind("submit");
+        form.bind("submit", function(event) {
           event.preventDefault();
+          settings.onSave(dialog);
         });
+      }
+
+      function submitForm(form, options) {
+        var opts = jQuery.extend({
+          onSuccess: function(responseText) {},
+          onError  : function(responseText) {}
+        }, options || {});
+
+        // handle form submission
+        // (re)bind to the submit event of the form we just loaded into the editor
+        form.unbind("submit");
+        form.bind("submit", function(event) {
+          event.preventDefault();
+          jQuery(this).ajaxSubmit({
+            dataType: 'script',
+            success: function(responseText) {
+              opts.onSuccess(responseText);
+            },
+            error: function(xhr) {
+              opts.onError(xhr.responseText);
+            }
+          });
+        });
+
+        // trigger the submit event of the form
+        form.submit();
       }
 
       /***********************************************************************************
@@ -332,12 +351,10 @@
         /** If the user clicks the create entry link of an entry */
         jQuery(".new-media-entry-action").change(function(event) {
           event.preventDefault();
+
           var entry_type = jQuery(this).attr('value');
-          switch (entry_type) {
-            case "SemAppHeadlineEntry":
-              createEntry("SemAppHeadlineEntry");
-              break;
-          }
+          createEntry(entry_type);
+          
           this.selectedIndex = 0;
         });
       });

@@ -1,12 +1,5 @@
 class SemAppEntriesController < ApplicationController
 
-  #def show
-  #  @sem_app_entry = SemAppEntry.find(params[:id])
-  #  respond_to do |format|
-  #    format.js
-  #  end
-  #end
-
   def new
     @sem_app         = SemApp.find(params[:sem_app_id])
     instance_type   = params[:instance_type].classify.constantize
@@ -19,18 +12,26 @@ class SemAppEntriesController < ApplicationController
   end
 
   def create
-    sem_app       = SemApp.find(params[:sem_app_id])
-    instance_type = params[:instance_type].classify.constantize
+    sem_app             = SemApp.find(params[:sem_app_id])
+    instance_class      = params[:instance_type].classify.constantize
+    instance_attributes = params[instance_class.to_s.underscore.to_sym]
+    instance            = instance_class.new()
 
-    instance       = instance_type.new(params[instance_type.to_s.underscore.to_sym])
+    # in case of a SemAppFileEntry we need to transform the tempfile
+    # into a proper SemAppFileAttachment
+    if instance_class == SemAppFileEntry
+      tempfile = params[:sem_app_file_entry][:sem_app_file_attachment]
+      instance_attributes[:sem_app_file_attachment] = SemAppFileAttachment.new(:attachment => tempfile, :attachable => instance)
+      #instance_attributes[:sem_app_file_attachment].save!
+    end
+
+    instance.attributes = instance_attributes
     @sem_app_entry = SemAppEntry.new(:sem_app => sem_app, :instance => instance)
 
-    if (instance.save and @sem_app_entry.save and @sem_app_entry.insert_at(1))
-      respond_to do |format|
+    respond_to do |format|
+      if (instance_attributes[:sem_app_file_attachment].valid? and instance.save and @sem_app_entry.save and @sem_app_entry.insert_at(1))
         format.js { render :layout => false }
-      end
-    else
-      respond_to do |format|
+      else
         format.js { render :action => :new, :layout => false, :status => 409 }
       end
     end
@@ -64,7 +65,6 @@ class SemAppEntriesController < ApplicationController
         entry.instance.update_attributes(:scheduled_for_removal => true)
       else
         entry.instance.destroy
-        entry.destroy
         entry.remove_from_list
       end
     end

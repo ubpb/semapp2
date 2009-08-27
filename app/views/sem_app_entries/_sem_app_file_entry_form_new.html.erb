@@ -1,0 +1,21 @@
+<% file_entry = entry.instance %>
+
+<% form_for(file_entry,
+  :url => sem_app_entries_path(entry.sem_app.id),
+  :html => {:id => "entry-form", :class => "entry-form file"}) do |f| %>
+  <%= hidden_field_tag :instance_type, entry.instance_type %>
+  <%= f.error_messages %>
+  <fieldset>
+    <legend></legend>
+    <ol>
+      <li>
+        <%= f.label      :sem_app_file_attachment, "Datei" %>
+        <%= f.file_field :sem_app_file_attachment %>
+      </li>
+      <li>
+        <%= f.label     :comment, "Kommentar" %>
+        <%= f.text_area :comment %>
+      </li>
+    </ol>
+  </fieldset>
+<% end %>

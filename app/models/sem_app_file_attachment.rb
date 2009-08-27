@@ -19,4 +19,6 @@ class SemAppFileAttachment < ActiveRecord::Base
 
   has_attached_file :attachment, :styles => {}, :processors => []
 
+  validates_attachment_presence :attachment
+
 end
