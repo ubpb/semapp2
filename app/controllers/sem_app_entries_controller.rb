@@ -17,22 +17,14 @@ class SemAppEntriesController < ApplicationController
     instance_attributes = params[instance_class.to_s.underscore.to_sym]
     instance            = instance_class.new()
 
-    # in case of a SemAppFileEntry we need to transform the tempfile
-    # into a proper SemAppFileAttachment
-    if instance_class == SemAppFileEntry
-      tempfile = params[:sem_app_file_entry][:sem_app_file_attachment]
-      instance_attributes[:sem_app_file_attachment] = SemAppFileAttachment.new(:attachment => tempfile, :attachable => instance)
-      #instance_attributes[:sem_app_file_attachment].save!
-    end
-
     instance.attributes = instance_attributes
     @sem_app_entry = SemAppEntry.new(:sem_app => sem_app, :instance => instance)
 
     respond_to do |format|
-      if (instance_attributes[:sem_app_file_attachment].valid? and instance.save and @sem_app_entry.save and @sem_app_entry.insert_at(1))
-        format.js { render :layout => false }
+      if (instance.save and @sem_app_entry.save and @sem_app_entry.insert_at(1))
+        format.js { render :layout => false, :content_type => 'text/html' }
       else
-        format.js { render :action => :new, :layout => false, :status => 409 }
+        format.js { render :action => :new, :layout => false, :status => 409, :content_type => 'text/html' }
       end
     end
   end
@@ -51,9 +43,9 @@ class SemAppEntriesController < ApplicationController
 
     respond_to do |format|
       if @sem_app_entry.instance.save and @sem_app_entry.save
-        format.js { render :layout => false }
+        format.js { render :layout => false, :content_type => 'text/html' }
       else
-        format.js { render :action => :edit, :layout => false, :status => 409 }
+        format.js { render :action => :edit, :layout => false, :status => 409, :content_type => 'text/html' }
       end
     end
   end

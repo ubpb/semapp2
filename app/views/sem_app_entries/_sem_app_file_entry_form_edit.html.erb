@@ -1,7 +1,7 @@
 <% file_entry = entry.instance %>
 
 <% form_for(file_entry,
-  :url => sem_app_entries_path(entry.sem_app.id),
+  :url => sem_app_entry_path(entry.sem_app.id, entry.id),
   :html => {:id => "entry-form", :class => "entry-form file"}) do |f| %>
   <%= hidden_field_tag :instance_type, entry.instance_type %>
   <%= f.error_messages %>

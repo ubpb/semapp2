@@ -199,7 +199,6 @@
               var form = jQuery('#entry-form');
               submitForm(form, {
                 onSuccess: function(responseText) {
-                  console.debug(responseText);
                   dialog.dialog("close");
                   jQuery('#sem-app-media-entries').prepend(responseText);
                   jQuery('#no-media-entries').hide();
@@ -216,6 +215,7 @@
       function editEntry(entry, url) {
         jQuery.get(url, function(data) {
           entryDialog({
+            title: "Einen Eintrag bearbeiten...",
             html: data,
             onSave: function(dialog) {
               var form = jQuery('#entry-form');
@@ -287,7 +287,7 @@
         form.bind("submit", function(event) {
           event.preventDefault();
           jQuery(this).ajaxSubmit({
-            dataType: 'script',
+            dataType: 'html',
             success: function(responseText) {
               opts.onSuccess(responseText);
             },
