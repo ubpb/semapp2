@@ -301,6 +301,24 @@
         form.submit();
       }
 
+      function reorderMediaEntries() {
+        var orderedList = jQuery("#sem-app-media-entries").sortable('serialize');
+        console.debug(orderedList);
+        
+        jQuery.ajax({
+          type: "put",
+          data: "_method=put&" + orderedList,
+          async: true,
+          url: "<%= reorder_sem_app_entries_path(@sem_app) -%>",
+          success: function() {
+            console.debug("Sort sucessfull");
+          },
+          error: function() {
+            alert("Sortieren fehlgeschlagen");
+          }
+        });
+      }
+
       /***********************************************************************************
        * Event hooks
        **********************************************************************************/
@@ -357,6 +375,15 @@
           
           this.selectedIndex = 0;
         });
+
+        /** Make media entries sortable with the mouse */
+        jQuery("#sem-app-media-entries").sortable({
+          items: '.sem-app-entry',
+          handle: '.toolbar-item.move',
+          update: function(event, ui) {
+            reorderMediaEntries();
+          }
+        })
       });
     </script>
   <% end %>

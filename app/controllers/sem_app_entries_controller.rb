@@ -57,7 +57,8 @@ class SemAppEntriesController < ApplicationController
         entry.instance.update_attributes(:scheduled_for_removal => true)
       else
         entry.instance.destroy
-        entry.remove_from_list
+        entry.destroy
+        entry.resync_positions
       end
     end
     render :nothing => true
@@ -67,15 +68,13 @@ class SemAppEntriesController < ApplicationController
   # reorder entries
   #
   def reorder
-    entries = params[:sem_app_media_entries]
+    entries = params['sem-app-entry']
     if entries
       SemAppEntry.transaction do
         entries.each_index do |i|
-          id = params[:sem_app_media_entries][i]
+          id = params['sem-app-entry'][i]
           if (id and !id.empty?)
-            entry = SemAppEntry.find_by_id!(id)
-            entry.position = i
-            entry.save!
+            SemAppEntry.find_by_id!(id).update_attribute(:position, i+1)
           end
         end
       end

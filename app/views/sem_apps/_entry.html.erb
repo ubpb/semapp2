@@ -3,11 +3,12 @@
     <div class="toolbar">
       <% if entry.instance_type == "SemAppBookEntry" %>
         <!-- toolbar for books -->
-        <%= link_to 'Löschen', sem_app_entry_path(entry.sem_app, entry), :class => "delete-book-entry-action" %>
+        <%= link_to 'Löschen', sem_app_entry_path(entry.sem_app, entry), :class => "toolbar-item delete-book-entry-action" %>
       <% else %>
         <!-- toolbar for media entries -->
-        <%= link_to 'Löschen', sem_app_entry_path(entry.sem_app, entry), :class => "delete-media-entry-action" %>
-        <%= link_to 'Bearbeiten', edit_sem_app_entry_path(entry.sem_app, entry), :class => "edit-media-entry-action" %>
+        <span class="toolbar-item move">Move</span>
+        <%= link_to 'Löschen', sem_app_entry_path(entry.sem_app, entry), :class => "toolbar-item delete-media-entry-action" %>
+        <%= link_to 'Bearbeiten', edit_sem_app_entry_path(entry.sem_app, entry), :class => "toolbar-item edit-media-entry-action" %>
       <% end %>
     </div>
   <% end %>
