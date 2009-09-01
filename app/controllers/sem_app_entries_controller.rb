@@ -1,10 +1,11 @@
 class SemAppEntriesController < ApplicationController
 
+  before_filter :require_user
+  before_filter :load_sem_app
+  before_filter :check_access
+
   def new
-    @sem_app         = SemApp.find(params[:sem_app_id])
-    instance_type   = params[:instance_type].classify.constantize
-    
-    @buddy_entry_id = params[:buddy_entry_id]
+    instance_type = params[:instance_type].classify.constantize
     @sem_app_entry = SemAppEntry.new(:sem_app => @sem_app, :instance => instance_type.new)
     respond_to do |format|
       format.js { render :layout => false }
@@ -12,13 +13,12 @@ class SemAppEntriesController < ApplicationController
   end
 
   def create
-    sem_app             = SemApp.find(params[:sem_app_id])
     instance_class      = params[:instance_type].classify.constantize
     instance_attributes = params[instance_class.to_s.underscore.to_sym]
     instance            = instance_class.new()
 
     instance.attributes = instance_attributes
-    @sem_app_entry = SemAppEntry.new(:sem_app => sem_app, :instance => instance)
+    @sem_app_entry = SemAppEntry.new(:sem_app => @sem_app, :instance => instance)
 
     respond_to do |format|
       if (instance.save and @sem_app_entry.save and @sem_app_entry.insert_at(1))
@@ -80,6 +80,20 @@ class SemAppEntriesController < ApplicationController
       end
     end
     render :nothing => true
+  end
+
+  private
+
+  def load_sem_app
+    @sem_app = SemApp.find(params[:sem_app_id])
+  end
+
+  def check_access
+    unless @sem_app.is_editable?
+      flash[:error] = "Zugriff verweigert"
+      redirect_to sem_app_path(@sem_app)
+      return false
+    end
   end
 
 end
