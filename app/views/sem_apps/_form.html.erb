@@ -83,6 +83,18 @@
           <span><%= h @sem_app.location.title %></span>
         <% end %>
       </li>
+      <% if User.current.is_admin? %>
+        <li>
+          <%= f.label      :bid, "Bibliotheks ID" %>
+          <%= f.text_field :bid %>
+          <div class="pui-tooltip">z.B. Aleph Ausweisnummer</div>
+        </li>
+        <li>
+          <%= f.label      :ref, "Referenznummer" %>
+          <%= f.text_field :ref %>
+          <div class="pui-tooltip">eine intern verwendete Referenznummer (z.B. Nummer am Regal)</div>
+        </li>
+      <% end %>
     </ol>
   </fieldset>
   <fieldset>
