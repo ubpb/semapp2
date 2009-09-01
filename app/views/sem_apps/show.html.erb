@@ -8,7 +8,17 @@
   <% end %>
 <% end %>
 
-<h3><%= @sem_app.title %> (<%= h(@sem_app.semester.title) -%>)</h3>
+<h3>
+  <%= @sem_app.title %> (<%= h(@sem_app.semester.title) -%>)
+  <% if @sem_app.editable? %>
+    (
+    <%= link_to '&raquo;Bearbeiten', edit_sem_app_path(@sem_app) -%>
+    <% if User.current.is_admin? %>
+      <%= link_to '&raquo;Löschen', sem_app_path(@sem_app), :method => :delete -%>
+    <% end %>
+    )
+  <% end %>
+</h3>
 <div>
   Tutor(en):
   <strong><%= h(@sem_app.tutors) %></strong>
@@ -27,7 +37,7 @@
         <%= render 'books_toolbar', :sem_app => @sem_app %>
       <% end %>
 
-      <% if @sem_app.book_entries.present? and @sem_app.bid.present? and @sem_app.ref.present? %>
+      <% if @sem_app.books.present? %>
         <% pui_panel do %>
           <strong>Standort der Bücher:</strong>
           <% if @sem_app.bid.blank? or @sem_app.ref.blank? %>
@@ -39,8 +49,8 @@
         <% end %>
 
         <div id="sem-app-book-entries" class="sem-app-entries">
-          <% @sem_app.book_entries.each do |entry| %>
-            <%= render 'entry', :entry => entry, :sem_app => @sem_app %>
+          <% @sem_app.books.each do |book| %>
+            <%= render 'book', :entry => book, :sem_app => @sem_app %>
           <% end %>
         </div>
       <% else %>

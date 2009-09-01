@@ -85,46 +85,9 @@
                 <% end %>
               <% end %>
 
-              <% if User.current and User.current.is_admin? %>
-                <div id="admin-menu" style="text-align: center; margin-bottom: 2em;">
-                  <select id="admin-menu-selector">
-                    <option value="default">-- Administration --</option>
-                    <optgroup label="eSeminarapparate">
-                      <option value="sem_apps">eSeminarapparate verwalten</option>
-                      <option value="users">Benutzer verwalten</option>
-                    </optgroup>
-                    <optgroup label="System">
-                      <option value="locations">Standorte verwalten</option>
-                      <option value="semesters">Semester verwalten</option>
-                    </optgroup>
-                  </select>
-                  <script type="text/javascript">
-                    jQuery(function() {
-                      jQuery("#admin-menu-selector").change(function() {
-                        value = jQuery(this).attr("value");
-                        switch(value) {
-                          case "sem_apps":
-                            window.location = "<%= admin_sem_apps_path %>"
-                            break;
-                          case "users":
-                            window.location = "<%= admin_users_path %>"
-                            break;
-                          case "locations":
-                            window.location = "<%= admin_locations_path %>"
-                            break;
-                          case "semesters":
-                            window.location = "<%= admin_semesters_path %>"
-                            break;
-                          }
-                        });
-                      });
-                  </script>
-                </div>
-              <% end %>
-
               <!-- skiplink anchor: navigation -->
               <a id="navigation" name="navigation"></a>
-              <h3>&raquo; für Studierende</h3>
+              <h3>&raquo; eSeminarapparate</h3>
               <ul class="pui-nav-v">
                 <li><%= link_to('Gesamtliste', sem_apps_path) %></li>
               </ul>
@@ -139,6 +102,16 @@
                 <% end %>
                 <li><%= link_to('eSeminarappart beantragen', new_sem_app_path) %></li>
               </ul>
+
+              <% if User.current and User.current.is_admin? %>
+              <h3>&raquo; für Admins</h3>
+              <ul class="pui-nav-v">
+                <li><%= link_to 'Dashboard', admin_dashboard_path %></li>
+                <li><%= link_to 'Benutzer verwalten', admin_users_path %></li>
+                <li><%= link_to 'Standorte verwalten', admin_locations_path %></li>
+                <li><%= link_to 'Semester verwalten', admin_semesters_path %></li>
+              </ul>
+              <% end %>
             </div>
           </div>
         </div>

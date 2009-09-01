@@ -1,18 +1,12 @@
 <div id="sem-app-entry-<%=entry.id-%>" class="sem-app-entry">
   <% if entry.sem_app.editable? %>
     <div class="toolbar">
-      <% if entry.instance_type == "SemAppBookEntry" %>
-        <!-- toolbar for books -->
-        <%= link_to 'Löschen', sem_app_entry_path(entry.sem_app, entry), :class => "toolbar-item delete-book-entry-action" %>
-      <% else %>
-        <!-- toolbar for media entries -->
-        <span class="toolbar-item reorder-media-entry-action"><span class="ui-icon ui-icon-arrowthick-2-n-s">Move</span></span>
-        <% link_to edit_sem_app_entry_path(entry.sem_app, entry), :class => "toolbar-item edit-media-entry-action" do %>
-          <span class="ui-icon ui-icon-pencil">Bearbeiten</span>
-        <% end %>
-        <% link_to sem_app_entry_path(entry.sem_app, entry), :class => "toolbar-item delete-media-entry-action" do %>
-          <span class="ui-icon ui-icon-trash">Löschen</span>
-        <% end %>
+      <span class="toolbar-item reorder-media-entry-action"><span class="ui-icon ui-icon-arrowthick-2-n-s">Move</span></span>
+      <% link_to edit_sem_app_entry_path(entry.sem_app, entry), :class => "toolbar-item edit-media-entry-action" do %>
+        <span class="ui-icon ui-icon-pencil">Bearbeiten</span>
+      <% end %>
+      <% link_to sem_app_entry_path(entry.sem_app, entry), :class => "toolbar-item delete-media-entry-action" do %>
+        <span class="ui-icon ui-icon-trash">Löschen</span>
       <% end %>
     </div>
   <% end %>

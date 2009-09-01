@@ -1,4 +1,4 @@
-<% form_for @sem_app_book_entry, :url => sem_app_book_orders_path(@sem_app), :html => {:class => 'puiform'} do |f| %>
+<% form_for @book, :url => sem_app_book_orders_path(@sem_app), :html => {:class => 'puiform'} do |f| %>
   <%= f.error_messages %>
   <fieldset>
     <legend>Buch</legend>
@@ -16,8 +16,12 @@
         <%= f.text_field :author %>
       </li>
       <li>
-        <%= f.label      :year, "Erscheinungsjahr" %>
+        <%= f.label      :year, "Erscheinungsjahr*" %>
         <%= f.text_field :year, :size => 5 %>
+      </li>
+      <li>
+        <%= f.label      :edition, "Auflage*" %>
+        <%= f.text_field :edition, :size => 10 %>
       </li>
     </ol>
   </fieldset>

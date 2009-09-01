@@ -1,6 +1,9 @@
 class SemAppsController < ApplicationController
 
-  before_filter :require_user, :only => [:create]
+  before_filter :require_user,       :only => [:create, :edit, :update] # :new is handled in the view to better guide the user
+  before_filter :load_sem_app,       :only => [:show, :edit, :update, :destroy]
+  before_filter :check_access,       :only => [:edit, :update]
+  before_filter :check_admin_access, :only => [:destroy]
 
   def index
     pui_append_to_breadcrumb("eSeminarapparate", sem_apps_path)
@@ -40,15 +43,6 @@ class SemAppsController < ApplicationController
   end
 
   def show
-    @sem_app = SemApp.find_by_id(params[:id])
-
-     # check existance
-    unless @sem_app
-      flash[:error] = "Dieser eSeminarapparat existiert nicht"
-      redirect_to sem_apps_path
-      return false
-    end
-
     # allow access to inactive or unapproved apps only for owners and admins
     owner_access = true if User.current and User.current.owns_sem_app?(@sem_app)
     admin_access = true if User.current and User.current.is_admin?
@@ -65,19 +59,78 @@ class SemAppsController < ApplicationController
 
   def new
     @sem_app = SemApp.new
-    
-    pui_append_to_breadcrumb("Einen neuen eSeminarapparat beantragen", new_sem_app_path)
+    @sem_app.tutors = User.current.full_name if @sem_app.tutors.blank? and not User.current.is_admin?
+    if User.current.is_admin?
+      pui_append_to_breadcrumb("Admin :: Einen neuen eSeminarapparat anlegen", new_sem_app_path)
+    else
+      pui_append_to_breadcrumb("Einen neuen eSeminarapparat beantragen", new_sem_app_path)
+    end
   end
 
   def create
     @sem_app = SemApp.new(params[:sem_app])
+
     if @sem_app.save and @sem_app.add_ownership(User.current)
-      flash[:notice] = "Ihr eSeminarapparat wurde erfolgreich beantragt. Wir prüfen die Angaben und schalten
+      unless User.current.is_admin?
+        flash[:notice] = "Ihr eSeminarapparat wurde erfolgreich beantragt. Wir prüfen die Angaben und schalten
         den eSeminarappat nach erfolgter Prüfung frei. Sie sehen den Status auf Ihrer Konto Seite unter
         <strong>Meine eSeminarapparate</strong>."
+      else
+        flash[:notice] = "eSeminarapparat angelegt."
+      end
       redirect_to user_path(:anchor => 'apps')
     else
       render :action => :new
+    end
+  end
+
+  def edit
+    # nothing
+  end
+
+  def update
+    if @sem_app.update_attributes(params[:sem_app])
+      flash[:notice] = "Änderungen erfolgreich gespeichert."
+      redirect_back_or_default user_path(:anchor => 'apps')
+    else
+      render :action => :edit
+    end
+  end
+
+  def destroy
+    if @sem_app.destroy
+      flash[:notice] = "eSeminarapparat erfolgreich gelöscht."
+      redirect_to sem_apps_path
+    else
+      flash[:error] = "eSeminarapparat konnte nicht gelöscht werden. Unbekannter Fehler."
+      redirect_to sem_apps_path
+    end
+  end
+
+  private
+
+  def load_sem_app
+    @sem_app = SemApp.find_by_id(params[:id])
+    unless @sem_app
+      flash[:error] = "Dieser eSeminarapparat existiert nicht"
+      redirect_to sem_apps_path
+      return false
+    end
+  end
+
+  def check_access
+    unless @sem_app.is_editable?
+      flash[:error] = "Zugriff verweigert"
+      redirect_to sem_apps_path
+      return false
+    end
+  end
+
+  def check_admin_access
+    unless User.current.is_admin?
+      flash[:error] = "Zugriff verweigert"
+      redirect_to sem_apps_path
+      return false
     end
   end
 

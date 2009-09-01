@@ -6,30 +6,34 @@ class BookOrdersController < ApplicationController
   before_filter :setup_breadcrumb_base
 
   def index
-    @removals  = @sem_app.book_entries(:scheduled_for_removal  => true)
-    @additions = @sem_app.book_entries(:scheduled_for_addition => true)
+    @removals  = @sem_app.books(:scheduled_for_removal  => true)
+    @additions = @sem_app.books(:scheduled_for_addition => true)
   end
 
   def new
-    @sem_app_book_entry = SemAppBookEntry.new
+    @book = Book.new
   end
 
   def create
-    @sem_app_book_entry = SemAppBookEntry.new
-    @sem_app_book_entry.scheduled_for_addition = true
-    @sem_app_book_entry.signature = params[:sem_app_book_entry][:signature]
-    @sem_app_book_entry.title     = params[:sem_app_book_entry][:title]
-    @sem_app_book_entry.author    = params[:sem_app_book_entry][:author]
-    @sem_app_book_entry.year      = params[:sem_app_book_entry][:year]
+    @book = Book.new(:sem_app => @sem_app, :scheduled_for_addition => true)
+    @book.signature = params[:book][:signature]
+    @book.title     = params[:book][:title]
+    @book.author    = params[:book][:author]
+    @book.year      = params[:book][:year]
+    @book.edition   = params[:book][:edition]
     
-    sem_app_entry = SemAppEntry.new(:sem_app => @sem_app, :instance => @sem_app_book_entry)
-
-    if (@sem_app_book_entry.save and sem_app_entry.save)
+    if (@book.save)
       flash[:notice] = "Buchauftrag erfolgreich erstellt"
       redirect_to sem_app_book_orders_path(@sem_app)
     else
       render :action => :new
     end
+  end
+
+  def destroy
+    book = Book.find(params[:id])
+    book.update_attribute(:scheduled_for_removal, true)
+    render :nothing => true
   end
 
   private

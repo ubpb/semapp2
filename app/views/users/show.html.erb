@@ -52,6 +52,7 @@
             <td>
               <%= link_to h(o.sem_app.title), sem_app_path(o.sem_app) %>*
               (<%= h(o.sem_app.semester.title) %>)
+              (<%= link_to 'Bearbeiten', edit_sem_app_path(o.sem_app) %>)
               <div style="font-size:90%">
                 <%= h(o.sem_app.tutors) %>
               </div>

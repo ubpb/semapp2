@@ -103,8 +103,12 @@ class User < ActiveRecord::Base
   # checks if the user own the sem app
   #
   def owns_sem_app?(sem_app)
-    ownerships.each do |o|
-      return true if sem_app.id == o.sem_app.id
+    if sem_app.present?
+      ownerships.each do |o|
+        if o.sem_app.present?
+          return true if sem_app.id == o.sem_app.id
+        end
+      end
     end
     return false
   end

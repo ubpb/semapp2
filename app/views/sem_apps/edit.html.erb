@@ -1,0 +1,7 @@
+<% if User.current.is_admin? %>
+  <h3>eSeminarapparat '<%= h @sem_app.title %>' bearbeiten (Admin Modus)</h3>
+<% else %>
+  <h3>Einen eSeminarapparat bearbeiten</h3>
+<% end %>
+
+<%= render 'form' %>

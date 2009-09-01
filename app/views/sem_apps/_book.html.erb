@@ -1,0 +1,41 @@
+<div id="sem-app-entry-<%=entry.id-%>" class="sem-app-entry">
+  <% if entry.sem_app.editable? %>
+    <div class="toolbar">
+      <%= link_to 'Löschen', sem_app_book_order_path(entry.sem_app, entry), :class => "toolbar-item delete-book-entry-action" %>
+    </div>
+  <% end %>
+
+  <div id="sem-app-entry-<%=entry.id-%>-content">
+    <div class="book">
+      <strong><%=h entry.title %> / <%=h entry.author %></strong><br/>
+      <% if entry.edition %>
+        <span><%= entry.edition %>.-</span>
+      <% end %>
+      <% if entry.place %>
+        <span><%= entry.place %> :</span>
+      <% end %>
+      <% if entry.publisher %>
+        <span><%= entry.publisher %>,</span>
+      <% end %>
+      <% if entry.year %>
+        <span><%= entry.year %>.</span>
+      <% end %>
+      <% if entry.isbn %>
+        <span>- ISBN <%= entry.isbn %></span>
+      <% end %>
+      <% if entry.signature %>
+        <br/>
+        <span>
+          Signatur:
+          <a href="https://ubaleph.uni-paderborn.de/F/?func=find-b&find_code=PSG&request=<%= entry.signature -%>?" target="_blank">
+            <%= entry.signature -%> (Im Bibliothekskatalog anzeigen)
+          </a>
+        </span>
+      <% end %>
+      <% if entry.comment %>
+        <br/>
+        <span class="comment"><%= entry.comment %></span>
+      <% end %>
+    </div>
+  </div>
+</div>
