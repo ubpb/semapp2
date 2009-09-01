@@ -1,5 +1,5 @@
 <% if User.current.is_admin? %>
-  <h3>eSeminarapparat '<%= h @sem_app.title %>' bearbeiten (Admin Modus)</h3>
+  <h3>eSeminarapparat '<%= link_to h(@sem_app.title), sem_app_path(@sem_app) %>' bearbeiten (Admin Modus)</h3>
 <% else %>
   <h3>Einen eSeminarapparat bearbeiten</h3>
 <% end %>

@@ -126,6 +126,6 @@
     <% else %>
       <%= f.submit 'Änderungen Speichern' %>
     <% end %>
-    <%= link_to 'Abbrechen', root_path %>
+    <%= link_to 'Abbrechen', redirect_back_or_default_path(sem_apps_path) %>
   </fieldset>
 <% end %>

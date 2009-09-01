@@ -103,7 +103,7 @@ class SemAppsController < ApplicationController
       redirect_to sem_apps_path
     else
       flash[:error] = "eSeminarapparat konnte nicht gelöscht werden. Unbekannter Fehler."
-      redirect_to sem_apps_path
+      redirect_to sem_app_path(@sem_app)
     end
   end
 

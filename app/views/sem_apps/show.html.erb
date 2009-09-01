@@ -8,17 +8,17 @@
   <% end %>
 <% end %>
 
-<h3>
-  <%= @sem_app.title %> (<%= h(@sem_app.semester.title) -%>)
-  <% if @sem_app.editable? %>
-    (
+<% if @sem_app.editable? %>
+  <% pui_panel :style => 'text-align: right' do %>
+    <strong>eSeminarapparat:</strong>
     <%= link_to '&raquo;Bearbeiten', edit_sem_app_path(@sem_app) -%>
     <% if User.current.is_admin? %>
-      <%= link_to '&raquo;Löschen', sem_app_path(@sem_app), :method => :delete, :confirm => 'Den eSeminarapparat wirklich löschen? (Alle Daten werden unwiederruflich gelöscht)' -%>
+      | <%= link_to '&raquo;Löschen', sem_app_path(@sem_app), :method => :delete, :confirm => 'Den eSeminarapparat wirklich löschen? (Alle Daten werden unwiederruflich gelöscht)' -%>
     <% end %>
-    )
   <% end %>
-</h3>
+<% end %>
+
+<h3><%= @sem_app.title %> (<%= h(@sem_app.semester.title) -%>)</h3>
 <div>
   Tutor(en):
   <strong><%= h(@sem_app.tutors) %></strong>

@@ -18,20 +18,9 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password").
   filter_parameter_logging :password, :password_confirmation
 
-  # Additional helper methods
-  #helper_method :User.current_session, :User.current
+  helper_method :redirect_back_or_default_path
 
   private
-
-  #def User.current_session
-  #  return @User.current_session if defined?(@User.current_session)
-  #  @User.current_session = UserSession.find
-  #end
-
-  #def User.current
-  #  return @User.current if defined?(@User.current)
-  #  @User.current = User.current_session && User.current_session.user
-  #end
 
   def require_user
     unless User.current
@@ -47,8 +36,12 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_back_or_default(default)
-    redirect_to(session[:return_to] || default)
+    redirect_to(redirect_back_or_default_path(default))
     session[:return_to] = nil
+  end
+
+  def redirect_back_or_default_path(default)
+    session[:return_to] || default
   end
 
 end
