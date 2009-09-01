@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20090710121016
+# Schema version: 20090831113245
 #
 # Table name: sem_app_text_entries
 #
