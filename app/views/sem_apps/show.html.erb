@@ -14,7 +14,7 @@
     (
     <%= link_to '&raquo;Bearbeiten', edit_sem_app_path(@sem_app) -%>
     <% if User.current.is_admin? %>
-      <%= link_to '&raquo;Löschen', sem_app_path(@sem_app), :method => :delete -%>
+      <%= link_to '&raquo;Löschen', sem_app_path(@sem_app), :method => :delete, :confirm => 'Den eSeminarapparat wirklich löschen? (Alle Daten werden unwiederruflich gelöscht)' -%>
     <% end %>
     )
   <% end %>
@@ -132,7 +132,7 @@
         edit_mode = true;
         hideToolbar(entry);
         // let the user confirm this action
-        confirm({
+        confirmAction({
           title: settings.title,
           message: settings.message,
           onClose: function() {
@@ -167,7 +167,7 @@
       /**
        * Shows the a panel to confirm an operation (e.g. a delete operation)
        */
-      function confirm(options) {
+      function confirmAction(options) {
         // build the settings
         var settings = jQuery.extend({
           title  : "Bestätigen...",
