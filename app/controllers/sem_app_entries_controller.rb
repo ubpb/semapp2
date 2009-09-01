@@ -53,13 +53,9 @@ class SemAppEntriesController < ApplicationController
   def destroy
     SemAppEntry.transaction do
       entry = SemAppEntry.find(params[:id])
-      if (entry.instance.class == SemAppBookEntry)
-        entry.instance.update_attributes(:scheduled_for_removal => true)
-      else
-        entry.instance.destroy
-        entry.destroy
-        entry.resync_positions
-      end
+      entry.instance.destroy
+      entry.destroy
+      entry.resync_positions
     end
     render :nothing => true
   end
