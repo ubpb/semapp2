@@ -2,7 +2,7 @@
 
 <% form_for(text_entry,
   :url => sem_app_entries_path(entry.sem_app.id),
-  :html => {:id => "entry-form", :class => "entry-form text"}) do |f| %>
+  :html => {:id => "entry-form", :class => "puiform entry-form text"}) do |f| %>
   <%= hidden_field_tag :instance_type, entry.instance_type %>
   <%= f.error_messages %>
   <fieldset>
@@ -10,7 +10,7 @@
     <ol>
       <li>
         <%= f.label     :body_text, "Text" %>
-        <%= f.text_area :body_text, :rows => 20, :cols => 40 %>
+        <%= f.text_area :body_text, :rows => 20, :cols => 40, :class => 'mce' %>
       </li>
     </ol>
   </fieldset>

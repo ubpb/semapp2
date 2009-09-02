@@ -215,8 +215,12 @@
                 },
                 onError: function(responseText) {
                   form.replaceWith(responseText);
+                  loadMCE();
                 }
               });
+            },
+            onCancel: function(dialog) {
+              dialog.dialog('close');
             }
           });
         });
@@ -236,6 +240,7 @@
                 },
                 onError: function(responseText) {
                   form.replaceWith(responseText);
+                  loadMCE();
                 }
               });
             },
@@ -260,7 +265,7 @@
         var dialog = jQuery('<div id="entry-dialog"></div>').dialog({
           modal: true,
           autoOpen: false,
-          width: 450,
+          width: 620,
           title: settings.title,
           closeOnEscape: true,
           buttons: {
@@ -283,6 +288,24 @@
           event.preventDefault();
           settings.onSave(dialog);
         });
+
+        loadMCE();
+      }
+
+      function loadMCE() {
+        jQuery('textarea.mce').tinymce({
+          script_url: '/javascripts/tiny_mce/tiny_mce.js',
+          theme : "advanced",
+          add_form_submit_trigger : false,
+
+          width: '100%',
+          content_css: '/stylesheets/main.css',
+
+          theme_advanced_toolbar_align: "left",
+          theme_advanced_toolbar_location: "top",
+          theme_advanced_statusbar_location: "bottom",
+          theme_advanced_resizing: true
+        });
       }
 
       function submitForm(form, options) {
@@ -296,6 +319,11 @@
         form.unbind("submit");
         form.bind("submit", function(event) {
           event.preventDefault();
+
+          if (typeof tinyMCE != 'undefined') {
+            tinyMCE.triggerSave(true, true);
+          }
+
           jQuery(this).ajaxSubmit({
             dataType: 'html',
             success: function(responseText) {

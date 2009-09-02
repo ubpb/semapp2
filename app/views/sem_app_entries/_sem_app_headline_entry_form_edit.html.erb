@@ -2,7 +2,7 @@
 
 <% form_for(headline_entry,
   :url => sem_app_entry_path(entry.sem_app.id, entry.id),
-  :html => {:id => "entry-form", :class => "entry-form headline"}) do |f| %>
+  :html => {:id => "entry-form", :class => "puiform entry-form headline"}) do |f| %>
   <%= hidden_field_tag :instance_type, entry.instance_type %>
   <%= f.error_messages %>
   <fieldset>

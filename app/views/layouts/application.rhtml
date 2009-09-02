@@ -38,6 +38,9 @@
       });
     </script>
 
+    <!-- Load Tiny MCE -->
+    <%= javascript_include_tag 'tiny_mce/jquery.tinymce.js' %>
+
     <title>UB Paderborn - eSeminarapparate</title>
     <%= yield :header %>
   </head>
@@ -104,13 +107,13 @@
               </ul>
 
               <% if User.current and User.current.is_admin? %>
-              <h3>&raquo; für Admins</h3>
-              <ul class="pui-nav-v">
-                <li><%= link_to 'Dashboard', admin_dashboard_path %></li>
-                <li><%= link_to 'Benutzer verwalten', admin_users_path %></li>
-                <li><%= link_to 'Standorte verwalten', admin_locations_path %></li>
-                <li><%= link_to 'Semester verwalten', admin_semesters_path %></li>
-              </ul>
+                <h3>&raquo; für Admins</h3>
+                <ul class="pui-nav-v">
+                  <li><%= link_to 'Dashboard', admin_dashboard_path %></li>
+                  <li><%= link_to 'Benutzer verwalten', admin_users_path %></li>
+                  <li><%= link_to 'Standorte verwalten', admin_locations_path %></li>
+                  <li><%= link_to 'Semester verwalten', admin_semesters_path %></li>
+                </ul>
               <% end %>
             </div>
           </div>
