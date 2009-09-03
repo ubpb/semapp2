@@ -59,11 +59,13 @@ class SemAppsController < ApplicationController
 
   def new
     @sem_app = SemApp.new
-    @sem_app.tutors = User.current.full_name if @sem_app.tutors.blank? and not User.current.is_admin?
-    if User.current.is_admin?
-      pui_append_to_breadcrumb("Einen neuen eSeminarapparat anlegen (Admin Modus)", new_sem_app_path)
-    else
-      pui_append_to_breadcrumb("Einen neuen eSeminarapparat beantragen", new_sem_app_path)
+    if User.current
+      @sem_app.tutors = User.current.full_name if @sem_app.tutors.blank? and not User.current.is_admin?
+      if User.current.is_admin?
+        pui_append_to_breadcrumb("Einen neuen eSeminarapparat anlegen (Admin Modus)", new_sem_app_path)
+      else
+        pui_append_to_breadcrumb("Einen neuen eSeminarapparat beantragen", new_sem_app_path)
+      end
     end
   end
 
