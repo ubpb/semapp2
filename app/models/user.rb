@@ -52,9 +52,9 @@ class User < ActiveRecord::Base
   # Returns the current (logged in) user. Returns null
   # if there is no user logged in
   def self.current
-    return @current_user if @current_user
+    return Thread.current[:_current_user] if Thread.current[:_current_user]
     user_session = current_session
-    @current_user = user_session.user if user_session and user_session.user
+    Thread.current[:_current_user] = user_session.user if user_session and user_session.user
   end
 
   # Returns the current user session
@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
     if User.current_session
       User.current_session.destroy
     end
-    @current_user = nil
+    Thread.current[:_current_user] = nil
   end
 
   # Callback: Before save
