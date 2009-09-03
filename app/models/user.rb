@@ -62,6 +62,13 @@ class User < ActiveRecord::Base
     UserSession.find
   end
 
+  def logout
+    if User.current_session
+      User.current_session.destroy
+    end
+    @current_user = nil
+  end
+
   # Callback: Before save
   def before_validation
     self.authid = DEFAULT_AUTHID unless authid
