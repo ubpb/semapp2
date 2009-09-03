@@ -52,9 +52,10 @@ class User < ActiveRecord::Base
   # Returns the current (logged in) user. Returns null
   # if there is no user logged in
   def self.current
-    return Thread.current[:_current_user] if Thread.current[:_current_user]
-    user_session = current_session
-    Thread.current[:_current_user] = user_session.user if user_session and user_session.user
+    #return Thread.current[:_current_user] if Thread.current[:_current_user]
+    user_session = User.current_session
+    user_session.user if user_session and user_session.user
+    #Thread.current[:_current_user] = user_session.user if user_session and user_session.user
   end
 
   # Returns the current user session
