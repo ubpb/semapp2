@@ -1,0 +1,75 @@
+/*
+** PUI sub-columns (yaml subcr overrides/additions)
+*/
+.subcr.pui-subcr {
+  font-size: 90%;
+  padding: 0;
+  margin-bottom: 1.0em;
+}
+
+.subcr.pui-subcr.highlight {
+  background-color: #e3ebf3;
+  padding: 0.5em 10px 0.5em 10px;
+}
+
+/*
+** Navigation (Vertical)
+*/
+ul.pui-nav-v {
+  margin: 0 0 15px 0;
+  padding: 0;
+}
+
+ul.pui-nav-v li {
+  margin: 0 0 8px 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid #eaf2f5;
+  border-left: 5px solid #eaf2f5;
+}
+
+ul.pui-nav-v li a {
+  font-weight: normal;
+  padding: 10px 5px 5px 5px;
+  display: block;
+}
+
+ul.pui-nav-v li a:hover {
+  text-decoration: none;
+  background-color: #eaf2f5;
+}
+
+/*
+** Sub-Navigation (Vertical)
+*/
+ul.pui-subnav-v {
+  margin: 8px 0;
+  padding: 0;
+}
+
+ul.pui-subnav-v li {
+  margin: 0 0 5px 0;
+  padding: 0;
+  list-style: none;
+}
+
+ul.pui-subnav-v li .ui-icon {
+  vertical-align: text-bottom;
+}
+
+ul.pui-subnav-v li a {
+  -moz-border-radius: 2px;
+  background-color: #bedce7;
+  border: 1px solid #bedce7;
+  font-weight: normal;
+  padding: 5px 5px;
+  display: block;
+  line-height: 16px;
+  color: #333;
+}
+
+ul.pui-subnav-v li a:hover {
+  border: 1px solid #bedce7;
+  text-decoration: none;
+  color: #333;
+}

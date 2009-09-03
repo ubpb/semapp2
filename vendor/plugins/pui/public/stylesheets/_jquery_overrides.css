@@ -1,0 +1,20 @@
+.ui-state-default {
+  color: #081c5a;
+}
+
+.ui-state-hover {
+  color: #000099;
+}
+
+span.ui-icon {
+  vertical-align: middle;
+  display: inline-block;
+}
+
+a span.ui-icon {
+  text-decoration: none;
+}
+
+a:hover span.ui-icon {
+  text-decoration: none;
+}

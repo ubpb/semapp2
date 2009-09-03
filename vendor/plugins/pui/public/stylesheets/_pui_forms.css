@@ -1,0 +1,153 @@
+/*
+**
+** PUI form (base)
+**
+*/
+
+form.puiform {
+  font-size: 1.0em;
+  margin: 1em 0;
+}
+
+form.puiform .hidden {
+  display: none;
+}
+
+form.puiform fieldset {
+  margin-bottom: 10px;
+}
+
+form.puiform legend {
+  padding: 0 10px;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+form.puiform label {
+  display: inline-block;
+  vertical-align: top;
+  width: 160px;
+}
+
+form.puiform fieldset ol {
+  margin: 0;
+  padding: 0;
+}
+
+form.puiform fieldset li {
+  list-style: none;
+  padding: 5px;
+  margin: 0;
+}
+
+form.puiform fieldset.submit {
+  border: none;
+  text-align: center;
+  padding: 1.5em;
+  background: transparent url(../images/_pui_forms/submit_bg.png) repeat-x top;
+}
+
+form.puiform fieldset.submit legend {
+  display: none;
+}
+
+/*
+**
+** PUI form (default styles)
+**
+*/
+
+form.puiform em {
+  font-weight: bold;
+  font-style: normal;
+  color: #f00;
+}
+
+form.puiform legend, form.puiform label {
+  color: #333;
+  line-height: 2em;
+}
+
+form.puiform fieldset {
+  border: none;
+  border-top: 1px solid #bedce7;
+  background: #e4ecf3 url(../images/_pui_forms/fieldset_bg.png) left bottom repeat-x;
+}
+
+form.puiform fieldset li {
+  padding: 5px 10px 7px;
+  background: url(../images/_pui_forms/h_divider.png) left bottom repeat-x;
+}
+
+form.puiform input[type="text"], form.puiform input[type="password"] {
+  padding: 4px;
+  color: #000;
+  border: 1px solid #aaa;
+}
+
+form.puiform textarea {
+  line-height: 1.5;
+  padding: 4px;
+  border: 1px solid #aaa;
+}
+
+form.puiform fieldset div.container {
+  padding-left: 163px;
+}
+
+form.puiform fieldset div.container label {
+  display: inline;
+  width: auto;
+}
+
+/*
+**
+** PUI form (validation)
+**
+*/
+form.puiform .pui-error-message {
+  display: inline-block;
+  padding-left: 10px;
+  color: #c52f24;
+  font-size: 0.9em;
+}
+
+form.puiform span.pui-field-with-errors label {
+  color: #c52f24;
+}
+
+/* Default Rails stuff for f.error_messages */
+div.errorExplanation {
+  background: #F9D9D8 url('../images/_pui_forms/error_explanation_bg.gif') no-repeat top left;
+  padding: 10px 10px 10px 50px;
+}
+
+div.errorExplanation h2 {
+  font-size: 110%;
+  font-weight: bolder;
+  color: #000;
+}
+
+div.errorExplanation ul {
+
+}
+
+div.errorExplanation ul li {
+
+}
+
+/*
+**
+** PUI form (tool tips)
+**
+*/
+form.puiform div.pui-tooltip {
+    background-color: #000;
+    outline: 1px solid #669;
+    border: 2px solid #fff;
+    padding: 10px 15px;
+    width: 200px;
+    display: none;
+    color: #fff;
+    text-align: center;
+}

@@ -1,0 +1,21 @@
+<% content_for :content do %>
+  <div id="main" class="two-col">
+    <div id="col1">
+      <div id="col1_content" class="clearfix">
+        <%= yield(:before_sidebar_content) %>
+        <%= yield(:sidebar_content) %>
+        <%= yield(:after_sidebar_content) %>
+      </div>
+    </div>
+    <div id="col3">
+      <div id="col3_content" class="clearfix">
+        <%= render :partial => 'layouts/pui_flash_panel' %>
+        <%= yield(:before_main_content) %>
+        <%= yield(:main_content) or yield %>
+        <%= yield(:after_main_content) %>
+      </div>
+      <div id="ie_clearing">&#160;</div>
+    </div>
+  </div>
+<% end %>
+<%= render :file => 'layouts/pui_admin_default' %>
