@@ -22,7 +22,9 @@ class UserSessionsController < ApplicationController
   end
 
   def destroy
-    User.current_session.destroy
+    if User.current_session
+      User.current_session.destroy
+    end
     flash[:notice] = "Sie haben sich erfolgreich abgemeldet."
     redirect_to root_url
   end

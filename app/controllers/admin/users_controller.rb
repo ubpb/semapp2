@@ -12,7 +12,7 @@ class Admin::UsersController < Admin::ApplicationController
 
   create do
     wants.html {redirect_to :action => 'index'}
-    flash "eSeminarapparat erfolgreich erstellt"
+    flash "Benutzer erfolgreich erstellt"
   end
 
   edit.before do
