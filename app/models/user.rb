@@ -51,6 +51,8 @@ class User < ActiveRecord::Base
 
   # Returns the current (logged in) user. Returns null
   # if there is no user logged in
+  # FIXME: That need to be chached but using @current_user or Thread.current
+  # leads to serious security problems when run on passanger
   def self.current
     #return Thread.current[:_current_user] if Thread.current[:_current_user]
     user_session = User.current_session
