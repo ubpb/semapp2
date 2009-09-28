@@ -1,7 +1,7 @@
 # Be sure to restart your server when you modify this file
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.3' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.4' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -20,13 +20,15 @@ Rails::Initializer.run do |config|
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
   config.gem 'RedCloth',             :version => '4.2.2'
-  config.gem 'authlogic',            :version => '2.1.1'
-  config.gem 'thoughtbot-paperclip', :version => '2.3.0',  :lib => 'paperclip', :source => 'http://gems.github.com'
+  config.gem 'authlogic',            :version => '2.1.2'
+  config.gem 'thoughtbot-paperclip', :version => '2.3.1',  :lib => 'paperclip', :source => 'http://gems.github.com'
   config.gem 'mislav-will_paginate', :version => '2.3.11', :lib => 'will_paginate', :source => 'http://gems.github.com'
   config.gem 'libxml-ruby',          :version => '1.1.3',  :lib => 'libxml'
-  config.gem 'bcrypt-ruby',          :version => '2.1.1',  :lib => 'bcrypt'
+  config.gem 'bcrypt-ruby',          :version => '2.1.2',  :lib => 'bcrypt'
   config.gem 'giraffesoft-resource_controller', :version => '0.6.5', :lib => 'resource_controller', :source => 'http://gems.github.com'
   config.gem 'ruby-recaptcha',       :version => '1.0.0'
+
+  config.gem 'provideal-ui', :version => '>= 0.1.0', :lib => 'pui'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
@@ -46,7 +48,5 @@ Rails::Initializer.run do |config|
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
-
-  config.threadsafe!
 
 end
