@@ -1,0 +1,232 @@
+/* Basic HTML
+----------------------------------------------------------------------------------------------------*/
+
+/*
+  Colors
+    * dark-blue : #081c5a
+    * dark-grey : #cbcdd3 (header), #d6d6d6 (borders)
+    * light-grey: #eee (backgrounds, ...)
+*/
+
+/* Defauls provided by PUI. Overrides will follow... */
+
+body {
+  background: url(../images/page/page-bg.png) repeat top left;
+}
+
+a, a:visited {
+  color: #081c5a;
+}
+
+/* Global 960gs overrides
+----------------------------------------------------------------------------------------------------*/
+
+.grid_1, .grid_2, .grid_3, .grid_4, .grid_5, .grid_6, .grid_7, .grid_8, .grid_9, .grid_10, .grid_11, .grid_12, .grid_13, .grid_14, .grid_15, .grid_16 {
+  position: static;
+}
+
+/* Utils
+----------------------------------------------------------------------------------------------------*/
+
+.clearfix {
+  clear: both;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.underlined {
+  border-bottom: 1px solid #d6d6d6;
+}
+
+/* Page structure
+----------------------------------------------------------------------------------------------------*/
+
+#meta {
+  background: transparent url(../images/page/meta-bg.png) repeat-x bottom left;
+  line-height: 35px;
+  overflow: hidden;
+}
+
+#header {
+  background: url(../images/page/header-bg.png) repeat-x;
+  height: 90px;
+}
+
+.grid_4.grid_padded {
+  margin: 0;
+  padding: 0 10px;
+}
+
+#stage-wrapper {
+  background: url(../images/page/stage-wrapper-bg.png) no-repeat bottom center;
+  height: 94px;
+  margin-top: -4px;
+}
+
+#sidebar-wrapper {
+  background: url(../images/page/sidebar-wrapper-bg.png) repeat-y top center;
+}
+
+#sidebar {
+  padding: 20px 0 5px 0;
+  background: url(../images/page/sidebar-bg.png) no-repeat bottom center;
+}
+
+#sidebar-bottom-cap {
+  height: 8px;
+  background: url(../images/page/sidebar-bottom-cap-bg.png) no-repeat top center;
+  margin: 0 -10px;
+}
+
+#logo-upb {
+  width: 296px;
+  height: 90px;
+  background: url(../images/page/logo-upb.png) no-repeat bottom left;
+}
+
+#logo-ub {
+  width: 220px;
+  height: 79px;
+  background: url(../images/page/logo-ub.png) no-repeat center center;
+}
+
+#page {
+  background-color: #fff;
+  min-height: 550px;
+}
+
+#content {
+  width: 698px; /* 700px - 2px from the navigation border */
+  padding-top: 30px;
+}
+
+#content h1, #content h2, #content h3, #content h4, #content h5, #content h6 {
+  color: #081c5a;
+  letter-spacing: -0.05em;
+}
+
+#footer {
+  background: transparent url(../images/page/footer-bg.png) repeat-x top left;
+  padding-top: 1em;
+  padding-bottom: 5em;
+}
+
+/* Page elements
+----------------------------------------------------------------------------------------------------*/
+
+/* Meta Navigation */
+
+#meta-navigation {
+  text-align: right;
+  font-size: 90%;
+  color: #eee;
+}
+
+#meta-navigation a {
+  color: #eee;
+  text-decoration: none;
+}
+
+#meta-navigation a:hover {
+  text-decoration: underline;
+}
+
+/* Navigation */
+#navigation {
+  padding: 1.5em 0.8em 0;
+}
+
+#navigation h3 {
+  font-size: 110%;
+  color: #081c5a;
+  border-bottom: 1px solid #d6d6d6;
+  font-weight: bold;
+  padding: 0;
+  margin: 0 0 1em 0;
+}
+
+#navigation ul {
+  margin: 0 0 15px;
+  padding: 0;
+}
+
+#navigation li {
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#navigation li a {
+  color: #081c5a;
+  text-decoration: none;
+  display: block;
+  font-weight: normal;
+  line-height: 2em;
+  border-bottom: 1px solid #d6d6d6;
+  border-left: 4px solid #d6d6d6;
+  padding: 0 0 0 8px;
+  margin: 0 0 1em 0;
+}
+
+#navigation li a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+#footer {
+  text-align: center;
+  font-size: 90%;
+  color: #ccc;
+}
+
+#footer a {
+  color: #eee;
+  text-decoration: none;
+}
+
+#footer a:hover {
+  text-decoration: underline;
+}
+
+/* Panels */
+div.panel {
+  margin-bottom: 15px;
+}
+
+div.panel.padded {
+  padding: 0.8em;
+}
+
+div.panel.ui-state-highlight {
+
+}
+
+/* Pagination links */
+div.pagination {
+  margin: 0.5em 0;
+  text-align: center;
+}
+
+div.pagination span {
+  padding: 2px;
+}
+
+div.pagination a {
+  padding: 2px;
+}
+
+div.pagination span.current {
+  background-color: #bedce7;
+}
+
+div.pagination span.disabled {
+  color: #888;
+}

@@ -1,11 +1,8 @@
 class Admin::LocationsController < Admin::ApplicationController
 
-  before_filter :setup_breadcrumb_for_all_actions
-
   resource_controller
 
   new_action.before do
-    pui_append_to_breadcrumb("Einen neuen Standort erstellen", new_admin_location_path)
   end
 
   create do
@@ -14,7 +11,6 @@ class Admin::LocationsController < Admin::ApplicationController
   end
 
   edit.before do
-    pui_append_to_breadcrumb("<strong>#{h(@location.title)}</strong> bearbeiten", edit_admin_location_path(@location))
   end
 
   update do
@@ -47,10 +43,6 @@ class Admin::LocationsController < Admin::ApplicationController
 
   def collection
     @collection ||= end_of_association_chain.find(:all, :order => 'position')
-  end
-
-  def setup_breadcrumb_for_all_actions
-    pui_append_to_breadcrumb("Standorte verwalten", admin_locations_path)
   end
 
 end

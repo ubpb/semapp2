@@ -20,18 +20,18 @@
               (<%= h(s.semester.title) %>)
             </td>
             <td align="right" nowrap="true">
-              <%= pui_link_icon 'Bearbeiten', 'pencil', edit_admin_sem_app_path(s) %>
-              <%= pui_link_icon 'Löschen', 'trash', admin_sem_app_path(s), :method => :delete, :confirm => "Soll der eSeminarapparat #{s.id} wirklich gelöscht werden?" %>
+              <%= link_to 'Bearbeiten', edit_admin_sem_app_path(s) %>
+              <%= link_to 'Löschen', admin_sem_app_path(s), :method => :delete, :confirm => "Soll der eSeminarapparat #{s.id} wirklich gelöscht werden?" %>
             </td>
           </tr>
         <% end %>
       </tbody>
     </table>
   <% else %>
-    <% pui_panel :panel_style => 'highlight' do %>
+    <div class="panel notice">
       <p>
         Keine eSeminarapparate gefunden.
       </p>
-    <% end %>
+    </div>
   <% end %>
 </div>

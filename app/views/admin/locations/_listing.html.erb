@@ -19,9 +19,9 @@
             (<%= location.count %>)
           </td>
           <td align="right" nowrap="true">
-            <%= pui_link_icon 'Bearbeiten', 'pencil', edit_admin_location_path(location) %>
+            <%= link_to 'Bearbeiten', edit_admin_location_path(location) %>
             <% unless location.used? %>
-              <%= pui_link_icon 'Löschen', 'trash', admin_location_path(location), :method => :delete, :confirm => "Soll der Standort wirklich gelöscht werden?" %>
+              <%= link_to 'Löschen', admin_location_path(location), :method => :delete, :confirm => "Soll der Standort wirklich gelöscht werden?" %>
             <% end  %>
           </td>
         <% end %>
@@ -30,11 +30,11 @@
     </table>
     <span style="font-size: 90%; font-style: italic">(Um die Reihenfolge der Einträge festzulegen ziehen Sie sie mit der Maus <span class="ui-icon ui-icon-grip-dotted-horizontal"></span>)</span>
   <% else %>
-    <% pui_panel :panel_style => 'highlight', :style => 'text-align:center' do %>
+    <div class="panel notice">
       <p>
         Keine Standorte eingerichtet.
       </p>
-    <% end %>
+    </div>
   <% end %>
 </div>
 

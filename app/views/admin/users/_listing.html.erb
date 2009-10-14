@@ -27,9 +27,9 @@
               <%= h(s.full_name) %>
             </td>
             <td align="right" nowrap="true">
-              <%= pui_link_icon 'Bearbeiten', 'pencil', edit_admin_user_path(s) %>
+              <%= link_to 'Bearbeiten', edit_admin_user_path(s) %>
               <% if User.current != s %>
-                <%= pui_link_icon 'Löschen', 'trash', admin_user_path(s), :method => :delete, :confirm => "Soll der Benutzer #{s.login} wirklich gelöscht werden?" %>
+                <%= link_to 'Löschen', admin_user_path(s), :method => :delete, :confirm => "Soll der Benutzer #{s.login} wirklich gelöscht werden?" %>
               <% end %>
             </td>
           </tr>
@@ -37,10 +37,10 @@
       </tbody>
     </table>
   <% else %>
-    <% pui_panel :panel_style => 'highlight' do %>
+    <div class="panel notice">
       <p>
         Keine Benutzer gefunden.
       </p>
-    <% end %>
+    </div>
   <% end %>
 </div>

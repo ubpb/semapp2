@@ -6,8 +6,6 @@ class SemAppsController < ApplicationController
   before_filter :check_admin_access, :only => [:destroy]
 
   def index
-    pui_append_to_breadcrumb("eSeminarapparate", sem_apps_path)
-
     # filter by semster
     @semester = Semester.find_by_id(params[:semester][:id]) unless params[:semester].blank?
     # filter by location
@@ -51,21 +49,12 @@ class SemAppsController < ApplicationController
       redirect_to sem_apps_path
       return false
     end
-
-    # Setup breadcrumb
-    pui_append_to_breadcrumb("eSeminarapparate", sem_apps_path)
-    pui_append_to_breadcrumb("eSeminarapparat #{@sem_app.id}", sem_app_path(@sem_app))
   end
 
   def new
     @sem_app = SemApp.new
     if User.current
-      @sem_app.tutors = User.current.full_name if @sem_app.tutors.blank? and not User.current.is_admin?
-      if User.current.is_admin?
-        pui_append_to_breadcrumb("Einen neuen eSeminarapparat anlegen (Admin Modus)", new_sem_app_path)
-      else
-        pui_append_to_breadcrumb("Einen neuen eSeminarapparat beantragen", new_sem_app_path)
-      end
+      @sem_app.tutors = User.current.full_name if @sem_app.tutors.blank? and not User.current.is_admin?      
     end
   end
 

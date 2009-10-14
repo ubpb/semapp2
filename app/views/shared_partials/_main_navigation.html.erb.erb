@@ -1,0 +1,42 @@
+<% if User.current %>
+  <div class="section">
+    <div class="panel notice">
+      Willkommen<br/>
+      <strong><%= link_to h(User.current.full_name), user_path %></strong><br/>
+    </div>
+  </div>
+<% end %>
+
+<div class="section">
+  <h3>&raquo; eSeminarapparate</h3>
+  <ul>
+    <li>
+      <%= link_to('Gesamtliste', sem_apps_path) %>
+    </li>
+  </ul>
+</div>
+
+<div class="section">
+  <h3>&raquo; Für Lehrende</h3>
+  <ul>
+    <% if User.current %>
+      <li><%= link_to('Meine Seite / Abmelden', user_path) %></li>
+      <li><%= link_to('Meine eSeminarapparate', user_path(:anchor => 'apps')) %></li>
+    <% else %>
+      <li><%= link_to('Login', login_path) %></li>
+    <% end %>
+    <li><%= link_to('eSeminarappart beantragen', new_sem_app_path) %></li>
+  </ul>
+</div>
+
+<% if User.current and User.current.is_admin? %>
+  <div class="section">
+    <h3>&raquo; für Admins</h3>
+    <ul>
+      <li><%= link_to 'Dashboard', admin_dashboard_path %></li>
+      <li><%= link_to 'Benutzer verwalten', admin_users_path %></li>
+      <li><%= link_to 'Standorte verwalten', admin_locations_path %></li>
+      <li><%= link_to 'Semester verwalten', admin_semesters_path %></li>
+    </ul>
+  </div>
+<% end %>

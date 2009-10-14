@@ -1,6 +1,26 @@
-<h3>Gesamtliste</h3>
+<% content_for(:head) do %>
+  <%= javascript_include_tag('sem_apps/index.js') %>
+<% end %>
 
-<% pui_panel :panel_style => 'blue', :rounded => true, :style => 'padding: 1em;' do %>
+<h2 class="underlined">Gesamtliste</h2>
+
+<% semantic_form_for User.new, :url => sem_apps_path do |form| %>
+
+  <% form.inputs :name => "Basic" do %>
+    <%= form.input :login %>
+    <%= form.input :password %>
+  <% end %>
+
+  <% form.buttons do %>
+    <%= form.commit_button %>
+  <% end %>
+
+<% end %>
+
+
+
+<div id="filter-panel" class="pui-overlay">
+  <h2 class="underlined">Liste filtern</h2>
   <% form_tag(sem_apps_url, :method => :get) do %>
     <table>
       <tr>
@@ -27,14 +47,15 @@
       <% end %>
     </div>
   <% end %>
-<% end %>
+</div>
 
-<div style="text-align: right">
-<% if @filtered %>
-  Anzahl der eSeminarapparate: <%= @count %> <strong>(Gefiltert)</strong>
-<% else %>
-  Anzahl der eSeminarapparate: <%= @count %> <strong>(Gesamt)</strong>
-<% end %>
+<div id="filter-info-panel" class="panel underlined align-right">
+  <% if @filtered %>
+    Anzahl der eSeminarapparate: <%= @count %> <strong>(Gefiltert)</strong>
+  <% else %>
+    Anzahl der eSeminarapparate: <%= @count %> <strong>(Gesamt)</strong>
+  <% end %>
+  <a href="#" rel="#filter-panel">&raquo; Filter</a>
 </div>
 
 <%= render 'listing', :sem_apps => @sem_apps %>

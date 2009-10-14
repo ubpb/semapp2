@@ -1,11 +1,11 @@
 <% unless User.current %>
 
-  <% pui_panel :panel_style => 'notice' do %>
+  <div class="panel notice">
     <p>
       Um einen eSeminarapparat zu beantragen, müssen Sie sich zunächst anmelden.
       <%= link_to('&raquo; Zur Anmeldung', login_path) %>
     </p>
-  <% end %>
+  </div>
 
 <% else %>
     

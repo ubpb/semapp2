@@ -1,11 +1,8 @@
 class Admin::SemAppsController < Admin::ApplicationController
 
-  before_filter :setup_breadcrumb_for_all_actions
-
   resource_controller
 
   new_action.before do
-    pui_append_to_breadcrumb("Ein neuen eSeminarapparat erstellen", new_admin_sem_app_path)
   end
 
   create do
@@ -13,8 +10,7 @@ class Admin::SemAppsController < Admin::ApplicationController
     flash "eSeminarapparat erfolgreich erstellt"
   end
 
-  edit.before do
-    pui_append_to_breadcrumb("<strong>#{h(@sem_app.title)}</strong> bearbeiten", edit_admin_sem_app_path(@sem_app))
+  edit.before do    
   end
 
   update do
@@ -38,11 +34,6 @@ class Admin::SemAppsController < Admin::ApplicationController
 
     @collection ||= end_of_association_chain.paginate(:page => params[:page], :per_page => 20,
       :conditions => conditions)
-  end
-
-
-  def setup_breadcrumb_for_all_actions
-    pui_append_to_breadcrumb("eSeminarapparate verwalten", admin_sem_apps_path)
   end
 
 end

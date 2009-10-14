@@ -29,6 +29,8 @@ Rails::Initializer.run do |config|
   config.gem 'ruby-recaptcha',       :version => '1.0.0'
 
   config.gem 'provideal-ui', :version => '>= 0.1.0', :lib => 'pui'
+  config.gem "justinfrench-formtastic", :version => '0.2.4', :lib => 'formtastic', :source  => 'http://gems.github.com'
+
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

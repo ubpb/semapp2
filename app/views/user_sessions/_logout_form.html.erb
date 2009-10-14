@@ -1,9 +1,9 @@
 <% form_for @user_session, :html => {:method => :delete, :class => 'puiform'} do |f| %>
-  <% pui_panel :panel_style => 'highlight', :style => "text-align: center" do %>
+  <div class="panel notice">
     <p>
       Sie sind aktuell angemeldet als Benutzer <b><%= User.current.login %></b>
     </p>
-  <% end %>
+  </div>
 
   <fieldset class="submit">
     <%= f.submit "Abmelden" %>

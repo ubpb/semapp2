@@ -3,7 +3,6 @@ class BookOrdersController < ApplicationController
   before_filter :require_user
   before_filter :load_sem_app
   before_filter :check_access
-  before_filter :setup_breadcrumb_base
 
   def index
     @removals  = @sem_app.books(:scheduled_for_removal  => true)
@@ -40,12 +39,6 @@ class BookOrdersController < ApplicationController
 
   def load_sem_app
     @sem_app = SemApp.find(params[:sem_app_id])
-  end
-
-  def setup_breadcrumb_base
-    pui_append_to_breadcrumb("eSeminarapparate", sem_apps_path)
-    pui_append_to_breadcrumb("eSeminarapparat #{@sem_app.id}", sem_app_path(@sem_app))
-    pui_append_to_breadcrumb("Buchaufträge", sem_app_book_orders_path(@sem_app))
   end
 
   # allow access only for owners and admins

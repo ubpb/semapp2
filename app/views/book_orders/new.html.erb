@@ -1,18 +1,17 @@
 <h3>Einen neuen Buchauftrag für eSeminarapparat '<%= h(@sem_app.title) %> (<%= h(@sem_app.semester.title) %>)'</h3>
 
-<% pui_panel :panel_style => 'highlight' do %>
-<p>
-  Mit diesem Formular beauftragen Sie die Bibliothek ein Buch aus dem Bestand in Ihren
-  Seminarapparat einzustellen. Bitte recherchieren Sie die erforderliche Signatur
-  mittels unseres <a href="https://ubaleph.uni-paderborn.de/F" target="_blank">Katalogs</a>.
-</p>
-<p>
-  <strong>Bitte beachten Sie, dass bestehende Leihfristen und Vormerkungen den Vorgang
-  verzögern können.</strong>
-  Sie können den Status jederzeit <%= link_to 'hier', sem_app_book_orders_path(@sem_app) %> einsehen
-  und werden bei Statusänderungen per E-Mail darüber informiert.
-</p>
-<% end %>
-
+<div class="panel notice">
+  <p>
+    Mit diesem Formular beauftragen Sie die Bibliothek ein Buch aus dem Bestand in Ihren
+    Seminarapparat einzustellen. Bitte recherchieren Sie die erforderliche Signatur
+    mittels unseres <a href="https://ubaleph.uni-paderborn.de/F" target="_blank">Katalogs</a>.
+  </p>
+  <p>
+    <strong>Bitte beachten Sie, dass bestehende Leihfristen und Vormerkungen den Vorgang
+      verzögern können.</strong>
+    Sie können den Status jederzeit <%= link_to 'hier', sem_app_book_orders_path(@sem_app) %> einsehen
+    und werden bei Statusänderungen per E-Mail darüber informiert.
+  </p>
+</div>
 
 <%= render :partial => 'form' %>

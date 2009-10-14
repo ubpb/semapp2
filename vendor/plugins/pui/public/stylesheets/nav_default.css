@@ -1,9 +1,0 @@
-/**
- * A simple main menu based on YAML shinybuttons.
- */
-@import url(yaml/navigation/nav_shinybuttons.css);
-
-.hlist { border-bottom: 1px solid #bbb; border-top: none; }
-.hlist ul li a, .hlist ul li strong { padding: 0.8em; font-weight: normal; }
-.hlist ul li.active a, .hlist ul li.active a:hover { color: #000; }
-.hlist ul li.active { background: #eee; border-left: 1px #fff solid; border-right: 1px #aaa solid; }

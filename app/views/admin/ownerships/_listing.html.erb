@@ -16,16 +16,16 @@
             <%= '<br/>Telefon:' + h(o.user.phone) if o.user.phone.present? %>
           </td>
           <td align="right">
-            <%= pui_link_icon 'Löschen', 'trash', admin_sem_app_ownership_path(@sem_app, o), :method => :delete, :confirm => "Soll der Besitzer #{o.user.login} wirklich gelöscht werden?" %>
+            <%= link_to 'Löschen', admin_sem_app_ownership_path(@sem_app, o), :method => :delete, :confirm => "Soll der Besitzer #{o.user.login} wirklich gelöscht werden?" %>
           </td>
         </tr>
       <% end %>
     </table>
   <% else %>
-    <% pui_panel :panel_style => 'highlight', :style => 'text-align:center' do %>
+    <div class="panel notice">
       <p>
         Keine Besitzer eingerichtet.
       </p>
-    <% end %>
+    </div>
   <% end %>
 </div>
