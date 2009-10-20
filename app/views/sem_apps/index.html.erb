@@ -21,31 +21,37 @@
 
 <div id="filter-panel" class="pui-overlay">
   <h2 class="underlined">Liste filtern</h2>
-  <% form_tag(sem_apps_url, :method => :get) do %>
-    <table>
-      <tr>
-        <td>Angezeigtes Semester:</td>
-        <td><%= select("semester", "id", Semester.all.collect {|p| [ p.title, p.id ]}, {:include_blank => 'Alle'}) %></td>
-      </tr>
-      <tr>
-        <td>Standort:</td>
-        <td><%= select("location", "id", Location.all.collect {|p| [ p.title, p.id ]}, {:include_blank => 'Alle'}) %></td>
-      </tr>
-      <tr>
-        <td>Titel enthält:</td>
-        <td><%= text_field_tag 'title', @title %></td>
-      </tr>
-      <tr>
-        <td>Tutor(en) enthält:</td>
-        <td><%= text_field_tag 'tutors', @tutors %></td>
-      </tr>
-    </table>
-    <div style="text-align: center">
-      <%= submit_tag 'Filtern' %>
-      <% if @filtered %>
-        <%= link_to 'Filter zurücksetzen', sem_apps_path %>
-      <% end %>
-    </div>
+  <% form_tag(sem_apps_url, :method => :get, :class => 'formtastic') do %>
+    <fieldset class="inputs">
+      <ol>
+        <li class="string required">
+          <label>Angezeigtes Semester</label>
+          <%= select("semester", "id", Semester.all.collect {|p| [ p.title, p.id ]}, {:include_blank => 'Alle'}) %>
+        </li>
+        <li class="string required">
+          <label>Standort</label>
+          <%= select("location", "id", Location.all.collect {|p| [ p.title, p.id ]}, {:include_blank => 'Alle'}) %>
+        </li>
+        <li class="string required">
+          <label>Titel enthält</label>
+          <%= text_field_tag 'title', @title %>
+        </li>
+        <li class="string required">
+          <label>Tutor(en) enthält</label>
+          <%= text_field_tag 'tutors', @tutors %>
+        </li>
+      </ol>
+    </fieldset>
+    <fieldset class="buttons">
+      <ol>
+        <li class="commit">
+          <%= submit_tag 'Filtern' %>
+          <% if @filtered %>
+            <%= link_to 'Filter zurücksetzen', sem_apps_path %>
+          <% end %>
+        </li>
+      </ol>
+    </fieldset>
   <% end %>
 </div>
 
