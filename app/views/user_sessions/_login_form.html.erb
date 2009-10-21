@@ -17,29 +17,15 @@
 <div class="panels">
 
   <div id="local-login-panel">
-    <% form_for @user_session, :html => {:class => 'puiform'} do |f| %>
-      <%= f.error_messages %>
-      <fieldset>
-        <legend>Anmelden (mit lokalen Nutzerdaten)</legend>
-        <ol>
-          <li>
-            <%= f.label :login, "Login" %>
-            <%= f.text_field :login %>
-          </li>
-          <li>
-            <%= f.label :password, "Passwort" %>
-            <%= f.password_field :password %>
-          </li>
-          <li>
-            <%= f.label :remember_me, 'Angemeldet bleiben?' %>
-            <%= f.check_box :remember_me %>
-          </li>
-        </ol>
-      </fieldset>
-      <fieldset class="submit">
-        <%= f.submit "Login" %>
-        <%= link_to 'Abbrechen', root_path %>
-      </fieldset>
+    <% semantic_form_for @user_session do |f| %>
+      <% f.inputs :name => "Anmelden (mit lokalen Nutzerdaten)" do %>
+        <%= f.input :login, :label => 'Login' %>
+        <%= f.input :password, :label => 'Passwort' %>
+      <% end %>
+
+      <% f.buttons do %>
+        <%= f.commit_button 'Anmelden' %>
+      <% end %>
     <% end %>
   </div>
 
@@ -62,38 +48,21 @@
 
 <p style="font-size: 90%; font-style: italic">
   * In einer späteren Programmversion wird ein Login mittels
-  IMT Kennung möglich sein. Vgl. <a href="#" rel="#login-required-help">Wann benötige ich Zugangsdaten?</a>
+  IMT Kennung möglich sein. Vgl. <a href="#" class="pui-overlay-trigger" rel="#login-required-help">Wann benötige ich Zugangsdaten?</a>
 </p>
-<div class="pui-overlay" id="login-required-help">
-  <h3>Wann benötige ich Zugangsdaten?</h3>
-  <p>
-    Sie benötigen für die eSeminarapparate nur in folgenden Fällen einen persönlichen
-    Zugang.
-    [TBD.]
-  </p>
-</div>
+
 <p style="font-size: 90%; font-style: italic">
   ** Studierende können sich in einer späteren Programmversion ebenfalls mittels ihrer IMT Kennungen
   anmelden. Aktuell erfolgt der Lesezugriff für Studienrende mittels dem in der Veranstaltung
   bekanntgegebenen "Passwort für den Lesezugriff" oder über <a href="http://koala.uni-paderborn.de">koaLA</a>.
 </p>
 
-
-<% content_for :header do %>
-  <script type="text/javascript">
-    jQuery(function() {
-      jQuery("ul.tabs").tabs("div.panels > div", {
-        history: true
-      });
-
-      jQuery("a[rel]").overlay({
-        expose: {
-          color: '#222',
-          opacity: 0.7,
-          closeSpeed: 1000
-        }
-      });
-    });
-  </script>
-<% end %>
+<div class="pui-overlay" id="login-required-help">
+  <h2 class="section">Wann benötige ich Zugangsdaten?</h2>
+  <p>
+    Sie benötigen für die eSeminarapparate nur in folgenden Fällen einen persönlichen
+    Zugang.
+    [TBD.]
+  </p>
+</div>
 

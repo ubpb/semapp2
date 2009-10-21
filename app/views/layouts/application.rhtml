@@ -13,6 +13,7 @@
         jQuery.alwaysSendAuthToken(<%=form_authenticity_token.inspect-%>);
       });
     </script>
+    <%= javascript_include_tag("application.js") %>
     <%= stylesheet_link_tag("page.css", :media => "screen") %>
     <%= stylesheet_link_tag("formtastic.css", :media => "screen") %>
     <%= stylesheet_link_tag("formtastic_changes.css", :media => "screen") %>
@@ -26,7 +27,7 @@
       <div class="container_16 clearfix">
         <div class="grid_16">
           <div id="meta-navigation">
-            <a href="#">&raquo; Hilfe</a> |
+            <a href="#">&raquo; Hilfe</a>
             <a href="#">&raquo; Über eSeminarapparate</a>
           </div>
         </div>
