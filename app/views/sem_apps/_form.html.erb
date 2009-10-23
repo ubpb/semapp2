@@ -1,6 +1,6 @@
 <% unless User.current.is_admin? %>
   <% if @sem_app.new_record? %>
-    <div class="panel notice">
+    <div class="pui-panel notice">
       <p>
         eSeminarapparate werden durch die Universitätsbibliothek <strong>überprüft</strong> und <strong>aktiviert</strong>.
         Jeder <strong>Hochschullehrer</strong> (oder eine im Auftrag handelnde Person) kann einen eSeminarapparat
@@ -10,7 +10,7 @@
       </p>
     </div>
   <% else %>
-    <div class="panel notice">
+    <div class="pui-panel notice">
       <p>
         Attribute an eSeminarapparaten (wie z.B. der Titel) können nach der Beantragung durch Sie nur noch begrenzt
         bearbeitet werden. Wünschen Sie weitergehende Änderungen kontaktieren Sie bitte Ihren Ansprechpartner in der UB.

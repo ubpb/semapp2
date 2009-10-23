@@ -27,8 +27,30 @@
       <div class="container_16 clearfix">
         <div class="grid_16">
           <div id="meta-navigation">
-            <a href="#">&raquo; Hilfe</a>
-            <a href="#">&raquo; Über eSeminarapparate</a>
+            <% if User.current %>
+              <span>
+                Willkommen
+                <strong><%= User.current.firstname %> <%= User.current.lastname %></strong>
+                (<%= User.current.login %>)
+              </span>
+              <% link_to user_path do %>
+                <%= image_tag 'icons/user-orange.png', :plugin => 'pui' %>
+                Mein Konto
+              <% end %>
+              <% link_to login_path do %>
+                <%= image_tag 'icons/door-open-out.png', :plugin => 'pui' %>
+                Abmelden
+              <% end %>
+            <% else %>
+              <% link_to login_path do %>
+                <%= image_tag 'icons/door-open-in.png', :plugin => 'pui' %>
+                Anmelden
+              <% end %>
+            <% end %>
+            <a href="#" rel="#common-help" class="pui-overlay-trigger">
+              <%= image_tag 'icons/question-shield.png', :plugin => 'pui' %>
+              Hilfe
+            </a>
           </div>
         </div>
       </div>
@@ -56,6 +78,38 @@
         </div>
         <div id="content" class="grid_12">
           <%= yield :layout %>
+
+          <div class="pui-overlay" id="common-help">
+            <h2 class="section">Hilfe?</h2>
+            <p>
+              Sie haben Fragen zu Ihren eSeminarapparaten, möchten Hilfe bei technischen Problemen oder eine Beratung?
+              Dann stehen Ihnen die folgenden Ansprechpartner zur Verfügung:
+            </p>
+            <ul>
+              <li>
+                <b>Hilfe bei Fragen und Beratung zu eSeminarapparaten:</b>
+                <br/>
+                <i>Informationszentrum (Universitätsbibliothek)</i>
+                <br/>
+                E-Mail: <a href="mailto:information@ub.uni-paderborn.de">information@ub.uni-paderborn.de</a>
+                <br/>
+                Tel.: 05251 / 602017
+                <br/>
+                Tel.: 05251 / 603953
+                <br/>
+              </li>
+              <li>
+                <b>Hilfe bei technischen Problemen:</b>
+                <br/>
+                <i>René Sprotte (Universitätsbibliothek)</i>
+                <br/>
+                E-Mail: <a href="mailto:r.sprotte@ub.uni-paderborn.de">r.sprotte@ub.uni-paderborn.de</a>
+                <br/>
+                Tel.: 05251 / 604251
+                <br/>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

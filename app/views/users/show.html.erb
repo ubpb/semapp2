@@ -1,78 +1,71 @@
-<h3>Meine Seite</h3>
+<h2 class="section">Meine Seite</h2>
 
-<div class="panel notice">
-  <p>
-    Sie sind aktuell angemeldet als Benutzer
-    <strong><%= h(@user.full_name) %> (<%= @user.login %>)</strong>
-    <%= link_to '&raquo; Abmelden', logout_path, :confirm => 'Wirklich abmelden?' %>
-  </p>
-</div>
+<div class="pui-tabs-wrapper">
+  <ul class="pui-tabs">
+    <li><a href="#account">Mein Konto</a></li>
+    <li><a href="#apps">Meine eSeminarapparate</a></li>
+  </ul>
 
-<ul class="pui-tabbar tabs">
-  <li><a href="#account">Mein Konto</a></li>
-  <li><a href="#apps">Meine eSeminarapparate</a></li>
-</ul>
+  <div class="pui-tab-panes">
 
-<div class="panels">
+    <div id="my-account-panel">
+      <% if @user.externally_managed? %>
+        <h4>Mein Konto</h4>
+      <% else %>
+        <h4>Mein Konto <span style="font-weight: normal;">(<%= link_to '&raquo; Bearbeiten', edit_user_path %>)</span></h4>
+      <% end %>
 
-  <div id="my-account-panel">
-    <% if @user.externally_managed? %>
-      <h4>Mein Konto</h4>
-    <% else %>
-      <h4>Mein Konto <span style="font-weight: normal;">(<%= link_to '&raquo; Bearbeiten', edit_user_path %>)</span></h4>
-    <% end %>
+      <dl>
+        <dt>Login</dt>
+        <dd><%= @user.login %></dd>
+        <dt>Vor-/Nachname</dt>
+        <dd><%= h(@user.full_name) %></dd>
+        <dt>E-Mail</dt>
+        <dd><%= @user.email %></dd>
+        <dt>Telefon im Haus</dt>
+        <dd><%= @user.phone || '-' %></dd>
+        <dt>Lehrstuhl</dt>
+        <dd><%= @user.department || '-' %></dd>
+      </dl>
 
-    <dl>
-      <dt>Login</dt>
-      <dd><%= @user.login %></dd>
-      <dt>Vor-/Nachname</dt>
-      <dd><%= h(@user.full_name) %></dd>
-      <dt>E-Mail</dt>
-      <dd><%= @user.email %></dd>
-      <dt>Telefon im Haus</dt>
-      <dd><%= @user.phone || '-' %></dd>
-      <dt>Lehrstuhl</dt>
-      <dd><%= @user.department || '-' %></dd>
-    </dl>
+      <% if @user.externally_managed? %>
+        <div>
+          <span style="font-size: 90%; font-style: italic">Ihr Login wird extern verwaltet. Sie Können diese Daten hier nicht bearbeiten.</span>
+        </div>
+      <% end %>
+    </div>
 
-    <% if @user.externally_managed? %>
-      <div>
-        <span style="font-size: 90%; font-style: italic">Ihr Login wird extern verwaltet. Sie Können diese Daten hier nicht bearbeiten.</span>
-      </div>
-    <% end %>
+    <div id="my-semapps-panel">
+      <h4>Meine eSeminarapparate</h4>
+      <% if @user.ownerships and not @user.ownerships.empty?%>
+        <table class="pui-datagrid">
+          <% @user.ownerships.each do |o| %>
+            <% next unless o.sem_app %>
+            <tr>
+              <td>
+                <%= link_to h(o.sem_app.title), sem_app_path(o.sem_app) %>*
+                (<%= h(o.sem_app.semester.title) %>)
+                (<%= link_to 'Bearbeiten', edit_sem_app_path(o.sem_app) %>)
+                <div style="font-size:90%">
+                  <%= h(o.sem_app.tutors) %>
+                </div>
+                <div style="font-size:90%">
+                  <%= render 'shared_partials/sem_app_states', :sem_app => o.sem_app %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+        <span style="font-size:90%">*eSeminarapparate sind nur dann öffentlich sichtbar wenn sie geprüft wurden und aktiv sind.</span>
+      <% else %>
+        <div class="pui-panel notice">
+          <p>
+            Sie besitzen noch keine eSeminarapparate. <%= link_to '&raquo; eSeminarapparat beantragen', new_sem_app_path %>
+          </p>
+        </div>
+      <% end %>
+    </div>
   </div>
-
-  <div id="my-semapps-panel">
-    <h4>Meine eSeminarapparate</h4>
-    <% if @user.ownerships and not @user.ownerships.empty?%>
-      <table class="pui-datagrid">
-        <% @user.ownerships.each do |o| %>
-          <% next unless o.sem_app %>
-          <tr>
-            <td>
-              <%= link_to h(o.sem_app.title), sem_app_path(o.sem_app) %>*
-              (<%= h(o.sem_app.semester.title) %>)
-              (<%= link_to 'Bearbeiten', edit_sem_app_path(o.sem_app) %>)
-              <div style="font-size:90%">
-                <%= h(o.sem_app.tutors) %>
-              </div>
-              <div style="font-size:90%">
-                <%= render 'shared_partials/sem_app_states', :sem_app => o.sem_app %>
-              </div>
-            </td>
-          </tr>
-        <% end %>
-      </table>
-      <span style="font-size:90%">*eSeminarapparate sind nur dann öffentlich sichtbar wenn sie geprüft wurden und aktiv sind.</span>
-    <% else %>
-      <div class="panel notice">
-        <p>
-          Sie besitzen noch keine eSeminarapparate. <%= link_to '&raquo; eSeminarapparat beantragen', new_sem_app_path %>
-        </p>
-      </div>
-    <% end %>
-  </div>
-
 </div>
 
 <% content_for :header do %>

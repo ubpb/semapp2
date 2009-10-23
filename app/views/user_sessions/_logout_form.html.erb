@@ -1,12 +1,15 @@
-<% form_for @user_session, :html => {:method => :delete, :class => 'puiform'} do |f| %>
-  <div class="panel notice">
-    <p>
-      Sie sind aktuell angemeldet als Benutzer <b><%= User.current.login %></b>
-    </p>
-  </div>
+<h2 class="section">Abmelden</h2>
 
-  <fieldset class="submit">
-    <%= f.submit "Abmelden" %>
-    <%= link_to 'Abbrechen', root_path %>
-  </fieldset>
-<% end %>
+<div class="pui-panel align-center">
+  Sie sind aktuell angemeldet als Benutzer<br/>
+  <strong><%= User.current.firstname %> <%= User.current.lastname %></strong>
+  (<%= User.current.login %>)
+</div>
+
+<p class="align-center">
+  <% link_to logout_path, :method => :delete, :class => 'pui-button' do %>
+    <%= image_tag 'icons/door-open-out.png', :plugin => 'pui' %>
+    Abmelden
+  <% end %>
+  <%= link_to 'Abbrechen', root_path %>
+</p>

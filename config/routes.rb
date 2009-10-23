@@ -21,7 +21,7 @@ ActionController::Routing::Routes.draw do |map|
   map.logout 'logout', :controller => 'user_sessions', :action => 'destroy'
 
   # User registration / User profiles
-  map.resource :user
+  map.resource :user, :except => [:index, :destroy]
 
   # Sem Apps
   map.resources :sem_apps, :as => 'apps', :controller => 'sem_apps' do |sem_app|

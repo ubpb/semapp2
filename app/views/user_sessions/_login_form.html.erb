@@ -1,4 +1,6 @@
-<div class="panel notice">
+<h2 class="section">Login</h2>
+
+<div class="pui-panel notice">
   <p>
     <strong>Lehrende</strong> die einen eSeminarapparat anlegen möchten, benötigen ein persönliches Login für dieses System*.
     Sollten Sie noch kein persönliches Login haben, können Sie
@@ -9,46 +11,45 @@
   </p>
 </div>
 
-<ul class="pui-tabbar tabs">
-  <li><a href="#local">Lokale Anmeldung</a></li>
-  <li><a href="#imt">IMT Anmeldung</a></li>
-</ul>
+<div class="pui-tabs-wrapper">
+  <ul class="pui-tabs">
+    <li><a href="#local">Lokale Anmeldung</a></li>
+    <li><a href="#imt">IMT Anmeldung</a></li>
+  </ul>
 
-<div class="panels">
+  <div class="pui-tab-panes">
+    <div id="local-login-panel">
+      <% semantic_form_for @user_session do |f| %>
+        <% f.inputs :name => "Anmelden (mit lokalen Nutzerdaten)" do %>
+          <%= f.input :login, :label => 'Login' %>
+          <%= f.input :password, :label => 'Passwort' %>
+        <% end %>
 
-  <div id="local-login-panel">
-    <% semantic_form_for @user_session do |f| %>
-      <% f.inputs :name => "Anmelden (mit lokalen Nutzerdaten)" do %>
-        <%= f.input :login, :label => 'Login' %>
-        <%= f.input :password, :label => 'Passwort' %>
+        <% f.buttons do %>
+          <%= f.commit_button 'Anmelden' %>
+        <% end %>
       <% end %>
 
-      <% f.buttons do %>
-        <%= f.commit_button 'Anmelden' %>
-      <% end %>
-    <% end %>
-  </div>
+      Noch kein lokales Login?
+      <%= link_to '&raquo; Login einrichten', new_user_path %><br/>
+      Passwort vergessen?
+      <%= link_to '&raquo; Passwort wiederherstellen', '#',
+        :rel => "#password-recovery-help",
+        :class => "pui-overlay-trigger" %>
+    </div>
 
-  <div id="imt-login-panel">
-    <% form_for @user_session, :html => {:class => 'puiform'} do |f| %>
-      <fieldset>
-        <legend>Anmelden (mit IMT Zugangsdaten)</legend>
-        <ol>
-          <li>
-            <strong>
-              Eine Anmeldung mittels Ihrer IMT Zugangsdaten wird in einer späteren Programmversion
-              zur Verfügung stehen. Verwenden Sie bitte bis dahin die lokale Anmedung.
-            </strong>
-          </li>
-        </ol>
-      </fieldset>
-    <% end %>
+    <div id="imt-login-panel">
+      <strong>Bitte beachten Sie</strong>
+      <div class="pui-panel notice align-center">
+        Eine Anmeldung mittels Ihrer IMT Zugangsdaten wird in einer späteren Programmversion
+        zur Verfügung stehen. Verwenden Sie bitte bis dahin die lokale Anmedung.
+      </div>
+    </div>
   </div>
 </div>
 
 <p style="font-size: 90%; font-style: italic">
-  * In einer späteren Programmversion wird ein Login mittels
-  IMT Kennung möglich sein. Vgl. <a href="#" class="pui-overlay-trigger" rel="#login-required-help">Wann benötige ich Zugangsdaten?</a>
+  * In einer späteren Programmversion wird ein Login mittels IMT Kennung möglich sein.
 </p>
 
 <p style="font-size: 90%; font-style: italic">
@@ -63,6 +64,14 @@
     Sie benötigen für die eSeminarapparate nur in folgenden Fällen einen persönlichen
     Zugang.
     [TBD.]
+  </p>
+</div>
+
+<div class="pui-overlay" id="password-recovery-help">
+  <h2 class="section">Passwort wiederherstellen?</h2>
+  <p>
+    Diese Funktion steht aktuell noch nicht zur Verfügung. Bitte wenden Sie sich
+    solange an das Informationszentrum in der Universitätsbibliothek.
   </p>
 </div>
 

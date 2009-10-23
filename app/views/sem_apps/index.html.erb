@@ -5,19 +5,19 @@
   <% form_tag(sem_apps_url, :method => :get, :class => 'formtastic') do %>
     <fieldset class="inputs">
       <ol>
-        <li class="string required">
+        <li class="string">
           <label>Angezeigtes Semester</label>
           <%= select("semester", "id", Semester.all.collect {|p| [ p.title, p.id ]}, {:include_blank => 'Alle'}) %>
         </li>
-        <li class="string required">
+        <li class="string">
           <label>Standort</label>
           <%= select("location", "id", Location.all.collect {|p| [ p.title, p.id ]}, {:include_blank => 'Alle'}) %>
         </li>
-        <li class="string required">
+        <li class="string">
           <label>Titel enthält</label>
           <%= text_field_tag 'title', @title %>
         </li>
-        <li class="string required">
+        <li class="string">
           <label>Tutor(en) enthält</label>
           <%= text_field_tag 'tutors', @tutors %>
         </li>
@@ -36,17 +36,17 @@
   <% end %>
 </div>
 
-<div id="filter-info-panel" class="panel align-right">
+<div id="filter-info-panel" class="pui-panel align-right">
   <% if @filtered %>
     Anzahl der eSeminarapparate: <%= @count %> <strong>(Gefiltert)</strong>
-    <a href="#" rel="#filter-panel" class="pui-overlay-trigger button">
-      <%= image_tag 'fugue/icons/ui-search-field.png', :plugin => 'pui' %>
+    <a href="#" rel="#filter-panel" class="pui-overlay-trigger pui-button">
+      <%= image_tag 'icons/ui-search-field.png', :plugin => 'pui' %>
       Filter ändern
     </a>
   <% else %>
     Anzahl der eSeminarapparate: <%= @count %> <strong>(Gesamt)</strong>
-    <a href="#" rel="#filter-panel" class="pui-overlay-trigger button">
-      <%= image_tag 'fugue/icons/ui-search-field.png', :plugin => 'pui' %>
+    <a href="#" rel="#filter-panel" class="pui-overlay-trigger pui-button">
+      <%= image_tag 'icons/ui-search-field.png', :plugin => 'pui' %>
       Liste Filtern
     </a>
   <% end %>

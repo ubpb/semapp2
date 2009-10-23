@@ -1,78 +1,19 @@
-<h3>Ein neues Benutzerkonto einrichten</h3>
+<h2 class="section">Ein neues Benutzerkonto einrichten</h2>
 
-<% form_for @user, :url => user_path, :html => {:class => 'puiform'} do |f| %>
-  <%= f.error_messages %>
-  <fieldset>
-    <legend>Login Daten</legend>
-    <ol>
-      <li>
-        <%= f.label :login, "Login*" %>
-        <%= f.text_field :login %>
-      </li>
-      <li>
-        <%= f.label :password, "Passwort*" %>
-        <%= f.password_field :password %>
-      </li>
-      <li>
-        <%= f.label :password_confirmation, "Passwort bestätigen*" %>
-        <%= f.password_field :password_confirmation %>
-      </li>
-    </ol>
-  </fieldset>
-  <fieldset>
-    <legend>Persönliche Daten</legend>
-    <ol>
-      <li>
-        <%= f.label :firstname, "Vorname*" %>
-        <%= f.text_field :firstname %>
-      </li>
-      <li>
-        <%= f.label :lastname, "Nachname*" %>
-        <%= f.text_field :lastname %>
-      </li>
-      <li>
-        <%= f.label :email, "E-Mail*" %>
-        <%= f.text_field :email %>
-      </li>
-    </ol>
-  </fieldset>
-  <fieldset>
-    <legend>Kontaktdaten im Haus</legend>
-    <ol>
-      <li>
-        <%= f.label :phone, "Telefon" %>
-        <%= f.text_field :phone %>
-      </li>
-      <li>
-        <%= f.label :department, "Lehrstuhl" %>
-        <%= f.text_field :department %>
-      </li>
-    </ol>
-  </fieldset>
-  <fieldset>
-    <legend>Spam-Schutz</legend>
-    <ol>
-      <li>
-        <div class="container">
-          <div style="font-size: 90%; font-style: italic">
-            <p>
-              Um zu verhindern, dass Logins automatisiert erstellt werden,
-              und damit das System für Spam missbraucht wird, schützen wir
-              das System mit einem <a href="http://de.wikipedia.org/wiki/Captcha">Captcha</a>.
-            </p>
-            <p>
-              Sie beantworten das Captcha in dem Sie die zwei Worte die Sie sehen
-              in das Feld eingeben. Sie können jederzeit ein neues Captcha anfordern.
-            </p>
-          </div>
-          <%= get_captcha(:options => {:theme => 'white', :tabindex => 10}) %>
-        </div>
-      </li>
-    </ol>
-  </fieldset>
-  <div style="font-size: 90%">* Plfichtfelder</div>
-  <fieldset class="submit">
-    <%= f.submit "Konto einrichten" %>
-    <%= link_to 'Abbrechen', root_path %>
-  </fieldset>
+<% semantic_form_for @user, :url => user_path do |f| %>
+  <% f.inputs :name => 'Login Daten' do %>
+    <%= f.input :login, :label => 'Login' %>
+    <%= f.input :password, :label => 'Passwort' %>
+    <%= f.input :password_confirmation, :label => 'Passwort wiederholen' %>
+  <% end %>
+
+  <% f.inputs :name => 'Persönliche Daten' do %>
+    <%= f.input :firstname, :label => 'Vorname' %>
+    <%= f.input :lastname, :label => 'Nachname' %>
+    <%= f.input :email, :label => 'E-Mail' %>
+  <% end %>
+
+  <% f.buttons do %>
+    <%= f.commit_button 'Konto einrichten' %>
+  <% end %>
 <% end %>

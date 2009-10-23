@@ -1,5 +1,5 @@
 <% unless @sem_app.approved? and @sem_app.active?  %>
-  <div class="panel notice">
+  <div class="pui-panel notice">
     <p>
       Der eSeminarapparat ist <strong>nicht</strong> aktiv und/oder wurde noch nicht von der Bibliothek
       freigegeben. Nur Sie als Besitzer dieses eSemnarapparates können ihn sehen und
@@ -9,7 +9,7 @@
 <% end %>
 
 <% if @sem_app.editable? %>
-  <div class="panel" style="text-align: right">
+  <div class="pui-panel" style="text-align: right">
     <strong>eSeminarapparat:</strong>
     <%= link_to '&raquo;Bearbeiten', edit_sem_app_path(@sem_app) -%>
     <% if User.current.is_admin? %>
@@ -38,7 +38,7 @@
       <% end %>
 
       <% if @sem_app.books.present? %>
-        <div class="panel">
+        <div class="pui-panel">
           <strong>Standort der Bücher:</strong>
           <% if @sem_app.bid.blank? or @sem_app.ref.blank? %>
             <span style="font-style: italic">Dieser eSeminarapparat ist nur online verfügbar</span>
@@ -165,7 +165,7 @@
       }
       
       /**
-       * Shows the a panel to confirm an operation (e.g. a delete operation)
+       * Shows a panel to confirm an operation (e.g. a delete operation)
        */
       function confirmAction(options) {
         // build the settings
