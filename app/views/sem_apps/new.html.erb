@@ -1,20 +1,19 @@
 <% unless User.current %>
+  <div class="pui-panel notice align-center">
+    Um einen eSeminarapparat zu beantragen, müssen Sie sich zunächst anmelden.
+    <%= link_to('&raquo; Zur Anmeldung', login_path) %>
+  </div>
+<% else %>
+  <h2 class="section">Einen neuen eSeminarapparat beantragen</h2>
 
   <div class="pui-panel notice">
-    <p>
-      Um einen eSeminarapparat zu beantragen, müssen Sie sich zunächst anmelden.
-      <%= link_to('&raquo; Zur Anmeldung', login_path) %>
-    </p>
+    Beantragte eSeminarapparate werden durch die Universitätsbibliothek <strong>überprüft</strong> und
+    <strong>aktiviert</strong>.
+    Jeder Lehrende (oder eine im Auftrag handelnde Person z.B. SHK) kann einen eSeminarapparat
+    für eine Veranstaltung beantragen.
+    <strong>Vorraussetzung ist, dass die Veranstaltung im Semester offiziell stattfindet</strong>
+    (z.B. Nachweis im <a href="http://paul.uni-paderborn.de">Vorlesungsverzeichnis</a>).
   </div>
 
-<% else %>
-    
-  <% if User.current.is_admin? %>
-    <h3>Einen neuen eSeminarapparat anlegen (Admin Modus)</h3>
-  <% else %>
-    <h3>Einen neuen eSeminarapparat beantragen</h3>
-  <% end %>
-
   <%= render 'form' %>
-
 <% end %>

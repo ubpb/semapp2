@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
 
-  before_filter :require_user, :only => [:show, :edit, :update]
-  before_filter :load_current_user, :only => [:show, :edit, :update]
-  before_filter :check_editable, :only => [:edit, :update]  
+  before_filter :require_user, :only => [:show, :edit, :update, :password, :change_password]
+  before_filter :load_current_user, :only => [:show, :edit, :update, :password, :change_password]
+  before_filter :check_editable, :only => [:edit, :update, :password, :change_password]
 
   def new
     @user = User.new
@@ -37,6 +37,18 @@ class UsersController < ApplicationController
       redirect_to user_path
     else
       render :action => :edit
+    end
+  end
+
+  def password
+  end
+
+  def change_password
+    if @user.update_attributes(params[:user])
+      flash[:notice] = "Sie haben Ihr Passwort erfolgreich aktualisiert"
+      redirect_to user_path
+    else
+      render :action => :password
     end
   end
 

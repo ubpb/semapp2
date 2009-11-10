@@ -1,0 +1,31 @@
+<% semantic_form_for @user, :url => user_path do |f| %>
+  <% if @user.new_record? %>
+    <% f.inputs :name => 'Login Daten' do %>
+      <%= f.input :login, :label => 'Login' %>
+      <%= f.input :password, :label => 'Passwort' %>
+      <%= f.input :password_confirmation, :label => 'Passwort wiederholen' %>
+    <% end %>
+  <% end %>
+
+  <% f.inputs :name => 'Persönliche Daten' do %>
+    <%= f.input :firstname, :label => 'Vorname' %>
+    <%= f.input :lastname, :label => 'Nachname' %>
+    <%= f.input :email, :label => 'E-Mail' %>
+  <% end %>
+
+  <% f.buttons do %>
+    <% if @user.new_record? %>
+      <%= f.commit_button 'Login einrichten' %>
+      <li>
+        <%= link_to 'Abbrechen', root_path %>
+      </li>
+    <% else %>
+      <%= f.commit_button 'Speichern' %>
+      <li>
+        <%= link_to 'Abbrechen', user_path %>
+      </li>
+    <% end %>
+  <% end %>
+<% end %>
+
+<span>* Pflichtfelder</span>

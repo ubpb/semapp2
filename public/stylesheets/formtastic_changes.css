@@ -10,67 +10,84 @@ form.formtastic fieldset ol li p.inline-hints { color:#333; }
 --------------------------------------------------------------------------------------------------*/
 
 form.formtastic {
-  margin-bottom: 15px;
+    margin-bottom: 15px;
 }
 
 form.formtastic fieldset ol li {
-  background-color: #efefef;
-  margin-bottom: 2px;
-  padding: 8px 0;
+    background-color: #efefef;
+    margin-bottom: 2px;
+    padding: 8px 0;
 }
 
 form.formtastic fieldset ol li.string input { width: auto; }
 form.formtastic fieldset ol li.password input { width: auto; }
 form.formtastic fieldset ol li.numeric input { width: auto; }
+form.formtastic fieldset ol li.text textarea { width: 60%; }
 
 form.formtastic input, form.formtastic textarea, form.formtastic select {
-  width: auto;
-  padding: 6px;
-  border: 1px solid #ccc;
+    width: auto;
+    padding: 6px;
+    border: 1px solid #ccc;
 }
 
 form.formtastic legend {
-  color: #888;
-  font-size: 120%;
+    color: #888;
+    font-size: 120%;
 }
 
 form.formtastic fieldset ol li label {
-  width: 150px;
-  text-align: right;
-  padding-right: 10px;
+    width: 160px;
+    text-align: right;
+    padding-right: 10px;
 }
 
 form.formtastic fieldset.buttons {
-  padding: 10px 10px 10px 160px;
-  /*border: 1px solid #ddd;*/
-  background-color: #efefef;
-  /*-moz-border-radius: 4px;
-  -webkit-border-radius: 4px;*/
+    padding: 10px 10px 10px 170px;
+    /*border: 1px solid #ddd;*/
+    background-color: #efefef;
+    /*-moz-border-radius: 4px;
+-webkit-border-radius: 4px;*/
 }
 form.formtastic fieldset.buttons ol li {
-  padding: 0;
-  margin: 0;
+    padding: 0;
+    margin: 0;
+}
+
+form.formtastic fieldset.buttons ol li a, form.formtastic fieldset.buttons ol li span {
+    display: block;
+    padding: 6px;
 }
 
 form.formtastic fieldset ol li.boolean label {
-  padding-left: 0;
-  margin-left: 160px;
+    padding-left: 0;
+    margin-left: 170px;
 }
 
 form.formtastic fieldset ol li.boolean label input {
-  margin-left: 0;
+    margin-left: 0;
 }
 
 form.formtastic fieldset ol li.error {
-  background-color: #FBE3E4;
+    background-color: #FBE3E4;
 }
 
 form.formtastic fieldset ol li p.inline-errors {
-  color: #8A1F11;
-  margin: 0.2em 0 0 160px;
+    font-size: 90%;
+    color: #8A1F11;
+    margin: 0.2em 0 0 170px;
+    font-style: italic;
 }
 
 
 form.formtastic fieldset ol li p.inline-hints {
-  margin: 0.2em 0 0 160px;
+    margin: 0.2em 0 0 170px;
+    font-size: 90%;
+    font-style: italic;
 }
+
+form.formtastic fieldset ol li fieldset { position:relative; }
+form.formtastic fieldset ol li fieldset legend { font-size: 100%; color: #000; }
+form.formtastic fieldset ol li fieldset legend span { display: block; text-align: right; width: 160px; padding-right: 10px; position: absolute }
+form.formtastic fieldset ol li fieldset ol { float:left; margin:0; padding: 0 0 0 170px; }
+form.formtastic fieldset ol li fieldset ol li { padding:0; border:0; }
+form.formtastic fieldset ol li fieldset ol li label { text-align: left; }

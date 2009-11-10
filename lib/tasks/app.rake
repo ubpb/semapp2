@@ -1,7 +1,10 @@
 begin
   require 'highline/import'
 rescue LoadError
-  puts 'Please install the highline gem.'
+  puts '######################################'
+  puts '# Please install the highline gem.   #'
+  puts '# $sudo gem install highline         #'
+  puts '######################################'
 end
 
 namespace :app do
@@ -58,6 +61,43 @@ namespace :app do
     connector = AlpehXserverConnector.new # TODO: make this configurable
     engine    = BookSyncEngine.new(connector)
     engine.sync
+  end
+
+  #
+  # Creates a new semester
+  #
+  desc "creates a new semester"
+  task(:create_semester => :environment) do
+    options  = {}
+    options[:title]    = ask("Titel")
+    options[:current]  = agree("Ist dies das aktuelle Semester?")
+    options[:position] = ask("Sortierung 0-n")
+    
+    s = Semester.new(options)
+    if s.valid?
+      s.save!
+    else
+      puts "Semester #{s} is not valid:"
+      s.errors.each {|attr,msg| puts "\t#{attr} - #{msg}"}
+    end
+  end
+
+  #
+  # Creates a new location
+  #
+  desc "creates a new location"
+  task(:create_location => :environment) do
+    options  = {}
+    options[:title]    = ask("Titel")
+    options[:position] = ask("Sortierung 0-n")
+
+    s = Location.new(options)
+    if s.valid?
+      s.save!
+    else
+      puts "Location #{s} is not valid:"
+      s.errors.each {|attr,msg| puts "\t#{attr} - #{msg}"}
+    end
   end
 
   #

@@ -21,12 +21,14 @@
 
 class SemApp < ActiveRecord::Base
 
+  belongs_to :user
   belongs_to :semester
   belongs_to :location
 
   has_many :ownerships, :dependent => :destroy
-  has_many :owners, :through => :ownerships, :source => :user
+  has_many :owners,     :through   => :ownerships, :source => :user
 
+  validates_presence_of   :user
   validates_presence_of   :semester
   validates_presence_of   :location
   validates_presence_of   :title
@@ -71,7 +73,7 @@ class SemApp < ActiveRecord::Base
   end
 
   def editable?
-    User.current and (User.current.is_admin? or User.current.owns_sem_app?(self))
+    User.current and (User.current.is_admin? or User.current.id == self.user.id or User.current.owns_sem_app?(self))
   end
 
   def is_editable?

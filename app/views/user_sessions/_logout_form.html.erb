@@ -1,15 +1,15 @@
 <h2 class="section">Abmelden</h2>
 
-<div class="pui-panel align-center">
+<div class="pui-panel align-center notice">
   Sie sind aktuell angemeldet als Benutzer<br/>
   <strong><%= User.current.firstname %> <%= User.current.lastname %></strong>
   (<%= User.current.login %>)
 </div>
 
-<p class="align-center">
+<div class="pui-panel align-center">
   <% link_to logout_path, :method => :delete, :class => 'pui-button' do %>
     <%= image_tag 'icons/door-open-out.png', :plugin => 'pui' %>
     Abmelden
   <% end %>
   <%= link_to 'Abbrechen', root_path %>
-</p>
+</div>

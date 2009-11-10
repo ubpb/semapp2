@@ -1,14 +1,8 @@
-<h2 class="section">Login</h2>
+<h2 class="section">Anmelden</h2>
 
-<div class="pui-panel notice">
-  <p>
-    <strong>Lehrende</strong> die einen eSeminarapparat anlegen möchten, benötigen ein persönliches Login für dieses System*.
-    Sollten Sie noch kein persönliches Login haben, können Sie
-    <%= link_to '&raquo; hier ein Login einrichten', new_user_path %>.
-  </p>
-  <p>
-    <strong>Studierende</strong> benötigen hier <strong>kein</strong> Login**.
-  </p>
+<div class="pui-view align-right">
+  <%= image_tag 'icons/question-shield.png', :plugin => 'pui' %>
+  <%= link_to 'Wann benötige ich ein persönliches Login?', '#', :rel => '#login-required-help', :class => 'pui-overlay-trigger' %>
 </div>
 
 <div class="pui-tabs-wrapper">
@@ -39,32 +33,38 @@
     </div>
 
     <div id="imt-login-panel">
-      <strong>Bitte beachten Sie</strong>
       <div class="pui-panel notice align-center">
-        Eine Anmeldung mittels Ihrer IMT Zugangsdaten wird in einer späteren Programmversion
+        Eine Anmeldung mit Ihren IMT Zugangsdaten wird in einer späteren Programmversion
         zur Verfügung stehen. Verwenden Sie bitte bis dahin die lokale Anmedung.
       </div>
     </div>
   </div>
 </div>
 
-<p style="font-size: 90%; font-style: italic">
-  * In einer späteren Programmversion wird ein Login mittels IMT Kennung möglich sein.
-</p>
-
-<p style="font-size: 90%; font-style: italic">
-  ** Studierende können sich in einer späteren Programmversion ebenfalls mittels ihrer IMT Kennungen
-  anmelden. Aktuell erfolgt der Lesezugriff für Studienrende mittels dem in der Veranstaltung
-  bekanntgegebenen "Passwort für den Lesezugriff" oder über <a href="http://koala.uni-paderborn.de">koaLA</a>.
-</p>
-
 <div class="pui-overlay" id="login-required-help">
-  <h2 class="section">Wann benötige ich Zugangsdaten?</h2>
+  <h2 class="section">Wann benötige ich ein persönliches Login?</h2>
+  <div class="pui-panel notice align-center">
+    <strong>Bitte beachten Sie:</strong> Der Zugriff auf die Materialien erfolgt <strong>ohne persönliches Login</strong>
+    mit der in der Veranstaltung bekanntgegebenen <i>Kennung für den Lesezugriff</i>.
+  </div>
   <p>
-    Sie benötigen für die eSeminarapparate nur in folgenden Fällen einen persönlichen
-    Zugang.
-    [TBD.]
+    Sie benötigen für die eSeminarapparate nur in folgenden Fällen ein persönliches
+    Login.
   </p>
+  <ol>
+    <li>
+      Wenn Sie als Lehrender, oder im Auftrag eines Lehrenden (z.B. als SHK),
+      einen eSeminarapparat beantragen oder bearbeiten möchten
+    </li>
+    <li>
+      Wenn Sie personalisierte Funktionen der eSeminarapparate verwenden möchten, z.B.
+      <ul>
+        <li>Meine eSeminapparate merken</li>
+        <li>Automatische E-Mail Benachrichtigung bei Änderungen</li>
+        <li>usw.</li>
+      </ul>
+    </li>
+  </ol>
 </div>
 
 <div class="pui-overlay" id="password-recovery-help">

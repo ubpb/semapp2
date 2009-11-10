@@ -1,19 +1,2 @@
-<h2 class="section">Ein neues Benutzerkonto einrichten</h2>
-
-<% semantic_form_for @user, :url => user_path do |f| %>
-  <% f.inputs :name => 'Login Daten' do %>
-    <%= f.input :login, :label => 'Login' %>
-    <%= f.input :password, :label => 'Passwort' %>
-    <%= f.input :password_confirmation, :label => 'Passwort wiederholen' %>
-  <% end %>
-
-  <% f.inputs :name => 'Persönliche Daten' do %>
-    <%= f.input :firstname, :label => 'Vorname' %>
-    <%= f.input :lastname, :label => 'Nachname' %>
-    <%= f.input :email, :label => 'E-Mail' %>
-  <% end %>
-
-  <% f.buttons do %>
-    <%= f.commit_button 'Konto einrichten' %>
-  <% end %>
-<% end %>
+<h2 class="section">Ein neues persönliches Login einrichten</h2>
+<%= render 'form' %>

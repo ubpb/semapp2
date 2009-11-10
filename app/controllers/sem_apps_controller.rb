@@ -53,25 +53,28 @@ class SemAppsController < ApplicationController
 
   def new
     @sem_app = SemApp.new
-    if User.current
-      @sem_app.tutors = User.current.full_name if @sem_app.tutors.blank? and not User.current.is_admin?      
-    end
   end
 
   def create
     @sem_app = SemApp.new(params[:sem_app])
-
-    if @sem_app.save and @sem_app.add_ownership(User.current)
-      unless User.current.is_admin?
-        flash[:notice] = "Ihr eSeminarapparat wurde erfolgreich beantragt. Wir prüfen die Angaben und schalten
-        den eSeminarappat nach erfolgter Prüfung frei. Sie sehen den Status auf Ihrer Konto Seite unter
-        <strong>Meine eSeminarapparate</strong>."
+    # Force the current user as the "creator"
+    @sem_app.user = User.current
+    # Make sure a created semapp is not approved and inactive
+    @sem_app.active   = false
+    @sem_app.approved = false
+    # Finally create the semapp and add the ownership
+    SemApp.transaction do
+      if @sem_app.save and @sem_app.add_ownership(User.current)
+        unless User.current.is_admin?
+          flash[:notice] = "Ihr eSeminarapparat wurde erfolgreich beantragt. Wir prüfen die Angaben und schalten
+        den eSeminarappat nach erfolgter Prüfung frei. Sie sehen den Status unter <strong>Meine eSeminarapparate</strong>."
+        else
+          flash[:notice] = "eSeminarapparat angelegt."
+        end
+        redirect_to user_path(:anchor => 'apps')
       else
-        flash[:notice] = "eSeminarapparat angelegt."
+        render :action => :new
       end
-      redirect_to user_path(:anchor => 'apps')
-    else
-      render :action => :new
     end
   end
 

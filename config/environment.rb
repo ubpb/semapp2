@@ -15,25 +15,17 @@ Rails::Initializer.run do |config|
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
 
   # Specify gems that this application depends on and have them installed with rake gems:install
-  # config.gem "bj"
-  # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
-  # config.gem "sqlite3-ruby", :lib => "sqlite3"
-  # config.gem "aws-s3", :lib => "aws/s3"
-  config.gem 'RedCloth',             :version => '4.2.2'
-  config.gem 'authlogic',            :version => '2.1.2'
-  config.gem 'thoughtbot-paperclip', :version => '2.3.1',  :lib => 'paperclip', :source => 'http://gems.github.com'
-  config.gem 'mislav-will_paginate', :version => '2.3.11', :lib => 'will_paginate', :source => 'http://gems.github.com'
-  config.gem 'libxml-ruby',          :version => '1.1.3',  :lib => 'libxml'
-  config.gem 'bcrypt-ruby',          :version => '2.1.2',  :lib => 'bcrypt'
-  config.gem 'giraffesoft-resource_controller', :version => '0.6.5', :lib => 'resource_controller', :source => 'http://gems.github.com'
-  config.gem 'ruby-recaptcha',       :version => '1.0.0'
+  config.gem 'RedCloth',      :version => '4.2.2',   :lib => 'RedCloth',      :source => 'http://gemcutter.org'
+  config.gem 'authlogic',     :version => '2.1.2',   :lib => 'authlogic',     :source => 'http://gemcutter.org'
+  config.gem 'libxml-ruby',   :version => '1.1.3',   :lib => 'libxml',        :source => 'http://gemcutter.org'
+  config.gem 'bcrypt-ruby',   :version => '2.1.2',   :lib => 'bcrypt',        :source => 'http://gemcutter.org'
+  config.gem 'paperclip',     :version => '2.3.1.1', :lib => 'paperclip',     :source => 'http://gemcutter.org'
+  config.gem 'will_paginate', :version => '2.3.11',  :lib => 'will_paginate', :source => 'http://gemcutter.org'
+  config.gem "formtastic",    :version => '0.9.1',   :lib => 'formtastic',    :source => 'http://gemcutter.org'
 
-  config.gem 'provideal-ui', :version => '>= 0.1.0', :lib => 'pui'
-  config.gem "formtastic", :version => '0.9.0', :source  => 'http://gemcutter.org'
-
-  config.gem 'chriseppstein-compass', :lib => 'compass', :source => 'http://gems.github.com/'
-  config.gem 'haml', :lib => 'haml', :version => '>=2.2.0'
-
+  config.gem 'provideal-ui',                :version => '0.1.0', :lib => 'pui',                         :source => 'http://gemcutter.org'
+  config.gem 'provideal-migration-helpers', :version => '1.1.1', :lib => 'provideal_migration_helpers', :source => 'http://gemcutter.org'
+  
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
@@ -51,6 +43,6 @@ Rails::Initializer.run do |config|
 
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
-  # config.i18n.default_locale = :de
+  config.i18n.default_locale = :de
 
 end
