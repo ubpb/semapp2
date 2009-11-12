@@ -1,19 +1,21 @@
-<% if sem_apps and not sem_apps.empty? %>
-  <table class="pui-datagrid">
+<% if sem_apps.present? %>
+  <div id="sem-apps-listing" class="pui-collection-view">
     <% for sem_app in sem_apps %>
-      <tr>
-        <td width="100%">
-          <%= link_to(sem_app.title, sem_app_path(sem_app.id)) %>
-          (<%= sem_app.semester.title %>)
-          <div style="font-size: 90%">
-            Tutor(en): <%= h(sem_app.tutors) %>
-          </div>
-        </td>
-      </tr>
+      <div class="item sem-app">
+        <h4 class="title">
+          <%= link_to h(sem_app.title), sem_app_path(sem_app) %>
+        </h4>
+        <div class="semester">
+          im <%= h(sem_app.semester.title) %>
+        </div>
+        <div class="tutors">
+          Tutor(en): <strong><%= h(sem_app.tutors) %></strong>
+        </div>
+      </div>
     <% end %>
-  </table>
+  </div>
 <% else %>
-  <div class="pui-panel notice" style="text-align: center">
+  <div class="pui-panel notice align-center">
     Es wurden <strong>keine</strong> eSeminarapparate gefunden.
   </div>
 <% end %>

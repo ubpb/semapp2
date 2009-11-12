@@ -11,6 +11,8 @@
 
 class Authority < ActiveRecord::Base
 
+  ADMIN_ROLE = 'ROLE_ADMIN'
+
   validates_presence_of   :name
   validates_uniqueness_of :name
   validates_format_of     :name, :with => /^[A-Z0-9_]+$/

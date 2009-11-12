@@ -7,19 +7,19 @@
       <ol>
         <li class="string">
           <label>Angezeigtes Semester</label>
-          <%= select("semester", "id", Semester.all.collect {|p| [ p.title, p.id ]}, {:include_blank => 'Alle'}) %>
+          <%= select("semester", "id", Semester.all.collect {|p| [ p.title, p.id ]}, {:include_blank => 'Alle'}, {:style => 'width: 200px'}) %>
         </li>
         <li class="string">
           <label>Standort</label>
-          <%= select("location", "id", Location.all.collect {|p| [ p.title, p.id ]}, {:include_blank => 'Alle'}) %>
+          <%= select("location", "id", Location.all.collect {|p| [ p.title, p.id ]}, {:include_blank => 'Alle'}, {:style => 'width: 200px'}) %>
         </li>
         <li class="string">
           <label>Titel enthält</label>
-          <%= text_field_tag 'title', @title %>
+          <%= text_field_tag 'title', @title, {:style => 'width: 200px'} %>
         </li>
         <li class="string">
           <label>Tutor(en) enthält</label>
-          <%= text_field_tag 'tutors', @tutors %>
+          <%= text_field_tag 'tutors', @tutors, {:style => 'width: 200px'} %>
         </li>
       </ol>
     </fieldset>

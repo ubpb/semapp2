@@ -1,14 +1,7 @@
 <% unless sem_app.approved? %>
-  <%= image_tag('common/state_nok.png', :title => 'Wird geprüft', :style => "vertical-align: middle") %>
-  Prüfung
+  <%= image_tag('common/state_nok.png', :title => 'Wird geprüft') %>
+  Wird von der Universitätsbibiothek überprüft
 <% else %>
-  <%= image_tag('common/state_ok.png', :title => 'Erfolgreich geprüft', :style => "vertical-align: middle") %>
-  Prüfung
-<% end %>
-<% unless sem_app.active? %>
-  <%= image_tag('common/state_nok.png', :title => 'Ist inaktiv', :style => "vertical-align: middle") %>
-  Aktiv
-<% else %>
-  <%= image_tag('common/state_ok.png', :title => 'Ist aktiv', :style => "vertical-align: middle") %>
-  Aktiv
+  <%= image_tag('common/state_ok.png', :title => 'Erfolgreich geprüft') %>
+  Erfolgreich geprüft
 <% end %>

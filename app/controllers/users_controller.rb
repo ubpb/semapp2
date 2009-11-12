@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
 
-  before_filter :require_user, :only => [:show, :edit, :update, :password, :change_password]
+  before_filter :require_user,      :only => [:show, :edit, :update, :password, :change_password]
   before_filter :load_current_user, :only => [:show, :edit, :update, :password, :change_password]
-  before_filter :check_editable, :only => [:edit, :update, :password, :change_password]
+  before_filter :check_editable,    :only => [       :edit, :update, :password, :change_password]
 
   def new
     @user = User.new
@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     @user.approved = true
     @user.active   = true
 
-    if (@user.save) #if (validate_recap(params, @user.errors) and @user.save)
+    if @user.save
       flash[:notice] = "Ihr Benutzerkonto wurde erfolgreich eingerichtet und sie wurden bereits angemeldet."
       UserSession.create(@user, false)
       redirect_to user_path
@@ -56,6 +56,7 @@ class UsersController < ApplicationController
 
   def load_current_user
     @user = User.current
+    raise "No user logged in. That was not expected" unless @user
   end
 
   def check_editable

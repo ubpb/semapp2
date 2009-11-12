@@ -75,8 +75,8 @@ class DefaultDb < ActiveRecord::Migration
     ############################################################################
 
     create_table :authorities_users, :id => false do |t|
-      t.references :authority, :null => false
-      t.references :user,      :null => false
+      t.belongs_to :authority, :null => false
+      t.belongs_to :user,      :null => false
     end
 
     add_index :authorities_users, [:authority_id, :user_id], :unique => true
@@ -118,26 +118,25 @@ class DefaultDb < ActiveRecord::Migration
     ############################################################################
 
     create_table :sem_apps do |t|
-      t.references :user,           :null => false
-      t.references :semester,       :null => false
-      t.references :location,       :null => false
+      t.belongs_to :creator,        :null => false
+      t.belongs_to :semester,       :null => false
+      t.belongs_to :location,       :null => false
       t.boolean    :active,         :null => false, :default => false
       t.boolean    :approved,       :null => false, :default => false
       t.string     :title,          :null => false
-      t.string     :course_id,      :null => true
       t.text       :tutors,         :null => false
       t.string     :shared_secret,  :null => false
+      t.string     :course_id,      :null => true
       t.string     :bid,            :null => true
       t.string     :ref,            :null => true
-      t.datetime   :books_synced_at
       t.timestamps
     end
 
-    add_index :sem_apps, [:title, :semester_id],     :unique => true
+    add_index :sem_apps, [:title,     :semester_id], :unique => true
     add_index :sem_apps, [:course_id, :semester_id], :unique => true
-    add_index :sem_apps, [:bid, :semester_id],       :unique => true
+    add_index :sem_apps, [:bid,       :semester_id], :unique => true
 
-    add_foreign_key :sem_apps, :user_id,     :users,     :id
+    add_foreign_key :sem_apps, :creator_id,  :users,     :id
     add_foreign_key :sem_apps, :semester_id, :semesters, :id
     add_foreign_key :sem_apps, :location_id, :locations, :id
 
@@ -148,8 +147,8 @@ class DefaultDb < ActiveRecord::Migration
     ############################################################################
 
     create_table :ownerships do |t|
-      t.references :user, :null => false
-      t.references :sem_app, :null => false
+      t.belongs_to :user, :null => false
+      t.belongs_to :sem_app, :null => false
       t.timestamps
     end
 
@@ -165,8 +164,8 @@ class DefaultDb < ActiveRecord::Migration
     ############################################################################
 
     create_table :sem_app_entries do |t|
-      t.references :sem_app,  :null => false
-      t.references :instance, :null => false, :polymorphic => true
+      t.belongs_to :sem_app,  :null => false
+      t.belongs_to :instance, :null => false, :polymorphic => true
       t.integer    :position, :null => false, :default => 0
       t.timestamps
     end
@@ -197,7 +196,7 @@ class DefaultDb < ActiveRecord::Migration
     ############################################################################
 
     create_table :books do |t|
-      t.references :sem_app,                :null => false
+      t.belongs_to :sem_app,                :null => false
       t.string     :signature,              :null => false
       t.string     :title,                  :null => false
       t.string     :author,                 :null => false

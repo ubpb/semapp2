@@ -49,30 +49,32 @@ class User < ActiveRecord::Base
     c.validations_scope = :authid
   end
 
+  #
   # Returns the current (logged in) user. Returns null
-  # if there is no user logged in
-  # FIXME: That need to be chached but using @current_user or Thread.current
-  # leads to serious security problems when run on passanger
+  # if there is no user logged in.
+  #
   def self.current
-    #return Thread.current[:_current_user] if Thread.current[:_current_user]
     user_session = User.current_session
     user_session.user if user_session and user_session.user
-    #Thread.current[:_current_user] = user_session.user if user_session and user_session.user
   end
 
+  #
   # Returns the current user session
+  #
   def self.current_session
     UserSession.find
   end
 
+  #
+  # Logs out the user
+  #
   def logout
-    if User.current_session
-      User.current_session.destroy
-    end
-    Thread.current[:_current_user] = nil
+    User.current_session.destroy if User.current_session
   end
 
+  #
   # Callback: Before save
+  #
   def before_validation
     self.authid = DEFAULT_AUTHID unless authid
   end
@@ -157,16 +159,6 @@ class User < ActiveRecord::Base
   #
   def to_s
     return "#{self.login}@#{self.authid}"
-  end
-
-  def phone
-    t = read_attribute(:phone)
-    t unless t.blank?
-  end
-
-  def department
-    t = read_attribute(:department)
-    t unless t.blank?
   end
 
 end

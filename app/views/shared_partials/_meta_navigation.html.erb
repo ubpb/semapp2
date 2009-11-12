@@ -1,0 +1,24 @@
+<% if User.current %>
+  <span>
+    Willkommen
+    <strong><%= User.current.firstname %> <%= User.current.lastname %></strong>
+    (<%= User.current.login %>)
+  </span>
+  <% link_to user_path do %>
+    <%= image_tag 'icons/user-orange.png', :plugin => 'pui' %>
+    Mein Bereich
+  <% end %>
+  <% link_to login_path do %>
+    <%= image_tag 'icons/door-open-out.png', :plugin => 'pui' %>
+    Abmelden
+  <% end %>
+<% else %>
+  <% link_to login_path do %>
+    <%= image_tag 'icons/door-open-in.png', :plugin => 'pui' %>
+    Anmelden
+  <% end %>
+<% end %>
+<a href="#" rel="#common-help" class="pui-overlay-trigger">
+  <%= image_tag 'icons/question-shield.png', :plugin => 'pui' %>
+  Hilfe
+</a>

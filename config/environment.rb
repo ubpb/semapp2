@@ -16,7 +16,7 @@ Rails::Initializer.run do |config|
 
   # Specify gems that this application depends on and have them installed with rake gems:install
   config.gem 'RedCloth',      :version => '4.2.2',   :lib => 'RedCloth',      :source => 'http://gemcutter.org'
-  config.gem 'authlogic',     :version => '2.1.2',   :lib => 'authlogic',     :source => 'http://gemcutter.org'
+  config.gem 'authlogic',     :version => '2.1.3',   :lib => 'authlogic',     :source => 'http://gemcutter.org'
   config.gem 'libxml-ruby',   :version => '1.1.3',   :lib => 'libxml',        :source => 'http://gemcutter.org'
   config.gem 'bcrypt-ruby',   :version => '2.1.2',   :lib => 'bcrypt',        :source => 'http://gemcutter.org'
   config.gem 'paperclip',     :version => '2.3.1.1', :lib => 'paperclip',     :source => 'http://gemcutter.org'

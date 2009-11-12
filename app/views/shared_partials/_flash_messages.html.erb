@@ -1,0 +1,15 @@
+<% if flash[:success].present? %>
+  <div class="pui-panel success align-center">
+    <%= flash[:success] %>
+  </div>
+<% end %>
+<% if flash[:notice].present? %>
+  <div class="pui-panel notice align-center">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+<% if flash[:error].present? %>
+  <div class="pui-panel error align-center">
+    <%= flash[:error] %>
+  </div>
+<% end %>

@@ -11,7 +11,7 @@
 /* Defauls provided by PUI. Overrides will follow... */
 
 body {
-  background: url(../images/page/page-bg.png) repeat top left;
+  background: #626566 url(../images/page/page-bg.png) repeat top left;
 }
 
 a, a:visited {
@@ -22,11 +22,15 @@ img {
   margin: 0 0 -4px 0 !important;
 }
 
+.pui-collection-view .item {
+  margin-bottom: 15px;
+}
+
 /* Page structure
 ----------------------------------------------------------------------------------------------------*/
 
 #meta {
-  background: transparent url(../images/page/meta-bg.png) repeat-x bottom left;
+  /*background: transparent url(../images/page/meta-bg.png) repeat-x bottom left;*/
   line-height: 35px;
   overflow: hidden;
 }
@@ -34,9 +38,10 @@ img {
 #header {
   background: url(../images/page/header-bg.png) repeat-x;
   height: 90px;
+  overflow: visible;
 }
 
-.grid_4.grid_padded {
+.grid_padded {
   margin: 0;
   padding: 0 10px;
 }
@@ -77,6 +82,12 @@ img {
 #page {
   background-color: #fff;
   min-height: 550px;
+  -moz-box-shadow: 0 0 30px #333;
+  -webkit-box-shadow: 0 0 30px #333;
+  -moz-border-radius-bottomleft: 8px;
+  -moz-border-radius-bottomright: 8px;
+  -webkit-border-bottom-left-radius: 8px;
+  -webkit-border-bottom-right-radius: 8px;
 }
 
 #content {
@@ -85,7 +96,7 @@ img {
 }
 
 #footer {
-  background: transparent url(../images/page/footer-bg.png) repeat-x top left;
+  /*background: transparent url(../images/page/footer-bg.png) repeat-x top left;*/
   padding-top: 1em;
   padding-bottom: 5em;
 }
@@ -201,8 +212,25 @@ img {
   text-decoration: underline;
 }
 
+/* Page content elements
+----------------------------------------------------------------------------------------------------*/
 
+/* SemApp listing */
+#sem-apps-listing .item.sem-app {
+  
+}
 
+#sem-apps-listing .item.sem-app .semester {
+  font-style: italic;
+  color: #333;
+}
+
+#sem-apps-listing .item.sem-app h4.title {
+  font-size: 110%;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
 
 /* Pagination links */
 div.pagination {

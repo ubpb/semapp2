@@ -23,105 +23,42 @@
   </head>
 
   <body>
-    <div id="meta">
-      <div class="container_16 clearfix">
-        <div class="grid_16">
-          <div id="meta-navigation">
-            <% if User.current %>
-              <span>
-                Willkommen
-                <strong><%= User.current.firstname %> <%= User.current.lastname %></strong>
-                (<%= User.current.login %>)
-              </span>
-              <% link_to user_path do %>
-                <%= image_tag 'icons/user-orange.png', :plugin => 'pui' %>
-                Mein Bereich
-              <% end %>
-              <% link_to login_path do %>
-                <%= image_tag 'icons/door-open-out.png', :plugin => 'pui' %>
-                Abmelden
-              <% end %>
-            <% else %>
-              <% link_to login_path do %>
-                <%= image_tag 'icons/door-open-in.png', :plugin => 'pui' %>
-                Anmelden
-              <% end %>
-            <% end %>
-            <a href="#" rel="#common-help" class="pui-overlay-trigger">
-              <%= image_tag 'icons/question-shield.png', :plugin => 'pui' %>
-              Hilfe
-            </a>
-          </div>
+    <div id="meta" class="container_16 clearfix">
+      <div class="grid_16">
+        <div id="meta-navigation">
+          <%= render 'shared_partials/meta_navigation' %>
         </div>
       </div>
     </div>
 
-    <div id="header">
-      <div class="container_16 clearfix">
+    <div id="page" class="container_16 clearfix">
+      <div id="header" class="container_16 clearfix">
         <div id="stage-wrapper" class="grid_4 grid_padded">
           <div id="stage"></div>
         </div>
         <div id="logo-upb" class="grid_12"></div>
       </div>
-    </div>
 
-    <div id="page">
-      <div class="container_16 clearfix">
-        <div id="sidebar-wrapper" class="grid_4 grid_padded">
-          <div id="sidebar">
-            <div id="logo-ub"></div>
-            <div id="navigation">
-              <%= render 'shared_partials/main_navigation' %>
-            </div>
-          </div>
-          <div id="sidebar-bottom-cap"></div>
-        </div>
-        <div id="content" class="grid_12">
-          <%= yield :layout %>
-
-          <div class="pui-overlay" id="common-help">
-            <h2 class="section">Hilfe?</h2>
-            <p>
-              Sie haben Fragen zu Ihren eSeminarapparaten, möchten Hilfe bei technischen Problemen oder eine Beratung?
-              Dann stehen Ihnen die folgenden Ansprechpartner zur Verfügung:
-            </p>
-            <ul>
-              <li>
-                <b>Hilfe bei Fragen und Beratung zu eSeminarapparaten:</b>
-                <br/>
-                <i>Informationszentrum (Universitätsbibliothek)</i>
-                <br/>
-                E-Mail: <a href="mailto:information@ub.uni-paderborn.de">information@ub.uni-paderborn.de</a>
-                <br/>
-                Tel.: 05251 / 602017
-                <br/>
-                Tel.: 05251 / 603953
-                <br/>
-              </li>
-              <li>
-                <b>Hilfe bei technischen Problemen:</b>
-                <br/>
-                <i>René Sprotte (Universitätsbibliothek)</i>
-                <br/>
-                E-Mail: <a href="mailto:r.sprotte@ub.uni-paderborn.de">r.sprotte@ub.uni-paderborn.de</a>
-                <br/>
-                Tel.: 05251 / 604251
-                <br/>
-              </li>
-            </ul>
+      <div id="sidebar-wrapper" class="grid_4 grid_padded">
+        <div id="sidebar">
+          <div id="logo-ub"></div>
+          <div id="navigation">
+            <%= render 'shared_partials/main_navigation' %>
           </div>
         </div>
+        <div id="sidebar-bottom-cap"></div>
+      </div>
+
+      <div id="content" class="grid_12">
+        <%= render 'shared_partials/flash_messages' %>
+        <%= yield :layout %>
+        <%= render 'shared_partials/common_help' %>
       </div>
     </div>
 
-    <div id="footer">
-      <div class="container_16 clearfix">
-        <div class="grid_16">
-          &copy; <%= Time.now.year %> <a href="http://www.ub.uni-paderborn.de">Universitätsbibliothek Paderborn</a> |
-          <a href="http://www.ub.uni-paderborn.de/sitemap/" tabindex="400">Sitemap</a> |
-          <a href="http://www.ub.uni-paderborn.de/impressum/" tabindex="401">Impressum</a> |
-          <a href="mailto:webmaster@ub.uni-paderborn.de" tabindex="402">Webmaster</a>
-        </div>
+    <div id="footer" class="container_16 clearfix">
+      <div class="grid_16">
+        <%= render 'shared_partials/footer' %>
       </div>
     </div>
   </body>
