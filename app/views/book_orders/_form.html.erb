@@ -1,34 +1,18 @@
-<% form_for @book, :url => sem_app_book_orders_path(@sem_app), :html => {:class => 'puiform'} do |f| %>
-  <%= f.error_messages %>
-  <fieldset>
-    <legend>Buch</legend>
-    <ol>
-      <li>
-        <%= f.label      :signature, "Signatur*" %>
-        <%= f.text_field :signature %>
-      </li>
-      <li>
-        <%= f.label      :title, "Titel*" %>
-        <%= f.text_field :title %>
-      </li>
-      <li>
-        <%= f.label      :author, "Autor*" %>
-        <%= f.text_field :author %>
-      </li>
-      <li>
-        <%= f.label      :year, "Erscheinungsjahr*" %>
-        <%= f.text_field :year, :size => 5 %>
-      </li>
-      <li>
-        <%= f.label      :edition, "Auflage*" %>
-        <%= f.text_field :edition, :size => 10 %>
-      </li>
-    </ol>
-  </fieldset>
-  <fieldset class="submit">
-    <legend>Speichern</legend>
-    <%= f.submit 'Speichern' %>
-    <%= link_to 'Abbrechen', sem_app_book_orders_path(@sem_app) %>
-  </fieldset>
+<% semantic_form_for @book, :url => sem_app_book_orders_path(@sem_app) do |f| %>
+  <% f.inputs do %>
+    <%= f.input :signature, :label => 'Signatur' %>
+    <%= f.input :title,     :label => 'Titel' %>
+    <%= f.input :author,    :label => 'Autor' %>
+    <%= f.input :year,      :label => 'Erscheinungsjahr' %>
+    <%= f.input :edition,   :label => 'Auflage' %>
+  <% end %>
+
+  <% f.buttons do %>
+    <%= f.commit_button 'Speichern' %>
+    <li>
+      <%= link_to 'Abbrechen', sem_app_book_orders_path(@sem_app) %>
+    </li>
+  <% end %>
 <% end %>
 
+<span>* Pflichtfelder</span>

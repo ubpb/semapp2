@@ -215,21 +215,44 @@ img {
 /* Page content elements
 ----------------------------------------------------------------------------------------------------*/
 
-/* SemApp listing */
-#sem-apps-listing .item.sem-app {
+/* SemApp */
+.sem-app {
   
 }
 
-#sem-apps-listing .item.sem-app .semester {
+.sem-app .semester {
   font-style: italic;
   color: #333;
 }
 
-#sem-apps-listing .item.sem-app h4.title {
+.sem-app h4.title {
   font-size: 110%;
   font-weight: bold;
   margin: 0;
   padding: 0;
+}
+
+/* Book order */
+#book-order-listing .book-order {
+
+}
+
+#book-order-listing .book-order .date {
+  font-size: 90%;
+  font-style: italic;
+  color: #333;
+}
+
+#book-order-listing .book-order .signature {
+  font-weight: bolder;
+}
+
+#book-order-listing .book-order .source {
+
+}
+
+#book-order-listing .book-order .state {
+  font-style: italic;
 }
 
 /* Pagination links */

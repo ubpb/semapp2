@@ -43,9 +43,7 @@ class BookOrdersController < ApplicationController
 
   # allow access only for owners and admins
   def check_access
-    owner_access = true if User.current.owns_sem_app?(@sem_app)
-    admin_access = true if User.current.is_admin?
-    unless owner_access or admin_access
+    unless @sem_app.is_editable?
       flash[:error] = "Zugriff verweigert"
       redirect_to sem_apps_path
       return false

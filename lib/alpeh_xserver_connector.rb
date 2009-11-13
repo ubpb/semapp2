@@ -3,8 +3,8 @@ require 'xml'
 
 class AlpehXserverConnector < AbstractConnector
 
-  def get_books(sem_app_id)
-    url = "http://ubaleph.uni-paderborn.de/X?op=bor-info&bor_id=#{sem_app_id}&library=pad50"
+  def get_books(ils_account)
+    url = "http://ubaleph.uni-paderborn.de/X?op=bor-info&bor_id=#{ils_account}&library=pad50"
     xml = Net::HTTP.get_response(URI.parse(url)).body
     doc = XML::Parser.string(xml).parse
 

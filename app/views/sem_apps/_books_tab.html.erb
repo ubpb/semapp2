@@ -1,0 +1,28 @@
+<% if @sem_app.editable? %>
+  <div class="pui-panel align-right">
+    <%= link_to 'Buchaufträge verwalten', sem_app_book_orders_path(@sem_app), :class => 'pui-button' %>
+  </div>
+<% end %>
+
+<% if @sem_app.books.present? %>
+  <% if @sem_app.has_book_shelf? %>
+    <div class="pui-panel notice align-center">
+      Sie finden die Bücher in der <strong><%= h(@sem_app.location.title) %></strong> im
+      Seminarapparat <strong>Nr. <%= h(@sem_app.book_shelf.slot_number) %></strong>
+    </div>
+  <% else %>
+    <div class="pui-panel notice align-center">
+      <p>Die Bücher dieses Seminarapparates finden Sie regulären Bestand.</p>
+    </div>
+  <% end %>
+
+  <div id="sem-app-book-entries" class="sem-app-entries">
+    <% @sem_app.books.each do |book| %>
+      <%= render 'book', :entry => book, :sem_app => @sem_app %>
+    <% end %>
+  </div>
+<% else %>
+  <div class="pui-panel notice align-center">
+    Für diesen eSeminarapparat sind aktuell <strong>keine</strong> Bücher gelistet.
+  </div>
+<% end %>

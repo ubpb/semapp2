@@ -121,24 +121,40 @@ class DefaultDb < ActiveRecord::Migration
       t.belongs_to :creator,        :null => false
       t.belongs_to :semester,       :null => false
       t.belongs_to :location,       :null => false
-      t.boolean    :active,         :null => false, :default => false
       t.boolean    :approved,       :null => false, :default => false
       t.string     :title,          :null => false
       t.text       :tutors,         :null => false
       t.string     :shared_secret,  :null => false
       t.string     :course_id,      :null => true
-      t.string     :bid,            :null => true
-      t.string     :ref,            :null => true
       t.timestamps
     end
 
     add_index :sem_apps, [:title,     :semester_id], :unique => true
     add_index :sem_apps, [:course_id, :semester_id], :unique => true
-    add_index :sem_apps, [:bid,       :semester_id], :unique => true
 
     add_foreign_key :sem_apps, :creator_id,  :users,     :id
     add_foreign_key :sem_apps, :semester_id, :semesters, :id
     add_foreign_key :sem_apps, :location_id, :locations, :id
+
+    ############################################################################
+    #
+    # Book Shelf
+    #
+    ############################################################################
+
+    create_table :book_shelves do |t|
+      t.belongs_to :sem_app,     :null => false
+      t.string     :ils_account, :null => false
+      t.string     :slot_number, :null => false
+      t.timestamps
+    end
+
+    add_index :book_shelves, :ils_account
+    add_index :book_shelves, :slot_number
+    add_index :book_shelves, [:sem_app_id, :ils_account], :unique => true
+    add_index :book_shelves, [:sem_app_id, :slot_number], :unique => true
+
+    add_foreign_key :book_shelves, :sem_app_id, :sem_apps, :id
 
     ############################################################################
     #

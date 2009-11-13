@@ -1,20 +1,18 @@
 <% unless entries.empty? %>
-  <table class="pui-datagrid">
-    <tbody>
-      <% entries.each do |entry| %>
-        <tr>
-          <td>
-            Auftrag vom: <%= entry.created_at.to_s(:long) %><br/>
-            <strong>(<%= h(entry.signature) %>)</strong>
-            <%= h(entry.title) %><%= ', ' + h(entry.author) if entry.author.present? %><%= ', ' + h(entry.year) if entry.year.present? %><br/>
-            Status: In Bearbeitung
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <div id="book-order-listing" class="pui-collection-view">
+    <% entries.each do |entry| %>
+      <div class="item book-order">
+        <div class="date"><%= entry.created_at.to_s(:long) %></div>
+        <div class="signature"><%= h(entry.signature) %></div>
+        <div class="source">
+          <%= h(entry.title) %><%= ', ' + h(entry.author) if entry.author.present? %><%= ', ' + h(entry.year) if entry.year.present? %>
+        </div>
+        <div class="state">In Bearbeitung</div>
+      </div>
+    <% end %>
+  </div>
 <% else %>
-  <div class="pui-panel notice">
+  <div class="pui-panel notice align-center">
     <p>Aktuell sind <strong>keine</strong> Aufträge offen.</p>
   </div>
 <% end %>

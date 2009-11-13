@@ -35,12 +35,15 @@
   <% f.buttons do %>
     <% if @sem_app.new_record? %>
       <%= f.commit_button 'eSeminarapparat beantragen' %>
+      <li>
+        <%= link_to 'Abbrechen', user_path(:anchor => :apps) %>
+      </li>
     <% else %>
       <%= f.commit_button 'Speichern' %>
+      <li>
+        <%= link_to 'Abbrechen', sem_app_path(@sem_app) %>
+      </li>
     <% end %>
-    <li>
-      <%= link_to 'Abbrechen', user_path(:anchor => :apps) %>
-    </li>
   <% end %>
 <% end %>
 

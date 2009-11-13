@@ -1,12 +1,12 @@
 # == Schema Information
-# Schema version: 20090831113245
+# Schema version: 20091110135349
 #
 # Table name: semesters
 #
 #  id         :integer(4)      not null, primary key
 #  current    :boolean(1)
 #  title      :string(255)     not null
-#  position   :integer(4)
+#  position   :integer(4)      default(0), not null
 #  created_at :datetime
 #  updated_at :datetime
 #

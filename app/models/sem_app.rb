@@ -1,22 +1,20 @@
 # == Schema Information
-# Schema version: 20090831113245
+# Schema version: 20091110135349
 #
 # Table name: sem_apps
 #
-#  id              :integer(4)      not null, primary key
-#  semester_id     :integer(4)      not null
-#  location_id     :integer(4)      not null
-#  active          :boolean(1)      not null
-#  approved        :boolean(1)      not null
-#  title           :string(255)     not null
-#  course_id       :string(255)
-#  tutors          :text            default(""), not null
-#  shared_secret   :string(255)     not null
-#  bid             :string(255)
-#  ref             :string(255)
-#  books_synced_at :datetime
-#  created_at      :datetime
-#  updated_at      :datetime
+#  id            :integer(4)      not null, primary key
+#  creator_id    :integer(4)      not null
+#  semester_id   :integer(4)      not null
+#  location_id   :integer(4)      not null
+#  active        :boolean(1)      not null
+#  approved      :boolean(1)      not null
+#  title         :string(255)     not null
+#  tutors        :text            default(""), not null
+#  shared_secret :string(255)     not null
+#  course_id     :string(255)
+#  created_at    :datetime
+#  updated_at    :datetime
 #
 
 class SemApp < ActiveRecord::Base
@@ -25,6 +23,7 @@ class SemApp < ActiveRecord::Base
   belongs_to :creator, :class_name => 'User'
   belongs_to :semester
   belongs_to :location
+  has_one    :book_shelf, :dependent => :destroy
   has_many   :ownerships, :dependent => :destroy
   has_many   :owners,     :through   => :ownerships, :source => :user
 
@@ -38,8 +37,6 @@ class SemApp < ActiveRecord::Base
 
   validates_uniqueness_of :title,     :scope => :semester_id
   validates_uniqueness_of :course_id, :scope => :semester_id, :allow_nil => true, :allow_blank => false
-  validates_uniqueness_of :bid,       :scope => :semester_id, :allow_nil => true, :allow_blank => false
-
 
   ###########################################################################################
   #
@@ -48,12 +45,25 @@ class SemApp < ActiveRecord::Base
   ###########################################################################################
   
   def books(options = {})
-    options = {
-      :scheduled_for_addition => false,
-      :scheduled_for_removal  => false
-    }.merge(options)
+    unless options[:all]
+      options = {
+        :scheduled_for_addition => false,
+        :scheduled_for_removal  => false
+      }.merge(options)
+    else
+      options.delete(:all)
+    end
 
     Book.find(:all, :conditions => options.merge!(:sem_app_id => id), :order => "created_at DESC")
+  end
+
+  def book_by_signature(signature)
+    Book.find(
+      :first,
+      :conditions => {
+        :sem_app_id => self.id,
+        :signature => signature
+      })
   end
 
   def media_entries
@@ -74,11 +84,19 @@ class SemApp < ActiveRecord::Base
   end
 
   def editable?
-    User.current and (User.current.is_admin? or User.current.owns_sem_app?(self))
+    User.current and (User.current.is_admin? or (User.current.owns_sem_app?(self) and self.approved?))
   end
 
   def is_editable?
     editable?
+  end
+
+  def is_from_current_semester?
+    self.semester == Semester.current
+  end
+
+  def has_book_shelf?
+    self.book_shelf != nil
   end
 
   ###########################################################################################
@@ -87,16 +105,12 @@ class SemApp < ActiveRecord::Base
   #
   ###########################################################################################
 
+  #
+  # Make sure we convert empty values to nil, to make the database
+  # unique constrain work properly.
+  #
   def course_id=(value)
     write_attribute :course_id, (value.blank? ? nil : value)
-  end
-
-  def bid=(value)
-    write_attribute :bid, (value.blank? ? nil : value)
-  end
-
-  def ref=(value)
-    write_attribute :ref, (value.blank? ? nil : value)
   end
 
 end

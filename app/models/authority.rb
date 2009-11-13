@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20090831113245
+# Schema version: 20091110135349
 #
 # Table name: authorities
 #

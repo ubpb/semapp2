@@ -1,9 +1,8 @@
 class SemAppsController < ApplicationController
 
   before_filter :require_user,       :only => [:create, :edit, :update] # :new is handled in the view to better guide the user
-  before_filter :load_sem_app,       :only => [:show, :edit, :update, :destroy]
-  before_filter :check_access,       :only => [:edit, :update]
-  before_filter :check_admin_access, :only => [:destroy]
+  before_filter :load_sem_app,       :only => [:show,   :edit, :update, :destroy]
+  before_filter :check_access,       :only => [:edit,   :update]
 
   def index
     # filter by semster
@@ -11,14 +10,13 @@ class SemAppsController < ApplicationController
     # filter by location
     @location = Location.find_by_id(params[:location][:id]) unless params[:location].blank?
     # filter by title
-    @title = params[:title] unless params[:title].blank?
+    @title    = params[:title]  unless params[:title].blank?
     # filter by tutors
-    @tutors = params[:tutors] unless params[:tutors].blank?
+    @tutors   = params[:tutors] unless params[:tutors].blank?
 
     # build the filter conditions
     conditions = Condition.block do |c|
       c.and "approved", true
-      c.and "active", true
       c.and "semester_id",    @semester.id if @semester
       c.and "location_id",    @location.id if @location
       c.and "title", "like",  @title.index('%')  ? @title  : "%#{@title}%"  if @title
@@ -39,10 +37,8 @@ class SemAppsController < ApplicationController
   end
 
   def show
-    # allow access to inactive or unapproved apps only for owners and admins
-    owner_access = true if User.current and User.current.owns_sem_app?(@sem_app)
-    admin_access = true if User.current and User.current.is_admin?
-    if (not @sem_app.active? or not @sem_app.approved?) and not owner_access and not admin_access
+    # deny read access until the app is approved
+    if (not @sem_app.approved?) and not (User.current and User.current.is_admin?)
       flash[:error] = "Zugriff verweigert"
       redirect_to sem_apps_path
       return false
@@ -53,11 +49,11 @@ class SemAppsController < ApplicationController
     @sem_app = SemApp.new
   end
 
+  # TODO: Cherrypick the values for security reasons
   def create
     options = params[:sem_app]
     # Protect some attributes
     options.merge!({
-        :active   => false,
         :approved => false,
         :creator  => User.current
       })
@@ -66,12 +62,11 @@ class SemAppsController < ApplicationController
     # Finally create the semapp and add the ownership
     SemApp.transaction do
       if @sem_app.save and @sem_app.add_ownership(User.current)
-        unless User.current.is_admin?
-          flash[:notice] = "Ihr eSeminarapparat wurde erfolgreich beantragt. Wir prüfen die Angaben und schalten
-        den eSeminarappat nach erfolgter Prüfung frei. Sie sehen den Status unter <strong>Meine eSeminarapparate</strong>."
-        else
-          flash[:notice] = "eSeminarapparat angelegt."
-        end
+        flash[:success] = """
+          <p>Ihr eSeminarapparat wurde erfolgreich beantragt. Wir prüfen die Angaben und schalten
+          den eSeminarappat nach erfolgter Prüfung für Sie frei. Sie sehen den Status unter
+          <strong>Meine eSeminarapparate</strong>.</p>
+        """
         redirect_to user_path(:anchor => 'apps')
       else
         render :action => :new
@@ -83,11 +78,11 @@ class SemAppsController < ApplicationController
     # nothing
   end
 
+  # TODO: Cherrypick the values for security reasons
   def update
     options = params[:sem_app]
     # Protect some attributes
     options.merge!({
-        :active    => @sem_app.active,
         :approved  => @sem_app.approved,
         :creator   => @sem_app.creator,
         :semester  => @sem_app.semester,
@@ -97,20 +92,10 @@ class SemAppsController < ApplicationController
       })
 
     if @sem_app.update_attributes(params[:sem_app])
-      flash[:notice] = "Änderungen erfolgreich gespeichert."
-      redirect_back_or_default user_path(:anchor => 'apps')
+      flash[:success] = "Änderungen erfolgreich gespeichert."
+      redirect_to sem_app_path(@sem_app)
     else
       render :action => :edit
-    end
-  end
-
-  def destroy
-    if @sem_app.destroy
-      flash[:notice] = "eSeminarapparat erfolgreich gelöscht."
-      redirect_to sem_apps_path
-    else
-      flash[:error] = "eSeminarapparat konnte nicht gelöscht werden. Unbekannter Fehler."
-      redirect_to sem_app_path(@sem_app)
     end
   end
 
@@ -119,7 +104,7 @@ class SemAppsController < ApplicationController
   def load_sem_app
     @sem_app = SemApp.find_by_id(params[:id])
     unless @sem_app
-      flash[:error] = "Dieser eSeminarapparat existiert nicht"
+      flash[:error] = "Der eSeminarapparat den Sie versucht haben aufzurufen existiert nicht."
       redirect_to sem_apps_path
       return false
     end
@@ -127,14 +112,6 @@ class SemAppsController < ApplicationController
 
   def check_access
     unless @sem_app.is_editable?
-      flash[:error] = "Zugriff verweigert"
-      redirect_to sem_apps_path
-      return false
-    end
-  end
-
-  def check_admin_access
-    unless User.current.is_admin?
       flash[:error] = "Zugriff verweigert"
       redirect_to sem_apps_path
       return false

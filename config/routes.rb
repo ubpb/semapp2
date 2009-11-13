@@ -24,7 +24,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :user, :except => [:index, :destroy], :collection => {:password => :get, :change_password => :put}
 
   # Sem Apps
-  map.resources :sem_apps, :as => 'apps', :controller => 'sem_apps' do |sem_app|
+  map.resources :sem_apps, :as => 'apps', :controller => 'sem_apps', :except => [:destroy] do |sem_app|
     sem_app.resources :entries, :controller => 'sem_app_entries', :except => [:index, :show], :collection => {:reorder => :put}
     sem_app.resources :book_orders, :as => 'book-orders'
   end

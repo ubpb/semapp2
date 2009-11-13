@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20090831113245
+# Schema version: 20091110135349
 #
 # Table name: sem_app_file_entries
 #
@@ -7,8 +7,8 @@
 #  attachment_file_name    :string(255)     not null
 #  attachment_content_type :string(255)     not null
 #  attachment_file_size    :integer(4)      not null
-#  attachment_updated_at   :datetime
-#  comment                 :text
+#  title                   :string(255)     not null
+#  description             :text
 #  created_at              :datetime
 #  updated_at              :datetime
 #

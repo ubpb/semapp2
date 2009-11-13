@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20090831113245
+# Schema version: 20091110135349
 #
 # Table name: sem_app_entries
 #
@@ -7,7 +7,7 @@
 #  sem_app_id    :integer(4)      not null
 #  instance_id   :integer(4)      not null
 #  instance_type :string(255)     not null
-#  position      :integer(4)
+#  position      :integer(4)      default(0), not null
 #  created_at    :datetime
 #  updated_at    :datetime
 #
