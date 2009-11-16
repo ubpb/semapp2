@@ -11,7 +11,8 @@
 /* Defauls provided by PUI. Overrides will follow... */
 
 body {
-  background: #626566 url(../images/page/page-bg.png) repeat top left;
+  /*background: #626566 url(../images/page/body-bg.png) repeat top left;*/
+  background: #b9b9b9 url(../images/page/body-bg.jpg) no-repeat top center;
 }
 
 a, a:visited {
@@ -82,8 +83,8 @@ img {
 #page {
   background-color: #fff;
   min-height: 550px;
-  -moz-box-shadow: 0 0 30px #333;
-  -webkit-box-shadow: 0 0 30px #333;
+  -moz-box-shadow: 0 0 20px #777;
+  -webkit-box-shadow: 0 0 20px #777;
   -moz-border-radius-bottomleft: 8px;
   -moz-border-radius-bottomright: 8px;
   -webkit-border-bottom-left-radius: 8px;
@@ -129,20 +130,21 @@ img {
 #meta-navigation {
   text-align: right;
   font-size: 90%;
-  color: #eee;
+  color: #6e6e6e;
 }
 
 #meta-navigation a {
   display: inline-block;
   padding: 0 5px;
   margin-left: 5px;
-  color: #eee;
+  color: #6e6e6e;
   text-decoration: none;
 }
 
 #meta-navigation a:hover {
   text-decoration: none !important;
   background-color: #333;
+  color: #eee;
 }
 
 #meta-navigation img {
@@ -200,11 +202,11 @@ img {
 #footer {
   text-align: center;
   font-size: 90%;
-  color: #ccc;
+  color: #6e6e6e;
 }
 
 #footer a {
-  color: #eee;
+  color: #6e6e6e;
   text-decoration: none;
 }
 

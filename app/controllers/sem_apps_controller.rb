@@ -6,6 +6,7 @@ class SemAppsController < ApplicationController
 
   def index
     # filter by semster
+    #@semester = Semester.current
     @semester = Semester.find_by_id(params[:semester][:id]) unless params[:semester].blank?
     # filter by location
     @location = Location.find_by_id(params[:location][:id]) unless params[:location].blank?

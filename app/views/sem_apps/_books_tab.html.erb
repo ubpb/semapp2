@@ -16,9 +16,9 @@
     </div>
   <% end %>
 
-  <div id="sem-app-book-entries" class="sem-app-entries">
+  <div id="sem-app-book-entries" class="pui-collection-view books-listing">
     <% @sem_app.books.each do |book| %>
-      <%= render 'book', :entry => book, :sem_app => @sem_app %>
+      <%= render 'book', :book => book, :sem_app => @sem_app %>
     <% end %>
   </div>
 <% else %>

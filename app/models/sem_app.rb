@@ -7,7 +7,6 @@
 #  creator_id    :integer(4)      not null
 #  semester_id   :integer(4)      not null
 #  location_id   :integer(4)      not null
-#  active        :boolean(1)      not null
 #  approved      :boolean(1)      not null
 #  title         :string(255)     not null
 #  tutors        :text            default(""), not null
@@ -23,7 +22,7 @@ class SemApp < ActiveRecord::Base
   belongs_to :creator, :class_name => 'User'
   belongs_to :semester
   belongs_to :location
-  has_one    :book_shelf, :dependent => :destroy
+  has_one    :book_shelf
   has_many   :ownerships, :dependent => :destroy
   has_many   :owners,     :through   => :ownerships, :source => :user
 

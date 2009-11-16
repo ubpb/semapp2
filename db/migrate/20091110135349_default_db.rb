@@ -143,16 +143,14 @@ class DefaultDb < ActiveRecord::Migration
     ############################################################################
 
     create_table :book_shelves do |t|
-      t.belongs_to :sem_app,     :null => false
       t.string     :ils_account, :null => false
       t.string     :slot_number, :null => false
+      t.belongs_to :sem_app,     :null => true
       t.timestamps
     end
 
-    add_index :book_shelves, :ils_account
-    add_index :book_shelves, :slot_number
-    add_index :book_shelves, [:sem_app_id, :ils_account], :unique => true
-    add_index :book_shelves, [:sem_app_id, :slot_number], :unique => true
+    add_index :book_shelves, :sem_app_id,  :unique => true
+    add_index :book_shelves, :ils_account, :unique => true
 
     add_foreign_key :book_shelves, :sem_app_id, :sem_apps, :id
 
