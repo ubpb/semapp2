@@ -1,4 +1,4 @@
-<% semantic_form_for @book, :url => sem_app_book_orders_path(@sem_app) do |f| %>
+<% semantic_form_for @book, :url => sem_app_books_path(@sem_app) do |f| %>
   <% f.inputs do %>
     <%= f.input :signature, :label => 'Signatur' %>
     <%= f.input :title,     :label => 'Titel' %>
@@ -10,7 +10,7 @@
   <% f.buttons do %>
     <%= f.commit_button 'Speichern' %>
     <li>
-      <%= link_to 'Abbrechen', sem_app_book_orders_path(@sem_app) %>
+      <%= link_to 'Abbrechen', sem_app_books_path(@sem_app) %>
     </li>
   <% end %>
 <% end %>

@@ -1,4 +1,4 @@
-class BookOrdersController < ApplicationController
+class BooksController < ApplicationController
 
   before_filter :require_user
   before_filter :load_sem_app
@@ -23,7 +23,7 @@ class BookOrdersController < ApplicationController
     
     if (@book.save)
       flash[:notice] = "Buchauftrag erfolgreich erstellt"
-      redirect_to sem_app_book_orders_path(@sem_app)
+      redirect_to sem_app_books_path(@sem_app)
     else
       render :action => :new
     end

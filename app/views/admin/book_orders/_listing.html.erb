@@ -22,8 +22,8 @@
             Ihre Nachricht an uns: <span style="font-style:italic"><%= h(book_order.message.present? ? book_order.message : '-') %></span>
           </td>
           <td valign="top" nowrap="true" align="right">
-            <%= link_to 'Bearbeiten', edit_admin_sem_app_book_order_path(@sem_app, book_order) %><br/>
-            <%= link_to 'Löschen', admin_sem_app_book_order_path(@sem_app, book_order), :method => :delete, :confirm => "Den Auftrag wirklich löschen?" %>
+            <%= link_to 'Bearbeiten', edit_admin_sem_app_book_path(@sem_app, book_order) %><br/>
+            <%= link_to 'Löschen', admin_sem_app_book_path(@sem_app, book_order), :method => :delete, :confirm => "Den Auftrag wirklich löschen?" %>
           </td>
         </tr>
       <% end %>
