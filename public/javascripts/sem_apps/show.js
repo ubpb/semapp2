@@ -86,6 +86,19 @@
       }, options || {});
 
       // setup the confirmation dialog
+      $('<div class="pui-overlay">moooo</div>').overlay({
+        top: 272,
+        expose: {
+          color: '#fff',
+          loadSpeed: 200,
+          opacity: 0.5
+        },
+        api: true,
+        closeOnClick: false
+      }).load();
+
+
+      /*
       jQuery('<div id="confirmation-dialog"></div>').dialog({
         modal: true,
         autoOpen: false,
@@ -106,6 +119,7 @@
       })
       .html(settings.message)
       .dialog("open");
+      */
     }
 
     function createEntry(instance_type) {
@@ -270,7 +284,22 @@
      * Event hooks
      **********************************************************************************/
     
-    /** If the user hovers over entries with the mouse, show/hide a toolbar. */
+    /** If the user hovers over books with the mouse, show/hide a toolbar. */
+
+    $("#books-listing .item").live('mouseover', function() {
+      highlightEntry($(this));
+      showToolbar($(this));
+    });
+
+    $("#books-listing .item").live('mouseout', function() {
+      unhighlightEntry($(this));
+      hideToolbar($(this));
+    });
+
+
+
+
+
     jQuery(".sem-app-entries .sem-app-entry").live('mouseover', function() {
       if (edit_mode == true) return;
       highlightEntry(jQuery(this));

@@ -51,6 +51,7 @@ SemApp.transaction do
       :tutors        => 'Prof. Dr. Meyer',
       :shared_secret => 'secret'
     })
+  default_semapp.add_ownership(default_user)
 
   # Book Shelves
   BookShelf.create({:sem_app => default_semapp, :ils_account => 'PE70000010', :slot_number => '10'})

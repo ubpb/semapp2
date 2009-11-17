@@ -234,6 +234,45 @@ img {
   padding: 0;
 }
 
+.sem-app #books-listing.pui-collection-view {
+  
+}
+
+.sem-app #books-listing.pui-collection-view .item {
+  padding: 5px;
+  position: relative;
+}
+
+.sem-app #books-listing.pui-collection-view .item .toolbar {
+  display: none;
+  position: absolute;
+  top: -25px;
+  right: 0;
+  background-color: #e3e3e3;
+  padding: 5px 25px;
+  z-index: 100;
+  -moz-border-radius-topleft: 4px;
+  -moz-border-radius-topright: 4px;
+  -webkit-border-top-left-radius: 4px;
+  -webkit-border-top-right-radius: 4px;
+}
+
+.sem-app #books-listing.pui-collection-view .item .toolbar a {
+  text-decoration: none;
+}
+
+.sem-app #books-listing.pui-collection-view .item .toolbar a:hover {
+  text-decoration: none;
+}
+
+.sem-app #books-listing.pui-collection-view .item.highlight {
+  background-color: #e3e3e3;
+}
+
+.sem-app #books-listing.pui-collection-view .book {
+  
+}
+
 /* Book order */
 #book-order-listing .book-order {
 

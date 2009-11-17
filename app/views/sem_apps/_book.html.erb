@@ -1,57 +1,57 @@
 <div id="book-<%=book.id-%>" class="item">
   <% if book.sem_app.editable? %>
     <div class="toolbar">
-      <%= link_to 'Löschen', sem_app_book_order_path(book.sem_app, book), :class => "toolbar-item delete-book-entry-action" %>
+      <% link_to sem_app_book_order_path(book.sem_app, book), :class => "toolbar-item delete-book-action" do %>
+        <%= image_tag 'icons/cross-circle-frame.png', :plugin => 'pui', :title => 'Dieses Buch aus dem eSeminarapparat entfernen' %>
+      <% end %>
     </div>
   <% end %>
 
-  <div id="sem-app-entry-<%=book.id-%>-content">
-    <div class="book clearfix">
-      <div style="float: left">
-        <% if book.isbn.present? %>
-          <%= image_tag "http://ecx.images-amazon.com/images/P/#{book.isbn.gsub('-', '')}.03._PC_SCTZZZZZZZ_.jpg" %>
-        <% else %>
-          Default image TBD.
-        <% end %>
-      </div>
+  <div class="book clearfix">
+    <div style="float: left">
+      <% if book.isbn.present? %>
+        <%= image_tag "http://ecx.images-amazon.com/images/P/#{book.isbn.gsub('-', '')}.03._SCTZZZZZZZ_.jpg", :class => 'book-cover' %>
+      <% else %>
+        Default image TBD.
+      <% end %>
+    </div>
 
-      <div style="padding-left: 100px">
-        <strong><%=h book.title %> / <%=h book.author %></strong><br/>
-        <% if book.edition.present? %>
-          <span><%= book.edition %>.-</span>
-        <% end %>
-        <% if book.place.present? %>
-          <span><%= book.place %> :</span>
-        <% end %>
-        <% if book.publisher.present? %>
-          <span><%= book.publisher %>,</span>
-        <% end %>
-        <% if book.year.present? %>
-          <span><%= book.year %>.</span>
-        <% end %>
-        <% if book.isbn.present? %>
-          <span>- ISBN <%= book.isbn %></span>
-        <% end %>
-        <% if book.signature.present? %>
-          <br/>
-          <span>
-            Signatur: <%= book.base_signature -%>
-            <% link_to "https://ubaleph.uni-paderborn.de/F/?func=find-b&find_code=PSG&request=#{book.base_signature}?" do %>
-              &raquo; Im Bibliothekskatalog anzeigen
-            <% end %>
-          </span>
-        <% end %>
-        <% if book.isbn.present? %>
-          <br/>
-          Diese Buch bei:
-          <%= link_to 'Amazon.de', "http://www.amazon.de/dp/#{book.isbn.gsub('-', '')}" %>,
-          <%= link_to 'Google Books', "http://books.google.com/books?as_isbn=#{book.isbn.gsub('-', '')}" %>
-        <% end %>
-        <% if book.comment.present? %>
-          <br/>
-          <span class="comment"><%= book.comment %></span>
-        <% end %>
-      </div>
+    <div style="padding-left: 100px">
+      <strong><%=h book.title %> / <%=h book.author %></strong><br/>
+      <% if book.edition.present? %>
+        <span><%= book.edition %>.-</span>
+      <% end %>
+      <% if book.place.present? %>
+        <span><%= book.place %> :</span>
+      <% end %>
+      <% if book.publisher.present? %>
+        <span><%= book.publisher %>,</span>
+      <% end %>
+      <% if book.year.present? %>
+        <span><%= book.year %>.</span>
+      <% end %>
+      <% if book.isbn.present? %>
+        <span>- ISBN <%= book.isbn %></span>
+      <% end %>
+      <% if book.signature.present? %>
+        <br/>
+        <span>
+          Signatur: <%= book.base_signature -%>
+          <% link_to "https://ubaleph.uni-paderborn.de/F/?func=find-b&find_code=PSG&request=#{book.base_signature}?" do %>
+            &raquo; Im Bibliothekskatalog anzeigen
+          <% end %>
+        </span>
+      <% end %>
+      <% if book.isbn.present? %>
+        <br/>
+        Diese Buch bei:
+        <%= link_to 'Amazon.de', "http://www.amazon.de/dp/#{book.isbn.gsub('-', '')}" %>,
+        <%= link_to 'Google Books', "http://books.google.com/books?as_isbn=#{book.isbn.gsub('-', '')}" %>
+      <% end %>
+      <% if book.comment.present? %>
+        <br/>
+        <span class="comment"><%= book.comment %></span>
+      <% end %>
     </div>
   </div>
 </div>

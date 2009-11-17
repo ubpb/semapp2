@@ -1,4 +1,10 @@
 <% if @sem_app.editable? %>
+  <% content_for :head do %>
+    <%= javascript_include_tag 'sem_apps/books.js' %>
+  <% end %>
+<% end %>
+
+<% if @sem_app.editable? %>
   <div class="pui-panel align-right">
     <%= link_to 'Buchaufträge verwalten', sem_app_book_orders_path(@sem_app), :class => 'pui-button' %>
   </div>
@@ -16,7 +22,7 @@
     </div>
   <% end %>
 
-  <div id="sem-app-book-entries" class="pui-collection-view books-listing">
+  <div id="books-listing" class="pui-collection-view">
     <% @sem_app.books.each do |book| %>
       <%= render 'book', :book => book, :sem_app => @sem_app %>
     <% end %>
