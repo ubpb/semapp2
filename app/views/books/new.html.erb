@@ -2,16 +2,15 @@
   Ein neues Buch beauftragen
 </h2>
 
+<div class="pui-panel align-right">
+  <%= link_to('Zurück', sem_app_books_path(@sem_app), :class => 'pui-button') %>
+</div>
+
 <div class="pui-view sem-app">
   <%= render 'sem_apps/title', :sem_app => @sem_app %>
 </div>
 
 <div class="pui-panel notice">
-  <p>
-    Mit diesem Formular beauftragen Sie die Bibliothek ein Buch aus dem Bestand in Ihren
-    Seminarapparat einzustellen. Bitte recherchieren Sie die erforderliche Signatur
-    mittels unseres <%= link_to 'Katalogs', 'https://ubaleph.uni-paderborn.de/F', :popup => true %>.
-  </p>
   <p>
     <strong>Bitte beachten Sie, dass bestehende Leihfristen und Vormerkungen den Vorgang verzögern können.</strong>
     Sie können den Status jederzeit über die Seite <%= link_to 'Buchaufträge', sem_app_books_path(@sem_app) %>
@@ -19,4 +18,4 @@
   </p>
 </div>
 
-<%= render :partial => 'form' %>
+<%= render 'lookup_form' %>

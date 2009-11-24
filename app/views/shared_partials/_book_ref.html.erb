@@ -1,0 +1,14 @@
+<%
+  content = ""
+  content                << content_tag(:span, book.title)
+  content << " / "       << content_tag(:span, book.author)    if book.title.present? and book.author.present?
+  content << ".- Aufl. " << content_tag(:span, book.edition)   if book.edition.present?
+  content << ".- "       << content_tag(:span, book.place)     if book.place.present?
+  content << " : "       << content_tag(:span, book.publisher) if book.place.present? and book.publisher.present?
+  content << ", "        << content_tag(:span, book.year)      if book.year.present?
+  content << ".- ISBN "  << content_tag(:span, book.isbn)      if book.isbn.present?
+%>
+
+<div class="bib-ref">
+  <%= content %>
+</div>

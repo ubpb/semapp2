@@ -2,40 +2,49 @@ require 'xml'
 
 class Aleph::Item
 
-  def initialize(data)
-    raise "Data must be of type LibXML::XML::Document or LibXML::XML::Node" unless data.class == LibXML::XML::Document or data.class == LibXML::XML::Node
-    @data = data
+  include Aleph::XmlUtils
+
+  ##
+  # Inititalize the object with the given raw data as LibXML::XML::Node
+  #
+  def initialize(doc_number, node)
+    raise "Doc Number required"                    unless doc_number.present?
+    raise "Node is required"                       unless node.present?
+    raise "Node must be of type LibXML::XML::Node" unless node.class == LibXML::XML::Node
+
+    @doc_number = doc_number
+
+    data        = LibXML::XML::Document.new()
+    data.root   = node.copy(true)
+    @data       = data
   end
 
-  def signature
-    content_from_node(@data, '//call-no-1')
+  def doc_number
+    @doc_number
   end
 
-  def item_status
-    content_from_node(@data, '//item-status')
+  ##
+  # Return the raw LibXML::XML::Node object
+  #
+  def data
+    @data
   end
 
-  def loan_status
-    content_from_node(@data, '//loan-status')
+  ##
+  # Most of the item data can be called using method missing
+  #
+  def method_missing(m, *args, &block)
+    method_name = m.to_s
+    method_name = method_name.gsub('_', '-')
+    content_from_node(@data, "//#{method_name}")
   end
 
+  ##
+  # Return a proper Date object for load_due_date
+  #
   def loan_due_date
     t = content_from_node(@data, '//loan-due-date')
     t.present? ? Date.parse(t) : nil
-  end
-
-  private
-
-  ##
-  # Returns the content from a given node, matched by the given
-  # xpath expression. Returns nil if the node is nil or the xpath
-  # doesn't match.
-  #
-  def content_from_node(node, xpath)
-    raise "Node must be of type LibXML::XML::Document or LibXML::XML::Node" unless node.class == LibXML::XML::Document or node.class == LibXML::XML::Node
-    return nil unless node.present?
-    t = node.find_first(xpath)
-    t.present? ? t.content : nil
   end
 
 end

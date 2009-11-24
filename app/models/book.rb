@@ -26,12 +26,12 @@ class Book < ActiveRecord::Base
   belongs_to :sem_app
 
   # Validations
-  validates_presence_of :sem_app
-  validates_presence_of :signature
-  validates_presence_of :title
-  validates_presence_of :author
-  validates_presence_of :year
-  validates_presence_of :edition
+  validates_presence_of   :sem_app
+  validates_presence_of   :ils_id
+  validates_uniqueness_of :ils_id, :scope => :sem_app_id, :message => "Dieses Exemplar befindet sich bereits in Ihrem eSeminarapparat."
+  validates_presence_of   :signature
+  validates_presence_of   :title
+  validates_presence_of   :author
 
   ###########################################################################################
   #

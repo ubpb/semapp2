@@ -17,22 +17,8 @@
     </div>
 
     <div style="padding-left: 100px">
-      <strong><%=h book.title %> / <%=h book.author %></strong><br/>
-      <% if book.edition.present? %>
-        <span><%= book.edition %>.-</span>
-      <% end %>
-      <% if book.place.present? %>
-        <span><%= book.place %> :</span>
-      <% end %>
-      <% if book.publisher.present? %>
-        <span><%= book.publisher %>,</span>
-      <% end %>
-      <% if book.year.present? %>
-        <span><%= book.year %>.</span>
-      <% end %>
-      <% if book.isbn.present? %>
-        <span>- ISBN <%= book.isbn %></span>
-      <% end %>
+      <%= render 'shared_partials/book_ref', :book => book %>
+
       <% if book.signature.present? %>
         <br/>
         <span>
@@ -42,12 +28,14 @@
           <% end %>
         </span>
       <% end %>
+
       <% if book.isbn.present? %>
         <br/>
-        Diese Buch bei:
+        Dieses Buch bei:
         <%= link_to 'Amazon.de', "http://www.amazon.de/dp/#{book.isbn.gsub('-', '')}" %>,
         <%= link_to 'Google Books', "http://books.google.com/books?as_isbn=#{book.isbn.gsub('-', '')}" %>
       <% end %>
+        
       <% if book.comment.present? %>
         <br/>
         <span class="comment"><%= book.comment %></span>

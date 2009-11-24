@@ -56,12 +56,12 @@ class SemApp < ActiveRecord::Base
     Book.find(:all, :conditions => options.merge!(:sem_app_id => id), :order => "created_at DESC")
   end
 
-  def book_by_signature(signature)
+  def book_by_ils_id(ils_id)
     Book.find(
       :first,
       :conditions => {
         :sem_app_id => self.id,
-        :signature => signature
+        :ils_id     => ils_id
       })
   end
 

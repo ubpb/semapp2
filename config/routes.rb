@@ -26,7 +26,7 @@ ActionController::Routing::Routes.draw do |map|
   # Sem Apps
   map.resources :sem_apps, :as => 'apps', :controller => 'sem_apps', :except => [:destroy] do |sem_app|
     sem_app.resources :entries, :controller => 'sem_app_entries', :except => [:index, :show], :collection => {:reorder => :put}
-    sem_app.resources :books
+    sem_app.resources :books, :collection => {:lookup => :get}
   end
 
   # ubdok import

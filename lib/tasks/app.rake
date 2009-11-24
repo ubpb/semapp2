@@ -46,8 +46,9 @@ namespace :app do
   #
   desc "Synchronize books"
   task(:sync_books => :environment) do
-    connector = AlpehXserverConnector.new # TODO: make this configurable
-    engine    = BookSyncEngine.new(connector)
+    # TODO: make this configurable
+    adapter   = AlephSyncEngineAdapter.new(:base_url => 'http://ubaleph.uni-paderborn.de/X', :library => 'pad50', :search_base => 'pad01')
+    engine    = SyncEngine.new(adapter)
     engine.sync
   end
 

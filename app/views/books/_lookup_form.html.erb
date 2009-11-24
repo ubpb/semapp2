@@ -1,0 +1,29 @@
+<% form_tag(lookup_sem_app_books_path, :method => :get, :class => 'formtastic') do %>
+  <fieldset class="inputs">
+    <ol>
+      <li class="string">
+        <label>Title enthält</label>
+        <%= text_field_tag 'title', @title %>
+      </li>
+      <li class="string">
+        <label>Autor enthält</label>
+        <%= text_field_tag 'author', @author %>
+      </li>
+      <li class="string">
+        <label>ISBN</label>
+        <%= text_field_tag 'isbn', @isbn %>
+      </li>
+      <li class="string">
+        <label>Signatur beginnt mit</label>
+        <%= text_field_tag 'signature', @signature %>
+      </li>
+    </ol>
+  </fieldset>
+  <fieldset class="buttons">
+    <ol>
+      <li class="commit">
+        <%= submit_tag 'Suchen' %>
+      </li>
+    </ol>
+  </fieldset>
+<% end %>

@@ -1,8 +1,8 @@
-class BookSyncEngine
+class SyncEngine
 
-  def initialize(connector)
-    raise "Connector is not valid" unless connector or connector.class == AbstractConnector
-    @connector = connector
+  def initialize(adapter)
+    raise "Adapter is not valid" unless adapter or adapter.is_a?(SyncEngineAdapter)
+    @adapter = adapter
   end
 
   def sync
@@ -17,7 +17,7 @@ class BookSyncEngine
     puts "#\n\n"
     
     sem_apps.each_with_index do |sem_app, i|
-      sync_sem_app(sem_app, i)
+      sync_sem_app(sem_app, i)      
     end
 
     puts "\n#"
@@ -39,7 +39,7 @@ class BookSyncEngine
     if sem_app.has_book_shelf?
       begin
         # load the books for this sem_app
-        ils_entries = @connector.get_books(sem_app.book_shelf.ils_account)
+        ils_entries = @adapter.get_books(sem_app.book_shelf.ils_account)
         db_entries  = mergable_hash_from_db_entries(sem_app.books(:all => true))
 
         # sync the books
@@ -94,10 +94,11 @@ class BookSyncEngine
   #   :year
   #   :isbn
   #
-  def create_or_update_entry(sem_app, signature, ils_entry)
+  def create_or_update_entry(sem_app, ils_id, ils_entry)
     options = {
       :sem_app   => sem_app,
-      :signature => signature,
+      :ils_id    => ils_id,
+      :signature => ils_entry[:signature],
       :title     => ils_entry[:title],
       :author    => ils_entry[:author],
       :year      => ils_entry[:year],
@@ -107,12 +108,12 @@ class BookSyncEngine
       :isbn      => ils_entry[:isbn],
     }
 
-    db_entry = sem_app.book_by_signature(signature)
+    db_entry = sem_app.book_by_ils_id(ils_id)
     db_entry ? update_entry(db_entry, options) : create_entry(options)
   end
 
   def create_entry(options)
-    unless Book.new(options).save(false)
+    unless Book.new(options).save
       raise "Failed for signature #{options[:signature]} while creating a new entry."
     end
   end
@@ -120,7 +121,7 @@ class BookSyncEngine
   def update_entry(db_entry, options)
     options.merge!({:scheduled_for_addition => false})
     db_entry.update_attributes(options)
-    unless db_entry.save(false)
+    unless db_entry.save
       raise "Failed for signature #{options[:signature]} while updating an exsisting entry."
     end
   end

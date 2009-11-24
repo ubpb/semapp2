@@ -211,6 +211,7 @@ class DefaultDb < ActiveRecord::Migration
 
     create_table :books do |t|
       t.belongs_to :sem_app,                :null => false
+      t.string     :ils_id,                 :null => false
       t.string     :signature,              :null => false
       t.string     :title,                  :null => false
       t.string     :author,                 :null => false
@@ -225,12 +226,13 @@ class DefaultDb < ActiveRecord::Migration
       t.timestamps
     end
 
+    add_index :books, :ils_id
     add_index :books, :signature
+    add_index :books, [:sem_app_id, :ils_id], :unique => true
     add_index :books, :scheduled_for_addition
     add_index :books, :scheduled_for_removal
 
     add_foreign_key :books, :sem_app_id, :sem_apps, :id
-
   end
 
   def self.down
