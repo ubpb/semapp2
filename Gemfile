@@ -3,6 +3,7 @@ source      'http://gemcutter.org'
 disable_system_gems
 
 gem 'rails',                       '2.3.5'
+gem 'pg',                          '0.8.0'
 gem 'highline',                    '1.5.1'
 gem 'RedCloth',                    '4.2.2'
 gem 'authlogic',                   '2.1.3'
