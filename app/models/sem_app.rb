@@ -65,14 +65,13 @@ class SemApp < ActiveRecord::Base
       })
   end
 
-  def media_entries
+  def media
     SemAppEntry.find(
       :all,
       :include    => [:instance],
       :order      => :position,
-      :conditions => ["sem_app_id = :sem_app_id AND instance_type <> :instance_type", {
-          :sem_app_id    => id,
-          :instance_type => 'SemAppBookEntry'
+      :conditions => ["sem_app_id = :sem_app_id", {
+          :sem_app_id => id
         }])
   end
 

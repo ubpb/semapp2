@@ -2,26 +2,6 @@
 
   $(function() {
 
-    /** Highlights a given entry */
-    function highlightItem(item) {
-      item.addClass("highlight");
-    }
-
-    /** Unhighlights a given entry */
-    function unhighlightItem(item) {
-      item.removeClass("highlight");
-    }
-
-    /** Shows the toolbar for a given entry */
-    function showToolbar(item) {
-      item.find(".toolbar").show();
-    }
-
-    /** Hides the toolbar for a given entry */
-    function hideToolbar(item) {
-      item.find(".toolbar").hide();
-    }
-
     /**
      * Deletes a book from the listing.
      */
@@ -47,13 +27,13 @@
     /** If the user hovers over books with the mouse, show/hide a toolbar. */
 
     $("#books-listing .item").live('mouseover', function() {
-      highlightItem($(this));
-      showToolbar($(this));
+      $(this).item_highlight();
+      $(this).item_toolbar_show();
     });
 
     $("#books-listing .item").live('mouseout', function() {
-      unhighlightItem($(this));
-      hideToolbar($(this));
+      $(this).item_unhighlight();
+      $(this).item_toolbar_hide();
     });
 
     /** If the user clicks the link to delete a book */
@@ -70,4 +50,4 @@
 
   });
 
-})(jQuery)
+})(jQuery);

@@ -18,35 +18,17 @@
   </div>
 
   <div class="pui-tabs-wrapper">
-
     <ul class="pui-tabs">
       <li><a href="#books">Bücher</a></li>
       <li><a href="#media">Texte und Medien</a></li>
     </ul>
 
     <div class="pui-tab-panes">
-      <!-- Books Tab -->
       <div id="books-tab">
         <%= render 'books_tab' %>
       </div>
-
-      <!-- Media Tab -->
       <div id="media-tab">
-        <% if @sem_app.editable? %>
-          <%= render 'media_toolbar', :sem_app => @sem_app %>
-        <% end %>
-
-        <div id="sem-app-media-entries" class="sem-app-entries">
-          <% if @sem_app.media_entries.present? %>
-            <% @sem_app.media_entries.each do |entry| %>
-              <%= render 'entry', :entry => entry, :sem_app => @sem_app %>
-            <% end %>
-          <% else %>
-            <div id="no-media-entries-message">
-              <p>Für diesen eSeminarapparat sind aktuell <strong>keine</strong> elektronischen Texte und Medien verfügbar.</p>
-            </div>
-          <% end %>
-        </div>
+        <%= render 'media_tab' %>
       </div>
     </div>
   </div>

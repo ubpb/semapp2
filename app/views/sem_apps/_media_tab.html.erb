@@ -1,0 +1,23 @@
+<% if @sem_app.editable? %>
+  <% content_for :head do %>
+    <%= javascript_include_tag 'sem_apps/media.js' %>
+  <% end %>
+<% end %>
+
+<% if @sem_app.editable? %>
+  <div class="pui-panel align-right">
+    <%= link_to 'TBD', '#', :class => 'pui-button' %>
+  </div>
+<% end %>
+
+<% if @sem_app.media.present? %>
+  <div id="media-listing" class="pui-collection-view">
+    <% @sem_app.media.each do |entry| %>
+      TBD
+    <% end %>
+  </div>
+<% else %>
+  <div class="pui-panel notice align-center">
+    Für diesen eSeminarapparat sind aktuell <strong>keine</strong> Medien verfügbar.
+  </div>
+<% end %>
