@@ -10,3 +10,7 @@ config/database.yml
 db/schema.rb
 public/plugins
 nbproject
+vendor/bundler_gems/gems
+vendor/bundler_gems/specifications
+vendor/bundler_gems/doc
+vendor/bundler_gems/environment.rb

@@ -1,0 +1,15 @@
+bundle_path 'vendor/bundler_gems'
+source      'http://gemcutter.org'
+disable_system_gems
+
+gem 'rails',                       '2.3.5'
+gem 'highline',                    '1.5.1'
+gem 'RedCloth',                    '4.2.2'
+gem 'authlogic',                   '2.1.3'
+gem 'libxml-ruby',                 '1.1.3', :require_as => 'libxml'
+gem 'bcrypt-ruby',                 '2.1.2', :require_as => 'bcrypt'
+gem 'paperclip',                   '2.3.1.1'
+gem 'will_paginate',               '2.3.11'
+gem 'formtastic',                  '0.9.4'
+gem 'provideal-ui',                '0.1.0', :require_as => 'pui', :git => 'git@github.com:provideal/provideal-ui.git'
+gem 'provideal-migration-helpers', '1.1.2', :require_as => 'provideal_migration_helpers'
