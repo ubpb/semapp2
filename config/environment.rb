@@ -1,7 +1,7 @@
 # Be sure to restart your server when you modify this file
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.4' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -21,10 +21,10 @@ Rails::Initializer.run do |config|
   config.gem 'bcrypt-ruby',   :version => '2.1.2',   :lib => 'bcrypt',        :source => 'http://gemcutter.org'
   config.gem 'paperclip',     :version => '2.3.1.1', :lib => 'paperclip',     :source => 'http://gemcutter.org'
   config.gem 'will_paginate', :version => '2.3.11',  :lib => 'will_paginate', :source => 'http://gemcutter.org'
-  config.gem "formtastic",    :version => '0.9.1',   :lib => 'formtastic',    :source => 'http://gemcutter.org'
+  config.gem "formtastic",    :version => '0.9.4',   :lib => 'formtastic',    :source => 'http://gemcutter.org'
 
   config.gem 'provideal-ui',                :version => '0.1.0', :lib => 'pui',                         :source => 'http://gemcutter.org'
-  config.gem 'provideal-migration-helpers', :version => '1.1.1', :lib => 'provideal_migration_helpers', :source => 'http://gemcutter.org'
+  config.gem 'provideal-migration-helpers', :version => '1.1.2', :lib => 'provideal_migration_helpers', :source => 'http://gemcutter.org'
   
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
