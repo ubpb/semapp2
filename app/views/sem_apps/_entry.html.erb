@@ -1,17 +1,13 @@
-<div id="sem-app-entry-<%=entry.id-%>" class="sem-app-entry">
+<div id="entry-<%=entry.id-%>" class="item">
   <% if entry.sem_app.is_editable_for?(current_user) %>
     <div class="toolbar">
-      <span class="toolbar-item reorder-media-entry-action"><span class="ui-icon ui-icon-arrowthick-2-n-s">Move</span></span>
-      <% link_to edit_sem_app_entry_path(entry.sem_app, entry), :class => "toolbar-item edit-media-entry-action" do %>
-        <span class="ui-icon ui-icon-pencil">Bearbeiten</span>
-      <% end %>
-      <% link_to sem_app_entry_path(entry.sem_app, entry), :class => "toolbar-item delete-media-entry-action" do %>
-        <span class="ui-icon ui-icon-trash">Löschen</span>
+      <% link_to sem_app_entry_path(entry.sem_app, entry), :class => "toolbar-item delete-entry-action" do %>
+        <%= image_tag 'icons/cross-circle-frame.png', :plugin => 'pui', :title => 'Diesen Eintrag entfernen' %>
       <% end %>
     </div>
   <% end %>
 
-  <div id="sem-app-entry-<%=entry.id-%>-content">
+  <div class="entry">
     <%= render_sem_app_entry(entry) %>
   </div>
 </div>

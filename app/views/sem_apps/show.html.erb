@@ -1,4 +1,10 @@
 <% if @sem_app.is_editable_for?(current_user) %>
+  <% content_for :head do %>
+    <%= javascript_include_tag 'sem_apps/common.js' %>
+    <%= javascript_include_tag 'sem_apps/books.js' %>
+    <%= javascript_include_tag 'sem_apps/media.js' %>
+  <% end %>
+
   <div class="pui-panel align-right">
     <%= link_to 'Einstellungen', edit_sem_app_path(@sem_app), :class => 'pui-button' -%>
   </div>

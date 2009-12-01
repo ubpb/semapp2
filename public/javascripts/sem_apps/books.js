@@ -24,18 +24,6 @@
      * Event hooks
      **********************************************************************************/
 
-    /** If the user hovers over books with the mouse, show/hide a toolbar. */
-
-    $("#books-listing .item").live('mouseover', function() {
-      $(this).item_highlight();
-      $(this).item_toolbar_show();
-    });
-
-    $("#books-listing .item").live('mouseout', function() {
-      $(this).item_unhighlight();
-      $(this).item_toolbar_hide();
-    });
-
     /** If the user clicks the link to delete a book */
     jQuery(".delete-book-action").live('click', function(event) {
       event.preventDefault();

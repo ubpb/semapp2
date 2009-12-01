@@ -2,21 +2,25 @@
 
   $(function() {
 
+    function deleteEntry(item, url) {
+      //alert(url);
+      item.slideUp(500);
+    }
 
     /***********************************************************************************
      * Event hooks
      **********************************************************************************/
 
-    /** If the user hovers over entries with the mouse, show/hide a toolbar. */
+    /** If the user clicks the link to delete an antry */
+    jQuery(".delete-entry-action").live('click', function(event) {
+      event.preventDefault();
+      var item = $(this).closest(".item");
+      var url  = $(this).attr("href");
 
-    $("#media-listing .item").live('mouseover', function() {
-      $(this).item_highlight();
-      $(this).item_toolbar_show();
-    });
-
-    $("#media-listing .item").live('mouseout', function() {
-      $(this).item_unhighlight();
-      $(this).item_toolbar_hide();
+      var ret = confirm("Soll der Eintrag wirklich aus der Liste gelöscht werden? Diese Aktion kann nicht Rückgängig gemacht werden.");
+      if (ret == true) {
+        deleteEntry(item, url);
+      }
     });
 
   });

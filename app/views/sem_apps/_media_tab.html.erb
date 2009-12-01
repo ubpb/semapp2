@@ -1,19 +1,13 @@
 <% if @sem_app.is_editable_for?(current_user) %>
-  <% content_for :head do %>
-    <%= javascript_include_tag 'sem_apps/media.js' %>
-  <% end %>
-<% end %>
-
-<% if @sem_app.is_editable_for?(current_user) %>
   <div class="pui-panel align-right">
     <%= link_to 'TBD', '#', :class => 'pui-button' %>
   </div>
 <% end %>
 
 <% if @sem_app.media.present? %>
-  <div id="media-listing" class="pui-collection-view">
-    <% @sem_app.media.each do |entry| %>
-      <%= render_sem_app_entry(entry) %>
+  <div id="media-listing" class="listing pui-collection-view">
+    <% @sem_app.media.each do |e| %>
+      <%= render 'entry', :entry => e %>
     <% end %>
   </div>
 <% else %>
