@@ -15,8 +15,7 @@
 
 class SemAppFileEntry < ActiveRecord::Base
 
-  has_one :sem_app_entry, :as => :instance, :dependent => :destroy
-
+  belongs_to :sem_app
   has_attached_file :attachment, :styles => {}, :processors => []
   validates_attachment_presence :attachment
 

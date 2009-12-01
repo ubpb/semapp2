@@ -30,7 +30,7 @@ class SemAppEntry < ActiveRecord::Base
   
   def relname
     unless @relname
-      sql = "select p.relname from #{SemAppEntry.name.tableize} s, pg_class p where s.tableoid = p.oid"
+      sql = "select p.relname from #{SemAppEntry.name.tableize} s, pg_class p where s.id = #{self.id} and s.tableoid = p.oid"
       res = connection.execute(sql)
       if res[0]
         @relname = res[0]['relname']

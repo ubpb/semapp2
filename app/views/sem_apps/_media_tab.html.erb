@@ -13,7 +13,7 @@
 <% if @sem_app.media.present? %>
   <div id="media-listing" class="pui-collection-view">
     <% @sem_app.media.each do |entry| %>
-      <%= entry.instance.id %> - <%= entry.relname %><br/>
+      <%= render_sem_app_entry(entry) %>
     <% end %>
   </div>
 <% else %>
