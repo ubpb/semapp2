@@ -1,6 +1,11 @@
 <% if @sem_app.is_editable_for?(current_user) %>
   <div class="pui-panel align-right">
-    <%= link_to 'TBD', '#', :class => 'pui-button' %>
+    <select class="new-media-entry-action">
+      <option value="">-- Neuen Eintrag erstellen --</option>
+      <option value="SemAppHeadlineEntry">Überschrift</option>
+      <option value="SemAppTextEntry">Text</option>
+      <option value="SemAppFileEntry">Datei</option>
+    </select>
   </div>
 <% end %>
 

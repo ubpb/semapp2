@@ -64,11 +64,11 @@ class SemAppEntriesController < ApplicationController
   # reorder entries
   #
   def reorder
-    entries = params['sem-app-entry']
+    entries = params[:entry]
     if entries
       SemAppEntry.transaction do
         entries.each_index do |i|
-          id = params['sem-app-entry'][i]
+          id = params[:entry][i]
           if (id and !id.empty?)
             SemAppEntry.find_by_id!(id).update_attribute(:position, i+1)
           end

@@ -4,6 +4,12 @@
       <% link_to sem_app_entry_path(entry.sem_app, entry), :class => "toolbar-item delete-entry-action" do %>
         <%= image_tag 'icons/cross-circle-frame.png', :plugin => 'pui', :title => 'Diesen Eintrag entfernen' %>
       <% end %>
+      <% link_to sem_app_entry_path(entry.sem_app, entry), :class => "toolbar-item create-entry-action" do %>
+        <%= image_tag 'icons/plus-circle-frame.png', :plugin => 'pui', :title => 'Einen neuen Eintrag unterhalb dieses Eintrags erstellen' %>
+      <% end %>
+      <% link_to reorder_sem_app_entries_path(entry.sem_app), :class => "toolbar-item reorder-entry-action" do %>
+        <%= image_tag 'icons/arrow-move.png', :plugin => 'pui', :title => 'Diese Eintrag mittels Drag&Drop umsortieren' %>
+      <% end %>
     </div>
   <% end %>
 

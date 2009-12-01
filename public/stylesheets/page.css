@@ -265,6 +265,11 @@ img {
   text-decoration: none;
 }
 
+.sem-app .listing.pui-collection-view .item .toolbar .toolbar-item {
+  margin: 0 5px;
+}
+
+
 .sem-app .listing.pui-collection-view .item.highlight {
   background-color: #e3e3e3;
 }
