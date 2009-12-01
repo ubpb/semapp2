@@ -39,7 +39,7 @@ class SemAppsController < ApplicationController
 
   def show
     # deny read access until the app is approved
-    if (not @sem_app.approved?) and not (User.current and User.current.is_admin?)
+    if (not @sem_app.approved?) and not (current_user and current_user.is_admin?)
       flash[:error] = "Zugriff verweigert"
       redirect_to sem_apps_path
       return false
@@ -56,13 +56,13 @@ class SemAppsController < ApplicationController
     # Protect some attributes
     options.merge!({
         :approved => false,
-        :creator  => User.current
+        :creator  => current_user
       })
     # Build a new semapp
     @sem_app = SemApp.new(options)
     # Finally create the semapp and add the ownership
     SemApp.transaction do
-      if @sem_app.save and @sem_app.add_ownership(User.current)
+      if @sem_app.save and @sem_app.add_ownership(current_user)
         flash[:success] = """
           <p>Ihr eSeminarapparat wurde erfolgreich beantragt. Wir prüfen die Angaben und schalten
           den eSeminarappat nach erfolgter Prüfung für Sie frei. Sie sehen den Status unter
@@ -112,7 +112,7 @@ class SemAppsController < ApplicationController
   end
 
   def check_access
-    unless @sem_app.is_editable?
+    unless @sem_app.is_editable_for?(current_user)
       flash[:error] = "Zugriff verweigert"
       redirect_to sem_apps_path
       return false

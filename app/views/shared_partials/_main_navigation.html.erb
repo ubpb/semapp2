@@ -2,7 +2,7 @@
   <h3>&raquo; eSeminarapparate</h3>
   <ul>
     <li><%= link_to('Gesamtliste', sem_apps_path) %></li>
-    <% if User.current %>
+    <% if current_user %>
       <li><%= link_to('Meine eSeminarapparate', user_path(:anchor => 'apps')) %></li>
     <% end %>
   </ul>
@@ -15,7 +15,7 @@
   </ul>
 </div>
 
-<% if User.current and User.current.is_admin? %>
+<% if current_user and current_user.is_admin? %>
 <!--
   <div class="section">
     <h3>&raquo; für Admins</h3>

@@ -85,7 +85,7 @@ class SemAppEntriesController < ApplicationController
   end
 
   def check_access
-    unless @sem_app.is_editable?
+    unless @sem_app.is_editable_for?(current_user)
       flash[:error] = "Zugriff verweigert"
       redirect_to sem_app_path(@sem_app)
       return false

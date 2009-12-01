@@ -50,29 +50,6 @@ class User < ActiveRecord::Base
   end
 
   #
-  # Returns the current (logged in) user. Returns null
-  # if there is no user logged in.
-  #
-  def self.current
-    user_session = User.current_session
-    user_session.user if user_session and user_session.user
-  end
-
-  #
-  # Returns the current user session
-  #
-  def self.current_session
-    UserSession.find
-  end
-
-  #
-  # Logs out the user
-  #
-  def logout
-    User.current_session.destroy if User.current_session
-  end
-
-  #
   # Callback: Before save
   #
   def before_validation

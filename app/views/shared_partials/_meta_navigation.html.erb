@@ -1,8 +1,8 @@
-<% if User.current %>
+<% if current_user %>
   <span>
     Willkommen
-    <strong><%= User.current.firstname %> <%= User.current.lastname %></strong>
-    (<%= User.current.login %>)
+    <strong><%= current_user.firstname %> <%= current_user.lastname %></strong>
+    (<%= current_user.login %>)
   </span>
   <% link_to user_path do %>
     <%= image_tag 'icons/user-orange.png', :plugin => 'pui' %>

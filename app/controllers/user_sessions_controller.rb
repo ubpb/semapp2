@@ -11,7 +11,7 @@ class UserSessionsController < ApplicationController
 
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
-      flash[:notice] = "Sie haben sich erfolgreich als '#{User.current.login}' angemeldet."
+      flash[:notice] = "Sie haben sich erfolgreich als '#{current_user.login}' angemeldet."
       redirect_to root_url
     else
       render :action => :new
@@ -19,8 +19,8 @@ class UserSessionsController < ApplicationController
   end
 
   def destroy
-    if User.current
-      User.current.logout
+    if current_user
+      current_user_session.destroy if current_user_session
       flash[:notice] = "Sie haben sich erfolgreich abgemeldet."
     end
     redirect_to root_url

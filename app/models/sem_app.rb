@@ -81,12 +81,12 @@ class SemApp < ActiveRecord::Base
     end
   end
 
-  def editable?
-    User.current and (User.current.is_admin? or (User.current.owns_sem_app?(self) and self.approved?))
+  def editable?(user)
+    is_editable_for?(user)
   end
 
-  def is_editable?
-    editable?
+  def is_editable_for?(user)
+    user and (user.is_admin? or (user.owns_sem_app?(self) and self.approved?))
   end
 
   def is_from_current_semester?

@@ -1,4 +1,4 @@
-<% if @sem_app.editable? %>
+<% if @sem_app.is_editable_for?(current_user) %>
   <div class="pui-panel align-right">
     <%= link_to 'Einstellungen', edit_sem_app_path(@sem_app), :class => 'pui-button' -%>
   </div>

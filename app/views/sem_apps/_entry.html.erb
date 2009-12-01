@@ -1,5 +1,5 @@
 <div id="sem-app-entry-<%=entry.id-%>" class="sem-app-entry">
-  <% if entry.sem_app.editable? %>
+  <% if entry.sem_app.is_editable_for?(current_user) %>
     <div class="toolbar">
       <span class="toolbar-item reorder-media-entry-action"><span class="ui-icon ui-icon-arrowthick-2-n-s">Move</span></span>
       <% link_to edit_sem_app_entry_path(entry.sem_app, entry), :class => "toolbar-item edit-media-entry-action" do %>

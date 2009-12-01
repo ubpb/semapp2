@@ -18,17 +18,27 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password").
   filter_parameter_logging :password, :password_confirmation
 
-  helper_method :redirect_back_or_default_path
+  helper_method :current_user_session, :current_user, :redirect_back_or_default_path
 
-  private
+  protected
 
   def require_user
-    unless User.current
+    unless current_user
       store_location
       flash[:notice] = "Sie müssen sich zunächst anmelden um die Seite aufrufen zu können."
       redirect_to login_url
       return false
     end
+  end
+
+  def current_user_session
+    return @current_user_session if defined?(@current_user_session)
+    @current_user_session = UserSession.find
+  end
+
+  def current_user
+    return @current_user if defined?(@current_user)
+    @current_user = current_user_session && current_user_session.user
   end
 
   def store_location

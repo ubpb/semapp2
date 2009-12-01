@@ -6,7 +6,7 @@ class Admin::ApplicationController < ApplicationController
   private
 
   def check_for_admin_role
-    unless User.current.is_admin?
+    unless current_user.is_admin?
       flash[:error] = "Zugriff verweigert"
       redirect_to root_url
     end

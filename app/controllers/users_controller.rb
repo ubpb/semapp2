@@ -55,7 +55,7 @@ class UsersController < ApplicationController
   private
 
   def load_current_user
-    @user = User.current
+    @user = current_user
     raise "No user logged in. That was not expected" unless @user
   end
 
