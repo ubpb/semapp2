@@ -173,38 +173,6 @@ class DefaultDb < ActiveRecord::Migration
 
     ############################################################################
     #
-    # SemApp entries
-    #
-    ############################################################################
-
-    create_table :sem_app_entries do |t|
-      t.belongs_to :sem_app,  :null => false
-      t.belongs_to :instance, :null => false, :polymorphic => true
-      t.integer    :position, :null => false, :default => 0
-      t.timestamps
-    end
-
-    add_foreign_key :sem_app_entries, :sem_app_id, :sem_apps, :id
-
-    create_table :sem_app_text_entries do |t|
-      t.text :body_text, :null => false
-    end
-
-    create_table :sem_app_headline_entries do |t|
-      t.string :headline, :null => false
-    end
-
-    create_table :sem_app_file_entries do |t|
-      t.string   :attachment_file_name,    :null => false
-      t.string   :attachment_content_type, :null => false
-      t.integer  :attachment_file_size,    :null => false
-      t.string   :title,                   :null => false
-      t.text     :description,             :null => true
-      t.timestamps
-    end
-
-    ############################################################################
-    #
     # Books
     #
     ############################################################################
@@ -233,14 +201,46 @@ class DefaultDb < ActiveRecord::Migration
     add_index :books, :scheduled_for_removal
 
     add_foreign_key :books, :sem_app_id, :sem_apps, :id
+
+    ############################################################################
+    #
+    # SemApp entries
+    #
+    ############################################################################
+
+    create_table :sem_app_entries do |t|
+      t.belongs_to :sem_app,  :null => false
+      t.integer    :position, :null => false, :default => 0
+      t.timestamps
+    end
+
+    add_foreign_key :sem_app_entries, :sem_app_id, :sem_apps, :id
+
+    create_table :sem_app_text_entries, :id => false, :options => 'INHERITS (sem_app_entries);' do |t|
+      t.text :body_text, :null => false
+    end
+
+    create_table :sem_app_headline_entries, :id => false, :options => 'INHERITS (sem_app_entries);' do |t|
+      t.string :headline, :null => false
+    end
+
+    create_table :sem_app_file_entries, :id => false, :options => 'INHERITS (sem_app_entries);' do |t|
+      t.string   :attachment_file_name,    :null => false
+      t.string   :attachment_content_type, :null => false
+      t.integer  :attachment_file_size,    :null => false
+      t.string   :title,                   :null => false
+      t.text     :description,             :null => true
+    end
+
+    
   end
 
   def self.down
-    drop_table :books
     drop_table :sem_app_file_entries
     drop_table :sem_app_headline_entries
     drop_table :sem_app_text_entries
     drop_table :sem_app_entries
+    drop_table :books
     drop_table :ownerships
     drop_table :sem_apps
     drop_table :locations

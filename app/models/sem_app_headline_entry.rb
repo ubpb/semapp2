@@ -9,8 +9,8 @@
 
 class SemAppHeadlineEntry < ActiveRecord::Base
 
-  has_one :sem_app_entry, :as => :instance, :dependent => :destroy
-
+  #has_one :sem_app_entry, :as => :instance, :dependent => :destroy
+  belongs_to :sem_app
   validates_presence_of :headline
 
 end

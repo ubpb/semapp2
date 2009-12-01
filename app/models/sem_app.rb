@@ -68,11 +68,9 @@ class SemApp < ActiveRecord::Base
   def media
     SemAppEntry.find(
       :all,
-      :include    => [:instance],
       :order      => :position,
-      :conditions => ["sem_app_id = :sem_app_id", {
-          :sem_app_id => id
-        }])
+      :conditions => ["sem_app_id = :sem_app_id", {:sem_app_id => id}]
+    )
   end
 
   def add_ownership(user)
