@@ -60,8 +60,16 @@
     });
 
     jQuery("#media-listing").sortable({
-      items : '.item',
-      handle: '.reorder-entry-action',
+      items      : '.item',
+      handle     : '.reorder-entry-action',
+      scrollSpeed: 10,
+      helper     : 'clone',
+      start: function() {
+        $.frozen = true;
+      },
+      stop: function() {
+        $.frozen = false;
+      },
       update: function(event, ui) {
         var url = ui.item.find(".reorder-entry-action").attr("href");
         reorderEntries(url);
