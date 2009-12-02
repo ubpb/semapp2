@@ -1,0 +1,12 @@
+<% text_entry = entry.instance %>
+
+<% semantic_form_for text_entry, :url => sem_app_entry_path, :html => {:class => "ajax-form"} do |f| %>
+  <% f.inputs do %>
+    <%= f.input :body_text, :label => 'Text', :input_html => { :class => 'mce'} %>
+  <% end %>
+
+  <% f.buttons do %>
+    <%= f.commit_button 'Speichern' %>
+  <% end %>
+<% end %>
+

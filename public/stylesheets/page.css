@@ -278,6 +278,11 @@ img {
   
 }
 
+/* Entry Editor */
+#entry-editor-panel {
+  width: 650px;
+}
+
 /* Book order */
 #book-order-listing .book-order {
 

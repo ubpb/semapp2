@@ -40,4 +40,12 @@ class SemAppEntry < ActiveRecord::Base
     end
   end
 
+  def partial_name
+    'sem_app_entries/' + self.instance.class.name.underscore
+  end
+
+  def form_partial_name(form_type = :edit)
+    'sem_app_entries/' + self.instance.class.name.underscore.concat('_form_').concat(form_type.to_s)
+  end
+  
 end

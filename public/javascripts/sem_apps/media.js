@@ -2,30 +2,128 @@
 
   $(function() {
 
-    function deleteEntry(item, url) {
-      //alert(url);
-      item.slideUp(500);
-    }
+    /***********************************************************************************
+     * API
+     **********************************************************************************/
 
     function createEntry(item, url) {
       alert("TBD: Neuen Eintrag erstellen");
     }
 
+    function editEntry(item, url) {
+      loadEditorPanel(item, url);
+    }
+
+    function deleteEntry(item, url) {
+      //alert(url);
+      item.slideUp(500);
+    }
+
     function reorderEntries(url) {
       var orderedList = $("#media-listing").sortable('serialize');
-      console.debug(orderedList);
-
       $.ajax({
         type: "put",
         data: "_method=put&" + orderedList,
         async: true,
-        url: url,
-        success: function() {
-          console.debug("resorder sucessfull");
+        url: url
+      });
+    }
+
+    /***********************************************************************************
+     * Helper
+     **********************************************************************************/
+
+    function loadEditorPanel(item, url) {
+      // Store in a global context because we use
+      // a single overlay instance.
+      $.editor_current_item = item;
+      $.editor_current_url  = url;
+
+      // Create the overlay
+      $('#entry-editor-panel').overlay({
+        oneInstance: true,
+        closeOnClick: false,
+        api: true,
+        expose: {
+          color: '#333',
+          loadSpeed: 550,
+          opacity: 0.6
         },
-        error: function() {
-          console.debug("reorder failed");
+        onBeforeLoad: function() {
+          this.getContent().find(".heading").html("Eintrag bearbeiten");
+          this.getContent().find(".content").html(loadPartial($.editor_current_url));
+          ajaxifyEditorForm();
+          //loadMCE();
+        },
+        onClose: function() {
+          this.getContent().find(".heading").html("");
+          this.getContent().find(".content").html("");
+          $.editor_current_item = null;
+          $.editor_current_url  = null;
         }
+      }).load();
+    }
+
+    function closeEditorPanel() {
+      $('#entry-editor-panel').overlay().close();
+    }
+
+    function loadPartial(url) {
+      var content = null;
+      $.ajax({
+        type: "get",
+        dataType: "json",
+        async: false,
+        url: url,
+        success: function(data) {
+          content = $('<div/>').html(data.partial).html();
+        }
+      });
+
+      return content;
+    }
+
+    function ajaxifyEditorForm() {
+      $("#entry-editor-panel .ajax-form").ajaxForm({
+        dataType: 'json',
+        success: function(data) {
+          handleFormResponse(data);
+        },
+        beforeSubmit: function() {
+          //if (typeof tinyMCE != 'undefined') {
+          //  tinyMCE.triggerSave(true, true);
+          //}
+        }
+      });
+    }
+
+    function handleFormResponse(data) {
+      var content = $('<div/>').html(data.partial).html();
+      var item    = $.editor_current_item
+
+      if (data.result == 'success') {
+        item.find(".entry").html(content);
+        item.effect("highlight", {}, 1000);
+        closeEditorPanel();
+      } else {
+        $('#entry-editor-panel .content').html(content);
+        ajaxifyEditorForm();
+        //loadMCE();
+      }
+    }
+
+    function loadMCE() {
+      $('#entry-editor-panel textarea.mce').tinymce({
+        script_url: '/javascripts/tiny_mce/tiny_mce.js',
+        theme: "advanced",
+        add_form_submit_trigger: false,
+
+        content_css: '/stylesheets/page.css',
+
+        theme_advanced_toolbar_align: "left",
+        theme_advanced_toolbar_location: "top",
+        theme_advanced_statusbar_location: "bottom",
+        theme_advanced_resizing: true
       });
     }
 
@@ -33,8 +131,26 @@
      * Event hooks
      **********************************************************************************/
 
+    /** If the user clicks the link to create a new antry */
+    $(".create-entry-action").live('click', function(event) {
+      event.preventDefault();
+      var item = $(this).closest(".item");
+      var url  = $(this).attr("href");
+
+      createEntry(item, url);
+    });
+
+    /** If the user clicks the link to create a new antry */
+    $(".edit-entry-action").live('click', function(event) {
+      event.preventDefault();
+      var item = $(this).closest(".item");
+      var url  = $(this).attr("href");
+
+      editEntry(item, url);
+    });
+
     /** If the user clicks the link to delete an antry */
-    jQuery(".delete-entry-action").live('click', function(event) {
+    $(".delete-entry-action").live('click', function(event) {
       event.preventDefault();
       var item = $(this).closest(".item");
       var url  = $(this).attr("href");
@@ -45,21 +161,12 @@
       }
     });
 
-    /** If the user clicks the link to create a new antry */
-    jQuery(".create-entry-action").live('click', function(event) {
-      event.preventDefault();
-      var item = $(this).closest(".item");
-      var url  = $(this).attr("href");
-
-      createEntry(item, url);
-    });
-
     /** Make media entries sortable with the mouse */
-    jQuery(".reorder-entry-action").live('click', function(event) {
+    $(".reorder-entry-action").live('click', function(event) {
       event.preventDefault();
     });
 
-    jQuery("#media-listing").sortable({
+    $("#media-listing").sortable({
       items      : '.item',
       handle     : '.reorder-entry-action',
       scrollSpeed: 10,

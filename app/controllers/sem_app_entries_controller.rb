@@ -30,22 +30,42 @@ class SemAppEntriesController < ApplicationController
   end
 
   def edit
-    @sem_app_entry = SemAppEntry.find(params[:id])
+    entry = SemAppEntry.find(params[:id])
+
     respond_to do |format|
-      format.js { render :layout => false }
+      format.html do
+        render :nothing => true, :status => 415
+      end
+
+      format.json do
+        render_json_response(:success, :partial => entry.form_partial_name(:edit), :locals => {:entry => entry})
+      end
     end
   end
 
   def update
-    @sem_app_entry = SemAppEntry.find(params[:id])
-    instance_type  = @sem_app_entry.instance_type.underscore
-    @sem_app_entry.instance.update_attributes(params[instance_type.to_sym])
+    entry = SemAppEntry.find(params[:id])
+    instance_type  = entry.relname.singularize
+    entry.instance.update_attributes(params[instance_type.to_sym])
 
     respond_to do |format|
-      if @sem_app_entry.instance.save and @sem_app_entry.save
-        format.js { render :layout => false, :content_type => 'text/html' }
+      if entry.instance.save and entry.save
+        format.html do
+          redirect_to sem_app_path(@sem_app, :anchor => 'media')
+        end
+
+        format.json do
+          render_json_response(:success, :partial => entry.partial_name, :locals => {:entry => entry})
+        end
       else
-        format.js { render :action => :edit, :layout => false, :status => 409, :content_type => 'text/html' }
+        format.html do
+          # TODO: implement me
+          render :nothing => true, :status => 415
+        end
+
+        format.json do
+          render_json_response(:error, :partial => entry.form_partial_name(:edit), :locals => {:entry => entry})
+        end
       end
     end
   end
@@ -90,6 +110,20 @@ class SemAppEntriesController < ApplicationController
       redirect_to sem_app_path(@sem_app)
       return false
     end
+  end
+
+  def render_json_response(result, options = {})
+    json = {}
+    json[:result]  = result.to_s
+    json[:message] = options[:message]
+
+    if options[:partial].present?
+      json[:partial] = render_to_string(:partial => options[:partial], :locals => options[:locals])
+    end
+
+    puts json.to_s
+
+    render :json => json, :content_type => 'text/plain'
   end
 
 end

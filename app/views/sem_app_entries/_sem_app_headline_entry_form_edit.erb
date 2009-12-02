@@ -1,0 +1,12 @@
+<% headline_entry = entry.instance %>
+
+<% semantic_form_for headline_entry, :url => sem_app_entry_path, :html => {:class => "ajax-form"} do |f| %>
+  <% f.inputs do %>
+    <%= f.input :headline, :label => 'Überschrift' %>
+  <% end %>
+
+  <% f.buttons do %>
+    <%= f.commit_button 'Speichern' %>
+  <% end %>
+<% end %>
+
