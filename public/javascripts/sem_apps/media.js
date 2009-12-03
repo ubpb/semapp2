@@ -15,8 +15,15 @@
     }
 
     function deleteEntry(item, url) {
-      //alert(url);
-      item.slideUp(500);
+      jQuery.ajax({
+        type: "delete",
+        data: "_method=delete",
+        async: true,
+        url: url,
+        success: function() {
+          item.slideUp(500);
+        }
+      });
     }
 
     function reorderEntries(url) {
@@ -53,7 +60,7 @@
           this.getContent().find(".heading").html("Eintrag bearbeiten");
           this.getContent().find(".content").html(loadPartial($.editor_current_url));
           ajaxifyEditorForm();
-          //loadMCE();
+        //loadMCE();
         },
         onClose: function() {
           this.getContent().find(".heading").html("");
@@ -90,9 +97,9 @@
           handleFormResponse(data);
         },
         beforeSubmit: function() {
-          //if (typeof tinyMCE != 'undefined') {
-          //  tinyMCE.triggerSave(true, true);
-          //}
+        //if (typeof tinyMCE != 'undefined') {
+        //  tinyMCE.triggerSave(true, true);
+        //}
         }
       });
     }
@@ -108,7 +115,7 @@
       } else {
         $('#entry-editor-panel .content').html(content);
         ajaxifyEditorForm();
-        //loadMCE();
+      //loadMCE();
       }
     }
 

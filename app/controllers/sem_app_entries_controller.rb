@@ -74,7 +74,6 @@ class SemAppEntriesController < ApplicationController
     SemAppEntry.transaction do
       entry = SemAppEntry.find(params[:id])
       entry.instance.destroy
-      entry.destroy
       entry.resync_positions
     end
     render :nothing => true
