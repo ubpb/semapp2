@@ -7,7 +7,8 @@
 #  body_text :text            default(""), not null
 #
 
-class SemAppTextEntry < ActiveRecord::Base
+class SemAppTextEntry < SemAppEntry
+  set_table_name :sem_app_text_entries
 
   belongs_to :sem_app
   validates_presence_of :body_text

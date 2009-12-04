@@ -15,37 +15,7 @@
 class SemAppEntry < ActiveRecord::Base
 
   belongs_to :sem_app
-
+  acts_as_inheritance_root
   acts_as_list :scope => :sem_app
 
-  def instance
-    unless @instance.present?
-      if relname.present?
-        @instance = relname.classify.constantize.find(self.id)
-      end
-    else
-      @instance
-    end
-  end
-  
-  def relname
-    unless @relname
-      sql = "select p.relname from #{SemAppEntry.name.tableize} s, pg_class p where s.id = #{self.id} and s.tableoid = p.oid"
-      res = connection.execute(sql)
-      if res[0]
-        @relname = res[0]['relname']
-      end
-    else
-      @relname
-    end
-  end
-
-  def partial_name
-    'sem_app_entries/' + self.instance.class.name.underscore
-  end
-
-  def form_partial_name(form_type = :edit)
-    'sem_app_entries/' + self.instance.class.name.underscore.concat('_form_').concat(form_type.to_s)
-  end
-  
 end

@@ -1,7 +1,7 @@
 <div id="entry-<%=entry.id-%>" class="item">
   <% if entry.sem_app.is_editable_for?(current_user) %>
     <div class="toolbar">
-      <% link_to sem_app_entry_path(entry.sem_app, entry), :class => "toolbar-item create-entry-action" do %>
+      <% link_to new_sem_app_entry_path(entry.sem_app, :class => 'SemAppHeadlineEntry', :origin_id => entry.id), :class => "toolbar-item create-entry-action" do %>
         <%= image_tag 'icons/plus-circle-frame.png', :plugin => 'pui', :title => 'Einen neuen Eintrag unterhalb dieses Eintrags erstellen' %>
       <% end %>
       <% link_to edit_sem_app_entry_path(entry.sem_app, entry), :class => "toolbar-item edit-entry-action" do %>
@@ -17,6 +17,6 @@
   <% end %>
 
   <div class="entry">
-    <%= render entry.partial_name, :entry => entry %>
+    <%= render partial_path_for_entry(entry), :entry => entry %>
   </div>
 </div>

@@ -7,7 +7,8 @@
 #  headline :string(255)     not null
 #
 
-class SemAppHeadlineEntry < ActiveRecord::Base
+class SemAppHeadlineEntry < SemAppEntry
+  set_table_name :sem_app_headline_entries
 
   belongs_to :sem_app
   validates_presence_of :headline

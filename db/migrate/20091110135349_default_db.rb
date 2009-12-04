@@ -210,7 +210,7 @@ class DefaultDb < ActiveRecord::Migration
 
     create_table :sem_app_entries do |t|
       t.belongs_to :sem_app,  :null => false
-      t.integer    :position, :null => false, :default => 0
+      t.integer    :position, :null => true
       t.timestamps
     end
 

@@ -7,7 +7,7 @@
      **********************************************************************************/
 
     function createEntry(item, url) {
-      alert("TBD: Neuen Eintrag erstellen");
+      loadEditorPanel(item, url);
     }
 
     function editEntry(item, url) {
@@ -15,7 +15,7 @@
     }
 
     function deleteEntry(item, url) {
-      jQuery.ajax({
+      $.ajax({
         type: "delete",
         data: "_method=delete",
         async: true,
@@ -109,8 +109,13 @@
       var item    = $.editor_current_item
 
       if (data.result == 'success') {
-        item.find(".entry").html(content);
-        item.effect("highlight", {}, 1000);
+        if (data.type == "create") {
+          item.after(content);
+        } else {
+          item.find(".entry").html(content);
+          item.effect("highlight", {}, 1000);
+        }
+
         closeEditorPanel();
       } else {
         $('#entry-editor-panel .content').html(content);

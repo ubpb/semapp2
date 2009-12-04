@@ -18,7 +18,8 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password").
   filter_parameter_logging :password, :password_confirmation
 
-  helper_method :current_user_session, :current_user, :redirect_back_or_default_path
+  helper_method :current_user_session, :current_user, :redirect_back_or_default_path,
+    :partial_path_for_entry, :partial_path_for_entry_form, :form_url_for_entry
 
   protected
 
@@ -52,6 +53,22 @@ class ApplicationController < ActionController::Base
 
   def redirect_back_or_default_path(default)
     session[:return_to] || default
+  end
+
+  def partial_path_for_entry(entry)
+    'sem_app_entries/' + entry.class.name.underscore
+  end
+
+  def partial_path_for_entry_form(entry)
+    partial_path_for_entry(entry) << "_form"
+  end
+
+  def form_url_for_entry(entry)
+    if entry.new_record?
+      sem_app_entries_path
+    else
+      sem_app_entry_path
+    end
   end
 
 end

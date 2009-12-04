@@ -56,4 +56,8 @@ SemApp.transaction do
   # Book Shelves
   BookShelf.create({:sem_app => default_semapp, :ils_account => 'PE70000010', :slot_number => '10'})
 
+  # Media entries
+  SemAppHeadlineEntry.create({:sem_app => default_semapp, :headline => 'Some Headline'})
+  SemAppHeadlineEntry.create({:sem_app => default_semapp, :headline => 'Another Headline'})
+
 end # end transaction

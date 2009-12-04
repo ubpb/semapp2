@@ -1,6 +1,4 @@
-<% text_entry = entry.instance %>
-
-<% semantic_form_for text_entry, :url => sem_app_entry_path, :html => {:class => "ajax-form"} do |f| %>
+<% semantic_form_for entry, :url => form_url_for_entry(entry), :html => {:class => "ajax-form"} do |f| %>
   <% f.inputs do %>
     <%= f.input :body_text, :label => 'Text', :input_html => { :class => 'mce'} %>
   <% end %>

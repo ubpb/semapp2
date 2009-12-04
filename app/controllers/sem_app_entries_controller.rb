@@ -5,26 +5,46 @@ class SemAppEntriesController < ApplicationController
   before_filter :check_access
 
   def new
-    instance_type = params[:instance_type].classify.constantize
-    @sem_app_entry = SemAppEntry.new(:sem_app => @sem_app, :instance => instance_type.new)
+    entry_class = params[:class].classify.constantize
+    entry       = entry_class.new
+
+    # The origin_id is the id of the entry that the user
+    # wants to create the new entry below
+    @origin_id = params[:origin_id]
+
     respond_to do |format|
-      format.js { render :layout => false }
+      format.json do
+        render_json_response(:success, :partial => partial_path_for_entry_form(entry), :locals => {:entry => entry})
+      end
     end
   end
 
   def create
-    instance_class      = params[:instance_type].classify.constantize
-    instance_attributes = params[instance_class.to_s.underscore.to_sym]
-    instance            = instance_class.new()
+    # prepare the new entry
+    entry_class    = params[:class].classify.constantize
+    attributes     = params[entry_class.name.underscore.to_sym]
+    entry          = entry_class.new(attributes)
+    entry.sem_app  = @sem_app
 
-    instance.attributes = instance_attributes
-    @sem_app_entry = SemAppEntry.new(:sem_app => @sem_app, :instance => instance)
-
-    respond_to do |format|
-      if (instance.save and @sem_app_entry.save and @sem_app_entry.insert_at(1))
-        format.js { render :layout => false, :content_type => 'text/html' }
-      else
-        format.js { render :action => :new, :layout => false, :status => 409, :content_type => 'text/html' }
+    # set the correct position for the new entry
+    # below the entry with the given origin_id
+    @origin_id     = params[:origin_id]
+    origin_entry   = SemAppEntry.find_by_id(@origin_id)
+    position       = origin_entry.present? ? origin_entry.position + 1 : 1
+    entry.position = position
+    
+    # finally save the entry
+    SemAppEntry.transaction do
+      respond_to do |format|
+        if (entry.valid? and entry.insert_at(position))
+          format.json do
+            render_json_response(:success, :type => :create, :partial => 'sem_apps/entry', :locals => {:entry => entry})
+          end
+        else
+          format.json do
+            render_json_response(:error, :partial => partial_path_for_entry_form(entry), :locals => {:entry => entry})
+          end
+        end
       end
     end
   end
@@ -33,38 +53,24 @@ class SemAppEntriesController < ApplicationController
     entry = SemAppEntry.find(params[:id])
 
     respond_to do |format|
-      format.html do
-        render :nothing => true, :status => 415
-      end
-
       format.json do
-        render_json_response(:success, :partial => entry.form_partial_name(:edit), :locals => {:entry => entry})
+        render_json_response(:success, :partial => partial_path_for_entry_form(entry), :locals => {:entry => entry})
       end
     end
   end
 
   def update
-    entry = SemAppEntry.find(params[:id])
-    instance_type  = entry.relname.singularize
-    entry.instance.update_attributes(params[instance_type.to_sym])
-
+    entry         = SemAppEntry.find(params[:id])
+    instance_type = entry.class.name.underscore.to_sym
+    
     respond_to do |format|
-      if entry.instance.save and entry.save
-        format.html do
-          redirect_to sem_app_path(@sem_app, :anchor => 'media')
-        end
-
+      if entry.update_attributes(params[instance_type])
         format.json do
-          render_json_response(:success, :partial => entry.partial_name, :locals => {:entry => entry})
+          render_json_response(:success, :partial => partial_path_for_entry(entry), :locals => {:entry => entry})
         end
       else
-        format.html do
-          # TODO: implement me
-          render :nothing => true, :status => 415
-        end
-
         format.json do
-          render_json_response(:error, :partial => entry.form_partial_name(:edit), :locals => {:entry => entry})
+          render_json_response(:error, :partial => partial_path_for_entry_form(entry), :locals => {:entry => entry})
         end
       end
     end
@@ -73,8 +79,8 @@ class SemAppEntriesController < ApplicationController
   def destroy
     SemAppEntry.transaction do
       entry = SemAppEntry.find(params[:id])
-      entry.instance.destroy
-      entry.resync_positions
+      entry.remove_from_list
+      entry.destroy
     end
     render :nothing => true
   end
@@ -115,12 +121,11 @@ class SemAppEntriesController < ApplicationController
     json = {}
     json[:result]  = result.to_s
     json[:message] = options[:message]
+    json[:type]    = options[:type] if options[:type].present?
 
     if options[:partial].present?
       json[:partial] = render_to_string(:partial => options[:partial], :locals => options[:locals])
     end
-
-    puts json.to_s
 
     render :json => json, :content_type => 'text/plain'
   end

@@ -25,6 +25,7 @@ Rails::Initializer.run do |config|
 
   config.gem 'provideal-ui',                :version => '0.1.0', :lib => 'pui',                         :source => 'http://gemcutter.org'
   config.gem 'provideal-migration-helpers', :version => '1.1.2', :lib => 'provideal_migration_helpers', :source => 'http://gemcutter.org'
+  config.gem 'acts_as_inheritance_root',    :version => '0.1.0'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
