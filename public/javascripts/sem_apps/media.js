@@ -7,7 +7,7 @@
      **********************************************************************************/
 
     function createEntry(item, url) {
-      loadEditorPanel(item, url);
+      loadEditorPanel(item, url, {heading: "Einen neuen Eintrag erstellen"});
     }
 
     function editEntry(item, url) {
@@ -40,9 +40,14 @@
      * Helper
      **********************************************************************************/
 
-    function loadEditorPanel(item, url) {
+    function loadEditorPanel(item, url, options) {
+      var options = jQuery.extend({
+        heading: "Eintrag bearbeiten"
+      }, options);
+
       // Store in a global context because we use
       // a single overlay instance.
+      $.editor_current_heading = options.heading;
       $.editor_current_item = item;
       $.editor_current_url  = url;
 
@@ -57,7 +62,7 @@
           opacity: 0.6
         },
         onBeforeLoad: function() {
-          this.getContent().find(".heading").html("Eintrag bearbeiten");
+          this.getContent().find(".heading").html($.editor_current_heading);
           this.getContent().find(".content").html(loadPartial($.editor_current_url));
           ajaxifyEditorForm();
         //loadMCE();

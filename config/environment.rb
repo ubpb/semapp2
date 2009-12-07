@@ -15,17 +15,18 @@ Rails::Initializer.run do |config|
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
   
   # Specify gems that this application depends on and have them installed with rake gems:install
-  config.gem 'RedCloth',      :version => '4.2.2',   :lib => 'RedCloth',      :source => 'http://gemcutter.org'
-  config.gem 'authlogic',     :version => '2.1.3',   :lib => 'authlogic',     :source => 'http://gemcutter.org'
-  config.gem 'libxml-ruby',   :version => '1.1.3',   :lib => 'libxml',        :source => 'http://gemcutter.org'
-  config.gem 'bcrypt-ruby',   :version => '2.1.2',   :lib => 'bcrypt',        :source => 'http://gemcutter.org'
-  config.gem 'paperclip',     :version => '2.3.1.1', :lib => 'paperclip',     :source => 'http://gemcutter.org'
-  config.gem 'will_paginate', :version => '2.3.11',  :lib => 'will_paginate', :source => 'http://gemcutter.org'
-  config.gem "formtastic",    :version => '0.9.4',   :lib => 'formtastic',    :source => 'http://gemcutter.org'
+  config.gem 'RedCloth',      :version => '4.2.2',   :lib => 'RedCloth'
+  config.gem 'authlogic',     :version => '2.1.3',   :lib => 'authlogic'
+  config.gem 'libxml-ruby',   :version => '1.1.3',   :lib => 'libxml'
+  config.gem 'bcrypt-ruby',   :version => '2.1.2',   :lib => 'bcrypt'
+  config.gem 'paperclip',     :version => '2.3.1.1', :lib => 'paperclip'
+  config.gem 'will_paginate', :version => '2.3.11',  :lib => 'will_paginate'
+  config.gem 'acts_as_list',  :version => '0.1.2',   :lib => 'acts_as_list'
+  config.gem "formtastic",    :version => '0.9.4',   :lib => 'formtastic'
 
-  config.gem 'provideal-ui',                :version => '0.1.0', :lib => 'pui',                         :source => 'http://gemcutter.org'
-  config.gem 'provideal-migration-helpers', :version => '1.1.2', :lib => 'provideal_migration_helpers', :source => 'http://gemcutter.org'
-  config.gem 'acts_as_inheritance_root',    :version => '0.1.0'
+  config.gem 'provideal-ui',                :version => '0.1.0', :lib => 'pui'
+  config.gem 'provideal-migration-helpers', :version => '1.1.2', :lib => 'provideal_migration_helpers'
+  config.gem 'acts_as_inheritance_root',    :version => '0.1.0', :lib => 'acts_as_inheritance_root'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

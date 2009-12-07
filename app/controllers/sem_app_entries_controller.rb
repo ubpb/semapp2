@@ -36,7 +36,7 @@ class SemAppEntriesController < ApplicationController
     # finally save the entry
     SemAppEntry.transaction do
       respond_to do |format|
-        if (entry.valid? and entry.insert_at(position))
+        if (entry.valid? and entry.insert_at(position) and resync_positions)
           format.json do
             render_json_response(:success, :type => :create, :partial => 'sem_apps/entry', :locals => {:entry => entry})
           end
@@ -81,6 +81,7 @@ class SemAppEntriesController < ApplicationController
       entry = SemAppEntry.find(params[:id])
       entry.remove_from_list
       entry.destroy
+      resync_positions
     end
     render :nothing => true
   end
@@ -128,6 +129,20 @@ class SemAppEntriesController < ApplicationController
     end
 
     render :json => json, :content_type => 'text/plain'
+  end
+
+  def resync_positions
+    entries = SemAppEntry.find(
+      :all,
+      :order      => :position,
+      :conditions => ["sem_app_id = :sem_app_id", {:sem_app_id => @sem_app.id}]
+    )
+    
+    if entries.present?
+      SemAppEntry.transaction do
+        entries.each_with_index { |o,i| o.update_attribute(:position, i+1) }
+      end
+    end
   end
 
 end
