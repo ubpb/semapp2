@@ -1,27 +1,25 @@
-<% if @sem_app.is_editable_for?(current_user) %>
-  <div class="pui-panel align-right">
-    <select class="new-media-entry-action">
-      <option value="">-- Neuen Eintrag erstellen --</option>
-      <option value="SemAppHeadlineEntry">Überschrift</option>
-      <option value="SemAppTextEntry">Text</option>
-      <option value="SemAppFileEntry">Datei</option>
-    </select>
-  </div>
-<% end %>
-
-<% if @sem_app.media.present? %>
-  <div id="media-listing" class="listing pui-collection-view">
+<div id="media-listing" class="listing pui-collection-view">
+  <% if @sem_app.media.present? %>
     <% @sem_app.media.each do |entry| %>
       <%= render 'entry', :entry => entry %>
     <% end %>
-  </div>
-<% else %>
-  <div class="pui-panel notice align-center">
-    Für diesen eSeminarapparat sind aktuell <strong>keine</strong> Medien verfügbar.
+  <% else %>
+    <div id="no-entries-message" class="pui-panel notice align-center">
+      Für diesen eSeminarapparat sind hier aktuell <strong>keine</strong> Inhalte verfügbar.
+    </div>
+
+    <% if @sem_app.is_editable_for?(current_user) %>
+      <div id="dummy-entry" class="item no-hover">
+        <h1>Erstellen Sie einen neuen Eintrag</h1>
+        <%= render 'sem_apps/entry_dropdown_panel', :origin_id => nil %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<% if @sem_app.is_editable_for?(current_user) %>
+  <div class="pui-overlay" id="entry-editor-panel">
+    <h2 class="section heading">Eintrag Bearbeiten</h2>
+    <div class="content" style="overflow: auto"></div>
   </div>
 <% end %>
-
-<div class="pui-overlay" id="entry-editor-panel">
-  <h2 class="section heading">Eintrag Bearbeiten</h2>
-  <div class="content" style="overflow: auto"></div>
-</div>

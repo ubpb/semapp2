@@ -3,6 +3,8 @@
   $(function() {
 
     $(".listing .item").live('mouseover', function() {
+      if ($(this).hasClass('no-hover')) return;
+
       $(this).item_highlight();
       $(this).item_toolbar_show();
     });

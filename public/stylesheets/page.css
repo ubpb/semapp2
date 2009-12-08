@@ -219,7 +219,7 @@ img {
 
 /* SemApp */
 .sem-app {
-  
+
 }
 
 .sem-app .semester {
@@ -235,7 +235,7 @@ img {
 }
 
 .sem-app .listing.pui-collection-view {
-  
+
 }
 
 .sem-app .listing.pui-collection-view .item {
@@ -275,13 +275,22 @@ img {
 }
 
 .sem-app .listing.pui-collection-view .book {
-  
+
 }
 
 /* Entry Editor */
 #entry-editor-panel {
   width: 650px;
 }
+
+.sem-app .listing .dropdown, .dropdown ul { list-style: none; display: inline-block; }
+.sem-app .listing .dropdown, .dropdown * { padding: 0; margin: 0; line-height: 1em; }
+.sem-app .listing .dropdown li.trigger { }
+.sem-app .listing .dropdown li.trigger a { display: block; }
+.sem-app .listing .dropdown li.trigger ul { display: none; text-align: left; position: absolute; padding: 10px 0; }
+.sem-app .listing .dropdown li.trigger:hover ul { display: block; }
+.sem-app .listing .dropdown li.trigger ul li a { padding: 5px 15px; }
+.sem-app .listing .dropdown li.trigger ul { background-color: #eee }
 
 /* Book order */
 #book-order-listing .book-order {

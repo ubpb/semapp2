@@ -28,9 +28,12 @@ class SemAppEntriesController < ApplicationController
 
     # set the correct position for the new entry
     # below the entry with the given origin_id
-    @origin_id     = params[:origin_id]
-    origin_entry   = SemAppEntry.find_by_id(@origin_id)
-    position       = origin_entry.present? ? origin_entry.position + 1 : 1
+    position    = 1
+    @origin_id  = params[:origin_id]
+    if @origin_id.present?
+      origin_entry = SemAppEntry.find(@origin_id)
+      position     = origin_entry.position + 1
+    end
     entry.position = position
     
     # finally save the entry

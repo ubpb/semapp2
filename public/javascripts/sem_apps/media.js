@@ -7,7 +7,9 @@
      **********************************************************************************/
 
     function createEntry(item, url) {
-      loadEditorPanel(item, url, {heading: "Einen neuen Eintrag erstellen"});
+      loadEditorPanel(item, url, {
+        heading: "Einen neuen Eintrag erstellen"
+      });
     }
 
     function editEntry(item, url) {
@@ -116,6 +118,10 @@
       if (data.result == 'success') {
         if (data.type == "create") {
           item.after(content);
+          $('#no-entries-message').remove();
+          $('#dummy-entry').remove();
+          // We have created a new element, lets rebind some events
+          rebindDropDownMenu();
         } else {
           item.find(".entry").html(content);
           item.effect("highlight", {}, 1000);
@@ -141,6 +147,19 @@
         theme_advanced_toolbar_location: "top",
         theme_advanced_statusbar_location: "bottom",
         theme_advanced_resizing: true
+      });
+    }
+
+    function rebindDropDownMenu() {
+      $('.dropdown li.trigger').unbind("click");
+      $('.dropdown li.trigger').unbind("mouseleave");
+
+      $('.dropdown li.trigger').bind("click", function() {
+        jQuery('ul', this).css('display', 'block');
+      });
+
+      $('.dropdown li.trigger').bind("mouseleave", function() {
+        jQuery('ul', this).css('display', 'none');
       });
     }
 
@@ -199,6 +218,9 @@
         reorderEntries(url);
       }
     })
+
+    /** (re)bind entry type dropdowns */
+    rebindDropDownMenu();
 
   });
 

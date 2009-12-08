@@ -1,4 +1,7 @@
 <% semantic_form_for entry, :url => form_url_for_entry(entry), :html => {:class => "ajax-form"} do |f| %>
+  <%= hidden_field_tag :class, 'SemAppTextEntry' %>
+  <%= hidden_field_tag :origin_id, @origin_id %>
+
   <% f.inputs do %>
     <%= f.input :body_text, :label => 'Text', :input_html => { :class => 'mce'} %>
   <% end %>
