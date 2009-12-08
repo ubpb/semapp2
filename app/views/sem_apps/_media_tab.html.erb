@@ -11,7 +11,7 @@
     <% if @sem_app.is_editable_for?(current_user) %>
       <div id="dummy-entry" class="item no-hover">
         <h1>Erstellen Sie einen neuen Eintrag</h1>
-        <%= render 'sem_apps/entry_dropdown_panel', :origin_id => nil %>
+        <%= render 'sem_apps/entry_dropdown_panel', :origin_id => nil, :inline_style => nil %>
       </div>
     <% end %>
   <% end %>

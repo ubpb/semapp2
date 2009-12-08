@@ -4,7 +4,7 @@
       <ul class="dropdown toolbar-item">
         <li class="trigger">
           <%= image_tag('icons/plus-circle-frame.png', :plugin => 'pui', :title => 'Einen neuen Eintrag unterhalb dieses Eintrags erstellen') %>
-          <%= render 'sem_apps/entry_dropdown_panel', :origin_id => entry.id %>
+          <%= render 'sem_apps/entry_dropdown_panel', :origin_id => entry.id, :inline_style => 'display: none' %>
         </li>
       </ul>
 
