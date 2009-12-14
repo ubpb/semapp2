@@ -87,6 +87,7 @@
       $.ajax({
         type: "get",
         dataType: "json",
+        data: "_method=get",
         async: false,
         url: url,
         success: function(data) {

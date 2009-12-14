@@ -7,6 +7,7 @@ class SemAppEntriesController < ApplicationController
   def new
     entry_class = params[:class].classify.constantize
     entry       = entry_class.new
+    raise "unknown instance" unless entry.kind_of?(SemAppEntry)
 
     # The origin_id is the id of the entry that the user
     # wants to create the new entry below
@@ -24,6 +25,7 @@ class SemAppEntriesController < ApplicationController
     entry_class    = params[:class].classify.constantize
     attributes     = params[entry_class.name.underscore.to_sym]
     entry          = entry_class.new(attributes)
+    raise "unknown instance" unless entry.kind_of?(SemAppEntry)
     entry.sem_app  = @sem_app
 
     # set the correct position for the new entry
