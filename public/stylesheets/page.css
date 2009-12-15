@@ -274,9 +274,19 @@ img {
   background-color: #e3e3e3;
 }
 
-.sem-app .listing.pui-collection-view .book {
+.sem-app .listing.pui-collection-view .entry .headline {
 
 }
+
+.sem-app .listing.pui-collection-view .entry .text {
+
+}
+
+.sem-app .listing.pui-collection-view .entry .file {}
+.sem-app .listing.pui-collection-view .entry .file .title { font-weight: bolder }
+.sem-app .listing.pui-collection-view .entry .file .description { font-style: italic }
+.sem-app .listing.pui-collection-view .entry .file .download-link { margin-top: 10px; }
+
 
 /* Entry Editor */
 #entry-editor-panel {

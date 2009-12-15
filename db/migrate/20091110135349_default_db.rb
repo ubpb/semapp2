@@ -225,13 +225,18 @@ class DefaultDb < ActiveRecord::Migration
     end
 
     create_table :sem_app_file_entries, :id => false, :options => 'INHERITS (sem_app_entries);' do |t|
-      t.string   :attachment_file_name,    :null => false
-      t.string   :attachment_content_type, :null => false
-      t.integer  :attachment_file_size,    :null => false
-      t.string   :title,                   :null => false
-      t.text     :description,             :null => true
+      t.string     :title,                   :null => false
+      t.text       :description,             :null => true
     end
 
+    create_table :attachments do |t|
+      t.belongs_to :sem_app_entry,           :null => false
+      t.string     :attachable_file_name,    :null => false
+      t.string     :attachable_content_type, :null => false
+      t.integer    :attachable_file_size,    :null => false
+      t.string     :title,                   :null => false
+      t.text       :description,             :null => true
+    end
     
   end
 

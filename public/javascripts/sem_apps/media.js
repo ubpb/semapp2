@@ -91,7 +91,7 @@
         async: false,
         url: url,
         success: function(data) {
-          content = $('<div/>').html(data.partial).html();
+          content = decHTMLifEnc(data.partial);
         }
       });
 
@@ -113,7 +113,7 @@
     }
 
     function handleFormResponse(data) {
-      var content = $('<div/>').html(data.partial).html();
+      var content = decHTMLifEnc(data.partial); //$('<div/>').html(data.partial).html();
       var item    = $.editor_current_item
 
       if (data.result == 'success') {
@@ -162,6 +162,19 @@
       $('.dropdown li.trigger').bind("mouseleave", function() {
         jQuery('ul', this).css('display', 'none');
       });
+    }
+
+    function isEncHTML(str) {
+      if(str.search(/&amp;/g) != -1 || str.search(/&lt;/g) != -1 || str.search(/&gt;/g) != -1)
+        return true;
+      else
+        return false;
+    }
+
+    function decHTMLifEnc(str){
+      if(isEncHTML(str))
+        return str.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+      return str;
     }
 
     /***********************************************************************************

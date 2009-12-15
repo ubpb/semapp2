@@ -2,15 +2,15 @@ class DownloadController < ApplicationController
 
   def download
     # load the attachment by the given id
-    file_entry = SemAppFileEntry.find(params[:id])
+    entry = SemAppFileEntry.find(params[:id])
 
     # TODO: security check
-    sem_app = file_entry.sem_app_entry.sem_app
+    sem_app = entry.sem_app
     # ... check if the user is allowed to read files from this sem_app
 
     # check all relevant elements of the path to defend url guessing
     request_path = "#{params[:hash1]}/#{params[:hash2]}/#{params[:hash3]}/#{params[:id]}/#{params[:style]}"
-    path = file_entry.attachment.path(params[:style])
+    path = entry.attachment.path(params[:style])
     unless path.include?(request_path)
       render :file => "#{RAILS_ROOT}/public/404.html", :layout => false, :status => 404
       return false
@@ -19,9 +19,9 @@ class DownloadController < ApplicationController
     # finally send the file
     send_file(path,
       :stream      => true,
-      :filename    => file_entry.attachment_file_name,
+      :filename    => entry.attachment_file_name,
       :disposition => 'attachment',
-      :type        => file_entry.attachment_content_type || 'application/octed-stream')
+      :type        => entry.attachment_content_type || 'application/octed-stream')
   end
 
 end

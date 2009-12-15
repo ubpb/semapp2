@@ -9,6 +9,12 @@ class SemAppEntriesController < ApplicationController
     entry       = entry_class.new
     raise "unknown instance" unless entry.kind_of?(SemAppEntry)
 
+    # If the entry can carry attachments, lets
+    # build an attachment for use within nested forms
+    if entry.respond_to? :attachments
+      entry.attachments.build
+    end
+    
     # The origin_id is the id of the entry that the user
     # wants to create the new entry below
     @origin_id = params[:origin_id]
@@ -47,7 +53,7 @@ class SemAppEntriesController < ApplicationController
           end
         else
           format.json do
-            render_json_response(:error, :partial => partial_path_for_entry_form(entry), :locals => {:entry => entry})
+            render_json_response(:error, :message => entry.errors.full_messages.to_sentence, :partial => partial_path_for_entry_form(entry), :locals => {:entry => entry})
           end
         end
       end
@@ -57,6 +63,12 @@ class SemAppEntriesController < ApplicationController
   def edit
     entry = SemAppEntry.find(params[:id])
 
+    # If the entry can carry attachments, lets
+    # build an attachment for use within nested forms
+    if entry.respond_to? :attachments
+      entry.attachments.build
+    end
+    
     respond_to do |format|
       format.json do
         render_json_response(:success, :partial => partial_path_for_entry_form(entry), :locals => {:entry => entry})
@@ -69,13 +81,13 @@ class SemAppEntriesController < ApplicationController
     instance_type = entry.class.name.underscore.to_sym
     
     respond_to do |format|
-      if entry.update_attributes(params[instance_type])
+      if entry.update_attributes(params[instance_type]) and entry.reload
         format.json do
           render_json_response(:success, :partial => partial_path_for_entry(entry), :locals => {:entry => entry})
         end
       else
         format.json do
-          render_json_response(:error, :partial => partial_path_for_entry_form(entry), :locals => {:entry => entry})
+          render_json_response(:error, :message => entry.errors.full_messages.to_sentence, :partial => partial_path_for_entry_form(entry), :locals => {:entry => entry})
         end
       end
     end

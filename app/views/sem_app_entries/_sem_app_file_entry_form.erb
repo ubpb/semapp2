@@ -1,0 +1,28 @@
+<% semantic_form_for entry, :url => form_url_for_entry(entry), :html => {:class => "ajax-form", :multipart => true} do |f| %>
+  <%= hidden_field_tag :class, 'SemAppFileEntry' %>
+  <%= hidden_field_tag :origin_id, @origin_id %>
+
+  <div style="height: 300px; overflow: auto">
+    <% f.inputs :name => 'Eintrag' do %>
+      <%= f.input :title,       :label => 'Titel' %>
+      <%= f.input :description, :label => 'Beschreibung', :required => false, :input_html => {:rows => 2} %>
+    <% end %>
+
+    <% f.inputs :name => 'Datei(en)' do %>
+      <% f.semantic_fields_for :attachments do |a| %>
+        <div style="margin-bottom: 15px">
+          <% unless a.object.new_record? %>
+            <%= a.input '_delete', :label => 'Löschen?', :as => :boolean %>
+          <% end %>
+          <%= a.input :title,       :label => 'Titel' %>
+          <%= a.input :attachable,  :label => 'Datei' %>
+          <%= a.input :description, :label => 'Beschreibung', :required => false, :input_html => {:rows => 2} %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <% f.buttons do %>
+    <%= f.commit_button 'Speichern' %>
+  <% end %>
+<% end %>

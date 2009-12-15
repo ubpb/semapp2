@@ -1,0 +1,33 @@
+<div class="file">
+  <div class="title">
+    <%= h(entry.title) %>
+  </div>
+
+  <% if entry.description.present? %>
+    <div class="description">
+      <%= textilize(entry.description) %>
+    </div>
+  <% end %>
+
+  <% if entry.attachments.present? %>
+    <ul class="attachment">
+      <% entry.attachments.each do |a| %>
+        <li class="attachment">
+          <div class="title">
+            <%= h(a.title) %>
+          </div>
+
+          <% if a.description.present? %>
+            <div class="description">
+              <%= textilize(a.description) %>
+            </div>
+          <% end %>
+
+          <div class="download-link">
+            <%= link_to 'Datei herunterladen', a.attachable.url %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
