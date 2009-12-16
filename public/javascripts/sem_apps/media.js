@@ -199,6 +199,14 @@
       editEntry(item, url);
     });
 
+    $(".item").live("dblclick", function(event) {
+      event.preventDefault();
+      var item = $(this);
+      var url  = $(this).find(".toolbar .edit-entry-action").attr("href");
+
+      editEntry(item, url);
+    })
+
     /** If the user clicks the link to delete an antry */
     $(".delete-entry-action").live('click', function(event) {
       event.preventDefault();
