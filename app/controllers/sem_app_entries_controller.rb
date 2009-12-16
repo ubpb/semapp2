@@ -8,12 +8,6 @@ class SemAppEntriesController < ApplicationController
     entry_class = params[:class].classify.constantize
     entry       = entry_class.new
     raise "unknown instance" unless entry.kind_of?(SemAppEntry)
-
-    # If the entry can carry attachments, lets
-    # build an attachment for use within nested forms
-    #if entry.respond_to? :attachments
-    #  entry.attachments.build
-    #end
     
     # The origin_id is the id of the entry that the user
     # wants to create the new entry below
@@ -63,12 +57,6 @@ class SemAppEntriesController < ApplicationController
   def edit
     entry = SemAppEntry.find(params[:id])
 
-    # If the entry can carry attachments, lets
-    # build an attachment for use within nested forms
-    #if entry.respond_to? :attachments
-    #  entry.attachments.build
-    #end
-    
     respond_to do |format|
       format.json do
         render_json_response(:success, :partial => partial_path_for_entry_form(entry), :locals => {:entry => entry})
