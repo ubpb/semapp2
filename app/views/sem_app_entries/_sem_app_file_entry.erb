@@ -1,22 +1,12 @@
 <div class="file">
-  <div class="title">
-    <%= h(entry.title) %>
+  <div class="description">
+    <%= textilize(entry.description) %>
   </div>
 
-  <% if entry.description.present? %>
-    <div class="description">
-      <%= textilize(entry.description) %>
-    </div>
-  <% end %>
-
   <% if entry.attachments.present? %>
-    <ul class="attachment">
+    <ol>
       <% entry.attachments.each do |a| %>
         <li class="attachment">
-          <div class="title">
-            <%= h(a.title) %>
-          </div>
-
           <% if a.description.present? %>
             <div class="description">
               <%= textilize(a.description) %>
@@ -28,6 +18,10 @@
           </div>
         </li>
       <% end %>
-    </ul>
+    </ol>
+  <% else %>
+    <div style="font-style: italic">
+      Keine Dateien vorhanden
+    </div>
   <% end %>
 </div>

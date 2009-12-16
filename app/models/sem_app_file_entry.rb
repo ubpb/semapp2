@@ -4,8 +4,8 @@ class SemAppFileEntry < SemAppEntry
 
   belongs_to :sem_app
   has_many   :attachments, :class_name => '::Attachment', :dependent => :destroy, :foreign_key => 'sem_app_entry_id'
-  accepts_nested_attributes_for :attachments, :allow_destroy => true, :reject_if => proc { |attrs| attrs[:title].blank? }
+  accepts_nested_attributes_for :attachments, :allow_destroy => true, :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
 
-  validates_presence_of :title
+  validates_presence_of :description
 
 end

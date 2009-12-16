@@ -11,9 +11,9 @@ class SemAppEntriesController < ApplicationController
 
     # If the entry can carry attachments, lets
     # build an attachment for use within nested forms
-    if entry.respond_to? :attachments
-      entry.attachments.build
-    end
+    #if entry.respond_to? :attachments
+    #  entry.attachments.build
+    #end
     
     # The origin_id is the id of the entry that the user
     # wants to create the new entry below
@@ -65,9 +65,9 @@ class SemAppEntriesController < ApplicationController
 
     # If the entry can carry attachments, lets
     # build an attachment for use within nested forms
-    if entry.respond_to? :attachments
-      entry.attachments.build
-    end
+    #if entry.respond_to? :attachments
+    #  entry.attachments.build
+    #end
     
     respond_to do |format|
       format.json do
