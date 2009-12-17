@@ -1,7 +1,21 @@
 <div id="media-listing" class="listing pui-collection-view">
-  <% if @sem_app.media(current_user).present? %>
-    <% @sem_app.media(current_user).each do |entry| %>
-      <%= render 'entry', :entry => entry %>
+  <% if @sem_app.media.present? %>
+    <% if @sem_app.is_unlocked_in_session?(session) or @sem_app.is_editable_for?(current_user) %>
+      <% @sem_app.media.each do |entry| %>
+        <%= render 'entry', :entry => entry %>
+      <% end %>
+    <% else %>
+      <div class="pui-panel notice">
+        <p>Texte und Medien sind urheberrechtlich geschützt. Sie müssen
+        diesen eSeminarapparat zunächst mittels der <strong>Kennung für den Lesezugriff</strong>
+        freischalten.</p>
+        <p>Diese Kennung erhalten Sie in der Regel von den Tutoren.</p>
+      </div>
+      <% form_tag unlock_sem_app_path do %>
+        <%= label_tag 'shared_secret', 'Kennung für den Lesezugriff' %>
+        <%= password_field_tag 'shared_secret' %>
+        <%= submit_tag "Freischalten" %>
+      <% end %>
     <% end %>
   <% else %>
     <div id="no-entries-message" class="pui-panel notice align-center">

@@ -1,7 +1,7 @@
 class SemAppsController < ApplicationController
 
   before_filter :require_user,       :only => [:create, :edit, :update] # :new is handled in the view to better guide the user
-  before_filter :load_sem_app,       :only => [:show,   :edit, :update, :destroy]
+  before_filter :load_sem_app,       :only => [:show,   :edit, :update, :destroy, :unlock]
   before_filter :check_access,       :only => [:edit,   :update]
 
   def index
@@ -98,6 +98,17 @@ class SemAppsController < ApplicationController
     else
       render :action => :edit
     end
+  end
+
+  def unlock
+    shared_secret = params[:shared_secret]
+    if shared_secret == @sem_app.shared_secret
+      @sem_app.unlock_in_session(session)
+    else
+      flash[:error] = "Die eingegebene Kennung stimmt leider nicht. Texte und Medien können nicht freigeschaltet werden."
+    end
+
+    redirect_to sem_app_path(@sem_app, :anchor => 'media')
   end
 
   private

@@ -4,20 +4,16 @@ class DownloadController < ApplicationController
     # load the attachment by the given id
     attachment = Attachment.find(params[:id])
 
-    # TODO: security check
+    # check access
     sem_app = attachment.sem_app_entry.sem_app
-    # ... check if the user is allowed to read files from this sem_app
-
-    # check all relevant elements of the path to defend url guessing
-    #request_path = "#{params[:hash1]}/#{params[:hash2]}/#{params[:hash3]}/#{params[:id]}/#{params[:style]}"
-    path = attachment.attachable.path(params[:style])
-    #unless path.include?(request_path)
-    #  render :file => "#{RAILS_ROOT}/public/404.html", :layout => false, :status => 404
-    #  return false
-    #end
+    unless sem_app.is_unlocked_in_session?(session)
+      flash[:error] = 'Zugriff verweigert'
+      redirect_to sem_app_path(sem_app, :anchor => 'media')
+      return false
+    end
 
     # finally send the file
-    send_file(path,
+    send_file(attachment.attachable.path(params[:style]),
       :stream      => true,
       :filename    => attachment.attachable_file_name,
       :disposition => 'attachment',

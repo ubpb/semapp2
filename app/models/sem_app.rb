@@ -95,6 +95,15 @@ class SemApp < ActiveRecord::Base
     user and (user.is_admin? or (user.owns_sem_app?(self) and self.approved?))
   end
 
+  def is_unlocked_in_session?(session)
+    unlocks = session[:unlockes]
+    unlocks.present? and unlocks[self.id.to_s].present?
+  end
+
+  def unlock_in_session(session)
+    session[:unlockes] = {self.id.to_s => true}
+  end
+
   def is_from_current_semester?
     self.semester == Semester.current
   end
