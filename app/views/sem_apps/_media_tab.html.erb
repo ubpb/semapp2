@@ -1,6 +1,6 @@
 <div id="media-listing" class="listing pui-collection-view">
-  <% if @sem_app.media.present? %>
-    <% @sem_app.media.each do |entry| %>
+  <% if @sem_app.media(current_user).present? %>
+    <% @sem_app.media(current_user).each do |entry| %>
       <%= render 'entry', :entry => entry %>
     <% end %>
   <% else %>

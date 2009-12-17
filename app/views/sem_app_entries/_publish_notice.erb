@@ -1,0 +1,5 @@
+<% if entry.to_be_published  %>
+  <div class="pui-panel notice align-center">
+    Dieser Eintrag wird am <%= entry.publish_on.to_s(:short) %> veröffentlicht.
+  </div>
+<% end %>

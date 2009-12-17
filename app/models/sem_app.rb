@@ -65,12 +65,20 @@ class SemApp < ActiveRecord::Base
       })
   end
 
-  def media
-    SemAppEntry.find(
-      :all,
-      :order      => :position,
-      :conditions => ["sem_app_id = :sem_app_id", {:sem_app_id => id}]
-    )
+  def media(user = nil)
+    if user.present? and self.is_editable_for?(user)
+      SemAppEntry.find(
+        :all,
+        :order      => :position,
+        :conditions => ["sem_app_id = :sem_app_id", {:sem_app_id => id}]
+      )
+    else
+      SemAppEntry.find(
+        :all,
+        :order      => :position,
+        :conditions => ["sem_app_id = :sem_app_id and publish_on < :date or publish_on is null", {:sem_app_id => id, :date => Time.new}]
+      )
+    end
   end
 
   def add_ownership(user)

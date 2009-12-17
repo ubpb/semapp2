@@ -209,8 +209,9 @@ class DefaultDb < ActiveRecord::Migration
     ############################################################################
 
     create_table :sem_app_entries do |t|
-      t.belongs_to :sem_app,  :null => false
-      t.integer    :position, :null => true
+      t.belongs_to :sem_app,    :null => false
+      t.integer    :position,   :null => true
+      t.timestamp  :publish_on, :null => true
       t.timestamps
     end
 
