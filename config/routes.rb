@@ -34,7 +34,7 @@ ActionController::Routing::Routes.draw do |map|
   map.ubdok_sem_app_import 'ubdok_sem_app_import', :controller => 'ubdok_import', :action => 'import_sem_app'
   
   # Download (secured download of attachments)
-  map.download 'download/:hash1/:hash2/:hash3/:id/:style', :controller => 'download', :action => 'download'
+  map.download 'download/:id/:style', :controller => 'download', :action => 'download'
 
   # Root Page
   map.root :controller => "home"
