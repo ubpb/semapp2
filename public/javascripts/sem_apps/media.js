@@ -23,7 +23,8 @@
         async: true,
         url: url,
         success: function() {
-          item.slideUp(500);
+          //item.slideUp(500);
+          item.remove();
         }
       });
     }
@@ -60,7 +61,7 @@
         api: true,
         expose: {
           color: '#333',
-          loadSpeed: 550,
+          loadSpeed: 150,
           opacity: 0.6
         },
         onBeforeLoad: function() {
