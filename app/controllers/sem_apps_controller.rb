@@ -1,19 +1,18 @@
 class SemAppsController < ApplicationController
 
-  before_filter :require_user,       :only => [:create, :edit, :update] # :new is handled in the view to better guide the user
-  before_filter :load_sem_app,       :only => [:show,   :edit, :update, :destroy, :unlock]
-  before_filter :check_access,       :only => [:edit,   :update]
+  before_filter :require_user, :only => [:create, :edit, :update] # :new is handled in the view to better guide the user
+  before_filter :load_sem_app, :only => [:show,   :edit, :update, :destroy, :unlock]
+  before_filter :check_access, :only => [:edit,   :update]
 
   def index
     # filter by semster
-    #@semester = Semester.current
-    @semester = Semester.find_by_id(params[:semester][:id]) unless params[:semester].blank?
+    @semester = Semester.find_by_id(params[:semester][:id]) if params[:semester].present? and params[:semester][:id].present?
     # filter by location
-    @location = Location.find_by_id(params[:location][:id]) unless params[:location].blank?
+    @location = Location.find_by_id(params[:location][:id]) if params[:location].present? and params[:location][:id].present?
     # filter by title
-    @title    = params[:title]  unless params[:title].blank?
+    @title    = params[:title]  if params[:title].present?
     # filter by tutors
-    @tutors   = params[:tutors] unless params[:tutors].blank?
+    @tutors   = params[:tutors] if params[:tutors].present?
 
     # build the filter conditions
     conditions = Condition.block do |c|

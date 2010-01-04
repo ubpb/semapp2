@@ -27,10 +27,12 @@
       <ol>
         <li class="commit">
           <%= submit_tag 'Filtern' %>
-          <% if @filtered %>
-            <%= link_to 'Filter zurücksetzen', sem_apps_path %>
-          <% end %>
         </li>
+        <% if @filtered %>
+          <li>
+            <%= link_to 'Filter zurücksetzen', sem_apps_path %>
+          </li>
+        <% end %>
       </ol>
     </fieldset>
   <% end %>
