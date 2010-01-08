@@ -193,6 +193,18 @@ CREATE TABLE sem_app_file_entries (
   description text NOT NULL
 ) INHERITS (sem_app_entries);
 
+CREATE TABLE sem_app_monograph_reference_entries (
+  author character varying NOT NULL,
+  title text NOT NULL,
+  subtitle text,
+  "year" character varying,
+  place character varying,
+  publisher character varying,
+  edition character varying,
+  url character varying,
+  isbn character varying
+) INHERITS (sem_app_entries);
+
 CREATE TABLE attachments (
   id serial NOT NULL PRIMARY KEY,
   sem_app_entry_id integer NOT NULL, --REFERENCES sem_app_entries(id) DEFERRABLE INITIALLY DEFERRED NOT NULL,
