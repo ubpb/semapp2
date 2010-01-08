@@ -8,46 +8,10 @@
       <%= f.input :publish_on,  :label => 'Veröffentlichen am', :required => false %>
     <% end %>
 
-    <% f.inputs :name => 'Datei(en)', :id => 'attachment-listing' do %>
-      <% if entry.new_record? and entry.attachments.blank? %>
-        <% f.semantic_fields_for :attachments, Attachment.new do |a| %>
-          <%= render 'attachment', :form => a %>
-        <% end %>
-      <% else %>
-        <% f.semantic_fields_for :attachments do |a| %>
-          <%= render 'attachment', :form => a %>
-        <% end %>
-      <% end %>
-    <% end %>
-
-    <div style="padding: 0 0 15px 0">
-      <a id="add-attachment-action" href="#" class="pui-button">Eine (weitere) Datei hochladen</a>
-    </div>
-    <div id="new-attachment" class="hidden">
-      <% f.semantic_fields_for :attachments, Attachment.new, :child_index => 'NEW_RECORD' do |a| %>
-        <%= render 'attachment', :form => a %>
-      <% end %>
-    </div>
+      <%= render 'attachment_fields', :form => f, :entry => entry %>
   </div>
 
   <% f.buttons do %>
     <%= f.commit_button 'Speichern' %>
   <% end %>
 <% end %>
-
-<script type="text/javascript">
-  (function($) {
-
-    $(function() {
-
-      $("#add-attachment-action").click(function(e) {
-        e.preventDefault();
-        var record = $("#new-attachment").html();
-        record = record.replace(/NEW_RECORD/g, new Date().getTime());
-        $("#attachment-listing ol").append(record);
-      });
-
-    });
-
-  })(jQuery);
-</script>
