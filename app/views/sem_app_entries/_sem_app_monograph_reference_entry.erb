@@ -11,4 +11,6 @@
     <%= link_to 'Amazon.de', "http://www.amazon.de/dp/#{entry.isbn.gsub('-', '')}" %>,
     <%= link_to 'Google Books', "http://books.google.com/books?as_isbn=#{entry.isbn.gsub('-', '')}" %>
   <% end %>
+
+  <%= render 'sem_app_entries/attachments', :entry => entry %>
 </div>

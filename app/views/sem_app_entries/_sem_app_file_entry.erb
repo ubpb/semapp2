@@ -5,25 +5,5 @@
     <%= textilize(entry.description) %>
   </div>
 
-  <% if entry.attachments.present? %>
-    <ol>
-      <% entry.attachments.each do |a| %>
-        <li class="attachment">
-          <% if a.description.present? %>
-            <div class="description">
-              <%= textilize(a.description) %>
-            </div>
-          <% end %>
-
-          <div class="download-link">
-            <%= link_to 'Datei herunterladen', a.attachable.url %>
-          </div>
-        </li>
-      <% end %>
-    </ol>
-  <% else %>
-    <div style="font-style: italic">
-      Keine Dateien vorhanden
-    </div>
-  <% end %>
+  <%= render 'sem_app_entries/attachments', :entry => entry %>
 </div>
