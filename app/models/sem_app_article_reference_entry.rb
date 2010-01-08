@@ -1,5 +1,5 @@
-class SemAppMonographReferenceEntry < SemAppEntry
-  set_table_name :sem_app_monograph_reference_entries
+class SemAppArticleReferenceEntry < SemAppEntry
+  set_table_name :sem_app_article_reference_entries
 
   belongs_to :sem_app
   has_many   :attachments, :class_name => '::Attachment', :dependent => :destroy, :foreign_key => 'sem_app_entry_id'
@@ -14,10 +14,11 @@ class SemAppMonographReferenceEntry < SemAppEntry
     out << year_to_s
     out << title_to_s
     out << subtitle_to_s
-    out << edition_to_s
-    out << place_to_s
-    out << publisher_to_s
-    out << isbn_to_s
+    out << journal_to_s
+    out << volume_to_s
+    out << issue_to_s
+    out << pages_to_s
+    out << issn_to_s
     out.ends_with?(".") ? out : "#{out}."
   end
 
@@ -39,36 +40,24 @@ class SemAppMonographReferenceEntry < SemAppEntry
     subtitle.present? ? ". #{subtitle.strip}" : ""
   end
 
-  def edition_to_s
-    if edition.present?
-      return (edition.to_i.to_s == edition) ? ". Aufl. #{edition.strip}" : ". #{edition.strip}"
-    else
-      return ""
-    end
+  def journal_to_s
+    journal.present? ? ". In: #{journal.strip}" : ""
   end
 
-  def place_to_s
-    if place.present?
-      return ". #{place.strip}"
-    else
-      return ""
-    end
+  def volume_to_s
+    volume.present? ? ", Jg. #{volume.strip}" : ""
   end
 
-  def publisher_to_s
-    if publisher.present?
-      return ": #{publisher.strip}"
-    else
-      return ""
-    end
+  def issue_to_s
+    issue.present? ? ", H. #{issue.strip}" : ""
   end
 
-  def isbn_to_s
-    if isbn.present?
-      return ", ISBN #{isbn.strip}"
-    else
-      return ""
-    end
+  def pages_to_s
+    pages.present? ? ", S. #{pages.strip.gsub(/\s/, '')}" : ""
+  end
+
+  def issn_to_s
+    issn.present? ? ", ISSN #{issn.strip}" : ""
   end
 
 end
