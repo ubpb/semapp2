@@ -277,17 +277,19 @@ img {
   background-color: #e3e3e3;
 }
 
-.sem-app .listing.pui-collection-view .entry .headline {
-
-}
-
-.sem-app .listing.pui-collection-view .entry .text {
-
-}
-
+.sem-app .listing.pui-collection-view .entry ol,
+.sem-app .listing.pui-collection-view .entry ul,
+.sem-app .listing.pui-collection-view .entry p,
+.sem-app .listing.pui-collection-view .entry h1,
+.sem-app .listing.pui-collection-view .entry h2,
+.sem-app .listing.pui-collection-view .entry h3,
+.sem-app .listing.pui-collection-view .entry h4 { margin: 7px 0 }
+.sem-app .listing.pui-collection-view .entry .headline {}
+.sem-app .listing.pui-collection-view .entry .text {}
 .sem-app .listing.pui-collection-view .entry .file {}
-.sem-app .listing.pui-collection-view .entry .file .description { }
+.sem-app .listing.pui-collection-view .entry .file .description {}
 .sem-app .listing.pui-collection-view .entry .file .download-link { margin-top: 10px; }
+.sem-app .listing.pui-collection-view .entry .bibref { margin: 7px 0 }
 
 
 .sem-app .listing .dropdown, .dropdown ul { list-style: none; display: inline-block; }
