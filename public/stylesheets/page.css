@@ -283,12 +283,16 @@ img {
 .sem-app .listing.pui-collection-view .entry h2,
 .sem-app .listing.pui-collection-view .entry h3,
 .sem-app .listing.pui-collection-view .entry h4 { margin: 7px 0 }
-.sem-app .listing.pui-collection-view .entry .headline {}
+.sem-app .listing.pui-collection-view .entry .headline { margin-top: 20px }
 .sem-app .listing.pui-collection-view .entry .text {}
 .sem-app .listing.pui-collection-view .entry .file {}
-.sem-app .listing.pui-collection-view .entry .file .description {}
-.sem-app .listing.pui-collection-view .entry .file .download-link { margin-top: 10px; }
 .sem-app .listing.pui-collection-view .entry .bibref { margin: 7px 0 }
+.sem-app .listing.pui-collection-view .entry .attachments {}
+.sem-app .listing.pui-collection-view .entry .attachments .header { font-size: 110%; font-weight: bolder }
+.sem-app .listing.pui-collection-view .entry .attachments-listing { list-style: none; margin: 0; padding: 0 }
+.sem-app .listing.pui-collection-view .entry .attachments-listing .attachment { margin: 0 0 1px 0; padding: 5px; display: block; background-color: #eee }
+.sem-app .listing.pui-collection-view .entry .attachments-listing .attachment .description {}
+.sem-app .listing.pui-collection-view .entry .attachments-listing .attachment .download-link {  }
 
 
 .sem-app .listing .dropdown, .dropdown ul { list-style: none; display: inline-block; }
