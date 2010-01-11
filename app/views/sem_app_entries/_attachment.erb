@@ -1,7 +1,7 @@
 <div class="item">
   <% unless form.object.new_record? %>
-    <%= form.input '_destroy', :label => 'Diese Datei löschen?', :as => :boolean %>
+    <%= form.input '_destroy', :label => 'Diese Datei löschen?', :as => :boolean, :required => false %>
   <% end %>
-  <%= form.input :attachable,  :label => 'Datei' %>
+  <%= form.input :attachable,  :label => 'Datei', :required => false %>
   <%= form.input :description, :label => 'Beschreibung', :required => false, :input_html => {:rows => 1} %>
 </div>
