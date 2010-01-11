@@ -48,27 +48,15 @@ class SemAppMonographReferenceEntry < SemAppEntry
   end
 
   def place_to_s
-    if place.present?
-      return ". #{place.strip}"
-    else
-      return ""
-    end
+    place.present? ? ". #{place.strip}" : ""
   end
 
   def publisher_to_s
-    if publisher.present?
-      return ": #{publisher.strip}"
-    else
-      return ""
-    end
+    publisher.present? ? ": #{publisher.strip}" : ""
   end
 
   def isbn_to_s
-    if isbn.present?
-      return ", ISBN #{isbn.strip}"
-    else
-      return ""
-    end
+    isbn.present? ? ", ISBN #{isbn.strip}" : ""
   end
 
 end

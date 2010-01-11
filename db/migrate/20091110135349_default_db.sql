@@ -218,6 +218,24 @@ CREATE TABLE sem_app_article_reference_entries (
   issn character varying
 ) INHERITS (sem_app_entries);
 
+CREATE TABLE sem_app_collected_article_reference_entries (
+  source_editor character varying NOT NULL,
+  source_title text,
+  source_subtitle text,
+  source_year character varying,
+  source_place character varying,
+  source_publisher character varying,
+  source_edition character varying,
+  source_series_title text,
+  source_series_volume character varying,
+  author character varying,
+  title text,
+  subtitle text,
+  volume character varying,
+  pages character varying,
+  url character varying
+) INHERITS (sem_app_entries);
+
 CREATE TABLE attachments (
   id serial NOT NULL PRIMARY KEY,
   sem_app_entry_id integer NOT NULL, --REFERENCES sem_app_entries(id) DEFERRABLE INITIALLY DEFERRED NOT NULL,
