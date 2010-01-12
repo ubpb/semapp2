@@ -21,6 +21,10 @@ class Aleph::Connector
     raise "search_base option missing" unless @@search_base.present?
   end
 
+  def authenticate(ils_account_no, verification)
+    do_authenticate(ils_account_no, verification, @library)
+  end
+
   def get_lendings(ils_account_no)
     load_lendings(ils_account_no, @library)
   end
@@ -43,6 +47,17 @@ class Aleph::Connector
   end
 
   private
+
+  def do_authenticate(ils_account_no, verification, library)
+    url  = "#{@base_url}?op=bor-auth&bor_id=#{ils_account_no}&verification=#{verification}&library=#{library}"
+    data = load_url(url)
+
+    if data.find_first('/bor-auth/error')
+      raise Aleph::AuthenticationError, "Authentication failed"
+    else
+      return Aleph::User.new(data.find_first('/bor-auth'))
+    end
+  end
 
   ##
   # Returns a list of Aleph document numbers that are
@@ -115,4 +130,7 @@ class Aleph::Connector
     XML::Parser.string(Net::HTTP.get_response(URI.parse(url)).body).parse
   end
 
+end
+
+class Aleph::AuthenticationError < RuntimeError
 end
