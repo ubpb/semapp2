@@ -19,9 +19,21 @@ module Devise #:nodoc:
       # Authenticate user with Facebook Connect.
       #
       def authenticate!
-        if resource = mapping.to.authenticate(params[scope])
-          success!(resource)
-        else
+        begin
+          if resource = mapping.to.authenticate(params[scope])
+            success!(resource)
+          else
+            fail!(:invalid)
+          end
+        rescue Aleph::AuthenticationError
+          fail!(:invalid)
+        rescue Aleph::UnsupportedAccountTypeError
+          fail!(:aleph_unsupported)
+        rescue Aleph::AccountLockedError
+          fail!(:aleph_account_locked)
+        rescue Exception => e
+          puts e.message
+          puts e.backtrace
           fail!(:invalid)
         end
       end

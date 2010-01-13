@@ -19,17 +19,9 @@ module Devise #:nodoc:
       module ClassMethods
 
         def authenticate(attributes={})
-          begin
-            aleph = Aleph::Connector.new
-            aleph_user = aleph.authenticate(attributes[:login].upcase, attributes[:password])
-            create_or_update_aleph_user!(attributes[:login].upcase, aleph_user)
-          rescue Aleph::AuthenticationError
-            return nil
-          rescue Exception => e
-            puts e.message
-            puts e.backtrace
-            return nil
-          end
+          aleph = Aleph::Connector.new
+          aleph_user = aleph.authenticate(attributes[:login].upcase, attributes[:password])
+          create_or_update_aleph_user!(attributes[:login].upcase, aleph_user)
         end
 
         protected

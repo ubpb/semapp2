@@ -10,36 +10,44 @@ module Aleph #:nodoc:
 
     include Aleph::XmlUtils
 
-    @@base_url    = 'http://localhost/X' # The Alpeh base url
-    @@library     = 'lib50'              # The library to use
-    @@search_base = 'lib01'              # The Aleph search base
+    @@base_url           = 'http://localhost/X'
+    @@library            = 'lib50'
+    @@search_base        = 'lib01' 
+    @@allowed_user_types = [/^PA.+/, /^PS.+/]
+    @@allowed_ban_codes  = [/^00$/]
 
-    cattr_accessor :base_url, :library, :search_base
+    cattr_accessor :base_url, :library, :search_base, :allowed_user_types, :allowed_ban_codes
 
     def initialize(options = {})
-      @base_url    = options[:base_url].present?    ? options[:base_url]    : @@base_url
-      @library     = options[:library].present?     ? options[:library]     : @@library
-      @search_base = options[:search_base].present? ? options[:search_base] : @@search_base
+      @base_url           = options[:base_url].present?           ? options[:base_url]           : @@base_url
+      @library            = options[:library].present?            ? options[:library]            : @@library
+      @search_base        = options[:search_base].present?        ? options[:search_base]        : @@search_base
+      @allowed_user_types = options[:allowed_user_types].present? ? options[:allowed_user_types] : @@allowed_user_types
+      @allowed_ban_codes  = options[:allowed_ban_codes].present?  ? options[:allowed_ban_codes]  : @@allowed_ban_codes
 
-      raise "base_url option missing"    unless @base_url.present?
-      raise "library option missing"     unless @library.present?
-      raise "search_base option missing" unless @search_base.present?
+      [@allowed_user_types, @allowed_ban_codes].each do |o|
+        o.instance_eval do
+          def allows?(s)
+            self.map{|m| m.match(s)}.select{|x|x}.length > 0
+          end
+        end
+      end
     end
 
     def authenticate(ils_account_no, verification)
-      do_authenticate(ils_account_no, verification, @library)
+      do_authenticate(ils_account_no, verification)
     end
 
     def get_lendings(ils_account_no)
-      load_lendings(ils_account_no, @library)
+      load_lendings(ils_account_no)
     end
 
     def get_record(doc_number)
-      load_record(doc_number, @search_base)
+      load_record(doc_number)
     end
 
     def get_item(doc_number)
-      load_item(doc_number, @search_base)
+      load_item(doc_number)
     end
 
     def find(term)
@@ -53,14 +61,24 @@ module Aleph #:nodoc:
 
     private
 
-    def do_authenticate(ils_account_no, verification, library)
-      url  = "#{@base_url}?op=bor-auth&bor_id=#{ils_account_no}&verification=#{verification}&library=#{library}"
+    def do_authenticate(ils_account_no, verification)
+      url  = "#{@base_url}?op=bor-auth&bor_id=#{ils_account_no}&verification=#{verification}&library=#{@library}"
       data = load_url(url)
 
       if data.find_first('/bor-auth/error')
         raise Aleph::AuthenticationError, "Authentication failed"
       else
-        return Aleph::User.new(data.find_first('/bor-auth'))
+        user = Aleph::User.new(data.find_first('/bor-auth'))
+
+        unless @allowed_user_types.allows?(user.status)
+          raise Aleph::UnsupportedAccountTypeError, "Authentication not allowed. Wrong user type."
+        end
+        
+        unless user.ban_codes.all?{|code| @allowed_ban_codes.allows?(code)}
+          raise Aleph::AccountLockedError, "Authentication not allowed. Your account is locked."
+        end
+
+        return user
       end
     end
 
@@ -69,8 +87,8 @@ module Aleph #:nodoc:
     # currently lent by the given ils account number in
     # the given library.
     #
-    def load_lendings(ils_account_no, library)
-      url  = "#{@base_url}?op=bor-info&bor_id=#{ils_account_no}&library=#{library}"
+    def load_lendings(ils_account_no)
+      url  = "#{@base_url}?op=bor-info&bor_id=#{ils_account_no}&library=#{@library}"
       data = load_url(url)
 
       lendings = []
@@ -84,15 +102,15 @@ module Aleph #:nodoc:
     ##
     # Returns the Aleph record with the given document number.
     #
-    def load_record(doc_number, search_base)
-      url  = "#{@base_url}?op=find-doc&doc_num=#{doc_number}&base=#{search_base}"
+    def load_record(doc_number)
+      url  = "#{@base_url}?op=find-doc&doc_num=#{doc_number}&base=#{@search_base}"
       data = load_url(url)
       node = data.find_first('//find-doc/record')
       return Aleph::Record.new(doc_number, node) if node.present?
     end
 
-    def load_item(doc_number, search_base)
-      url  = "#{@base_url}?op=item-data&doc_num=#{doc_number}&base=#{search_base}"
+    def load_item(doc_number)
+      url  = "#{@base_url}?op=item-data&doc_num=#{doc_number}&base=#{@search_base}"
       data = load_url(url)
       node = data.find_first('//item-data/item')
       return Aleph::Item.new(doc_number, node) if node.present?
@@ -142,4 +160,17 @@ module Aleph #:nodoc:
   #
   class AuthenticationError < RuntimeError
   end
+
+  ##
+  # TODO
+  #
+  class UnsupportedAccountTypeError < RuntimeError
+  end
+
+  ##
+  # TODO
+  #
+  class AccountLockedError < RuntimeError
+  end
+  
 end

@@ -56,5 +56,17 @@ module Aleph
       content_from_node(@data, "//z304-email-address")
     end
 
+    def status
+      content_from_node(@data, "//z305-bor-status")
+    end
+
+    def ban_codes
+      [
+        content_from_node(@data, "//z303-delinq-1"),
+        content_from_node(@data, "//z303-delinq-2"),
+        content_from_node(@data, "//z303-delinq-3")
+      ]
+    end
+
   end
 end
