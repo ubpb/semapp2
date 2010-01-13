@@ -1,8 +1,9 @@
 class SemAppsController < ApplicationController
 
   before_filter :authenticate_user!, :only => [:create, :edit, :update] # :new is handled in the view to better guide the user
-  before_filter :load_sem_app, :only => [:show,   :edit, :update, :destroy, :unlock]
-  before_filter :check_access, :only => [:edit,   :update]
+  before_filter :load_sem_app, :only => [:show, :edit, :update, :destroy, :unlock]
+  before_filter :check_lecturer, :only => [:create]
+  before_filter :check_access, :only => [:edit, :update]
 
   def index
     # filter by semster
@@ -49,16 +50,10 @@ class SemAppsController < ApplicationController
     @sem_app = SemApp.new
   end
 
-  # TODO: Cherrypick the values for security reasons
   def create
-    options = params[:sem_app]
-    # Protect some attributes
-    options.merge!({
-        :approved => false,
-        :creator  => current_user
-      })
-    # Build a new semapp
-    @sem_app = SemApp.new(options)
+    @sem_app = SemApp.new(params[:sem_app])
+    @sem_app.creator = current_user
+
     # Finally create the semapp and add the ownership
     SemApp.transaction do
       if @sem_app.save and @sem_app.add_ownership(current_user)
@@ -123,6 +118,14 @@ class SemAppsController < ApplicationController
 
   def check_access
     unless @sem_app.is_editable_for?(current_user)
+      flash[:error] = "Zugriff verweigert"
+      redirect_to sem_apps_path
+      return false
+    end
+  end
+
+  def check_lecturer
+    unless current_user.has_authority?(Authority::LECTURER_ROLE)
       flash[:error] = "Zugriff verweigert"
       redirect_to sem_apps_path
       return false

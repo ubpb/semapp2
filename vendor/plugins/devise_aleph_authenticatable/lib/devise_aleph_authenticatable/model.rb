@@ -16,12 +16,18 @@ module Devise #:nodoc:
         end
       end
 
+      def on_successfull_authentication(aleph_user)
+        # may be overridden in the app
+      end
+
       module ClassMethods
 
         def authenticate(attributes={})
           aleph = Aleph::Connector.new
           aleph_user = aleph.authenticate(attributes[:login].upcase, attributes[:password])
-          create_or_update_aleph_user!(attributes[:login].upcase, aleph_user)
+          user = create_or_update_aleph_user!(attributes[:login].upcase, aleph_user)
+          user.try(:on_successfull_authentication, aleph_user)
+          return user
         end
 
         protected

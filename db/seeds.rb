@@ -4,25 +4,15 @@
 SemApp.transaction do
 
   Authority.create({:name => Authority::ADMIN_ROLE})
-  admin_role = Authority.find_by_name(Authority::ADMIN_ROLE)
+  Authority.create({:name => Authority::LECTURER_ROLE})
 
+  # Default user
   default_user = User.create({
       :login => 'PA06003114',
       :name  => 'René Sprotte',
       :email => 'r.sprotte@ub.uni-paderborn.de'
     })
-  default_user.authorities << admin_role if admin_role
-
-#  default_user = User.create({
-#      :login                 => 'john.doe',
-#      :password              => 'password',
-#      :password_confirmation => 'password',
-#      :email                 => 'john.doe@example.com',
-#      :firstname             => 'John',
-#      :lastname              => 'Doe',
-#      :active                => true,
-#      :approved              => true
-#    })
+  default_user.authorities << Authority.find_by_name(Authority::ADMIN_ROLE)
 
   # Semesters
   Semester.create({:title => 'Sommersemester 2010', :position => 0, :current => false})

@@ -11,6 +11,17 @@ class User < ActiveRecord::Base
   validates_presence_of :login
   validates_presence_of :name
 
+
+  #
+  # Devise (Aleph) callback
+  #
+  def on_successfull_authentication(aleph_user)
+    if aleph_user.status.match(/^PA.+/)
+      add_authority(Authority::LECTURER_ROLE)
+    end
+  end
+
+
   #
   # Checks for the ROLE_ADMIN authority
   #
@@ -26,6 +37,12 @@ class User < ActiveRecord::Base
       return true if a.name == name
     end
     return false
+  end
+
+  def add_authority(name)
+    unless has_authority?(name)
+      authorities << Authority.find_by_name(name)
+    end
   end
 
   #

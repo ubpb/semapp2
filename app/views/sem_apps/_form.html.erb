@@ -22,14 +22,10 @@
 
   <% f.inputs :name => 'Zugriffsschutz' do %>
     <%= f.input :shared_secret, :label => 'Kennung für den Lesezugriff',
-      :hint => '''
-    Bitte vergeben Sie eine Kennung für den Lesezugriff auf die elektronischen
-    Volltexte. Jeder der dieses Passwort kennt hat damit Lesezugriff auf die
+      :hint => "Bitte vergeben Sie eine Kennung für den Lesezugriff auf die elektronischen Volltexte.
+    Jeder der diese Kennung kennt hat damit Lesezugriff auf die
     in diesem eSeminarapparat hinterlegten Dateien. Sie sollten dieses Passwort
-    nur dem begrenzten Teilnehmerkreis Ihrer Veranstaltung bekannt machen.
-    (In einer späteren Programmversion werden ihre Studierenden sich
-    zusätzlich mittels ihrer persönlichen IMT Kennung anmelden können.)
-    ''' %>
+    nur dem begrenzten Teilnehmerkreis Ihrer Veranstaltung bekannt machen." %>
   <% end %>
 
   <% f.buttons do %>

@@ -11,7 +11,8 @@
 
 class Authority < ActiveRecord::Base
 
-  ADMIN_ROLE = 'ROLE_ADMIN'
+  ADMIN_ROLE    = 'ROLE_ADMIN'
+  LECTURER_ROLE = 'ROLE_LECTURER'
 
   validates_presence_of   :name
   validates_uniqueness_of :name
