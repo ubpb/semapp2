@@ -25,15 +25,15 @@ module Devise #:nodoc:
         def authenticate(attributes={})
           aleph = Aleph::Connector.new
           aleph_user = aleph.authenticate(attributes[:login].upcase, attributes[:password])
-          user = create_or_update_aleph_user!(attributes[:login].upcase, aleph_user)
+          user = create_or_update_aleph_user!(aleph_user)
           user.try(:on_successfull_authentication, aleph_user)
           return user
         end
 
         protected
 
-        def create_or_update_aleph_user!(login, aleph_user)
-          user = self.find_by_login(login)
+        def create_or_update_aleph_user!(aleph_user)
+          user = self.find_by_login(aleph_user.user_id)
           user.present? ? update_user!(user, aleph_user) : create_user!(aleph_user)
         end
 
