@@ -16,9 +16,8 @@ Rails::Initializer.run do |config|
   
   # Specify gems that this application depends on and have them installed with rake gems:install
   config.gem 'RedCloth',      :version => '4.2.2',   :lib => 'RedCloth'
-  config.gem 'authlogic',     :version => '2.1.3',   :lib => 'authlogic'
+  config.gem 'devise',        :version => '0.8.1',   :lib => 'devise'
   config.gem 'libxml-ruby',   :version => '1.1.3',   :lib => 'libxml'
-  config.gem 'bcrypt-ruby',   :version => '2.1.2',   :lib => 'bcrypt'
   config.gem 'paperclip',     :version => '2.3.1.1', :lib => 'paperclip'
   config.gem 'will_paginate', :version => '2.3.11',  :lib => 'will_paginate'
   config.gem 'acts_as_list',  :version => '0.1.2',   :lib => 'acts_as_list'

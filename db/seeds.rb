@@ -6,35 +6,30 @@ SemApp.transaction do
   Authority.create({:name => Authority::ADMIN_ROLE})
   admin_role = Authority.find_by_name(Authority::ADMIN_ROLE)
 
-  admin_user = User.create({
-      :login                 => 'admin',
-      :password              => 'password',
-      :password_confirmation => 'password',
-      :email                 => 'joe.blogs@example.com',
-      :firstname             => 'Joe',
-      :lastname              => 'Blogs',
-      :active                => true,
-      :approved              => true
-    })
-  admin_user.authorities << admin_role if admin_role
-
   default_user = User.create({
-      :login                 => 'john.doe',
-      :password              => 'password',
-      :password_confirmation => 'password',
-      :email                 => 'john.doe@example.com',
-      :firstname             => 'John',
-      :lastname              => 'Doe',
-      :active                => true,
-      :approved              => true
+      :login => 'PA06003114',
+      :name  => 'René Sprotte',
+      :email => 'r.sprotte@ub.uni-paderborn.de'
     })
+  default_user.authorities << admin_role if admin_role
+
+#  default_user = User.create({
+#      :login                 => 'john.doe',
+#      :password              => 'password',
+#      :password_confirmation => 'password',
+#      :email                 => 'john.doe@example.com',
+#      :firstname             => 'John',
+#      :lastname              => 'Doe',
+#      :active                => true,
+#      :approved              => true
+#    })
 
   # Semesters
-  Semester.create({:title => 'Sommersemester 2010',      :position => 0, :current => false})
+  Semester.create({:title => 'Sommersemester 2010', :position => 0, :current => false})
   default_semester = Semester.create({:title => 'Wintersemester 2009/2010', :position => 1, :current => true})
 
   # Locations
-  default_location = Location.create({:title => 'Fachbibliothek für Kunstwissenschaften',                   :position => 0})
+  default_location = Location.create({:title => 'Fachbibliothek für Kunstwissenschaften', :position => 0})
   Location.create({:title => 'Fachbibliothek für Geisteswissenschaften',                 :position => 1})
   Location.create({:title => 'Fachbibliothek für Naturwissenschaften',                   :position => 2})
   Location.create({:title => 'Fachbibliothek für Sprach- und Literaturwissenschaften',   :position => 3})

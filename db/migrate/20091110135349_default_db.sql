@@ -3,33 +3,13 @@
 --
 CREATE TABLE users (
   id serial NOT NULL PRIMARY KEY,
-  authid character varying(255) NOT NULL,
-  active boolean DEFAULT false NOT NULL,
-  approved boolean DEFAULT false,
-  firstname character varying(255) NOT NULL,
-  lastname character varying(255) NOT NULL,
   login character varying(255) NOT NULL,
-  email character varying(255) NOT NULL,
-  phone character varying(255),
-  department character varying(255),
-  crypted_password character varying(255) NOT NULL,
-  password_salt character varying(255) NOT NULL,
-  persistence_token character varying(255) NOT NULL,
-  single_access_token character varying(255) NOT NULL,
-  perishable_token character varying(255) NOT NULL,
-  login_count integer DEFAULT 0 NOT NULL,
-  failed_login_count integer DEFAULT 0 NOT NULL,
-  last_request_at timestamp without time zone,
-  current_login_at timestamp without time zone,
-  last_login_at timestamp without time zone,
-  current_login_ip character varying(255),
-  last_login_ip character varying(255)
+  "name" character varying(255) NOT NULL,
+  email character varying(255) NULL
 );
 
-CREATE UNIQUE INDEX index_users_on_authid_and_login ON users(authid, login);
-CREATE INDEX index_users_on_login ON users(login);
+CREATE UNIQUE INDEX index_users_on_login ON users(login);
 CREATE INDEX index_users_on_email ON users(email);
-
 
 --
 -- Sessions

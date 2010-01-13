@@ -2,33 +2,10 @@
 
 <div class="pui-tabs-wrapper">
   <ul class="pui-tabs">
-    <li><a href="#account">Mein Login</a></li>
     <li><a href="#apps">Meine eSeminarapparate</a></li>
   </ul>
 
   <div class="pui-tab-panes">
-
-    <div id="my-account-panel">
-      <% unless @user.externally_managed? %>
-        <div class="pui-panel align-right">
-          <%= link_to 'Login Bearbeiten', edit_user_path, :class => 'pui-button' %>
-          <%= link_to 'Mein Passwort ändern', password_user_path, :class => 'pui-button' %>
-        </div>
-      <% end %>
-
-      <div class="pui-collection-view labeled">
-        <%= labeled_item :label => 'Login', :content => @user.login %>
-        <%= labeled_item :label => 'Name', :content => h(@user.full_name) %>
-        <%= labeled_item :label => 'E-Mail', :content => h(@user.email) %>
-      </div>
-
-      <% if @user.externally_managed? %>
-        <div>
-          <span style="font-size: 90%; font-style: italic">Ihr Login wird extern verwaltet. Sie Können diese Daten hier nicht bearbeiten.</span>
-        </div>
-      <% end %>
-    </div>
-
     <div id="my-semapps-panel">
       <% if @user.ownerships.present? %>
         <div class="pui-collection-view">

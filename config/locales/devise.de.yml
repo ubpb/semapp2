@@ -1,0 +1,10 @@
+de:
+  devise:
+    sessions:
+      signed_in: 'Sie wurden erfolgreich angemeldet.'
+      signed_out: 'Sie wurden erfolgreich abgemeldet.'
+      unauthenticated: 'Anmeldung erforderlich.'
+      invalid: 'Anmeldung fehlgeschlagen. Überprüfen Sie Login und Passwort.'
+      timeout: 'Ihre Session ist abgelaufen. Bitte melden Sie sich erneut an um weiterzumachen.'
+
+

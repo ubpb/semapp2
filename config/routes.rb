@@ -16,12 +16,10 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   # Login / Logout
-  map.resource :user_sessions
-  map.login 'login', :controller => 'user_sessions', :action => 'new'
-  map.logout 'logout', :controller => 'user_sessions', :action => 'destroy'
+  map.devise_for :user, :path_names => { :sign_in => 'login', :sign_out => 'logout' }
 
-  # User registration / User profiles
-  map.resource :user, :except => [:index, :destroy], :collection => {:password => :get, :change_password => :put}
+  # User profile
+  map.resource :user, :only => [:show]
 
   # Sem Apps
   map.resources :sem_apps, :as => 'apps', :controller => 'sem_apps', :except => [:destroy], :member => {:unlock => :post} do |sem_app|

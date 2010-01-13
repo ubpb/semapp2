@@ -1,6 +1,6 @@
 class SemAppsController < ApplicationController
 
-  before_filter :require_user, :only => [:create, :edit, :update] # :new is handled in the view to better guide the user
+  before_filter :authenticate_user!, :only => [:create, :edit, :update] # :new is handled in the view to better guide the user
   before_filter :load_sem_app, :only => [:show,   :edit, :update, :destroy, :unlock]
   before_filter :check_access, :only => [:edit,   :update]
 

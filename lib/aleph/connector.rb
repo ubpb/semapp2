@@ -16,9 +16,9 @@ class Aleph::Connector
     @library     = options[:library].present?     ? options[:library]     : @@library
     @search_base = options[:search_base].present? ? options[:search_base] : @@search_base
 
-    raise "base_url option missing"    unless @@base_url.present?
-    raise "library option missing"     unless @@library.present?
-    raise "search_base option missing" unless @@search_base.present?
+    raise "base_url option missing"    unless @base_url.present?
+    raise "library option missing"     unless @library.present?
+    raise "search_base option missing" unless @search_base.present?
   end
 
   def authenticate(ils_account_no, verification)

@@ -13,3 +13,8 @@
     <%= flash[:error] %>
   </div>
 <% end %>
+<% if flash[:failure].present? %>
+  <div class="pui-panel error align-center">
+    <%= flash[:failure] %>
+  </div>
+<% end %>

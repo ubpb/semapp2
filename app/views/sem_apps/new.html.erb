@@ -1,7 +1,7 @@
 <% unless current_user %>
   <div class="pui-panel notice align-center">
     Um einen eSeminarapparat zu beantragen, müssen Sie sich zunächst anmelden.
-    <%= link_to('&raquo; Zur Anmeldung', login_path) %>
+    <%= link_to('&raquo; Zur Anmeldung', new_user_session_path) %>
   </div>
 <% else %>
   <h2 class="section">Einen neuen eSeminarapparat beantragen</h2>

@@ -1,0 +1,26 @@
+<div class="pui-tabs-wrapper">
+  <ul class="pui-tabs">
+    <li><a href="#bib">Anmeldung</a></li>
+  </ul>
+
+  <div class="pui-tab-panes">
+    <div id="bib-login-panel">
+      <% semantic_form_for resource_name, resource, :url => session_path(resource_name) do |f| %>
+        <% f.inputs :name => "Anmelden (mit Bibliothekslogin*)" do %>
+          <%= f.input :login,    :label => 'Login' %>
+          <%= f.input :password, :label => 'Passwort' %>
+        <% end %>
+
+        <% f.buttons do %>
+          <%= f.commit_button 'Anmelden' %>
+        <% end %>
+      <% end %>
+
+      <p>
+        * Um sich an diesem System anzumelden verwenden Sie bitte die persönlichen
+        Zugangsdaten Ihres Bibliothekskontos. Den Benutzernamen finden Sie auf Ihrem
+        Bibliotheksausweis.
+      </p>
+    </div>
+  </div>
+</div>
