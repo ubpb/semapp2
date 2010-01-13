@@ -1,6 +1,6 @@
 class AlephSyncEngineAdapter < SyncEngineAdapter
 
-  def initialize(options)
+  def initialize(options = {})
     @base_url    = options[:base_url]
     @library     = options[:library]
     @search_base = options[:search_base]

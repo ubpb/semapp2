@@ -1,5 +1,5 @@
-module Aleph
-  module XmlUtils
+module Aleph #:nodoc:
+  module XmlUtils #:nodoc:
 
     ##
     # Returns the content from a given node, matched by the given
@@ -17,6 +17,9 @@ module Aleph
       c.present? ? c : nil
     end
 
+    ##
+    # TODO
+    #
     def attribute_from_node(node, attribute)
       raise "Node must be of type LibXML::XML::Document or LibXML::XML::Node" unless node.class == LibXML::XML::Document or node.class == LibXML::XML::Node
       return nil unless node.present?

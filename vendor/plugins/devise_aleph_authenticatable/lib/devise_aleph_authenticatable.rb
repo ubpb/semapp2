@@ -11,7 +11,17 @@ rescue
 end
 
 #
-# Require out stuff
+# Require Aleph Connector
+#
+begin
+  require 'aleph_connector'
+rescue
+  gem 'aleph_connector'
+  require 'aleph_connector'
+end
+
+#
+# Require our stuff
 #
 require 'devise_aleph_authenticatable/model'
 require 'devise_aleph_authenticatable/strategy'

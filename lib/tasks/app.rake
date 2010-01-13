@@ -14,8 +14,7 @@ namespace :app do
   #
   desc "Synchronize books"
   task(:sync_books => :environment) do
-    # TODO: make this configurable
-    adapter   = AlephSyncEngineAdapter.new(:base_url => 'http://ubaleph.uni-paderborn.de/X', :library => 'pad50', :search_base => 'pad01')
+    adapter   = AlephSyncEngineAdapter.new
     engine    = SyncEngine.new(adapter)
     engine.sync
   end
