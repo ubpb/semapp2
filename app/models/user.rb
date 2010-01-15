@@ -1,3 +1,14 @@
+# == Schema Information
+# Schema version: 20091110135349
+#
+# Table name: users
+#
+#  id    :integer         not null, primary key
+#  login :string(255)     not null
+#  name  :string(255)     not null
+#  email :string(255)
+#
+
 class User < ActiveRecord::Base
 
   # Relations

@@ -3,10 +3,10 @@
 #
 # Table name: book_shelves
 #
-#  id          :integer(4)      not null, primary key
+#  id          :integer         not null, primary key
 #  ils_account :string(255)     not null
 #  slot_number :string(255)     not null
-#  sem_app_id  :integer(4)
+#  sem_app_id  :integer
 #  created_at  :datetime
 #  updated_at  :datetime
 #

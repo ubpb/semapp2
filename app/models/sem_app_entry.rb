@@ -3,13 +3,12 @@
 #
 # Table name: sem_app_entries
 #
-#  id            :integer(4)      not null, primary key
-#  sem_app_id    :integer(4)      not null
-#  instance_id   :integer(4)      not null
-#  instance_type :string(255)     not null
-#  position      :integer(4)      default(0), not null
-#  created_at    :datetime
-#  updated_at    :datetime
+#  id         :integer         not null, primary key
+#  sem_app_id :integer         not null
+#  position   :integer
+#  publish_on :datetime
+#  created_at :datetime
+#  updated_at :datetime
 #
 
 class SemAppEntry < ActiveRecord::Base

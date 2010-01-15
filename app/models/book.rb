@@ -3,8 +3,9 @@
 #
 # Table name: books
 #
-#  id                     :integer(4)      not null, primary key
-#  sem_app_id             :integer(4)      not null
+#  id                     :integer         not null, primary key
+#  sem_app_id             :integer         not null
+#  ils_id                 :string(255)     not null
 #  signature              :string(255)     not null
 #  title                  :string(255)     not null
 #  author                 :string(255)     not null
@@ -14,8 +15,8 @@
 #  year                   :string(255)
 #  isbn                   :string(255)
 #  comment                :text
-#  scheduled_for_addition :boolean(1)      not null
-#  scheduled_for_removal  :boolean(1)      not null
+#  scheduled_for_addition :boolean         not null
+#  scheduled_for_removal  :boolean         not null
 #  created_at             :datetime
 #  updated_at             :datetime
 #

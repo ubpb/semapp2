@@ -1,3 +1,25 @@
+# == Schema Information
+# Schema version: 20091110135349
+#
+# Table name: sem_app_monograph_reference_entries
+#
+#  id         :integer         not null, primary key
+#  sem_app_id :integer         not null
+#  position   :integer
+#  publish_on :datetime
+#  created_at :datetime
+#  updated_at :datetime
+#  author     :string          not null
+#  title      :text            not null
+#  subtitle   :text
+#  year       :string
+#  place      :string
+#  publisher  :string
+#  edition    :string
+#  url        :string
+#  isbn       :string
+#
+
 class SemAppMonographReferenceEntry < SemAppEntry
   set_table_name :sem_app_monograph_reference_entries
 

@@ -3,13 +3,13 @@
 #
 # Table name: sem_apps
 #
-#  id            :integer(4)      not null, primary key
-#  creator_id    :integer(4)      not null
-#  semester_id   :integer(4)      not null
-#  location_id   :integer(4)      not null
-#  approved      :boolean(1)      not null
+#  id            :integer         not null, primary key
+#  creator_id    :integer         not null
+#  semester_id   :integer         not null
+#  location_id   :integer         not null
+#  approved      :boolean         not null
 #  title         :string(255)     not null
-#  tutors        :text            default(""), not null
+#  tutors        :text            not null
 #  shared_secret :string(255)     not null
 #  course_id     :string(255)
 #  created_at    :datetime

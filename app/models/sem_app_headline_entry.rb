@@ -3,8 +3,13 @@
 #
 # Table name: sem_app_headline_entries
 #
-#  id       :integer(4)      not null, primary key
-#  headline :string(255)     not null
+#  id         :integer         not null, primary key
+#  sem_app_id :integer         not null
+#  position   :integer
+#  publish_on :datetime
+#  created_at :datetime
+#  updated_at :datetime
+#  headline   :string(255)     not null
 #
 
 class SemAppHeadlineEntry < SemAppEntry

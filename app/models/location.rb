@@ -3,9 +3,9 @@
 #
 # Table name: locations
 #
-#  id         :integer(4)      not null, primary key
+#  id         :integer         not null, primary key
 #  title      :string(255)     not null
-#  position   :integer(4)      default(0), not null
+#  position   :integer         default(0), not null
 #  created_at :datetime
 #  updated_at :datetime
 #

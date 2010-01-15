@@ -3,9 +3,9 @@
 #
 # Table name: ownerships
 #
-#  id         :integer(4)      not null, primary key
-#  user_id    :integer(4)      not null
-#  sem_app_id :integer(4)      not null
+#  id         :integer         not null, primary key
+#  user_id    :integer         not null
+#  sem_app_id :integer         not null
 #  created_at :datetime
 #  updated_at :datetime
 #

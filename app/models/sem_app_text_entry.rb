@@ -3,8 +3,13 @@
 #
 # Table name: sem_app_text_entries
 #
-#  id        :integer(4)      not null, primary key
-#  body_text :text            default(""), not null
+#  id         :integer         not null, primary key
+#  sem_app_id :integer         not null
+#  position   :integer
+#  publish_on :datetime
+#  created_at :datetime
+#  updated_at :datetime
+#  body_text  :text            not null
 #
 
 class SemAppTextEntry < SemAppEntry

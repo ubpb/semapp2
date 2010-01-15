@@ -1,3 +1,17 @@
+# == Schema Information
+# Schema version: 20091110135349
+#
+# Table name: sem_app_file_entries
+#
+#  id          :integer         not null, primary key
+#  sem_app_id  :integer         not null
+#  position    :integer
+#  publish_on  :datetime
+#  created_at  :datetime
+#  updated_at  :datetime
+#  description :text            not null
+#
+
 class SemAppFileEntry < SemAppEntry
 
   set_table_name :sem_app_file_entries

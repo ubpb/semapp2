@@ -1,3 +1,31 @@
+# == Schema Information
+# Schema version: 20091110135349
+#
+# Table name: sem_app_collected_article_reference_entries
+#
+#  id                   :integer         not null, primary key
+#  sem_app_id           :integer         not null
+#  position             :integer
+#  publish_on           :datetime
+#  created_at           :datetime
+#  updated_at           :datetime
+#  source_editor        :string          not null
+#  source_title         :text
+#  source_subtitle      :text
+#  source_year          :string
+#  source_place         :string
+#  source_publisher     :string
+#  source_edition       :string
+#  source_series_title  :text
+#  source_series_volume :string
+#  author               :string
+#  title                :text
+#  subtitle             :text
+#  volume               :string
+#  pages                :string
+#  url                  :string
+#
+
 class SemAppCollectedArticleReferenceEntry < SemAppEntry
   set_table_name :sem_app_collected_article_reference_entries
 

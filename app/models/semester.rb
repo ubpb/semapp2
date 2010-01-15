@@ -3,10 +3,10 @@
 #
 # Table name: semesters
 #
-#  id         :integer(4)      not null, primary key
-#  current    :boolean(1)
+#  id         :integer         not null, primary key
+#  current    :boolean
 #  title      :string(255)     not null
-#  position   :integer(4)      default(0), not null
+#  position   :integer         default(0), not null
 #  created_at :datetime
 #  updated_at :datetime
 #
