@@ -1,9 +1,5 @@
 <% form.inputs :name => 'Datei(en)', :id => 'attachment-listing' do %>
-  <% if entry.new_record? and entry.attachments.blank? %>
-    <% form.semantic_fields_for :attachments, Attachment.new do |a| %>
-      <%= render 'attachment', :form => a %>
-    <% end %>
-  <% else %>
+  <% unless entry.new_record? and entry.attachments.blank? %>
     <% form.semantic_fields_for :attachments do |a| %>
       <%= render 'attachment', :form => a %>
     <% end %>
