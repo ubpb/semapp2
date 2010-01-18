@@ -169,10 +169,6 @@ CREATE TABLE sem_app_headline_entries (
   headline character varying(255) NOT NULL
 ) INHERITS (sem_app_entries);
 
-CREATE TABLE sem_app_file_entries (
-  description text NOT NULL
-) INHERITS (sem_app_entries);
-
 CREATE TABLE sem_app_monograph_reference_entries (
   author character varying NOT NULL,
   title text NOT NULL,

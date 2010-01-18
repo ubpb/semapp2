@@ -2,10 +2,14 @@
   <%= hidden_field_tag :class, 'SemAppTextEntry' %>
   <%= hidden_field_tag :origin_id, @origin_id %>
 
-  <% f.inputs do %>
-    <%= f.input :body_text, :label => 'Text', :input_html => { :rows => '10'} %>
-    <%= f.input :publish_on, :label => 'Veröffentlichen am', :required => false %>
-  <% end %>
+  <div style="height: 330px; overflow: auto">
+    <% f.inputs do %>
+      <%= f.input :body_text, :label => 'Text', :input_html => { :rows => '10'} %>
+      <%= f.input :publish_on, :label => 'Veröffentlichen am', :required => false %>
+    <% end %>
+
+    <%= render 'attachment_fields', :form => f, :entry => entry %>
+  </div>
 
   <% f.buttons do %>
     <%= f.commit_button 'Speichern' %>

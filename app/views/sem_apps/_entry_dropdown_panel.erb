@@ -3,10 +3,7 @@
     <%= link_to "Überschrift", new_sem_app_entry_path(@sem_app, :class => 'SemAppHeadlineEntry', :origin_id => origin_id), :class => 'create-entry-action' %>
   </li>
   <li>
-    <%= link_to "Text", new_sem_app_entry_path(@sem_app, :class => 'SemAppTextEntry', :origin_id => origin_id), :class => 'create-entry-action' %>
-  </li>
-  <li>
-    <%= link_to "Datei", new_sem_app_entry_path(@sem_app, :class => 'SemAppFileEntry', :origin_id => origin_id), :class => 'create-entry-action' %>
+    <%= link_to "Text / Datei", new_sem_app_entry_path(@sem_app, :class => 'SemAppTextEntry', :origin_id => origin_id), :class => 'create-entry-action' %>
   </li>
   <li>
     <%= link_to "Monographie", new_sem_app_entry_path(@sem_app, :class => 'SemAppMonographReferenceEntry', :origin_id => origin_id), :class => 'create-entry-action' %>

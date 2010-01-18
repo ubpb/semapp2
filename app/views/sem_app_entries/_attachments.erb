@@ -8,10 +8,11 @@
             <span class="description">
               <%= textilize_without_paragraph(a.description) %>
             </span>
-            <span class="download-link">
-              <%= link_to 'Datei herunterladen', a.attachable.url %>
-            </span>
           <% end %>
+          <span class="download-link">
+            <%= link_to 'Datei herunterladen', a.attachable.url %>
+            (<%= a.attachable_file_name %>)
+          </span>
         </li>
       <% end %>
     </ol>
