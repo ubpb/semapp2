@@ -16,7 +16,7 @@ Rails::Initializer.run do |config|
   
   # Specify gems that this application depends on and have them installed with rake gems:install
   config.gem 'RedCloth',      :version => '4.2.2',   :lib => 'RedCloth'
-  config.gem 'devise',        :version => '0.8.1',   :lib => 'devise'
+  config.gem 'devise',        :version => '0.8.2',   :lib => 'devise'
   config.gem 'libxml-ruby',   :version => '1.1.3',   :lib => 'libxml'
   config.gem 'paperclip',     :version => '2.3.1.1', :lib => 'paperclip'
   config.gem 'will_paginate', :version => '2.3.11',  :lib => 'will_paginate'
