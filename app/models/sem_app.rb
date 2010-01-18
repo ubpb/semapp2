@@ -67,16 +67,14 @@ class SemApp < ActiveRecord::Base
 
   def media(user = nil)
     if user.present? and self.is_editable_for?(user)
-      SemAppEntry.find(
-        :all,
+      SemAppEntry.find(:all,
         :order      => :position,
-        :conditions => ["sem_app_id = :sem_app_id", {:sem_app_id => id}]
+        :conditions => ["sem_app_id = :sem_app_id", {:sem_app_id => self.id}]
       )
     else
-      SemAppEntry.find(
-        :all,
+      SemAppEntry.find(:all,
         :order      => :position,
-        :conditions => ["sem_app_id = :sem_app_id and publish_on < :date or publish_on is null", {:sem_app_id => id, :date => Time.new}]
+        :conditions => ["sem_app_id = :sem_app_id and (publish_on < :date or publish_on is null)", {:sem_app_id => self.id, :date => Time.new}]
       )
     end
   end
