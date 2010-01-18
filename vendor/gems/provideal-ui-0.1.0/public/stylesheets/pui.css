@@ -1,0 +1,258 @@
+/* Utils
+----------------------------------------------------------------------------------------------------*/
+
+/*.pui-helper-inset {
+  padding: 0.8em 0.5em;
+}*/
+
+.pui-helper-hidden, .hidden, .hide {
+  display: none;
+}
+
+.pui-helper-clearfix, .clearfix, .clear {
+  clear: both;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-center {
+  text-align: center;
+}
+
+/* Buttons
+----------------------------------------------------------------------------------------------------*/
+
+a.pui-button, button, input[type="submit"] {
+  display: inline-block;
+  margin: 0;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 1em;
+  text-decoration: none;
+  cursor: pointer;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+
+  background: #fff url(/plugins/pui/images/pui-button/bg.png) repeat-x bottom left;
+  color: #333;
+}
+
+a:active.pui-button, a:visited.pui-button, a:hover.pui-button {
+  color: #333;
+  text-decoration: none !important;
+}
+
+a.pui-button img, button img, input[type="submit"] img {
+  margin: 0 4px -4px 0 !important;
+  padding: 0;
+  border: none;
+  width: 16px;
+  height: 16px;
+}
+
+
+/* STANDARD */
+
+a:hover.pui-button, button:hover, input[type="submit"]:hover {
+  color: #333;
+  border: 1px solid #999;
+}
+
+a:active.pui-button, button:active, input[type="submit"]:active {
+  color: #333;
+  border: 1px solid #999;
+  background: #cdcdcd url(/plugins/pui/images/pui-button/bg-active.png) repeat-x bottom left;
+}
+
+/* Forms
+----------------------------------------------------------------------------------------------------*/
+
+/* TODO */
+
+/* Overlays
+----------------------------------------------------------------------------------------------------*/
+
+.pui-overlay {
+  display: none;
+  z-index: 10000;
+  background-color: #fff;
+  padding: 1em;
+  width: 500px;
+  border: 1px solid #ccc;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-box-shadow: 0 0 30px #333;
+  -webkit-box-shadow: 0 0 30px #333;
+}
+
+.pui-overlay .close {
+  background-image: url(/plugins/pui/images/overlays/close.png);
+  position: absolute;
+  right: -15px;
+  top: -15px;
+  cursor: pointer;
+  height: 35px;
+  width: 35px;
+}
+
+/* View
+----------------------------------------------------------------------------------------------------*/
+
+div.pui-view {
+  padding: 0;
+  margin: 0 0 15px 0;
+}
+
+/* Datagrid
+----------------------------------------------------------------------------------------------------*/
+
+table.pui-datagrid {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+table.pui-datagrid th {
+  padding: 0.5em;
+  text-align: center;
+  font-weight: bolder;
+}
+
+table.pui-datagrid td {
+  padding: 0.5em;
+  border: 1px solid #d6d6d6;
+}
+
+/* Tabs
+----------------------------------------------------------------------------------------------------*/
+
+div.pui-tabs-wrapper {
+}
+
+/* root element for tabs  */
+div.pui-tabs-wrapper ul.pui-tabs {
+  margin: 0 !important;
+  padding: 0;
+  border-bottom: 1px solid #d6d6d6;
+}
+
+/* single tab */
+div.pui-tabs-wrapper ul.pui-tabs li {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  display: inline;
+}
+
+/* link inside the tab */
+div.pui-tabs-wrapper ul.pui-tabs a {
+  display: inline-block;
+  padding: 0 30px;
+  line-height: 2.5em;
+  color: #555;
+  margin-right: 4px;
+  text-decoration: none;
+
+  background-color: #f7f7f7;
+
+  position: relative;
+  top: 1px;
+
+  border: 1px solid #d6d6d6;
+  -moz-border-radius-topleft: 4px;
+  -moz-border-radius-topright: 4px;
+  -webkit-border-top-left-radius: 4px;
+  -webkit-border-top-right-radius: 4px;
+}
+
+div.pui-tabs-wrapper ul.pui-tabs a:hover {
+  text-decoration: none !important;
+}
+
+/* selected tab */
+div.pui-tabs-wrapper ul.pui-tabs a.current {
+  border-bottom: 1px solid #fff;
+  cursor: default;
+  background-color: #fff;
+}
+
+/* tab pane */
+div.pui-tabs-wrapper div.pui-tab-panes {
+  padding: 15px 20px;
+  border: 1px solid #d6d6d6;
+  border-top: none;
+  clear: left;
+}
+
+/* Panels
+----------------------------------------------------------------------------------------------------*/
+
+div.pui-panel {
+  margin-bottom: 15px;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  background-color: #fafafa;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
+div.pui-panel.error, div.pui-panel.notice, div.pui-panel.success {
+
+}
+
+div.pui-panel.error {
+  background: #FBE3E4;
+  border-color: #FBC2C4;
+  color: #8A1F11;
+}
+
+div.pui-panel.notice {
+  background: #FFF6BF;
+  border-color: #FFD324;
+  color: #514721;
+}
+
+div.pui-panel.success {
+  background: #E6EFC2;
+  border-color: #C6D880;
+  color: #264409;
+}
+
+
+/* Collection view
+----------------------------------------------------------------------------------------------------*/
+
+div.pui-collection-view {
+  margin-bottom: 15px;
+}
+
+div.pui-collection-view div.item {
+  padding: 0.3em 0;
+  border-bottom: 1px dotted #d6d6d6;
+}
+
+div.pui-collection-view.labeled {
+}
+
+div.pui-collection-view.labeled div.item {
+}
+
+div.pui-collection-view.labeled div.item span.label {
+  font-weight: bolder;
+  text-align: left;
+  float: left;
+  width: 160px;
+}
+
+div.pui-collection-view.labeled div.item div.content {
+  padding-left: 170px;
+}
