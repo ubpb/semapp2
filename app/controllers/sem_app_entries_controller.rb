@@ -90,13 +90,25 @@ class SemAppEntriesController < ApplicationController
   end
 
   def destroy
-    SemAppEntry.transaction do
-      entry = SemAppEntry.find(params[:id])
-      entry.remove_from_list
-      entry.destroy
-      resync_positions
+    respond_to do |format|
+      SemAppEntry.transaction do
+        entry = SemAppEntry.find(params[:id])
+
+        if entry.respond_to?(:scan_accepted) and entry.scan_accepted
+          msg = "Der Eintrag kann nicht gelöscht werden, da der Scanauftrag aktuell durch die Bibliothek bearbeitet wird."
+          format.json do
+            render_json_response(:error, :message => msg)
+          end
+        else
+          entry.remove_from_list
+          entry.destroy
+          resync_positions
+          format.json do
+            render_json_response(:error, :message => msg)
+          end
+        end
+      end
     end
-    render :nothing => true
   end
 
   #

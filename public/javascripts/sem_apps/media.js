@@ -20,11 +20,15 @@
       $.ajax({
         type: "delete",
         data: "_method=delete",
+        dataType: 'json',
         async: true,
         url: url,
-        success: function() {
-          //item.slideUp(500);
-          item.remove();
+        success: function(data) {
+          if (data.result == 'error') {
+            alert(data.message);
+          } else {
+            item.remove();
+          }
         }
       });
     }
@@ -68,7 +72,6 @@
           this.getContent().find(".heading").html($.editor_current_heading);
           this.getContent().find(".content").html(loadPartial($.editor_current_url));
           ajaxifyEditorForm();
-        //loadMCE();
         },
         onClose: function() {
           this.getContent().find(".heading").html("");
@@ -104,11 +107,6 @@
         dataType: 'json',
         success: function(data) {
           handleFormResponse(data);
-        },
-        beforeSubmit: function() {
-        //if (typeof tinyMCE != 'undefined') {
-        //  tinyMCE.triggerSave(true, true);
-        //}
         }
       });
     }
@@ -133,23 +131,7 @@
       } else {
         $('#entry-editor-panel .content').html(content);
         ajaxifyEditorForm();
-      //loadMCE();
       }
-    }
-
-    function loadMCE() {
-      $('#entry-editor-panel textarea.mce').tinymce({
-        script_url: '/javascripts/tiny_mce/tiny_mce.js',
-        theme: "advanced",
-        add_form_submit_trigger: false,
-
-        content_css: '/stylesheets/page.css',
-
-        theme_advanced_toolbar_align: "left",
-        theme_advanced_toolbar_location: "top",
-        theme_advanced_statusbar_location: "bottom",
-        theme_advanced_resizing: true
-      });
     }
 
     function rebindDropDownMenu() {
