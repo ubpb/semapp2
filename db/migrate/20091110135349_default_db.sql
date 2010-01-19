@@ -178,7 +178,8 @@ CREATE TABLE sem_app_monograph_reference_entries (
   publisher character varying,
   edition character varying,
   url character varying,
-  isbn character varying
+  isbn character varying,
+  signature character varying
 ) INHERITS (sem_app_entries);
 
 CREATE TABLE sem_app_article_reference_entries (
@@ -220,3 +221,15 @@ CREATE TABLE attachments (
   attachable_file_size integer NOT NULL,
   description text
 );
+
+--
+-- Scanjobs
+--
+CREATE TABLE scanjobs (
+  scan_accepted boolean,
+  scan_message text
+);
+
+CREATE TABLE sem_app_monograph_scanjob_entries (
+  pages character varying NOT NULL
+) INHERITS (scanjobs, sem_app_monograph_reference_entries);

@@ -17,6 +17,8 @@ class SemAppEntry < ActiveRecord::Base
   acts_as_inheritance_root
   acts_as_list :scope => :sem_app
 
+  validates_presence_of :sem_app
+
   def to_be_published
     self.publish_on.present? and self.publish_on >= Time.new
   end

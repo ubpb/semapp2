@@ -8,7 +8,7 @@ class SemAppEntriesController < ApplicationController
     entry_class = params[:class].classify.constantize
     entry       = entry_class.new
     raise "unknown instance" unless entry.kind_of?(SemAppEntry)
-    
+
     # The origin_id is the id of the entry that the user
     # wants to create the new entry below
     @origin_id = params[:origin_id]
@@ -27,6 +27,10 @@ class SemAppEntriesController < ApplicationController
     entry          = entry_class.new(attributes)
     raise "unknown instance" unless entry.kind_of?(SemAppEntry)
     entry.sem_app  = @sem_app
+
+    if entry.respond_to?(:current_request_params)
+      entry.current_request_params = params
+    end
 
     # set the correct position for the new entry
     # below the entry with the given origin_id
@@ -67,6 +71,10 @@ class SemAppEntriesController < ApplicationController
   def update
     entry         = SemAppEntry.find(params[:id])
     instance_type = entry.class.name.underscore.to_sym
+
+    if entry.respond_to?(:current_request_params)
+      entry.current_request_params = params
+    end
     
     respond_to do |format|
       if entry.update_attributes(params[instance_type]) and entry.reload
