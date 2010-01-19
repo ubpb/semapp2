@@ -1,0 +1,45 @@
+<% semantic_form_for entry, :url => form_url_for_entry(entry), :html => {:class => "ajax-form"} do |f| %>
+  <%= hidden_field_tag :class, 'SemAppCollectedArticleScanjobEntry' %>
+  <%= hidden_field_tag :origin_id, @origin_id %>
+
+  <% if entry.scan_accepted %>
+    <div class="pui-panel notice align-center">
+      Der Scanauftrag wird aktuell durch die Bibliothek bearbeitet und kann durch Sie nicht bearbeitet werden.
+    </div>
+  <% else %>
+    <div style="height: 400px; overflow: auto">
+      <% f.inputs :name => "Scanauftrag" do %>
+        <%= f.input :source_signature, :label => 'Signatur in der Bibliothek', :hint => 'Bitte recherchieren Sie die Signatur mit dem <a href="https://ubaleph.uni-paderborn.de/F" target="blank">Katalog</a> der Bibliothek' %>
+        <%= f.input :pages,            :label => 'Seiten von-bis', :required => true, :hint => 'Bitte beachten Sie: Aus Urheberrechtsgründen darf der gescannte Umfang nicht mehr als 10% der Gesamtseitenzahl betragen.' %>
+        <%= f.input :scan_message,     :label => 'Ihre Nachricht an uns', :input_html => {:rows => 1}, :required => false %>
+      <% end %>
+
+      <% f.inputs :name => "Angaben zum Sammelwerk" do %>
+        <%= f.input :source_editor,        :label => 'Herausgeber' %>
+        <%= f.input :source_title,         :label => 'Titel', :input_html => {:rows => 1} %>
+        <%= f.input :source_subtitle,      :label => 'Untertitel', :input_html => {:rows => 1}, :required => false %>
+        <%= f.input :source_year,          :label => 'Jahr' %>
+        <%= f.input :source_place,         :label => 'Verlagsort', :required => false %>
+        <%= f.input :source_publisher,     :label => 'Verlag', :required => false %>
+        <%= f.input :source_edition,       :label => 'Auflage', :required => false %>
+        <%= f.input :source_series_title,  :label => 'Reihentitel', :input_html => {:rows => 1}, :required => false %>
+        <%= f.input :source_series_volume, :label => 'Band', :required => false %>
+      <% end %>
+
+      <% f.inputs :name => "Angaben zum Beitrag" do %>
+        <%= f.input :author,   :label => 'Author(en)' %>
+        <%= f.input :title,    :label => 'Titel', :input_html => {:rows => 1} %>
+        <%= f.input :subtitle, :label => 'Untertitel', :input_html => {:rows => 1}, :required => false %>
+        <%= f.input :volume,   :label => 'Band', :required => false %>
+      <% end %>
+    </div>
+
+    <% f.buttons do %>
+      <% if entry.new_record?  %>
+        <%= f.commit_button 'Scanauftrag aufgeben' %>
+      <% else %>
+        <%= f.commit_button 'Speichern' %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

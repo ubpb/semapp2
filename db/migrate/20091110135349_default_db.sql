@@ -177,7 +177,6 @@ CREATE TABLE sem_app_monograph_reference_entries (
   place character varying,
   publisher character varying,
   edition character varying,
-  url character varying,
   isbn character varying,
   signature character varying
 ) INHERITS (sem_app_entries);
@@ -191,8 +190,8 @@ CREATE TABLE sem_app_article_reference_entries (
   "year" character varying,
   issue character varying,
   pages character varying,
-  url character varying,
-  issn character varying
+  issn character varying,
+  signature character varying
 ) INHERITS (sem_app_entries);
 
 CREATE TABLE sem_app_collected_article_reference_entries (
@@ -205,12 +204,13 @@ CREATE TABLE sem_app_collected_article_reference_entries (
   source_edition character varying,
   source_series_title text,
   source_series_volume character varying,
+  source_signature character varying,
+  source_isbn character varying,
   author character varying,
   title text,
   subtitle text,
   volume character varying,
-  pages character varying,
-  url character varying
+  pages character varying
 ) INHERITS (sem_app_entries);
 
 CREATE TABLE attachments (
@@ -233,3 +233,11 @@ CREATE TABLE scanjobs (
 CREATE TABLE sem_app_monograph_scanjob_entries (
   pages character varying NOT NULL
 ) INHERITS (scanjobs, sem_app_monograph_reference_entries);
+
+CREATE TABLE sem_app_article_scanjob_entries (
+  -- nothing
+) INHERITS (scanjobs, sem_app_article_reference_entries);
+
+CREATE TABLE sem_app_collected_article_scanjob_entries (
+  -- nothing
+) INHERITS (scanjobs, sem_app_collected_article_reference_entries);

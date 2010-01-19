@@ -15,6 +15,12 @@
     <%= link_to "Zeitschriftenartikel", new_sem_app_entry_path(@sem_app, :class => 'SemAppArticleReferenceEntry', :origin_id => origin_id), :class => 'create-entry-action' %>
   </li>
   <li>
+    <%= link_to "Zeitschriftenartikel (Scanauftrag)", new_sem_app_entry_path(@sem_app, :class => 'SemAppArticleScanjobEntry', :origin_id => origin_id), :class => 'create-entry-action' %>
+  </li>
+  <li>
     <%= link_to "Beitrag in einem Sammelwerk", new_sem_app_entry_path(@sem_app, :class => 'SemAppCollectedArticleReferenceEntry', :origin_id => origin_id), :class => 'create-entry-action' %>
+  </li>
+  <li>
+    <%= link_to "Beitrag in einem Sammelwerk (Scanauftrag)", new_sem_app_entry_path(@sem_app, :class => 'SemAppCollectedArticleScanjobEntry', :origin_id => origin_id), :class => 'create-entry-action' %>
   </li>
 </ul>
