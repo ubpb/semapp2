@@ -1,4 +1,14 @@
-<h3>eSeminarapprat '<%= link_to h(@sem_app.title), sem_app_url(@sem_app) %>' bearbeiten</h3>
+<h2 class="section clearfix">
+  <div style="float: left">
+    eSeminarapprat '<%= h(@sem_app.title) %>' bearbeiten
+  </div>
 
-<%= render 'admin/shared_partials/sem_app_edit_tabbar', :sem_app => @sem_app, :active_tab => :sem_app %>
+  <div class="align-right" style="margin-bottom: 5px">
+    <% link_to admin_sem_app_path(@sem_app), :class => 'pui-button' do %>
+      <%= image_tag 'icons/arrow-curve-180-left.png', :plugin => 'pui' %>
+      Zurück
+    <% end %>
+  </div>
+</h2>
+
 <%= render :partial => 'form' %>

@@ -1,37 +1,19 @@
-<div id="sem_app_listing">
-  <% if @sem_apps and not @sem_apps.empty?  %>
-    <%= will_paginate @sem_apps, :style => "text-align: left" %>
-    <table class="pui-datagrid">
-      <thead>
+<% if @sem_apps.present?  %>
+  <%= will_paginate @sem_apps, :style => "text-align: left" %>
+  <table class="pui-datagrid">
+    <tbody>
+      <% @sem_apps.each do |s| %>
         <tr>
-          <th>Status</th>
-          <th>Titel</th>
-          <th></th>
+          <td>
+            <%= link_to h(s.title), admin_sem_app_url(s) %>
+            (<%= h(s.semester.title) %>)
+          </td>
         </tr>
-      </thead>
-      <tbody>
-        <% @sem_apps.each do |s| %>
-          <tr>
-            <td nowrap="true" valign="middle">
-              <%= render 'shared_partials/sem_app_states', :sem_app => s %>
-            </td>
-            <td width="100%">
-              <%= link_to h(s.title), sem_app_url(s) %>
-              (<%= h(s.semester.title) %>)
-            </td>
-            <td align="right" nowrap="true">
-              <%= link_to 'Bearbeiten', edit_admin_sem_app_path(s) %>
-              <%= link_to 'Löschen', admin_sem_app_path(s), :method => :delete, :confirm => "Soll der eSeminarapparat #{s.id} wirklich gelöscht werden?" %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% else %>
-    <div class="pui-panel notice">
-      <p>
-        Keine eSeminarapparate gefunden.
-      </p>
-    </div>
-  <% end %>
-</div>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="pui-panel notice align-center">
+    Keine eSeminarapparate gefunden.
+  </div>
+<% end %>

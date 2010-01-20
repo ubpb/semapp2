@@ -1,70 +1,56 @@
-<% form_for [:admin, @sem_app], :html => {:class => 'puiform'} do |f| %>
-  <%= f.error_messages %>
-  <fieldset>
-    <legend>Basisdaten</legend>
-    <ol>
-      <li>
-        <div class="container">
-          <%= f.check_box :approved %>
-          <%= f.label     :approved, "Geprüft?" %>
-          <%= f.check_box :active %>
-          <%= f.label     :active, "Aktiv?" %>
-        </div>
-      </li>
-      <li>
-        <%= f.label             :semester, "Semester*" %>
-        <%= f.collection_select :semester_id, Semester.find(:all), :id, :title, :prompt => '-- Bitte auswählen --' %>
-      </li>
-      <li>
-        <%= f.label      :title, "Titel*" %>
-        <%= f.text_field :title %>
-      </li>
-      <li>
-        <%= f.label      :course_id, "Kurs ID" %>
-        <%= f.text_field :course_id %>
-      </li>
-      <li>
-        <%= f.label      :tutors, "Tutor(en)*" %>
-        <%= f.text_field :tutors %>
-        <div class="container" style="font-size:90%">
-          Trennen Sie mehrere Tutoren durch Komma. (z.B. Prof. Reiner Müller, Dr. Heiner Schmidt)
-        </div>
-      </li>
-    </ol>
-  </fieldset>
-  <fieldset>
-    <legend>Bibliotheksdaten</legend>
-    <ol>
-      <li>
-        <%= f.label             :location, "Standort*" %>
-        <%= f.collection_select :location_id, Location.find(:all), :id, :title, :prompt => '-- Bitte auswählen --' %>
-      </li>
-      <li>
-        <%= f.label      :bid, "Bibliotheks ID" %>
-        <%= f.text_field :bid %>
-        <div class="pui-tooltip">z.B. Aleph Ausweisnummer</div>
-      </li>
-      <li>
-        <%= f.label      :ref, "Referenznummer" %>
-        <%= f.text_field :ref %>
-        <div class="pui-tooltip">eine intern verwendete Referenznummer (z.B. Nummer am Regal)</div>
-      </li>
-    </ol>
-  </fieldset>
-  <fieldset>
-    <legend>Zugriffsschutz</legend>
-    <ol>
-      <li>
-        <%= f.label      :shared_secret, "Passwort für den Lesezugriff*" %>
-        <%= f.text_field :shared_secret %>
-      </li>
-    </ol>
-  </fieldset>
-  <div style="font-size: 90%">* Plfichtfelder</div>
-  <fieldset class="submit">
-    <legend>Speichern</legend>
-    <%= f.submit 'Speichern' %>
-    <%= link_to 'Abbrechen', admin_sem_apps_path %>
-  </fieldset>
+<% semantic_form_for [:admin, @sem_app] do |f| %>
+  <% f.inputs :name => 'Administrative Daten' do %>
+    <%= f.input :approved, :label => 'Von der UB geprüft und freigebegen?', :required => false %>
+  <% end %>
+
+  <% f.inputs :name => 'Ausweis / Regal' do %>
+    <div class="pui-panel">
+      Um Bücher in diesen Apparat einstellen zu können bitte die folgenden Felder ausfüllen. Ansonsten die Felder leer lassen.
+    </div>
+    <% f.semantic_fields_for :book_shelf do |shelf| %>
+      <% unless shelf.object.new_record? %>
+        <%= shelf.input '_destroy',  :label => 'Ausweis / Regal löschen?', :as => :boolean, :required => false %>
+      <% end %>
+      <%= shelf.input :ils_account, :label => 'Ausweis Nr.', :required => false %>
+      <%= shelf.input :slot_number, :label => 'Regal Nr.',   :required => false %>
+    <% end %>
+  <% end %>
+
+  <% f.inputs :name => 'Basisdaten' do %>
+    <% if @sem_app.new_record? %>
+      <%= f.input :semester,  :label => 'Semester', :hint => 'In welchem Semester findet Ihre Veranstaltung statt?' %>
+      <%= f.input :title,     :label => 'Titel',    :hint => 'Titel der Veranstaltung' %>
+      <%= f.input :course_id, :label => 'Kurs-ID',  :hint => 'Wenn bekannt geben Sie bitte die eindeutige Kurs-ID an.', :required => false %>
+    <% else %>
+      <%= f.input :semester,  :label => 'Semester' %>
+      <%= f.input :title,     :label => 'Titel' %>
+      <%= f.input :course_id, :label => 'Kurs-ID', :required => false %>
+    <% end %>
+    <%= f.input :tutors, :label => 'Tutor(en)', :as => :string, :hint => 'Die Namen der beteiligten Dozierenden und/oder Tutoren. Trennen Sie mehrere Tutoren durch ein Komma.' %>
+  <% end %>
+
+  <% f.inputs :name => 'Bibliotheksdaten' do %>
+    <% if @sem_app.new_record? %>
+      <%= f.input :location, :label => 'Standort', :hint => 'Welcher Fachbibliothek soll der eSeminarapparat zugeordnet werden?' %>
+    <% else %>
+      <%= f.input :location, :label => 'Standort' %>
+    <% end %>
+  <% end %>
+
+  <% f.inputs :name => 'Zugriffsschutz' do %>
+    <%= f.input :shared_secret, :label => 'Kennung für den Lesezugriff',
+      :hint => "Bitte vergeben Sie eine Kennung für den Lesezugriff auf die elektronischen Volltexte.
+    Jeder der diese Kennung kennt hat damit Lesezugriff auf die
+    in diesem eSeminarapparat hinterlegten Dateien. Sie sollten dieses Passwort
+    nur dem begrenzten Teilnehmerkreis Ihrer Veranstaltung bekannt machen." %>
+  <% end %>
+
+  <% f.buttons do %>
+    <%= f.commit_button 'Speichern' %>
+    <li>
+      <%= link_to 'Abbrechen', admin_sem_app_path(@sem_app) %>
+    </li>
+  <% end %>
 <% end %>
 
+<span>* Pflichtfelder</span>

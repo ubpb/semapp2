@@ -7,6 +7,9 @@
 
   <div class="pui-panel align-right">
     <%= link_to 'Einstellungen', edit_sem_app_path(@sem_app), :class => 'pui-button' -%>
+    <% if current_user and current_user.is_admin? %>
+      <%= link_to 'Administrieren', admin_sem_app_path(@sem_app), :class => 'pui-button' -%>
+    <% end %>
   </div>
 <% end %>
 

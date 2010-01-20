@@ -1,43 +1,9 @@
-<h3>eSeminarapparate</h3>
+<h2 class="section">eSeminarapparate verwalten</h2>
 
-<div class="subcolumns">
-  <div class="c75l">
-    <div class="subcl">
-      <%= render 'listing' %>
-    </div>
-  </div>
-  <div class="c25r">
-    <div class="subcr pui-subcr highlight ui-corner-right">
-      <h4>Aktionen</h4>
-      <ul class="pui-subnav-v">
-        <li>
-          <% link_to(new_admin_sem_app_path) do %>
-            <span class="ui-icon ui-icon-plus"></span>Neuen Sem.App
-          <% end %>
-        </li>
-      </ul>
-    </div>
+<div class="grid_8 alpha">
+  <%= render 'listing' %>
+</div>
 
-    <% locations = Location.find(:all, :order => 'position') %>
-    <% if locations and not locations.empty? %>
-      <div class="subcr pui-subcr highlight ui-corner-right">
-        <h4>Org. Filter</h4>
-        <ul class="pui-subnav-v">
-          <li><%= link_to('Alle', :ou => nil, :sf => params[:sf]) %></li>
-          <% locations.each do |location| %>
-            <li><%= link_to(h(location.title), :location => location.id, :sf => params[:sf]) %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <div class="subcr pui-subcr highlight ui-corner-right">
-      <h4>Status Filter</h4>
-      <ul class="pui-subnav-v">
-        <li><%= link_to('Alle',      :sf => nil,            :location => params[:location]) %></li>
-        <li><%= link_to('Zu prüfen', :sf => 'non-approved', :location => params[:location]) %></li>
-        <li><%= link_to('Inaktiv',   :sf => 'inactive',     :location => params[:location]) %></li>
-      </ul>
-    </div>
-  </div>
+<div class="grid_4 omega">
+  TBD
 </div>

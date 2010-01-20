@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
   # Checks for the ROLE_ADMIN authority
   #
   def is_admin?
-    has_authority?('ROLE_ADMIN')
+    has_authority?(Authority::ADMIN_ROLE)
   end
 
   #

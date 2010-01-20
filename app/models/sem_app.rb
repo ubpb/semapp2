@@ -23,6 +23,7 @@ class SemApp < ActiveRecord::Base
   belongs_to :semester
   belongs_to :location
   has_one    :book_shelf
+  accepts_nested_attributes_for :book_shelf, :allow_destroy => true, :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
   has_many   :ownerships, :dependent => :destroy
   has_many   :owners,     :through   => :ownerships, :source => :user
 

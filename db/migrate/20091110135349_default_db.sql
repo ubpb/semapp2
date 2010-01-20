@@ -99,7 +99,7 @@ CREATE TABLE book_shelves (
   id serial NOT NULL PRIMARY KEY,
   ils_account character varying(255) NOT NULL,
   slot_number character varying(255) NOT NULL,
-  sem_app_id integer REFERENCES sem_apps,
+  sem_app_id integer REFERENCES sem_apps NOT NULL,
   created_at timestamp without time zone,
   updated_at timestamp without time zone
 );

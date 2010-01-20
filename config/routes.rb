@@ -2,8 +2,10 @@ ActionController::Routing::Routes.draw do |map|
 
   # Admin routes
   map.namespace :admin do |admin|
-    admin.root :controller => 'dashboard'
-    
+    admin.root :controller => 'application', :action => 'redirect_to_default'
+
+    admin.resources :sem_apps, :as => 'apps'
+
     #admin.resources :semesters
     #admin.resources :locations, :collection => {:reorder => :put}
     #admin.resources :sem_apps, :as => 'apps' do |sem_app|
