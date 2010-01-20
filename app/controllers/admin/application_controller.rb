@@ -3,6 +3,8 @@ class Admin::ApplicationController < ApplicationController
   before_filter :authenticate_user!
   before_filter :check_for_admin_role
 
+  layout 'admin'
+
   private
 
   def check_for_admin_role

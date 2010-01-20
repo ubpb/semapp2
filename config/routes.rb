@@ -2,14 +2,15 @@ ActionController::Routing::Routes.draw do |map|
 
   # Admin routes
   map.namespace :admin do |admin|
-    admin.dashboard 'dashboard', :controller => 'dashboard'
-    admin.resources :semesters
-    admin.resources :locations, :collection => {:reorder => :put}
+    admin.root :controller => 'dashboard'
+    
+    #admin.resources :semesters
+    #admin.resources :locations, :collection => {:reorder => :put}
     #admin.resources :sem_apps, :as => 'apps' do |sem_app|
     #  sem_app.resources :ownerships, :only => [:index, :create, :destroy]
     #  sem_app.resources :book_orders, :as => 'book-orders', :only => [:index, :new, :create, :destroy]
     #end
-    admin.resources :users
+    #admin.resources :users
     #admin.namespace :utils do |utils|
     #  utils.users_picker 'users_picker.:format', :controller => 'users_picker', :action => 'users_listing'
     #end
