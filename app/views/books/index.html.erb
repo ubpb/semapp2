@@ -18,10 +18,10 @@
 
   <div class="pui-tab-panes">
     <div>
-      <%= render 'listing', :entries => @additions %>
+      <%= render 'listing', :entries => @sem_app.books_to_add %>
     </div>
     <div>
-      <%= render 'listing', :entries => @removals %>
+      <%= render 'listing', :entries => @sem_app.books_to_remove %>
     </div>
   </div>
 

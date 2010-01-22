@@ -5,6 +5,10 @@
       <% @sem_apps.each do |s| %>
         <tr>
           <td>
+            <% if s.has_book_jobs? %>
+              <%= image_tag 'icons/star.png', :plugin => 'pui' %>
+            <% end %>
+            
             <%= link_to h(s.title), admin_sem_app_url(s) %>
             (<%= h(s.semester.title) %>)
           </td>

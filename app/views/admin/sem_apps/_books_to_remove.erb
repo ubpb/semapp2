@@ -1,11 +1,11 @@
 <div class="pui-view">
-  <% if @remove_books.present? %>
+  <% if @sem_app.books_to_remove.present? %>
     <div class="pui-panel align-center">
       <%= image_tag 'icons/minus.png', :plugin => 'pui' %>
       Die folgenden Bücher bitte aus dem Apparat entfernen
     </div>
 
-    <% @remove_books.each do |b| %>
+    <% @sem_app.books_to_remove.each do |b| %>
       <%= render 'book', :book => b %>
     <% end %>
   <% else %>

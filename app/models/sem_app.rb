@@ -44,17 +44,36 @@ class SemApp < ActiveRecord::Base
   #
   ###########################################################################################
   
-  def books(options = {})
-    unless options[:all]
-      options = {
+  def books
+    Book.find(:all,
+      :conditions => {
+        :sem_app_id => id,
         :scheduled_for_addition => false,
-        :scheduled_for_removal  => false
-      }.merge(options)
-    else
-      options.delete(:all)
-    end
+        :scheduled_for_removal => false
+      },
+      :order => "created_at DESC")
+  end
 
-    Book.find(:all, :conditions => options.merge!(:sem_app_id => id), :order => "created_at DESC")
+  def books_to_add
+    Book.find(:all,
+      :conditions => {
+        :sem_app_id => id,
+        :scheduled_for_addition => true
+      },
+      :order => "created_at DESC")
+  end
+
+  def books_to_remove
+    Book.find(:all,
+      :conditions => {
+        :sem_app_id => id,
+        :scheduled_for_removal => true
+      },
+      :order => "created_at DESC")
+  end
+
+  def has_book_jobs?
+    books_to_add.present? or books_to_remove.present?
   end
 
   def book_by_ils_id(ils_id)

@@ -5,8 +5,6 @@ class BooksController < ApplicationController
   before_filter :check_access
 
   def index
-    @removals  = @sem_app.books(:scheduled_for_removal  => true)
-    @additions = @sem_app.books(:scheduled_for_addition => true)
   end
 
   def new

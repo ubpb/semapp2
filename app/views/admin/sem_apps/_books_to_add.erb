@@ -1,12 +1,12 @@
 <div class="pui-view">
-  <% if @new_books.present? %>
+  <% if @sem_app.books_to_add.present? %>
     <div class="pui-panel align-center">
       <%= image_tag 'icons/plus.png', :plugin => 'pui' %>
       Die folgenden Bücher bitte in den Apparat einstellen
     </div>
 
     <div class="pui-colletion-view">
-      <% @new_books.each do |b| %>
+      <% @sem_app.books_to_add.each do |b| %>
         <%= render 'book', :book => b %>
       <% end %>
     </div>

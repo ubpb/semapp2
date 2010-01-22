@@ -16,7 +16,7 @@
   </div>
 </h2>
 
-<% if @new_books.present? or @remove_books.present? %>
+<% if @sem_app.has_book_jobs? %>
   <div class="pui-panel notice align-center">
     <%= image_tag 'icons/star.png', :plugin => 'pui' %>
     Es gibt Buchaufträge für diesen Seminarapparat
@@ -97,15 +97,15 @@
 
   <div class="pui-tab-panes">
     <div>
-      <%= render 'users_tab' %>
+      <%= render 'users' %>
     </div>
 
     <div>
-      <%= render 'new_books_tab' %>
+      <%= render 'books_to_add' %>
     </div>
 
     <div>
-      <%= render 'remove_books_tab' %>
+      <%= render 'books_to_remove' %>
     </div>
   </div>
 </div>
