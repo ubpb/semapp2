@@ -7,6 +7,14 @@ class Admin::SemAppsController < Admin::ApplicationController
   def show
     @sem_app = SemApp.find_by_id(params[:id])
     (flash[:error] = "Dieser Apparat existiert nicht"; redirect_to admin_sem_apps_path) unless @sem_app.present?
+
+    @new_books    = @sem_app.books(:scheduled_for_addition => true)
+    @remove_books = @sem_app.books(:scheduled_for_removal  => true)
+
+    respond_to do |format|
+      format.html { render 'show',  :format => 'html' }
+      format.print { render 'show', :format => 'print', :layout => 'print' }
+    end
   end
 
   def edit

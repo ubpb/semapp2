@@ -29,7 +29,7 @@ form.formtastic fieldset ol li p.inline-hints { margin: 0 0 0 170px !important; 
 form.formtastic fieldset ol li p.inline-errors { margin:0.5em 0 0 170px !important; font-size:90%; }
 
 form.formtastic fieldset.buttons { padding: 10px 10px 10px 170px; background-color: #efefef; }
-form.formtastic fieldset.buttons ol li { padding: 0; margin: 0; }
+form.formtastic fieldset.buttons ol li { padding: 0; margin: 0 5px 0 0; }
 form.formtastic fieldset.buttons ol li a,
 form.formtastic fieldset.buttons ol li input,
 form.formtastic fieldset.buttons ol li span { display: block; padding: 6px; }

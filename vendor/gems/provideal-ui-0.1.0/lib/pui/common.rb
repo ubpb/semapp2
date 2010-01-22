@@ -21,15 +21,17 @@ module PUI
           :cache_file_suffix  => "pui"
         }.merge(options)
 
+        options[:jquery] = (options[:jquery] == true) ? "1.3.2" : (options[:jquery].is_a? String) ? options[:jquery] : false
+
         javascripts = []
         javascript_code = []
         stylesheets = []
         # enable jquery core
         if options[:jquery]
           if options[:use_cdn]
-            javascripts << 'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js'
+            javascripts << "http://ajax.googleapis.com/ajax/libs/jquery/#{options[:jquery]}/jquery.min.js"
           else
-            javascripts << 'jquery-1.3.2.min.js'
+            javascripts << "jquery-#{options[:jquery]}.min.js"
           end
 
           if options[:jquery_no_conflict]
@@ -74,7 +76,7 @@ module PUI
 
         includes = []
         # Include all stylesheets (and cache them as well)
-        includes << stylesheet_link_tag(*stylesheets << {:plugin => 'pui', :cache => "generated-#{options[:cache_file_suffix]}"})
+        includes << stylesheet_link_tag(*stylesheets << {:media => 'all', :plugin => 'pui', :cache => "generated-#{options[:cache_file_suffix]}"})
         # Include all javascripts (and cache them as well)
         includes << javascript_include_tag(*javascripts << {:plugin => 'pui', :cache => "generated-#{options[:cache_file_suffix]}"})
         # Write out javascript code

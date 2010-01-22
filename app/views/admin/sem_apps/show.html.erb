@@ -16,6 +16,17 @@
   </div>
 </h2>
 
+<% if @new_books.present? or @remove_books.present? %>
+  <div class="pui-panel notice align-center">
+    <%= image_tag 'icons/star.png', :plugin => 'pui' %>
+    Es gibt Buchaufträge für diesen Seminarapparat
+    <a href="#" class="print pui-button">
+      <%= image_tag 'icons/printer.png', :plugin => 'pui' %>
+      Übersicht Drucken
+    </a>
+  </div>
+<% end %>
+
 <div class="pui-view clearfix">
   <div class="grid_8 alpha">
     <% unless @sem_app.approved %>
@@ -25,7 +36,7 @@
     <% end %>
 
     <div class="pui-collection-view labeled">
-      <%= labeled_item :label => 'Titel',       :content => "#{h(@sem_app.title)} (#{link_to 'Anzeigen', sem_app_path(@sem_app)})" %>
+      <%= labeled_item :label => 'Titel',       :content => link_to(h(@sem_app.title), sem_app_path(@sem_app)) %>
       <%= labeled_item :label => 'Tutor(en)',   :content => h(@sem_app.tutors) %>
       <%= labeled_item :label => 'Semester',    :content => h(@sem_app.semester.title) %>
       <%= labeled_item :label => 'Standort',    :content => h(@sem_app.location.title) %>
@@ -60,36 +71,66 @@
 
 <div class="pui-tabs-wrapper">
   <ul class="pui-tabs">
-    <li><a href="#new-books">Bücher einstellen</a></li>
-    <li><a href="#remove-books">Bücher entfernen</a></li>
-    <li><a href="#users">Besitzer / Benutzer</a></li>
+    <li>
+      <a href="#users">
+        <%= image_tag 'icons/users.png', :plugin => 'pui' %>
+        Besitzer / Benutzer
+      </a>
+    </li>
+    <li>
+      <a href="#new-books">
+        <% if @new_books.present? %>
+          <%= image_tag 'icons/overlay/book--plus.png', :plugin => 'pui' %>
+        <% end %>
+        Bücher einstellen
+      </a>
+    </li>
+    <li>
+      <a href="#remove-books">
+        <% if @remove_books.present? %>
+          <%= image_tag 'icons/overlay/book--minus.png', :plugin => 'pui' %>
+        <% end %>
+        Bücher entfernen
+      </a>
+    </li>
   </ul>
 
   <div class="pui-tab-panes">
     <div>
-      <div class="pui-panel align-center">
-        Die folgenden Bücher bitte in den Apparat einstellen
-      </div>
+      <%= render 'users_tab' %>
     </div>
 
     <div>
-      <div class="pui-panel align-center">
-        Die folgenden Bücher bitte aus dem Apparat entfernen
-      </div>
+      <%= render 'new_books_tab' %>
     </div>
 
     <div>
-      <h5 class="section">Besitzer</h5>
-      <div class="pui-collection-view labeled">
-        <%= labeled_item :label => 'Besitzer', :content => h(@sem_app.creator.name) %>
-        <%= labeled_item :label => 'E-Mail',   :content => h(@sem_app.creator.email) %>
-        <%= labeled_item :label => 'UB ID',    :content => h(@sem_app.creator.login) %>
-      </div>
-
-      <h5 class="section">Weitere Bearbeiter</h5>
-      <div class="pui-panel align-center">
-        Die folgenden Benutzer können den Apparat bearbeiten
-      </div>
+      <%= render 'remove_books_tab' %>
     </div>
   </div>
 </div>
+
+<iframe 
+  id="print-frame"
+  name="print-frame"
+  src="<%= admin_sem_app_path(@sem_app, :format => :print) -%>"
+  style="width:0; height:0; position:absolute; left:-9999px;">
+</iframe>
+
+<script type="text/javascript">
+  (function($) {
+    $(function() {
+
+      $(".print").live('click', function(e) {
+        e.preventDefault();
+
+        var frame = $("#print-frame");
+        if (frame != null) {
+          window.frames["print-frame"].focus();
+          window.frames["print-frame"].print();
+        }
+      });
+    
+    });
+  })(jQuery);
+</script>

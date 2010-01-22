@@ -10,7 +10,7 @@ module Aleph
       raise "Data is required"                       unless node.present?
       raise "Data must be of type LibXML::XML::Node" unless node.class == LibXML::XML::Node
 
-      @doc_number = doc_number
+      @doc_number = doc_number.to_i.to_s
 
       data      = LibXML::XML::Document.new()
       data.root = node.copy(true)

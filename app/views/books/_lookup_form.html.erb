@@ -2,20 +2,11 @@
   <fieldset class="inputs">
     <ol>
       <li class="string">
-        <label>Title enthält</label>
-        <%= text_field_tag 'title', @title %>
-      </li>
-      <li class="string">
-        <label>Autor enthält</label>
-        <%= text_field_tag 'author', @author %>
-      </li>
-      <li class="string">
-        <label>ISBN</label>
-        <%= text_field_tag 'isbn', @isbn %>
-      </li>
-      <li class="string">
         <label>Signatur beginnt mit</label>
         <%= text_field_tag 'signature', @signature %>
+        <p class="inline-hints">
+          Bitte recherchieren Sie die Signatur mit unserem <a href="https://ubaleph.uni-paderborn.de/F" target="blank">Katalog</a>
+        </p>
       </li>
     </ol>
   </fieldset>

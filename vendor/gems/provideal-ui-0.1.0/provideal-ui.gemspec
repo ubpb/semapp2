@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ren\303\251 Sprotte"]
-  s.date = %q{2010-01-18}
+  s.date = %q{2010-01-21}
   s.email = %q{info@provideal.net}
   s.extra_rdoc_files = [
     "README"
@@ -4585,6 +4585,7 @@ Gem::Specification.new do |s|
      "public/images/pui-button/bg.png",
      "public/images/readme.txt",
      "public/javascripts/jquery-1.3.2.min.js",
+     "public/javascripts/jquery-1.4.min.js",
      "public/javascripts/jquery-form-2.33.js",
      "public/javascripts/jquery-tools-1.1.2.min.js",
      "public/javascripts/pui.js",

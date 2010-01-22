@@ -13,11 +13,11 @@ class AlephSyncEngineAdapter < SyncEngineAdapter
     if lendings.present?
       books = {}
       lendings.each do |l|
-        sleep(0.3)
+        sleep(1/100)
         record = @aleph.get_record(l)
         item   = @aleph.get_item(l)
         if record.present? and item.present?
-          books[record.doc_number.to_sym] = {
+          books[record.doc_number] = {
             :signature  => item.call_no_1,
             :title      => record.title,
             :author     => record.author,

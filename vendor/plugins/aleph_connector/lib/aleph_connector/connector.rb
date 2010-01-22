@@ -117,7 +117,7 @@ module Aleph #:nodoc:
     end
 
     def do_find(term)
-      url  = "#{@base_url}?op=find&base=pad01&request=#{URI.escape(term)}"
+      url  = "#{@base_url}?op=find&base=#{@search_base}&request=#{URI.escape(term)}"
       data = load_url(url)
 
       set_number = content_from_node(data, '//set_number')

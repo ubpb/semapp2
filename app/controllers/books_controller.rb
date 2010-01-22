@@ -44,6 +44,7 @@ class BooksController < ApplicationController
   end
 
   def destroy
+    # TODO: Security risk
     book = Book.find(params[:id])
     book.update_attribute(:scheduled_for_removal, true)
     render :nothing => true
@@ -92,9 +93,8 @@ class BooksController < ApplicationController
     end
   end
 
-  # TODO: Move this to a proper location
   def get_aleph
-    Aleph::Connector.new(:base_url => 'http://ubaleph.uni-paderborn.de/X', :library => 'pad50', :search_base => 'pbaus')
+    Aleph::Connector.new
   end
 
 end

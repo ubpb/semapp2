@@ -1,0 +1,7 @@
+<div class="item">
+  Signatur: <strong><%= book.signature %></strong>
+  //
+  Auftrag vom: <strong><%= book.created_at.to_formatted_s(:short) %></strong>
+
+  <%= render 'shared_partials/book_ref', :book => book %>
+</div>

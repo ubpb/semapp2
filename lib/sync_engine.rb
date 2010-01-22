@@ -58,7 +58,8 @@ class SyncEngine
           db_entries.each do |s, e|
             unless ils_entries.include?(s)
               # found a book that is in the db AND NOT in the ILS
-              delete_entry(e)
+              # skip books that are scheduled for addition
+              delete_entry(e) unless e.scheduled_for_addition
             else
               # found a book that is in the db AND in the ILS
               # do nothing: handled in the other case
@@ -80,7 +81,7 @@ class SyncEngine
 
   def mergable_hash_from_db_entries(db_entries)
     m = {}
-    db_entries.each {|e| m[e.signature] = e }
+    db_entries.each {|e| m[e.ils_id] = e }
     return m
   end
 
@@ -113,13 +114,14 @@ class SyncEngine
   end
 
   def create_entry(options)
+    options.merge!({:scheduled_for_addition => false, :scheduled_for_removal => false})
     unless Book.new(options).save
       raise "Failed for signature #{options[:signature]} while creating a new entry."
     end
   end
 
   def update_entry(db_entry, options)
-    options.merge!({:scheduled_for_addition => false})
+    options = options.merge({:scheduled_for_addition => false})
     db_entry.update_attributes(options)
     unless db_entry.save
       raise "Failed for signature #{options[:signature]} while updating an exsisting entry."
