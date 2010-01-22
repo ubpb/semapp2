@@ -1,7 +1,25 @@
 class Admin::SemAppsController < Admin::ApplicationController
 
+  SEM_APP_FILTER_NAME = 'admin_sem_app_filter_name'.freeze
+
   def index
-    @sem_apps = SemApp.paginate(:all, :per_page => 30, :page => params[:page])
+    @filter = session[SEM_APP_FILTER_NAME]
+    if @filter
+      @sem_apps = @filter.scope.paginate(:all, :include => [:creator, :books],  :per_page => 30, :page => params[:page])
+    else
+      @sem_apps = SemApp.paginate(:all, :include => [:creator], :per_page => 30, :page => params[:page])
+    end
+  end
+
+  def filter
+    filter          = SemAppsFilter.new
+    filter.title    = params[:title]
+    filter.tutors   = params[:tutors]
+    filter.creator  = params[:creator]
+    filter.approved = params[:approved]
+    
+    session[SEM_APP_FILTER_NAME] = filter
+    redirect_to :action => :index
   end
 
   def show

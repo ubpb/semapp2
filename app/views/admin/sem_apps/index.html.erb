@@ -5,5 +5,27 @@
 </div>
 
 <div class="grid_4 omega">
-  TBD
+  <div class="pui-panel">
+    <% form_tag filter_admin_sem_apps_path do %>
+      <p>
+        <label>Titel</label><br/>
+        <%= text_field_tag :title, @filter.title %>
+      </p>
+      <p>
+        <label>Tutor(en)</label><br/>
+        <%= text_field_tag :tutors, @filter.tutors %>
+      </p>
+      <p>
+        <label>Besitzer</label><br/>
+        <%= text_field_tag :creator, @filter.creator %>
+      </p>
+      <p>
+        <%= check_box_tag :approved, true, @filter.approved %>
+        <label>Geprüft</label>
+      </p>
+      <div class="align-center">
+        <%= submit_tag 'Filtern' %>
+      </div>
+    <% end %>
+  </div>
 </div>

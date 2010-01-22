@@ -4,7 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   map.namespace :admin do |admin|
     admin.root :controller => 'application', :action => 'redirect_to_default'
 
-    admin.resources :sem_apps, :as => 'apps'
+    admin.resources :sem_apps, :as => 'apps', :collection => {:filter => :post}
 
     #admin.resources :semesters
     #admin.resources :locations, :collection => {:reorder => :put}
