@@ -23,7 +23,7 @@ class SemApp < ActiveRecord::Base
   belongs_to :semester
   belongs_to :location
   has_one    :book_shelf
-  has_many   :books, :conditions => "scheduled_for_addition = false AND scheduled_for_removal = false"
+  has_many   :books, :conditions => "state = 'in_shelf'", :order => "title desc"
   accepts_nested_attributes_for :book_shelf, :allow_destroy => true, :reject_if => lambda { |attrs| attrs.all? { |k, v| v.blank? } }
   has_many   :ownerships, :dependent => :destroy
   has_many   :owners,     :through   => :ownerships, :source => :user
@@ -50,29 +50,38 @@ class SemApp < ActiveRecord::Base
       :conditions => {
         :sem_app_id => id
       },
-      :order => "created_at DESC")
+      :order => "title DESC")
   end
 
-  def books_to_add
+  def new_books
     Book.find(:all,
       :conditions => {
         :sem_app_id => id,
-        :scheduled_for_addition => true
+        :state => Book::States[:new]
       },
       :order => "created_at DESC")
   end
 
-  def books_to_remove
+  def deferred_books
     Book.find(:all,
       :conditions => {
         :sem_app_id => id,
-        :scheduled_for_removal => true
+        :state => Book::States[:deferred]
+      },
+      :order => "created_at DESC")
+  end
+
+  def removed_books
+    Book.find(:all,
+      :conditions => {
+        :sem_app_id => id,
+        :state => Book::States[:removed]
       },
       :order => "created_at DESC")
   end
 
   def has_book_jobs?
-    books_to_add.present? or books_to_remove.present?
+    new_books.present? or removed_books.present?
   end
 
   def book_by_ils_id(ils_id)

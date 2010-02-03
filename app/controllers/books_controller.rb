@@ -17,7 +17,7 @@ class BooksController < ApplicationController
     item   = aleph.get_item(params[:doc_number])
 
     if record.present? and item.present?
-      @book = Book.new(:sem_app => @sem_app, :scheduled_for_addition => true)
+      @book = Book.new(:sem_app => @sem_app)
       @book.ils_id     = record.doc_number
       @book.signature  = item.call_no_1
       @book.title      = record.title
@@ -42,9 +42,8 @@ class BooksController < ApplicationController
   end
 
   def destroy
-    # TODO: Security risk
     book = Book.find(params[:id])
-    book.update_attribute(:scheduled_for_removal, true)
+    book.set_state(:removed)
     render :nothing => true
   end
 

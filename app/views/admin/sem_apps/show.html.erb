@@ -5,12 +5,12 @@
 
   <div class="align-right" style="margin-bottom: 5px">
     <% link_to admin_sem_apps_path, :class => 'pui-button' do %>
-      <%= image_tag 'icons/arrow-curve-180-left.png', :plugin => 'pui' %>
+      <%= icon 'arrow-curve-180-left.png' %>
       Zurück zur Übersicht
     <% end %>
 
     <% link_to edit_admin_sem_app_path(@sem_app), :class => "pui-button" do %>
-      <%= image_tag 'icons/wrench-screwdriver.png', :plugin => 'pui' %>
+      <%= icon 'wrench-screwdriver.png' %>
       Bearbeiten
     <% end %>
   </div>
@@ -18,11 +18,10 @@
 
 <% if @sem_app.has_book_jobs? %>
   <div class="pui-panel notice align-center">
-    <%= image_tag 'icons/star.png', :plugin => 'pui' %>
     Es gibt Buchaufträge für diesen Seminarapparat
     <a href="#" class="print pui-button">
-      <%= image_tag 'icons/printer.png', :plugin => 'pui' %>
-      Übersicht Drucken
+      <%= icon 'printer.png' %>
+      Aufträge Drucken
     </a>
   </div>
 <% end %>
@@ -73,20 +72,20 @@
   <ul class="pui-tabs">
     <li>
       <a href="#users">
-        <%= image_tag 'icons/users.png', :plugin => 'pui' %>
-        Besitzer / Benutzer
+        <%= icon 'users.png' %>
+        Benutzer
       </a>
     </li>
     <li>
       <a href="#new-books">
-        <%= image_tag 'icons/overlay/book--plus.png', :plugin => 'pui' %>
-        Bücher einstellen
+        <%= icon 'overlay/book--plus.png' %>
+        Bücher neu
       </a>
     </li>
     <li>
-      <a href="#remove-books">
-        <%= image_tag 'icons/overlay/book--minus.png', :plugin => 'pui' %>
-        Bücher entfernen
+      <a href="#removed-books">
+        <%= icon 'overlay/book--minus.png' %>
+        Bücher zurück
       </a>
     </li>
   </ul>
@@ -97,11 +96,11 @@
     </div>
 
     <div>
-      <%= render 'books_to_add' %>
+      <%= render 'new_books' %>
     </div>
 
     <div>
-      <%= render 'books_to_remove' %>
+      <%= render 'removed_books' %>
     </div>
   </div>
 </div>

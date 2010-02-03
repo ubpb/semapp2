@@ -8,10 +8,10 @@
             <% unless s.approved? %>
               <%= icon 'star.png' %>
             <% end %>
-            <% if s.books_to_add.present? %>
+            <% if s.new_books.present? %>
               <%= icon 'overlay/book--plus.png' %>
             <% end %>
-            <% if s.books_to_remove.present? %>
+            <% if s.removed_books.present? %>
               <%= icon 'overlay/book--minus.png' %>
             <% end %>
             

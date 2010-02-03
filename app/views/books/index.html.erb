@@ -12,16 +12,20 @@
 <div class="pui-tabs-wrapper">
 
   <ul class="pui-tabs">
-    <li><a href="#additions">Neuaufträge</a></li>
-    <li><a href="#removals">Löschaufträge</a></li>
+    <li><a href="#additions">Bücher neu</a></li>
+    <li><a href="#deferred">Bücher vorgemerkt</a></li>
+    <li><a href="#removals">Bücher zurück</a></li>
   </ul>
 
   <div class="pui-tab-panes">
     <div>
-      <%= render 'listing', :entries => @sem_app.books_to_add %>
+      <%= render 'listing', :entries => @sem_app.new_books %>
     </div>
     <div>
-      <%= render 'listing', :entries => @sem_app.books_to_remove %>
+      <%= render 'listing', :entries => @sem_app.deferred_books %>
+    </div>
+    <div>
+      <%= render 'listing', :entries => @sem_app.removed_books %>
     </div>
   </div>
 

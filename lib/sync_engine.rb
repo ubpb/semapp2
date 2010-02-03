@@ -40,7 +40,7 @@ class SyncEngine
       begin
         # load the books for this sem_app
         ils_entries = @adapter.get_books(sem_app.book_shelf.ils_account)
-        db_entries  = mergable_hash_from_db_entries(sem_app.books(:all => true))
+        db_entries  = mergable_hash_from_db_entries(sem_app.all_books)
 
         # sync the books
         SemApp.transaction do
@@ -114,14 +114,13 @@ class SyncEngine
   end
 
   def create_entry(options)
-    options.merge!({:scheduled_for_addition => false, :scheduled_for_removal => false})
+    options.merge!(:state => :in_shelf)
     unless Book.new(options).save
       raise "Failed for signature #{options[:signature]} while creating a new entry."
     end
   end
 
   def update_entry(db_entry, options)
-    options = options.merge({:scheduled_for_addition => false})
     db_entry.update_attributes(options)
     unless db_entry.save
       raise "Failed for signature #{options[:signature]} while updating an exsisting entry."

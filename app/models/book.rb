@@ -23,6 +23,13 @@
 
 class Book < ActiveRecord::Base
 
+  States = {
+    :new      => "new",      # the book is marked to be added to the shelf
+    :in_shelf => "in_shelf", # the book was placed in the sem app shelf
+    :removed  => "removed",  # the book is marked to be removed from the shelf
+    :deferred => "deferred"  # the book is deferred
+  }.freeze
+
   # Relations
   belongs_to :sem_app
 
@@ -40,18 +47,20 @@ class Book < ActiveRecord::Base
   #
   ###########################################################################################
 
+  def state=(value)
+    if value.present? and States[value.to_sym].present?
+      self.write_attribute(:state, States[value.to_sym])
+    end
+  end
+
+  def set_state(value)
+    if value.present? and States[value.to_sym].present?
+      self.update_attribute(:state, States[value.to_sym])
+    end
+  end
+
   def base_signature
     Book.get_base_signature(signature)
-  end
-
-  def scheduled_for_addition=(value)
-    write_attribute :scheduled_for_addition, value
-    write_attribute :scheduled_for_removal, !value if (value == true)
-  end
-
-  def scheduled_for_removal=(value)
-    write_attribute :scheduled_for_removal, value
-    write_attribute :scheduled_for_addition, !value if (value == true)
   end
 
   ###########################################################################################
@@ -64,6 +73,18 @@ class Book < ActiveRecord::Base
     if signature.present?
       m = signature.match(/(.+)(\(|\+|-).*/)
       (m and m[1]) ? m[1] : signature
+    end
+  end
+
+  ###########################################################################################
+  #
+  # AR Callbacks
+  #
+  ###########################################################################################
+
+  def before_create
+    if self.state.blank?
+      self.state = Book::States[:new]
     end
   end
 

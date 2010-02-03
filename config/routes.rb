@@ -2,9 +2,11 @@ ActionController::Routing::Routes.draw do |map|
 
   # Admin routes
   map.namespace :admin do |admin|
-    admin.root :controller => 'application', :action => 'redirect_to_default'
+    admin.root :controller => 'sem_apps', :action => 'index'
 
     admin.resources :sem_apps, :as => 'apps', :collection => {:filter => :post}
+
+    admin.resources :books, :only => [:defer, :dedefer, :placed_in_shelf, :removed_from_shelf], :member => {:defer => :put, :dedefer => :put, :placed_in_shelf => :put, :removed_from_shelf => :put}
 
     #admin.resources :semesters
     #admin.resources :locations, :collection => {:reorder => :put}

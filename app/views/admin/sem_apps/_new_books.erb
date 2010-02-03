@@ -1,0 +1,37 @@
+<div class="pui-view">
+  <h4 class="section">Neue Bücher</h4>
+  <% if @sem_app.new_books.present? %>
+    <div class="pui-panel align-center">
+      <%= icon 'plus.png' %>
+      Die folgenden Bücher bitte in den Apparat einstellen
+    </div>
+
+    <div class="pui-colletion-view">
+      <% @sem_app.new_books.each do |b| %>
+        <%= render 'book', :book => b %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="pui-panel success align-center">
+      Aktuell keine neuen Bücher
+    </div>
+  <% end %>
+
+  <h4 class="section">Vormerkungen</h4>
+  <% if @sem_app.deferred_books.present? %>
+    <div class="pui-panel align-center">
+      <%= icon 'lock.png' %>
+      Die folgenden Bücher wurden vorgemerkt
+    </div>
+
+    <div class="pui-colletion-view">
+      <% @sem_app.deferred_books.each do |b| %>
+        <%= render 'book', :book => b %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="pui-panel success align-center">
+      Aktuell keine Bücher vorgemerkt
+    </div>
+  <% end %>
+</div>

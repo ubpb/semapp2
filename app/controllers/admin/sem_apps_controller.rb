@@ -6,10 +6,10 @@ class Admin::SemAppsController < Admin::ApplicationController
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
     if @filter
       @sem_apps = @filter.scope.paginate(:all, :include => [:creator, :books],  :per_page => 30, :page => params[:page], 
-        :order => "sem_apps.approved asc, books.scheduled_for_addition asc, books.scheduled_for_removal asc, sem_apps.title desc")
+        :order => "sem_apps.approved asc, books.state asc, sem_apps.title desc")
     else
       @sem_apps = SemApp.paginate(:all, :include => [:creator, :books], :per_page => 30, :page => params[:page], 
-        :order => "sem_apps.approved asc, books.scheduled_for_addition asc, books.scheduled_for_removal asc, sem_apps.title desc")
+        :order => "sem_apps.approved asc, books.state asc, sem_apps.title desc")
     end
   end
 
