@@ -8,6 +8,10 @@
   <div class="pui-panel">
     <% form_tag filter_admin_sem_apps_path do %>
       <p>
+        <label>Semester</label><br/>
+        <%= collection_select(:filter, :semester, Semester.all, :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
+      </p>
+      <p>
         <label>Fachbibliothek</label><br/>
         <%= collection_select(:filter, :location, Location.all, :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
       </p>

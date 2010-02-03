@@ -45,15 +45,13 @@ class SemApp < ActiveRecord::Base
   #
   ###########################################################################################
 
-#  def books
-#    Book.find(:all,
-#      :conditions => {
-#        :sem_app_id => id,
-#        :scheduled_for_addition => false,
-#        :scheduled_for_removal => false
-#      },
-#      :order => "created_at DESC")
-#  end
+  def all_books
+    Book.find(:all,
+      :conditions => {
+        :sem_app_id => id
+      },
+      :order => "created_at DESC")
+  end
 
   def books_to_add
     Book.find(:all,
