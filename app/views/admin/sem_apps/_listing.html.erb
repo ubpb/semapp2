@@ -5,12 +5,19 @@
       <% @sem_apps.each do |s| %>
         <tr>
           <td>
-            <% if s.has_book_jobs? %>
-              <%= image_tag 'icons/star.png', :plugin => 'pui' %>
+            <% unless s.approved? %>
+              <%= icon 'star.png' %>
+            <% end %>
+            <% if s.books_to_add.present? %>
+              <%= icon 'overlay/book--plus.png' %>
+            <% end %>
+            <% if s.books_to_remove.present? %>
+              <%= icon 'overlay/book--minus.png' %>
             <% end %>
             
-            <%= link_to h(s.title), admin_sem_app_url(s) %>
-            (<%= h(s.semester.title) %>)
+            <%= link_to h(s.title), admin_sem_app_url(s) %><br/>
+            <span style="font-size:90%"><%= h(s.tutors) %></span><br/>
+            <span style="font-size:90%"><%= h(s.semester.title) %>, <%= h(s.location.title) %></span>
           </td>
         </tr>
       <% end %>

@@ -48,7 +48,11 @@
   <% f.buttons do %>
     <%= f.commit_button 'Speichern' %>
     <li>
-      <%= link_to 'Abbrechen', admin_sem_app_path(@sem_app) %>
+      <% if f.object.new_record?  %>
+        <%= link_to 'Abbrechen', admin_sem_apps_path %>
+      <% else %>
+        <%= link_to 'Abbrechen', admin_sem_app_path(@sem_app) %>
+      <% end %>
     </li>
   <% end %>
 <% end %>

@@ -8,20 +8,20 @@
   <div class="pui-panel">
     <% form_tag filter_admin_sem_apps_path do %>
       <p>
+        <label>Fachbibliothek</label><br/>
+        <%= collection_select(:filter, :location, Location.all, :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
+      </p>
+      <p>
         <label>Titel</label><br/>
-        <%= text_field_tag :title, @filter.title %>
+        <%= text_field_tag "filter[title]", @filter.title, {:style => 'width: 190px'} %>
       </p>
       <p>
         <label>Tutor(en)</label><br/>
-        <%= text_field_tag :tutors, @filter.tutors %>
+        <%= text_field_tag "filter[tutors]", @filter.tutors, {:style => 'width: 190px'}  %>
       </p>
       <p>
         <label>Besitzer</label><br/>
-        <%= text_field_tag :creator, @filter.creator %>
-      </p>
-      <p>
-        <%= check_box_tag :approved, true, @filter.approved %>
-        <label>Geprüft</label>
+        <%= text_field_tag "filter[creator]", @filter.creator, {:style => 'width: 190px'}  %>
       </p>
       <div class="align-center">
         <%= submit_tag 'Filtern' %>

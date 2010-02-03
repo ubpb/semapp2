@@ -80,6 +80,7 @@ CREATE TABLE sem_apps (
   semester_id integer REFERENCES semesters NOT NULL,
   location_id integer REFERENCES locations NOT NULL,
   approved boolean DEFAULT false NOT NULL,
+  marked boolean DEFAULT false NOT NULL,
   title character varying(255) NOT NULL,
   tutors text NOT NULL,
   shared_secret character varying(255) NOT NULL,

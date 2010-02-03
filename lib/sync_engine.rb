@@ -68,14 +68,14 @@ class SyncEngine
         end
         
         # finished we are
-        print "Done."
+        print "Done.\n"
       rescue RuntimeError => e
-        print "Error! #{e}"
+        print "Error! #{e}\n"
       ensure
         print "\n"
       end
     else
-      print "Skipped. Has no book shelf applied."
+      print "Skipped. Has no book shelf applied.\n"
     end
   end
 

@@ -3,21 +3,18 @@ class Admin::SemAppsController < Admin::ApplicationController
   SEM_APP_FILTER_NAME = 'admin_sem_app_filter_name'.freeze
 
   def index
-    @filter = session[SEM_APP_FILTER_NAME]
+    @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
     if @filter
-      @sem_apps = @filter.scope.paginate(:all, :include => [:creator, :books],  :per_page => 30, :page => params[:page])
+      @sem_apps = @filter.scope.paginate(:all, :include => [:creator, :books],  :per_page => 30, :page => params[:page], 
+        :order => "sem_apps.approved asc, books.scheduled_for_addition asc, books.scheduled_for_removal asc, sem_apps.title desc")
     else
-      @sem_apps = SemApp.paginate(:all, :include => [:creator], :per_page => 30, :page => params[:page])
+      @sem_apps = SemApp.paginate(:all, :include => [:creator, :books], :per_page => 30, :page => params[:page], 
+        :order => "sem_apps.approved asc, books.scheduled_for_addition asc, books.scheduled_for_removal asc, sem_apps.title desc")
     end
   end
 
   def filter
-    filter          = SemAppsFilter.new
-    filter.title    = params[:title]
-    filter.tutors   = params[:tutors]
-    filter.creator  = params[:creator]
-    filter.approved = params[:approved]
-    
+    filter = SemAppsFilter.new(params[:filter])
     session[SEM_APP_FILTER_NAME] = filter
     redirect_to :action => :index
   end
@@ -32,6 +29,23 @@ class Admin::SemAppsController < Admin::ApplicationController
     end
   end
 
+  def new
+    @sem_app = SemApp.new
+    @sem_app.build_book_shelf unless @sem_app.book_shelf.present?
+  end
+
+  def create
+    @sem_app = SemApp.new(params[:sem_app])
+    @sem_app.creator = current_user
+    if @sem_app.save
+      flash[:success] = "Der eSeminarapparat wurde erfolgreich erstellt"
+      redirect_to :action => :index
+    else
+      @sem_app.build_book_shelf unless @sem_app.book_shelf.present?
+      render :action => :new
+    end
+  end
+
   def edit
     @sem_app = SemApp.find(params[:id])
     @sem_app.build_book_shelf unless @sem_app.book_shelf.present?
@@ -41,9 +55,9 @@ class Admin::SemAppsController < Admin::ApplicationController
     @sem_app = SemApp.find(params[:id])
     if @sem_app.update_attributes(params[:sem_app])
       flash[:success] = "Die Daten wurden erfolgreich gespeichert"
-      redirect_to admin_sem_app_path(@sem_app)
+      redirect_to :action => :show
     else
-      render :edit
+      render :action => :edit
     end
   end
 
