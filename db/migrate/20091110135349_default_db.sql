@@ -221,7 +221,7 @@ CREATE TABLE attachments (
 -- Scanjobs
 --
 CREATE TABLE scanjobs (
-  scan_accepted boolean,
+  scan_state   character varying,
   scan_message text
 );
 

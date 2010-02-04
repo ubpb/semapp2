@@ -27,6 +27,7 @@ class SemApp < ActiveRecord::Base
   accepts_nested_attributes_for :book_shelf, :allow_destroy => true, :reject_if => lambda { |attrs| attrs.all? { |k, v| v.blank? } }
   has_many   :ownerships, :dependent => :destroy
   has_many   :owners,     :through   => :ownerships, :source => :user
+  has_many   :sem_app_entries
 
   # Validation
   validates_presence_of   :creator
@@ -105,6 +106,18 @@ class SemApp < ActiveRecord::Base
         :conditions => ["sem_app_id = :sem_app_id and (publish_on < :date or publish_on is null)", {:sem_app_id => self.id, :date => Time.new}]
       )
     end
+  end
+
+  def scanjobs
+    scanjobs = []
+    SemAppEntry.find(:all, :conditions => { :sem_app_id => id}, :order => "created_at DESC").each do |e|
+      if (e.class == SemAppMonographScanjobEntry or
+          e.class == SemAppArticleScanjobEntry or
+          e.class == SemAppCollectedArticleScanjobEntry)
+        scanjobs << e
+      end
+    end
+    return scanjobs
   end
 
   def add_ownership(user)

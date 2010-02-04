@@ -8,6 +8,8 @@ ActionController::Routing::Routes.draw do |map|
 
     admin.resources :books, :only => [:defer, :dedefer, :placed_in_shelf, :removed_from_shelf], :member => {:defer => :put, :dedefer => :put, :placed_in_shelf => :put, :removed_from_shelf => :put}
 
+    admin.resources :scanjobs
+
     #admin.resources :semesters
     #admin.resources :locations, :collection => {:reorder => :put}
     #admin.resources :sem_apps, :as => 'apps' do |sem_app|

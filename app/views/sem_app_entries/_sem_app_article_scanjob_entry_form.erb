@@ -2,7 +2,7 @@
   <%= hidden_field_tag :class, 'SemAppArticleScanjobEntry' %>
   <%= hidden_field_tag :origin_id, @origin_id %>
 
-  <% if entry.scan_accepted %>
+  <% unless entry.editable? %>
     <div class="pui-panel notice align-center">
       Der Scanauftrag wird aktuell durch die Bibliothek bearbeitet und kann durch Sie nicht bearbeitet werden.
     </div>

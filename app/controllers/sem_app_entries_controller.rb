@@ -94,7 +94,7 @@ class SemAppEntriesController < ApplicationController
       SemAppEntry.transaction do
         entry = SemAppEntry.find(params[:id])
 
-        if entry.respond_to?(:scan_accepted) and entry.scan_accepted
+        if entry.respond_to?(:editable?) and not entry.editable?
           msg = "Der Eintrag kann nicht gelöscht werden, da der Scanauftrag aktuell durch die Bibliothek bearbeitet wird."
           format.json do
             render_json_response(:error, :message => msg)

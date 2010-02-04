@@ -5,10 +5,6 @@ class Admin::ApplicationController < ApplicationController
 
   layout 'admin'
 
-  def redirect_to_default
-    redirect_to admin_sem_apps_path
-  end
-
   private
 
   def check_for_admin_role
