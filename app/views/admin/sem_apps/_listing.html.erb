@@ -8,10 +8,12 @@
             <% unless s.approved? %>
               <%= icon 'star.png' %>
             <% end %>
-            <% if s.new_books.present? %>
+
+            <% if Book.for_sem_app(s).ordered.count > 0 %>
               <%= icon 'overlay/book--plus.png' %>
             <% end %>
-            <% if s.removed_books.present? %>
+
+            <% if Book.for_sem_app(s).removed.count > 0 %>
               <%= icon 'overlay/book--minus.png' %>
             <% end %>
             

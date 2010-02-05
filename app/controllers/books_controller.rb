@@ -5,6 +5,9 @@ class BooksController < ApplicationController
   before_filter :check_access
 
   def index
+    @ordered_books  = Book.for_sem_app(@sem_app).ordered.ordered_by('created_at')
+    @removed_books  = Book.for_sem_app(@sem_app).removed.ordered_by('created_at')
+    @deferred_books = Book.for_sem_app(@sem_app).deferred.ordered_by('created_at')
   end
 
   def new

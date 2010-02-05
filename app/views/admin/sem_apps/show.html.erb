@@ -16,7 +16,7 @@
   </div>
 </h2>
 
-<% if @sem_app.has_book_jobs? %>
+<% if @ordered_books.present? or @removed_books.present? %>
   <div class="pui-panel notice align-center">
     Es gibt Buchaufträge für diesen Seminarapparat
     <a href="#" class="print pui-button">
@@ -96,7 +96,7 @@
     </div>
 
     <div>
-      <%= render 'new_books' %>
+      <%= render 'ordered_books' %>
     </div>
 
     <div>

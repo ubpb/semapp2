@@ -34,7 +34,7 @@ class SemApp < ActiveRecord::Base
   ###########################################################################################
 
   def has_book_jobs?
-    Book.ordered.present? or Book.rejected.present?
+    Book.for_sem_app(self).ordered.count > 0 or Book.for_sem_app(self).removed.count > 0
   end
 
   def book_by_ils_id(ils_id)

@@ -19,13 +19,13 @@
 
   <div class="pui-tab-panes">
     <div>
-      <%= render 'listing', :entries => @sem_app.new_books %>
+      <%= render 'listing', :entries => @ordered_books %>
     </div>
     <div>
-      <%= render 'listing', :entries => @sem_app.deferred_books %>
+      <%= render 'listing', :entries => @deferred_books %>
     </div>
     <div>
-      <%= render 'listing', :entries => @sem_app.removed_books %>
+      <%= render 'listing', :entries => @removed_books %>
     </div>
   </div>
 
