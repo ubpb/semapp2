@@ -1,11 +1,13 @@
 class AbstractEntriesController < ApplicationController
 
   # TODO: Secure the controller
+  # TODO: Ajaxify the controller
 
   def new
-    @sem_app   = SemApp.find(params[:sem_app_id])
-    @entry     = self.controller_class.new
-    @origin_id = params[:origin_id]
+    @sem_app       = SemApp.find(params[:sem_app_id])
+    @entry         = self.controller_class.new
+    @entry.sem_app = @sem_app
+    @origin_id     = params[:origin_id]
   end
 
   def create

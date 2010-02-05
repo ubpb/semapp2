@@ -1,0 +1,14 @@
+<% semantic_form_for [@entry, @file_attachment], :html => {:multipart => true} do |f| %>
+
+  <% f.inputs do %>
+    <%= f.input :file,        :label => 'Datei',        :required => true %>
+    <%= f.input :description, :label => 'Beschreibung', :required => false, :input_html => {:rows => 1} %>
+  <% end %>
+
+  <% f.buttons do %>
+    <%= f.commit_button 'Datei hochladen' %>
+    <li class="commit">
+      <%= link_to 'Abbrechen', sem_app_path(@entry.sem_app, :anchor => 'media') %>
+    </li>
+  <% end %>
+<% end %>

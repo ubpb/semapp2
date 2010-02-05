@@ -1,3 +1,5 @@
 <%= render 'entries/publish_notice', :entry => entry %>
 
 <%= textilize(entry.text) %>
+
+<%= render 'entries/attachments', :entry => entry %>

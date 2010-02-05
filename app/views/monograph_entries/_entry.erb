@@ -12,3 +12,5 @@
     <%= link_to 'Google Books', "http://books.google.com/books?as_isbn=#{entry.isbn.gsub('-', '')}" %>
   <% end %>
 </div>
+
+<%= render 'entries/attachments', :entry => entry %>

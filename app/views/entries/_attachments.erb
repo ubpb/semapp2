@@ -1,17 +1,25 @@
-<%# if entry.attachments.present? %>
+<% if entry.file_attachments.present? %>
   <ol class="attachments clearfix">
-    <%# entry.attachments.each do |a| %>
+    <% entry.file_attachments.each do |a| %>
       <li class="attachment">
-        <%# if a.description.present? %>
+        <% if a.description.present? %>
           <span class="description">
-            <%#= textilize_without_paragraph(a.description) %>
+            <%= textilize_without_paragraph(a.description) %>
           </span>
-        <%# end %>
+        <% end %>
         <span class="download-link">
-          <%#= link_to 'Datei herunterladen', a.attachable.url %>
-          (<%#= a.attachable_file_name %>)
+          <%= link_to 'Datei herunterladen', a.file.url %>
+          <%= a.file_file_name %>,
+          <%= number_to_human_size(a.file_file_size) %>
         </span>
+        <% link_to file_attachment_path(a), :method => :delete, :confirm => "Angang wirklich löschen" do %>
+          <%= icon 'cross.png' %>
+        <% end %>
       </li>
-    <%# end %>
+    <% end %>
   </ol>
-<%# end %>
+<% end %>
+
+<div>
+  <%= link_to 'Eine Datei anhängen', polymorphic_path(['new', entry, 'file_attachment']) %>
+</div>

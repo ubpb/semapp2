@@ -2,6 +2,7 @@ class Entry < ActiveRecord::Base
 
   # Realations
   belongs_to :sem_app
+  has_many :file_attachments
 
   # Behavior
   acts_as_inheritance_root

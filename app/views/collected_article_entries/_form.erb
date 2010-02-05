@@ -23,5 +23,8 @@
 
   <% f.buttons do %>
     <%= f.commit_button 'Speichern' %>
+    <li class="commit">
+      <%= link_to 'Abbrechen', sem_app_path(@entry.sem_app, :anchor => 'media') %>
+    </li>
   <% end %>
 <% end %>

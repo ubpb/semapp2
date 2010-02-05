@@ -145,7 +145,7 @@ CREATE INDEX index_ownerships_on_user_id ON ownerships(user_id);
 CREATE INDEX index_ownerships_on_sem_app_id ON ownerships(sem_app_id);
 
 --
--- SemApp entries & attachments
+-- SemApp entries
 --
 CREATE TABLE entries (
   id         serial NOT NULL PRIMARY KEY,
@@ -208,13 +208,17 @@ CREATE TABLE collected_article_entries (
   pages character varying
 ) INHERITS (entries);
 
-CREATE TABLE attachments (
+--
+-- (File) Attachments
+--
+CREATE TABLE file_attachments (
   id serial NOT NULL PRIMARY KEY,
-  entry_id integer NOT NULL, --REFERENCES sem_app_entries(id) DEFERRABLE INITIALLY DEFERRED NOT NULL,
-  attachable_file_name character varying NOT NULL,
-  attachable_content_type character varying NOT NULL,
-  attachable_file_size integer NOT NULL,
-  description text
+  entry_id integer NOT NULL, --REFERENCES entries NOT NULL,
+  file_file_name character varying NOT NULL,
+  file_content_type character varying NOT NULL,
+  file_file_size integer NOT NULL,
+  description text,
+  scanjob boolean DEFAULT false NOT NULL
 );
 
 --
