@@ -1,0 +1,78 @@
+class MonographEntry < Entry  
+
+  # Relations
+  belongs_to :sem_app
+  #has_many   :attachments, :class_name => '::Attachment', :dependent => :destroy, :foreign_key => 'entry_id'
+
+  # Bahvior
+  set_table_name :monograph_entries
+  #accepts_nested_attributes_for :attachments, :allow_destroy => true, :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
+
+  # Validation
+  validates_presence_of :author
+  validates_presence_of :title
+
+  ######################################################################################################
+  #
+  # Public API
+  #
+  ######################################################################################################
+
+  def to_s
+    out  = ""
+    out << author_to_s
+    out << year_to_s
+    out << title_to_s
+    out << subtitle_to_s
+    out << edition_to_s
+    out << place_to_s
+    out << publisher_to_s
+    out << isbn_to_s
+    out.ends_with?(".") ? out : "#{out}."
+  end
+
+  private
+
+  ######################################################################################################
+  #
+  # Private API
+  #
+  ######################################################################################################
+
+  def author_to_s
+    author.present? ? author.strip : "n.n."
+  end
+
+  def year_to_s
+    year.present? ? " (#{year.strip})" : ""
+  end
+
+  def title_to_s
+    title.present? ? ": #{title.strip}" : ""
+  end
+
+  def subtitle_to_s
+    subtitle.present? ? ". #{subtitle.strip}" : ""
+  end
+
+  def edition_to_s
+    if edition.present?
+      return (edition.to_i.to_s == edition) ? ". Aufl. #{edition.strip}" : ". #{edition.strip}"
+    else
+      return ""
+    end
+  end
+
+  def place_to_s
+    place.present? ? ". #{place.strip}" : ""
+  end
+
+  def publisher_to_s
+    publisher.present? ? ": #{publisher.strip}" : ""
+  end
+
+  def isbn_to_s
+    isbn.present? ? ", ISBN #{isbn.strip}" : ""
+  end
+
+end

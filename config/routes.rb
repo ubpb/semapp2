@@ -29,14 +29,22 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :user, :only => [:show]
 
   # Sem Apps
-  map.resources :sem_apps, :as => 'apps', :controller => 'sem_apps', :except => [:destroy], :member => {:unlock => :post} do |sem_app|
-    sem_app.resources :entries, :controller => 'sem_app_entries', :except => [:index, :show], :collection => {:reorder => :put}
+  map.resources :sem_apps, :as => 'apps', :controller => 'sem_apps', :member => {:unlock => :post} do |sem_app|
+
+    sem_app.resources :headline_entries,           :as => 'headlines',          :shallow => true
+    sem_app.resources :text_entries,               :as => 'texts',              :shallow => true
+    sem_app.resources :monograph_entries,          :as => 'monographs',         :shallow => true
+    sem_app.resources :article_entries,            :as => 'articles',           :shallow => true
+    sem_app.resources :collected_article_entries,  :as => 'collected-articles', :shallow => true
+
+    sem_app.resources :entries, :only => [:reorder], :collection => {:reorder => :put}, :shallow => true
+
     sem_app.resources :books, :collection => {:lookup => :get}
   end
 
   # ubdok import
-  map.ubdok_sem_apps_import 'ubdok_sem_apps_import', :controller => 'ubdok_import', :action => 'import_sem_apps'
-  map.ubdok_sem_app_import 'ubdok_sem_app_import', :controller => 'ubdok_import', :action => 'import_sem_app'
+  #map.ubdok_sem_apps_import 'ubdok_sem_apps_import', :controller => 'ubdok_import', :action => 'import_sem_apps'
+  #map.ubdok_sem_app_import 'ubdok_sem_app_import', :controller => 'ubdok_import', :action => 'import_sem_app'
   
   # Download (secured download of attachments)
   map.download 'download/:id/:style', :controller => 'download', :action => 'download'

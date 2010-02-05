@@ -147,8 +147,8 @@ CREATE INDEX index_ownerships_on_sem_app_id ON ownerships(sem_app_id);
 --
 -- SemApp entries & attachments
 --
-CREATE TABLE sem_app_entries (
-  id serial NOT NULL PRIMARY KEY,
+CREATE TABLE entries (
+  id         serial NOT NULL PRIMARY KEY,
   sem_app_id integer REFERENCES sem_apps NOT NULL,
   "position" integer,
   publish_on timestamp without time zone,
@@ -156,15 +156,15 @@ CREATE TABLE sem_app_entries (
   updated_at timestamp without time zone
 );
 
-CREATE TABLE sem_app_text_entries (
-  body_text text NOT NULL
-) INHERITS (sem_app_entries);
-
-CREATE TABLE sem_app_headline_entries (
+CREATE TABLE headline_entries (
   headline character varying NOT NULL
-) INHERITS (sem_app_entries);
+) INHERITS (entries);
 
-CREATE TABLE sem_app_monograph_reference_entries (
+CREATE TABLE text_entries (
+  text text NOT NULL
+) INHERITS (entries);
+
+CREATE TABLE monograph_entries (
   author character varying NOT NULL,
   title text NOT NULL,
   subtitle text,
@@ -174,9 +174,9 @@ CREATE TABLE sem_app_monograph_reference_entries (
   edition character varying,
   isbn character varying,
   signature character varying
-) INHERITS (sem_app_entries);
+) INHERITS (entries);
 
-CREATE TABLE sem_app_article_reference_entries (
+CREATE TABLE article_entries (
   author character varying NOT NULL,
   title text NOT NULL,
   subtitle text,
@@ -187,9 +187,9 @@ CREATE TABLE sem_app_article_reference_entries (
   pages character varying,
   issn character varying,
   signature character varying
-) INHERITS (sem_app_entries);
+) INHERITS (entries);
 
-CREATE TABLE sem_app_collected_article_reference_entries (
+CREATE TABLE collected_article_entries (
   source_editor character varying NOT NULL,
   source_title text,
   source_subtitle text,
@@ -206,11 +206,11 @@ CREATE TABLE sem_app_collected_article_reference_entries (
   subtitle text,
   volume character varying,
   pages character varying
-) INHERITS (sem_app_entries);
+) INHERITS (entries);
 
 CREATE TABLE attachments (
   id serial NOT NULL PRIMARY KEY,
-  sem_app_entry_id integer NOT NULL, --REFERENCES sem_app_entries(id) DEFERRABLE INITIALLY DEFERRED NOT NULL,
+  entry_id integer NOT NULL, --REFERENCES sem_app_entries(id) DEFERRABLE INITIALLY DEFERRED NOT NULL,
   attachable_file_name character varying NOT NULL,
   attachable_content_type character varying NOT NULL,
   attachable_file_size integer NOT NULL,
@@ -224,15 +224,3 @@ CREATE TABLE scanjobs (
   scan_state   character varying,
   scan_message text
 );
-
-CREATE TABLE sem_app_monograph_scanjob_entries (
-  pages character varying NOT NULL
-) INHERITS (scanjobs, sem_app_monograph_reference_entries);
-
-CREATE TABLE sem_app_article_scanjob_entries (
-  -- nothing
-) INHERITS (scanjobs, sem_app_article_reference_entries);
-
-CREATE TABLE sem_app_collected_article_scanjob_entries (
-  -- nothing
-) INHERITS (scanjobs, sem_app_collected_article_reference_entries);

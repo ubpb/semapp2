@@ -123,7 +123,7 @@
     }
 
     function createEntry(instance_type) {
-      jQuery.get('<%= new_sem_app_entry_path(@sem_app) -%>', {
+      jQuery.get('<%= new_entry_path(@sem_app) -%>', {
         instance_type: instance_type
       }, function(data) {
         entryDialog({

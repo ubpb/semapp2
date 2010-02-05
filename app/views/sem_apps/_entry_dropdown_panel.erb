@@ -1,26 +1,17 @@
 <ul style="<%=inline_style%>">
   <li>
-    <%= link_to "Überschrift", new_sem_app_entry_path(@sem_app, :class => 'SemAppHeadlineEntry', :origin_id => origin_id), :class => 'create-entry-action' %>
+    <%= link_to "Überschrift", new_sem_app_headline_entry_path(@sem_app, :origin_id => origin_id) %>
   </li>
   <li>
-    <%= link_to "Text / Datei", new_sem_app_entry_path(@sem_app, :class => 'SemAppTextEntry', :origin_id => origin_id), :class => 'create-entry-action' %>
+    <%= link_to "Text", new_sem_app_text_entry_path(@sem_app, :origin_id => origin_id) %>
   </li>
   <li>
-    <%= link_to "Monographie", new_sem_app_entry_path(@sem_app, :class => 'SemAppMonographReferenceEntry', :origin_id => origin_id), :class => 'create-entry-action' %>
+    <%= link_to "Monographie", new_sem_app_monograph_entry_path(@sem_app, :origin_id => origin_id) %>
   </li>
   <li>
-    <%= link_to "Monographie (Scanauftrag)", new_sem_app_entry_path(@sem_app, :class => 'SemAppMonographScanjobEntry', :origin_id => origin_id), :class => 'create-entry-action' %>
+    <%= link_to "Zeitschriftenartikel", new_sem_app_article_entry_path(@sem_app, :origin_id => origin_id) %>
   </li>
   <li>
-    <%= link_to "Zeitschriftenartikel", new_sem_app_entry_path(@sem_app, :class => 'SemAppArticleReferenceEntry', :origin_id => origin_id), :class => 'create-entry-action' %>
-  </li>
-  <li>
-    <%= link_to "Zeitschriftenartikel (Scanauftrag)", new_sem_app_entry_path(@sem_app, :class => 'SemAppArticleScanjobEntry', :origin_id => origin_id), :class => 'create-entry-action' %>
-  </li>
-  <li>
-    <%= link_to "Beitrag in einem Sammelwerk", new_sem_app_entry_path(@sem_app, :class => 'SemAppCollectedArticleReferenceEntry', :origin_id => origin_id), :class => 'create-entry-action' %>
-  </li>
-  <li>
-    <%= link_to "Beitrag in einem Sammelwerk (Scanauftrag)", new_sem_app_entry_path(@sem_app, :class => 'SemAppCollectedArticleScanjobEntry', :origin_id => origin_id), :class => 'create-entry-action' %>
+    <%= link_to "Beitrag in einem Sammelwerk", new_sem_app_collected_article_entry_path(@sem_app, :origin_id => origin_id) %>
   </li>
 </ul>

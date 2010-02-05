@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def partial_path_for_entry(entry)
-    'sem_app_entries/' + entry.class.name.underscore
+    entry.class.name.tableize + '/entry'
   end
 
   def partial_path_for_entry_form(entry)
@@ -28,9 +28,9 @@ class ApplicationController < ActionController::Base
 
   def form_url_for_entry(entry)
     if entry.new_record?
-      sem_app_entries_path
+      entries_path
     else
-      sem_app_entry_path
+      entry_path
     end
   end
 

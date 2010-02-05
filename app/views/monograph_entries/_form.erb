@@ -1,0 +1,18 @@
+<% semantic_form_for [@sem_app, @entry] do |f| %>
+  <%= hidden_field_tag :origin_id, @origin_id %>
+
+  <% f.inputs do %>
+    <%= f.input :author,    :label => 'Author(en)' %>
+    <%= f.input :title,     :label => 'Titel', :input_html => {:rows => 1} %>
+    <%= f.input :subtitle,  :label => 'Untertitel', :input_html => {:rows => 1}, :required => false %>
+    <%= f.input :year,      :label => 'Jahr', :required => false %>
+    <%= f.input :place,     :label => 'Verlagsort', :required => false %>
+    <%= f.input :publisher, :label => 'Verlag', :required => false %>
+    <%= f.input :edition,   :label => 'Auflage', :required => false %>
+    <%= f.input :isbn,      :label => 'ISBN', :required => false %>
+  <% end %>
+
+  <% f.buttons do %>
+    <%= f.commit_button 'Speichern' %>
+  <% end %>
+<% end %>

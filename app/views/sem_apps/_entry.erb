@@ -8,15 +8,15 @@
         </li>
       </ul>
 
-      <% link_to edit_sem_app_entry_path(entry.sem_app, entry), :class => "toolbar-item edit-entry-action" do %>
+      <% link_to polymorphic_path ['edit', entry], :class => "toolbar-item" do %>
         <%= image_tag 'icons/wrench.png', :plugin => 'pui', :title => 'Diesen Eintrag bearbeiten' %>
       <% end %>
 
-      <% link_to sem_app_entry_path(entry.sem_app, entry), :class => "toolbar-item delete-entry-action" do %>
+      <% link_to polymorphic_path([entry]), :method => :delete, :confirm => 'Diesen Eintrag wirklich löschen?' do %>
         <%= image_tag 'icons/cross-circle-frame.png', :plugin => 'pui', :title => 'Diesen Eintrag entfernen' %>
       <% end %>
 
-      <% link_to reorder_sem_app_entries_path(entry.sem_app), :class => "toolbar-item reorder-entry-action" do %>
+      <% link_to reorder_sem_app_entries_path(@sem_app), :class => "toolbar-item reorder-entry-action" do %>
         <%= image_tag 'icons/arrow-move.png', :plugin => 'pui', :title => 'Diese Eintrag mittels Drag&Drop umsortieren' %>
       <% end %>
     </div>

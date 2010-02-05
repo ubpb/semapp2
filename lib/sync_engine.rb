@@ -40,7 +40,7 @@ class SyncEngine
       begin
         # load the books for this sem_app
         ils_entries = @adapter.get_books(sem_app.book_shelf.ils_account)
-        db_entries  = mergable_hash_from_db_entries(sem_app.all_books)
+        db_entries  = mergable_hash_from_db_entries(sem_app.books)
 
         # sync the books
         SemApp.transaction do

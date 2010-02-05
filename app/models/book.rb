@@ -1,39 +1,16 @@
-# == Schema Information
-# Schema version: 20091110135349
-#
-# Table name: books
-#
-#  id                     :integer         not null, primary key
-#  sem_app_id             :integer         not null
-#  ils_id                 :string(255)     not null
-#  signature              :string(255)     not null
-#  title                  :string(255)     not null
-#  author                 :string(255)     not null
-#  edition                :string(255)
-#  place                  :string(255)
-#  publisher              :string(255)
-#  year                   :string(255)
-#  isbn                   :string(255)
-#  comment                :text
-#  scheduled_for_addition :boolean         not null
-#  scheduled_for_removal  :boolean         not null
-#  created_at             :datetime
-#  updated_at             :datetime
-#
-
 class Book < ActiveRecord::Base
 
   States = {
-    :new      => "new",      # the book is marked to be added to the shelf
+    :ordered  => "ordered",  # the book is marked to be added to the shelf
     :in_shelf => "in_shelf", # the book was placed in the sem app shelf
-    :removed  => "removed",  # the book is marked to be removed from the shelf
+    :rejected => "rejected", # the book is marked to be removed from the shelf
     :deferred => "deferred"  # the book is deferred
   }.freeze
 
   # Relations
   belongs_to :sem_app
 
-  # Validations
+  # Validation
   validates_presence_of   :sem_app
   validates_presence_of   :ils_id
   validates_uniqueness_of :ils_id, :scope => :sem_app_id, :message => "Dieses Exemplar befindet sich bereits in Ihrem eSeminarapparat."
@@ -41,6 +18,14 @@ class Book < ActiveRecord::Base
   validates_presence_of   :title
   validates_presence_of   :author
 
+  # Scopes
+  named_scope :for_sem_app, lambda { |sem_app| { :conditions => { :sem_app_id => sem_app.id } } }
+  named_scope :ordered,     lambda { { :conditions => { :state => Book::States[:ordered] } } }
+  named_scope :in_shelf,    lambda { { :conditions => { :state => Book::States[:in_shelf] } } }
+  named_scope :removed,     lambda { { :conditions => { :state => Book::States[:rejected] } } }
+  named_scope :deferred,    lambda { { :conditions => { :state => Book::States[:deferred] } } }
+  named_scope :ordered_by,  lambda { |*order| { :order => order.flatten.first || 'title DESC' } }
+  
   ###########################################################################################
   #
   # Public API
@@ -84,7 +69,7 @@ class Book < ActiveRecord::Base
 
   def before_create
     if self.state.blank?
-      self.state = Book::States[:new]
+      self.state = Book::States[:ordered]
     end
   end
 

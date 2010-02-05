@@ -1,0 +1,14 @@
+<div class="bibref clearfix">
+  <div style="float: left">
+    <%= image_tag "http://ecx.images-amazon.com/images/P/#{entry.isbn.present? ? entry.isbn.gsub('-', '') : ''}.03._SCTZZZZZZZ_.jpg", :class => 'book-cover' %>
+  </div>
+
+  <%= entry.to_s %>
+
+  <% if entry.isbn.present? %>
+    <br/>
+    Dieses Buch bei:
+    <%= link_to 'Amazon.de', "http://www.amazon.de/dp/#{entry.isbn.gsub('-', '')}" %>,
+    <%= link_to 'Google Books', "http://books.google.com/books?as_isbn=#{entry.isbn.gsub('-', '')}" %>
+  <% end %>
+</div>

@@ -1,11 +1,13 @@
 <% if @sem_app.is_editable_for?(current_user) %>
   <div class="pui-panel align-right">
-    <%= link_to 'Buchaufträge', sem_app_books_path(@sem_app), :class => 'pui-button' %>
-    <%= link_to('Neues Buch', new_sem_app_book_path(@sem_app), :class => 'pui-button') %>
+    <% link_to sem_app_books_path(@sem_app), :class => 'pui-button' do %>
+      <%= icon 'book.png' %>
+      Buchaufträge
+    <% end %>
   </div>
 <% end %>
 
-<% if @sem_app.books.present? %>
+<% if @books.present? %>
   <% if @sem_app.has_book_shelf? %>
     <div class="pui-panel notice align-center">
       Sie finden die Bücher in der <strong><%= h(@sem_app.location.title) %></strong> im
@@ -18,7 +20,7 @@
   <% end %>
 
   <div id="books-listing" class="listing pui-collection-view">
-    <% @sem_app.books.each do |book| %>
+    <% @books.each do |book| %>
       <%= render 'book', :book => book, :sem_app => @sem_app %>
     <% end %>
   </div>

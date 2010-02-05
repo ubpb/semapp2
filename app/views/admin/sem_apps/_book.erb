@@ -6,16 +6,16 @@
   <%= render 'shared_partials/book_ref', :book => book %>
 
   <div>
-    <% if book.state == Book::States[:new] %>
+    <% if book.state == Book::States[:ordered] %>
       <%= link_to 'Wurde vorgemerkt/zurückgestellt', defer_admin_book_path(book), :method => :put, :class => 'pui-button' %>
     <% end %>
     <%# if book.state == Book::States[:deferred] %>
       <%#= link_to 'Als Neu markieren', dedefer_admin_book_path(book), :method => :put %>
     <%# end %>
-    <% if book.state == Book::States[:new] or book.state == Book::States[:deferred] %>
+    <% if book.state == Book::States[:ordered] or book.state == Book::States[:deferred] %>
       <%= link_to 'Wurde im Regal aufgestellt', placed_in_shelf_admin_book_path(book), :method => :put, :class => 'pui-button' %>
     <% end %>
-    <% if book.state == Book::States[:removed] %>
+    <% if book.state == Book::States[:rejected] %>
       <%= link_to 'Wurde aus dem Regal entfernt', removed_from_shelf_admin_book_path(book), :method => :put, :class => 'pui-button' %>
     <% end %>
   </div>

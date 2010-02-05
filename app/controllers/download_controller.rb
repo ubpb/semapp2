@@ -3,7 +3,7 @@ class DownloadController < ApplicationController
   def download
     attachment = Attachment.find(params[:id])
 
-    sem_app = attachment.sem_app_entry.sem_app
+    sem_app = attachment.entry.sem_app
     if sem_app.is_unlocked_in_session?(session) or sem_app.is_editable_for?(current_user)
       send_file(attachment.attachable.path(params[:style]),
         :stream      => true,

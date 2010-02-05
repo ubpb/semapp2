@@ -1,0 +1,11 @@
+<% semantic_form_for [@sem_app, @entry] do |f| %>
+  <%= hidden_field_tag :origin_id, @origin_id %>
+
+  <% f.inputs do %>
+    <%= f.input :headline, :label => 'Überschrift' %>
+  <% end %>
+
+  <% f.buttons do %>
+    <%= f.commit_button 'Speichern' %>
+  <% end %>
+<% end %>

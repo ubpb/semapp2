@@ -1,7 +1,7 @@
 <div id="media-listing" class="listing pui-collection-view">
-  <% if @sem_app.media.present? %>
+  <% if @media.present? %>
     <% if @sem_app.is_unlocked_in_session?(session) or @sem_app.is_editable_for?(current_user) %>
-      <% @sem_app.media.each do |entry| %>
+      <% @media.each do |entry| %>
         <%= render 'entry', :entry => entry %>
       <% end %>
     <% else %>

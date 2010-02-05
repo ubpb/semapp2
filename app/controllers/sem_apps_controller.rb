@@ -1,7 +1,7 @@
 class SemAppsController < ApplicationController
 
   before_filter :authenticate_user!, :only => [:create, :edit, :update] # :new is handled in the view to better guide the user
-  before_filter :load_sem_app, :only => [:show, :edit, :update, :destroy, :unlock]
+  before_filter :load_sem_app, :only => [:show, :edit, :update, :unlock]
   before_filter :check_lecturer, :only => [:create]
   before_filter :check_access, :only => [:edit, :update]
 
@@ -38,11 +38,14 @@ class SemAppsController < ApplicationController
   end
 
   def show
-    # deny read access until the app is approved
+    # deny read access until the app has been approved
     if (not @sem_app.approved?) and not (current_user and current_user.is_admin?)
       flash[:error] = "Zugriff verweigert"
       redirect_to sem_apps_path
       return false
+    else
+      @books = Book.for_sem_app(@sem_app).in_shelf.ordered_by
+      @media = Entry.for_sem_app(@sem_app).ordered_by
     end
   end
 
