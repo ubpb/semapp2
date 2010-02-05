@@ -2,11 +2,11 @@ class Entry < ActiveRecord::Base
 
   # Realations
   belongs_to :sem_app
-  has_many :file_attachments
+  has_many :file_attachments, :dependent => :destroy
+  has_one :scanjob, :dependent => :destroy
 
   # Behavior
   acts_as_inheritance_root
-  #acts_as_list :scope => :sem_app
 
   # Validation
   validates_presence_of :sem_app

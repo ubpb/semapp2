@@ -1,0 +1,5 @@
+class ScanjobsController < ApplicationController
+
+  
+
+end

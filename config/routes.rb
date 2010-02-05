@@ -40,12 +40,15 @@ ActionController::Routing::Routes.draw do |map|
     end
     sem_app.resources :monograph_entries, :as => 'monographs', :shallow => true do |entry|
       entry.resources :file_attachments, :as => 'attachments'
+      entry.resource  :scanjob, :as => 'scan'
     end
     sem_app.resources :article_entries, :as => 'articles', :shallow => true do |entry|
       entry.resources :file_attachments, :as => 'attachments'
+      entry.resource  :scanjob, :as => 'scan'
     end
     sem_app.resources :collected_article_entries,  :as => 'collected-articles', :shallow => true do |entry|
       entry.resources :file_attachments, :as => 'attachments'
+      entry.resource  :scanjob, :as => 'scan'
     end
 
     sem_app.resources :books, :collection => {:lookup => :get}

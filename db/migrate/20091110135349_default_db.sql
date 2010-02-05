@@ -221,10 +221,17 @@ CREATE TABLE file_attachments (
   scanjob boolean DEFAULT false NOT NULL
 );
 
+CREATE INDEX index_file_attachments_on_entry_id ON file_attachments(entry_id);
+
 --
 -- Scanjobs
 --
 CREATE TABLE scanjobs (
-  scan_state   character varying,
-  scan_message text
+  id serial NOT NULL PRIMARY KEY,
+  entry_id integer NOT NULL, --REFERENCES entries NOT NULL,
+  "state" character varying,
+  message text,
+  pages character varying
 );
+
+CREATE INDEX index_scanjobs_on_entry_id ON scanjobs(entry_id);
