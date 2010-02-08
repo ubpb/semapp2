@@ -18,6 +18,19 @@ class FileAttachmentsController < ApplicationController
     end
   end
 
+  def edit
+    @file_attachment = FileAttachment.find(params[:id])
+  end
+
+  def update
+    @file_attachment = FileAttachment.find(params[:id])
+    if @file_attachment.update_attributes(params[:file_attachment])
+      redirect_to sem_app_path(@file_attachment.entry.sem_app, :anchor => 'media')
+    else
+      render :edit
+    end
+  end
+
   def destroy
     @file_attachment = FileAttachment.find(params[:id])
     unless @file_attachment.destroy

@@ -30,24 +30,25 @@ ActionController::Routing::Routes.draw do |map|
 
   # Sem Apps
   map.resources :sem_apps, :as => 'apps', :controller => 'sem_apps', :member => {:unlock => :post} do |sem_app|
-    sem_app.resources :entries, :only => [:reorder], :collection => {:reorder => :put}, :shallow => true
-
+    sem_app.resources :entries, :only => [:reorder], :collection => {:reorder => :put}, :shallow => true do |entry|
+      entry.resources :file_attachments, :as => 'attachments', :only => [:edit, :update, :destroy]
+    end
     sem_app.resources :headline_entries, :as => 'headlines', :shallow => true do |entry|
       # nope
     end
     sem_app.resources :text_entries, :as => 'texts', :shallow => true do |entry|
-      entry.resources :file_attachments, :as => 'attachments'
+      entry.resources :file_attachments, :as => 'attachments', :only => [:new, :create]
     end
     sem_app.resources :monograph_entries, :as => 'monographs', :shallow => true do |entry|
-      entry.resources :file_attachments, :as => 'attachments'
+      entry.resources :file_attachments, :as => 'attachments', :only => [:new, :create]
       entry.resource  :scanjob, :as => 'scan'
     end
     sem_app.resources :article_entries, :as => 'articles', :shallow => true do |entry|
-      entry.resources :file_attachments, :as => 'attachments'
+      entry.resources :file_attachments, :as => 'attachments', :only => [:new, :create]
       entry.resource  :scanjob, :as => 'scan'
     end
     sem_app.resources :collected_article_entries,  :as => 'collected-articles', :shallow => true do |entry|
-      entry.resources :file_attachments, :as => 'attachments'
+      entry.resources :file_attachments, :as => 'attachments', :only => [:new, :create]
       entry.resource  :scanjob, :as => 'scan'
     end
 

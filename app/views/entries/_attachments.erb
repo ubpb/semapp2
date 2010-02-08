@@ -15,6 +15,9 @@
         <% link_to file_attachment_path(a), :method => :delete, :confirm => "Angang wirklich löschen" do %>
           <%= icon 'cross.png' %>
         <% end %>
+        <% link_to edit_file_attachment_path(a) do %>
+          <%= icon 'wrench.png' %>
+        <% end %>
       </li>
     <% end %>
   </ol>

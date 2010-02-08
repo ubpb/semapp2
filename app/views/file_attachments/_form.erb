@@ -1,14 +1,18 @@
 <% semantic_form_for [@entry, @file_attachment], :html => {:multipart => true} do |f| %>
 
   <% f.inputs do %>
-    <%= f.input :file,        :label => 'Datei',        :required => true %>
+    <% if f.object.new_record?  %>
+      <%= f.input :file, :label => 'Datei', :required => true %>
+    <% else %>
+      <%= f.input :file, :label => 'Datei', :required => false, :hint => 'Wenn Sie die vorhandene Datei ersetzen möchten, wählen Sie eine neue Datei aus. Ansonsten lassen Sie dieses Feld einfach leer.' %>
+    <% end %>
     <%= f.input :description, :label => 'Beschreibung', :required => false, :input_html => {:rows => 1} %>
   <% end %>
 
   <% f.buttons do %>
     <%= f.commit_button 'Datei hochladen' %>
     <li class="commit">
-      <%= link_to 'Abbrechen', sem_app_path(@entry.sem_app, :anchor => 'media') %>
+      <%= link_to 'Abbrechen', sem_app_path(@file_attachment.entry.sem_app, :anchor => 'media') %>
     </li>
   <% end %>
 <% end %>
