@@ -2,17 +2,17 @@ class CollectedArticleEntry < Entry
 
   # Relation
   belongs_to :sem_app
-  #has_many   :attachments, :class_name => '::Attachment', :dependent => :destroy, :foreign_key => 'entry_id'
-
+  
   # Behavior
   set_table_name :collected_article_entries
-  #accepts_nested_attributes_for :attachments, :allow_destroy => true, :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
-
+  
   # Validation
   validates_presence_of :source_editor
   validates_presence_of :source_title
+  validates_presence_of :source_year
   validates_presence_of :author
   validates_presence_of :title
+  validates_presence_of :pages
 
   ######################################################################################################
   #

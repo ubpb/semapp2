@@ -5,11 +5,12 @@
     <%= f.input :author,    :label => 'Author(en)' %>
     <%= f.input :title,     :label => 'Titel', :input_html => {:rows => 1} %>
     <%= f.input :subtitle,  :label => 'Untertitel', :input_html => {:rows => 1}, :required => false %>
-    <%= f.input :year,      :label => 'Jahr', :required => false %>
+    <%= f.input :year,      :label => 'Erscheinungsjahr', :required => true %>
     <%= f.input :place,     :label => 'Verlagsort', :required => false %>
     <%= f.input :publisher, :label => 'Verlag', :required => false %>
     <%= f.input :edition,   :label => 'Auflage', :required => false %>
     <%= f.input :isbn,      :label => 'ISBN', :required => false %>
+    <%= f.input :signature, :label => 'Signatur in der Bibliothek', :required => false, :hint => 'Wenn Sie hier die Signatur der Bibliothek angeben (sofern vorhanden), verlinken wir diesen Eintrag automatisch mit unserem Katalog. Bitte recherchieren Sie die Signatur mit unserem <a href="https://ubaleph.uni-paderborn.de/F" target="blank">Katalog</a>' %>
   <% end %>
 
   <% f.buttons do %>

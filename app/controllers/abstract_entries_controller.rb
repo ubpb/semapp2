@@ -26,6 +26,10 @@ class AbstractEntriesController < ApplicationController
 
   def edit
     @entry = self.controller_class.find(params[:id])
+    if @entry.respond_to?(:scanjob) and @entry.scanjob.present?
+      flash[:error] = "Für diesen Eintrag wurde ein Scan beauftragt, der noch nicht abgeschlossen ist. Solange der Scanauftrag durch die Bibliothek bearbeitet wird, kann der Eintrag nicht bearbeitet werden."
+      redirect_to sem_app_path(@entry.sem_app, :anchor => 'media')
+    end
   end
 
   def update
@@ -39,6 +43,13 @@ class AbstractEntriesController < ApplicationController
 
   def destroy
     @entry = self.controller_class.find(params[:id])
+
+    if @entry.respond_to?(:scanjob) and @entry.scanjob.present?
+      flash[:error] = "Für diesen Eintrag wurde ein Scan beauftragt, der noch nicht abgeschlossen ist. Solange der Scanauftrag durch die Bibliothek bearbeitet wird, kann der Eintrag nicht gelöscht werden."
+      redirect_to sem_app_path(@entry.sem_app, :anchor => 'media')
+      return false
+    end
+
     if @entry.destroy
       resync_positions(@entry.sem_app)
       redirect_to sem_app_path(@entry.sem_app, :anchor => 'media')

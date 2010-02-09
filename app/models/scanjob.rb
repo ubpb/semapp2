@@ -6,6 +6,7 @@ class Scanjob < ActiveRecord::Base
   # Validation
   validates_presence_of :entry
   validates_presence_of :pages
+  validates_presence_of :signature
 
   #################################################################################
   #

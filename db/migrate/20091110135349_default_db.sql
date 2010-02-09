@@ -231,7 +231,8 @@ CREATE TABLE scanjobs (
   entry_id integer NOT NULL, --REFERENCES entries NOT NULL,
   "state" character varying,
   message text,
-  pages character varying
+  pages character varying,
+  signature character varying
 );
 
 CREATE INDEX index_scanjobs_on_entry_id ON scanjobs(entry_id);

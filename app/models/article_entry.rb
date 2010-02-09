@@ -2,15 +2,18 @@ class ArticleEntry < Entry
 
   # Relation
   belongs_to :sem_app
-  #has_many   :attachments, :class_name => '::Attachment', :dependent => :destroy, :foreign_key => 'entry_id'
-
+  
   # Behavior
   set_table_name :article_entries
-  #accepts_nested_attributes_for :attachments, :allow_destroy => true, :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
-
+  
   # Validation
   validates_presence_of :author
   validates_presence_of :title
+  validates_presence_of :journal
+  validates_presence_of :volume
+  validates_presence_of :year
+  validates_presence_of :issue
+  validates_presence_of :pages
 
   ######################################################################################################
   #

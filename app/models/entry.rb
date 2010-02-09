@@ -12,7 +12,7 @@ class Entry < ActiveRecord::Base
   validates_presence_of :sem_app
 
   # Scopes
-  named_scope :for_sem_app, lambda { |sem_app| { :conditions => { :sem_app_id => sem_app.id } } }
+  named_scope :for_sem_app, lambda { |sem_app| { :conditions => { :sem_app_id => sem_app.id }, :include => [:file_attachments, :scanjob] } }
   named_scope :ordered_by,  lambda { |*order| { :order => order.flatten.first || 'position asc' } }
 
   #################################################################################

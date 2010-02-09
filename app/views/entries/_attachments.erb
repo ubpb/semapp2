@@ -12,17 +12,22 @@
           <%= a.file_file_name %>,
           <%= number_to_human_size(a.file_file_size) %>
         </span>
-        <% link_to file_attachment_path(a), :method => :delete, :confirm => "Angang wirklich löschen" do %>
-          <%= icon 'cross.png' %>
-        <% end %>
-        <% link_to edit_file_attachment_path(a) do %>
-          <%= icon 'wrench.png' %>
+
+        <% if @sem_app.editable?(current_user) %>
+          <% link_to file_attachment_path(a), :method => :delete, :confirm => "Angang wirklich löschen" do %>
+            <%= icon 'cross.png' %>
+          <% end %>
+          <% link_to edit_file_attachment_path(a) do %>
+            <%= icon 'wrench.png' %>
+          <% end %>
         <% end %>
       </li>
     <% end %>
   </ol>
 <% end %>
 
-<div>
-  <%= link_to 'Eine Datei anhängen', polymorphic_path(['new', entry, 'file_attachment']) %>
-</div>
+<% if @sem_app.editable?(current_user) %>
+  <div>
+    <%= link_to 'Eine Datei anhängen', polymorphic_path(['new', entry, 'file_attachment']) %>
+  </div>
+<% end %>
