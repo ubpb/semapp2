@@ -1,0 +1,11 @@
+<% if @scanjobs.present? %>
+  <% @scanjobs.each do |sj| %>
+    <% if sj == @scanjobs.last %>
+      <%= render 'scanjob', :scanjob => sj %>
+    <% else %>
+      <div style="page-break-after:always">
+        <%= render 'scanjob', :scanjob => sj %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

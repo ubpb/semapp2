@@ -33,6 +33,10 @@ class SemApp < ActiveRecord::Base
   #
   ###########################################################################################
 
+  def full_title
+    "#{self.title} (#{self.semester.title})"
+  end
+
   def has_book_jobs?
     Book.for_sem_app(self).ordered.count > 0 or Book.for_sem_app(self).removed.count > 0
   end

@@ -1,3 +1,4 @@
 /* overrides page.css */
 
 body {background: none}
+.no-print {display: none;}

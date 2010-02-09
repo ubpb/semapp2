@@ -232,7 +232,9 @@ CREATE TABLE scanjobs (
   "state" character varying,
   message text,
   pages character varying,
-  signature character varying
+  signature character varying,
+  created_at timestamp without time zone,
+  updated_at timestamp without time zone
 );
 
 CREATE INDEX index_scanjobs_on_entry_id ON scanjobs(entry_id);

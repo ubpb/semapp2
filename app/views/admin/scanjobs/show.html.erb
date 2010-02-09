@@ -1,0 +1,44 @@
+<h3 class="section clearfix" style="margin-bottom: 30px">
+  <div style="float: left">
+    Scanjob &raquo; Details
+  </div>
+
+  <div class="align-right" style="margin-bottom: 5px">
+    <% link_to admin_scanjobs_path, :class => 'pui-button' do %>
+      <%= icon 'arrow-curve-180-left.png' %>
+      Zurück zur Übersicht
+    <% end %>
+
+    <% link_to '#', :class => "pui-button print" do %>
+      <%= icon 'printer.png' %>
+      Auftrag drucken
+    <% end %>
+  </div>
+</h3>
+
+<%= render 'scanjob', :scanjob => @scanjob %>
+
+<iframe
+  id="print-frame"
+  name="print-frame"
+  src="<%= admin_scanjob_path(@scanjob, :format => :print) -%>"
+  style="width:0; height:0; position:absolute; left:-9999px;">
+</iframe>
+
+<script type="text/javascript">
+  (function($) {
+    $(function() {
+
+      $(".print").live('click', function(e) {
+        e.preventDefault();
+
+        var frame = $("#print-frame");
+        if (frame != null) {
+          window.frames["print-frame"].focus();
+          window.frames["print-frame"].print();
+        }
+      });
+
+    });
+  })(jQuery);
+</script>

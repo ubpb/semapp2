@@ -21,6 +21,8 @@ Rails::Initializer.run do |config|
   config.gem 'paperclip',     :version => '2.3.1.1', :lib => 'paperclip'
   config.gem 'will_paginate', :version => '2.3.11',  :lib => 'will_paginate'
   config.gem 'acts_as_list',  :version => '0.1.2',   :lib => 'acts_as_list'
+  config.gem 'barby',         :version => '0.3.2',   :lib => 'barby'
+  config.gem 'png',           :version => '1.1.0',   :lib => 'png'
 
   config.gem 'provideal-ui',                :version => '0.1.0', :lib => 'pui'
   config.gem 'provideal-migration-helpers', :version => '1.1.2', :lib => 'provideal_migration_helpers'
