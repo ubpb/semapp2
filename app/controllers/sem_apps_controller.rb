@@ -1,40 +1,27 @@
 class SemAppsController < ApplicationController
 
+  SEM_APP_FILTER_NAME = 'sem_app_filter_name'.freeze
+
   before_filter :authenticate_user!, :only => [:create, :edit, :update] # :new is handled in the view to better guide the user
   before_filter :load_sem_app, :only => [:show, :edit, :update, :unlock]
   before_filter :check_lecturer, :only => [:create]
   before_filter :check_access, :only => [:edit, :update]
 
   def index
-    # filter by semster
-    @semester = Semester.find_by_id(params[:semester][:id]) if params[:semester].present? and params[:semester][:id].present?
-    # filter by location
-    @location = Location.find_by_id(params[:location][:id]) if params[:location].present? and params[:location][:id].present?
-    # filter by title
-    @title    = params[:title]  if params[:title].present?
-    # filter by tutors
-    @tutors   = params[:tutors] if params[:tutors].present?
-
-    # build the filter conditions
-    conditions = Condition.block do |c|
-      c.and "approved", true
-      c.and "semester_id",    @semester.id if @semester
-      c.and "location_id",    @location.id if @location
-      c.and "title", "like",  @title.index('%')  ? @title  : "%#{@title}%"  if @title
-      c.and "tutors", "like", @tutors.index('%') ? @tutors : "%#{@tutors}%" if @tutors
+    @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
+    if @filter
+      @sem_apps = @filter.scope.paginate(:all, :conditions => {:approved => true}, :per_page => 30, :page => params[:page],
+        :order => "sem_apps.created_at")
+    else
+      @sem_apps = SemApp.paginate(:all, :conditions => {:approved => true}, :per_page => 30, :page => params[:page],
+        :order => "sem_apps.created_at")
     end
+  end
 
-    # marker that we use some user filter
-    @filtered          = true if @semester or @location or @title or @tutors
-    @advanced_filtered = true if @location or @title or @tutors
-
-    # find sem apps
-    @count    = SemApp.count(:conditions => conditions)
-    @sem_apps = SemApp.paginate(
-      :page       => params[:page],
-      :per_page   => 10,
-      :conditions => conditions,
-      :order      => 'title, semester_id DESC')
+  def filter
+    filter = SemAppsFilter.new(params[:filter])
+    session[SEM_APP_FILTER_NAME] = filter
+    redirect_to :action => :index
   end
 
   def show
