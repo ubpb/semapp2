@@ -2,6 +2,7 @@ class FileAttachment < ActiveRecord::Base
 
   # Relations
   belongs_to :entry
+  belongs_to :creator, :class_name => 'User'
 
   # Behavior
   has_attached_file :file, :styles => {}, :processors => []

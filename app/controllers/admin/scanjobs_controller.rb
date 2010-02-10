@@ -43,8 +43,7 @@ class Admin::ScanjobsController < Admin::ApplicationController
 
     render :template => 'admin/scanjobs/print_list', :layout => 'print'
   end
-
-
+  
   def barcode
     scanjob = Scanjob.find(params[:id])
     code = "scanjob-#{scanjob.id}"
@@ -54,20 +53,22 @@ class Admin::ScanjobsController < Admin::ApplicationController
 
   def defer
     scanjob = Scanjob.find(params[:id])
+    old_state = scanjob.state
     unless scanjob.set_state(:deferred)
       flash[:error] = "Es ist ein Fehler aufgetreten."
     end
 
-    redirect_to admin_scanjobs_path(:anchor => 'deferred')
+    redirect_to admin_scanjobs_path(:anchor => old_state)
   end
 
   def dedefer
     scanjob = Scanjob.find(params[:id])
+    old_state = scanjob.state
     unless scanjob.set_state(:accepted)
       flash[:error] = "Es ist ein Fehler aufgetreten."
     end
 
-    redirect_to admin_scanjobs_path(:anchor => 'accepted')
+    redirect_to admin_scanjobs_path(:anchor => old_state)
   end
 
   private

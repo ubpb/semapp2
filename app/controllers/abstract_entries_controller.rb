@@ -15,6 +15,7 @@ class AbstractEntriesController < ApplicationController
     @entry          = self.controller_class.new(params[self.controller_class.name.underscore.to_sym])
     @entry.sem_app  = @sem_app
     @entry.position = get_position(params[:origin_id])
+    @entry.creator  = current_user
 
     if @entry.save
       resync_positions(@sem_app)

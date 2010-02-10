@@ -2,6 +2,7 @@ class Entry < ActiveRecord::Base
 
   # Realations
   belongs_to :sem_app
+  belongs_to :creator, :class_name => 'User'
   has_many :file_attachments, :dependent => :destroy
   has_one :scanjob, :dependent => :destroy
 

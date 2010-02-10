@@ -21,6 +21,7 @@ class ScanjobsController < ApplicationController
   def create
     @entry = find_entry
     @scanjob = @entry.build_scanjob(params[:scanjob])
+    @scanjob.creator = current_user
 
     if @scanjob.save
       flash[:success] = "Der Scan wurde beauftragt. Er wird in Kürze bereitgestellt."

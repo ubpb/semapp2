@@ -9,6 +9,7 @@ class Book < ActiveRecord::Base
 
   # Relations
   belongs_to :sem_app
+  belongs_to :creator, :class_name => 'User'
 
   # Validation
   validates_presence_of   :sem_app

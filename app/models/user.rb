@@ -73,8 +73,10 @@ class User < ActiveRecord::Base
   #
   # To string
   #
-  def to_s
-    return "#{self.login} - #{self.name}"
+  def to_s()
+    s  = "#{self.name} (#{self.login})"
+    s << ", #{self.email}" if self.email.present?
+    return s
   end
 
 end

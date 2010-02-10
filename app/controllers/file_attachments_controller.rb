@@ -10,6 +10,7 @@ class FileAttachmentsController < ApplicationController
   def create
     @entry = find_entry
     @file_attachment = @entry.file_attachments.build(params[:file_attachment])
+    @file_attachment.creator = current_user
 
     if @file_attachment.save
       redirect_to sem_app_path(@entry.sem_app, :anchor => 'media')

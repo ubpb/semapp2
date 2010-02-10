@@ -9,6 +9,7 @@ class Scanjob < ActiveRecord::Base
 
   # Realations
   belongs_to :entry
+  belongs_to :creator, :class_name => 'User'
 
   # Validation
   validates_presence_of :entry

@@ -111,6 +111,7 @@ CREATE UNIQUE INDEX index_book_shelves_on_ils_account ON book_shelves(ils_accoun
 CREATE TABLE books (
   id serial NOT NULL PRIMARY KEY,
   sem_app_id integer REFERENCES sem_apps NOT NULL,
+  creator_id integer REFERENCES users NULL,
   ils_id character varying NOT NULL,
   signature character varying NOT NULL,
   title character varying NOT NULL,
@@ -150,6 +151,7 @@ CREATE INDEX index_ownerships_on_sem_app_id ON ownerships(sem_app_id);
 CREATE TABLE entries (
   id         serial NOT NULL PRIMARY KEY,
   sem_app_id integer REFERENCES sem_apps NOT NULL,
+  creator_id integer REFERENCES users NULL,
   "position" integer,
   publish_on timestamp without time zone,
   created_at timestamp without time zone,
@@ -213,6 +215,7 @@ CREATE TABLE collected_article_entries (
 --
 CREATE TABLE file_attachments (
   id serial NOT NULL PRIMARY KEY,
+  creator_id integer REFERENCES users NULL,
   entry_id integer NOT NULL, --REFERENCES entries NOT NULL,
   file_file_name character varying NOT NULL,
   file_content_type character varying NOT NULL,
@@ -228,6 +231,7 @@ CREATE INDEX index_file_attachments_on_entry_id ON file_attachments(entry_id);
 --
 CREATE TABLE scanjobs (
   id serial NOT NULL PRIMARY KEY,
+  creator_id integer REFERENCES users NULL,
   entry_id integer NOT NULL, --REFERENCES entries NOT NULL,
   "state" character varying,
   message text,

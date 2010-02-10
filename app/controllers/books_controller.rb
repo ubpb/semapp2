@@ -21,6 +21,7 @@ class BooksController < ApplicationController
 
     if record.present? and item.present?
       @book = Book.new(:sem_app => @sem_app)
+      @book.creator    = current_user
       @book.ils_id     = record.doc_number
       @book.signature  = item.call_no_1
       @book.title      = record.title

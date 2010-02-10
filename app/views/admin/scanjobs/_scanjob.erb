@@ -4,12 +4,15 @@
   <%= labeled_item :label => 'Auftrag vom',     :content => h(scanjob.created_at.to_formatted_s(:short)) %>
   <%= labeled_item :label => 'Quelle',          :content => h(scanjob.entry.to_s) %>
   <%= labeled_item :label => 'eSeminarapparat', :content => h(scanjob.entry.sem_app.full_title) %>
+  <div class="no-print">
+    <%= labeled_item :label => 'Auftrag von',     :content => scanjob.creator.present? ? scanjob.creator.to_s : '-' %>
+  </div>
 </div>
 
 <h4 class="section">Scan-Info</h4>
 <div class="pui-collection-view labeled">
   <%= labeled_item :label => 'Signatur',       :content => h(scanjob.signature) %>
-  <%= labeled_item :label => 'Seiten von-bis', :content => h(scanjob.pages) %>
+  <%= labeled_item :label => 'Seiten von-bis', :content => h(scanjob.pages) %>  
 </div>
 
 <div class="pui-view align-center">
