@@ -22,36 +22,42 @@
   </head>
 
   <body>
-    <div id="meta" class="container_16 clearfix">
-      <div class="grid_16">
-        <div id="meta-navigation">
-          <%= render 'shared_partials/meta_navigation' %>
+    <div id="meta-wrapper">
+      <div id="meta" class="container_16 clearfix">
+        <div class="grid_16">
+          <div id="meta-navigation">
+            <%= render 'shared_partials/meta_navigation' %>
+          </div>
         </div>
       </div>
     </div>
 
-    <div id="page" class="container_16 clearfix">
+    <div id="header-wrapper">
       <div id="header" class="container_16 clearfix">
         <div id="stage-wrapper" class="grid_4 grid_padded">
           <div id="stage"></div>
         </div>
         <div id="logo-upb" class="grid_12"></div>
       </div>
+    </div>
 
-      <div id="sidebar-wrapper" class="grid_4 grid_padded">
-        <div id="sidebar">
-          <div id="logo-ub"></div>
-          <div id="navigation">
-            <%= yield :sidebar %>
+    <div id="page-wrapper">
+      <div id="page" class="container_16 clearfix">
+        <div id="sidebar-wrapper" class="grid_4 grid_padded">
+          <div id="sidebar">
+            <div id="logo-ub"></div>
+            <div id="navigation">
+              <%= yield :sidebar %>
+            </div>
           </div>
+          <div id="sidebar-bottom-cap"></div>
         </div>
-        <div id="sidebar-bottom-cap"></div>
-      </div>
 
-      <div id="content" class="grid_12">
-        <%= render 'shared_partials/flash_messages' %>
-        <%= yield :layout %>
-        <%= render 'shared_partials/common_help' %>
+        <div id="content" class="grid_12">
+          <%= render 'shared_partials/flash_messages' %>
+          <%= yield :layout %>
+          <%= render 'shared_partials/common_help' %>
+        </div>
       </div>
     </div>
 

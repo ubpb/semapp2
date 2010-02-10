@@ -19,15 +19,6 @@ a, a:visited {
   color: #081c5a;
 }
 
-img {
-  margin: 0 0 -4px 0 !important;
-}
-
-div.pui-collection-view div.item {
-  margin-bottom: 10px;
-  padding: 0;
-}
-
 
 /* Page structure
 ----------------------------------------------------------------------------------------------------*/
@@ -38,8 +29,11 @@ div.pui-collection-view div.item {
   overflow: hidden;
 }
 
-#header {
+#header-wrapper {
   background: url(../images/page/header-bg.png) repeat-x;
+}
+
+#header {
   height: 90px;
   overflow: visible;
 }
@@ -82,15 +76,13 @@ div.pui-collection-view div.item {
   background: url(../images/page/logo-ub.png) no-repeat center center;
 }
 
-#page {
+#page-wrapper {
   background-color: #fff;
   min-height: 550px;
-  -moz-box-shadow: 0 0 20px #777;
-  -webkit-box-shadow: 0 0 20px #777;
-  -moz-border-radius-bottomleft: 8px;
-  -moz-border-radius-bottomright: 8px;
-  -webkit-border-bottom-left-radius: 8px;
-  -webkit-border-bottom-right-radius: 8px;
+}
+
+#page {
+
 }
 
 #content {
