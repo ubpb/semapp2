@@ -24,53 +24,13 @@
 
   <div class="pui-tab-panes">
     <div>
-      <%= render 'listing', :scanjobs => @ordered_scanjobs %>
+      <%= render 'listing', :scanjobs => @ordered_scanjobs, :list_name => 'ordered' %>
     </div>
     <div>
-      <%= render 'listing', :scanjobs => @accepted_scanjobs %>
+      <%= render 'listing', :scanjobs => @accepted_scanjobs, :list_name => 'accepted' %>
     </div>
     <div>
-      <%= render 'listing', :scanjobs => @deferred_scanjobs %>
+      <%= render 'listing', :scanjobs => @deferred_scanjobs, :list_name => 'deferred' %>
     </div>
   </div>
 </div>
-
-<iframe
-  id="printframe"
-  name="printframe"
-  style="width:0; height:0; position:absolute; left:-9999px;"
-  src="about:blank"
-  onload="if (printframe.location.href != 'about:blank') printFrameReady()">
-</iframe>
-
-<script type="text/javascript">
-
-  function printFrameReady() {
-    window.frames["printframe"].focus();
-    window.frames["printframe"].print();
-    var frame = jQuery("#printframe");
-    if (frame != null) {
-      frame.attr('src', 'about:blank');
-    }
-
-    //location.reload(true);
-  }
-
-  (function($) {
-    $(function() {
-      $(".print").live('click', function(e) {
-        e.preventDefault();
-        var url   = $(this).attr("href");
-        var frame = $("#printframe");
-
-        if (frame != null) {
-          frame.attr('src', url);
-          frame.load(function() {
-            // this callback is triggered several times
-            // so we are using the onready hack
-          });
-        }
-      });
-    });
-  })(jQuery);
-</script>

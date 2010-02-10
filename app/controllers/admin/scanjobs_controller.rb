@@ -49,7 +49,25 @@ class Admin::ScanjobsController < Admin::ApplicationController
     scanjob = Scanjob.find(params[:id])
     code = "scanjob-#{scanjob.id}"
     barcode = Barby::Code128B.new(code)
-    send_data barcode.to_png, :filename => "bc-#{code}.png", :disposition => 'inline'
+    send_data barcode.to_png, :filename => "scanjob-bc-#{code}.png", :disposition => 'inline'
+  end
+
+  def defer
+    scanjob = Scanjob.find(params[:id])
+    unless scanjob.set_state(:deferred)
+      flash[:error] = "Es ist ein Fehler aufgetreten."
+    end
+
+    redirect_to admin_scanjobs_path(:anchor => 'deferred')
+  end
+
+  def dedefer
+    scanjob = Scanjob.find(params[:id])
+    unless scanjob.set_state(:accepted)
+      flash[:error] = "Es ist ein Fehler aufgetreten."
+    end
+
+    redirect_to admin_scanjobs_path(:anchor => 'accepted')
   end
 
   private
@@ -61,7 +79,7 @@ class Admin::ScanjobsController < Admin::ApplicationController
   def update_scanjob_state(scanjob)
     current_state = scanjob.state
     if current_state == 'ordered'
-      scanjob.update_attribute(:state, :accepted)
+      scanjob.set_state(:accepted)
     end
   end
 
