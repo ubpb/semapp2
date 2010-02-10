@@ -8,9 +8,7 @@ module Devise #:nodoc:
     # Default strategy for signing in a user using Aleph.
     # Redirects to sign_in page if it's not authenticated
     #
-    class AlephAuthenticatable < ::Warden::Strategies::Base
-
-      include ::Devise::Strategies::Base
+    class AlephAuthenticatable < ::Devise::Strategies::Base
 
       def valid?
         super && params[scope] && params[scope][:password].present?
