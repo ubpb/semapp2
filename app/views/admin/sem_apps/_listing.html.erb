@@ -1,30 +1,39 @@
 <% if @sem_apps.present?  %>
-  <%= will_paginate @sem_apps, :style => "text-align: left" %>
-  <table class="pui-datagrid">
+  <table class="pui-tableview">
+    <thead>
+      <tr>
+        <th>eSeminarapparat</th>
+      </tr>
+    </thead>
     <tbody>
-      <% @sem_apps.each do |s| %>
-        <tr>
+      <% @sem_apps.each_with_index do |sem_app, n| %>
+        <tr class="<%= (n % 2 == 0) ? 'even' : 'odd' -%>">
           <td>
-            <% unless s.approved? %>
+            <% unless sem_app.approved? %>
               <%= icon 'star.png' %>
             <% end %>
 
-            <% if Book.for_sem_app(s).ordered.count > 0 %>
+            <% if Book.for_sem_app(sem_app).ordered.count > 0 %>
               <%= icon 'overlay/book--plus.png' %>
             <% end %>
 
-            <% if Book.for_sem_app(s).removed.count > 0 %>
+            <% if Book.for_sem_app(sem_app).removed.count > 0 %>
               <%= icon 'overlay/book--minus.png' %>
             <% end %>
-            
-            <%= link_to h(s.title), admin_sem_app_url(s) %><br/>
-            <span style="font-size:90%"><%= h(s.tutors) %></span><br/>
-            <span style="font-size:90%"><%= h(s.semester.title) %>, <%= h(s.location.title) %></span>
+
+            <strong><%= link_to h(sem_app.title), admin_sem_app_path(sem_app) %></strong><br/>
+            im <%= h(sem_app.semester.title) %><br/>
+            Tutor(en): <%= h(sem_app.tutors) %><br/>
+            Fachbibliothek: <%= h(sem_app.location.title) %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
+
+  <div class="pui-view align-center">
+    <%= will_paginate @sem_apps %>
+  </div>
 <% else %>
   <div class="pui-panel notice align-center">
     Keine eSeminarapparate gefunden.

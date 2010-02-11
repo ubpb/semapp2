@@ -1,14 +1,11 @@
 <div id="entry-<%=entry.id-%>" class="item">
   <% if entry.sem_app.is_editable_for?(current_user) %>
     <div class="toolbar">
-      <ul class="dropdown toolbar-item">
-        <li class="trigger">
-          <%= image_tag('icons/plus-circle-frame.png', :plugin => 'pui', :title => 'Einen neuen Eintrag unterhalb dieses Eintrags erstellen') %>
-          <%= render 'sem_apps/entry_dropdown_panel', :origin_id => entry.id, :inline_style => 'display: none' %>
-        </li>
-      </ul>
+      <% link_to '#', :class => "toolbar-item pui-overlay-trigger", :rel => "#entry-type-panel" do %>
+        <%= image_tag 'icons/plus-circle-frame.png', :plugin => 'pui', :title => 'Einen neuen Eintrag unterhalb dieses Eintrags erstellen' %>
+      <% end %>
 
-      <% link_to polymorphic_path ['edit', entry], :class => "toolbar-item" do %>
+      <% link_to polymorphic_path(['edit', entry]), :class => "toolbar-item" do %>
         <%= image_tag 'icons/wrench.png', :plugin => 'pui', :title => 'Diesen Eintrag bearbeiten' %>
       <% end %>
 

@@ -27,22 +27,26 @@ SemApp.transaction do
   Location.create!(:title => 'Fachbibliothek für Fürstenallee',                          :position => 5)
 
   # Sem App
-  default_semapp = SemApp.create!(
-    :creator       => default_user,
-    :semester      => default_semester,
-    :location      => default_location,
-    :approved      => true,
-    :title         => 'Default Sem App',
-    :tutors        => 'Prof. Dr. Meyer',
-    :shared_secret => 'secret'
-  )
-  default_semapp.add_ownership(default_user)
+  20.times do |i|
+    default_semapp = SemApp.create!(
+      :creator       => default_user,
+      :semester      => default_semester,
+      :location      => default_location,
+      :approved      => true,
+      :title         => 'Seminarapparat #' + i.to_s,
+      :tutors        => 'Prof. Dr. Meyer',
+      :shared_secret => 'secret'
+    )
+    default_semapp.add_ownership(default_user)
 
-  # Book Shelves
-  BookShelf.create!(:sem_app => default_semapp, :ils_account => 'PE70000010', :slot_number => '10')
+    # Book Shelves
+    if i == 1
+      BookShelf.create!(:sem_app => default_semapp, :ils_account => "PE70000010", :slot_number => '10')
+    end
 
-  # Media entries
-  HeadlineEntry.create!(:sem_app => default_semapp, :headline => 'Headline', :position => 0)
-  TextEntry.create!(:sem_app => default_semapp, :text => 'Lorem Ipsum ...', :position => 1)
+    # Media entries
+    HeadlineEntry.create!(:sem_app => default_semapp, :headline => 'Headline', :position => 0)
+    TextEntry.create!(:sem_app => default_semapp, :text => 'Lorem Ipsum ...', :position => 1)
+  end
   
 end # end transaction

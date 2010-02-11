@@ -1,33 +1,35 @@
-<% if entry.file_attachments.present? %>
-  <ol class="attachments clearfix">
-    <% entry.file_attachments.each do |a| %>
-      <li class="attachment">
-        <% if a.description.present? %>
-          <span class="description">
-            <%= textilize_without_paragraph(a.description) %>
+<div class="pui-view">
+  <% if entry.file_attachments.present? %>
+    <ol class="attachments clearfix">
+      <% entry.file_attachments.each do |a| %>
+        <li class="attachment">
+          <% if a.description.present? %>
+            <span class="description">
+              <%= textilize_without_paragraph(a.description) %>
+            </span>
+          <% end %>
+          <span class="download-link">
+            <%= link_to 'Datei herunterladen', a.file.url %>
+            <%= a.file_file_name %>,
+            <%= number_to_human_size(a.file_file_size) %>
           </span>
-        <% end %>
-        <span class="download-link">
-          <%= link_to 'Datei herunterladen', a.file.url %>
-          <%= a.file_file_name %>,
-          <%= number_to_human_size(a.file_file_size) %>
-        </span>
 
-        <% if @sem_app.editable?(current_user) %>
-          <% link_to file_attachment_path(a), :method => :delete, :confirm => "Angang wirklich löschen" do %>
-            <%= icon 'cross.png' %>
+          <% if @sem_app.editable?(current_user) %>
+            <% link_to file_attachment_path(a), :method => :delete, :confirm => "Angang wirklich löschen" do %>
+              <%= icon 'cross.png' %>
+            <% end %>
+            <% link_to edit_file_attachment_path(a) do %>
+              <%= icon 'wrench.png' %>
+            <% end %>
           <% end %>
-          <% link_to edit_file_attachment_path(a) do %>
-            <%= icon 'wrench.png' %>
-          <% end %>
-        <% end %>
-      </li>
-    <% end %>
-  </ol>
-<% end %>
+        </li>
+      <% end %>
+    </ol>
+  <% end %>
 
-<% if @sem_app.editable?(current_user) %>
-  <div>
-    <%= link_to 'Eine Datei anhängen', polymorphic_path(['new', entry, 'file_attachment']) %>
-  </div>
-<% end %>
+  <% if @sem_app.editable?(current_user) %>
+    <p class="align-right">
+      <%= link_to 'Eine Datei anhängen', polymorphic_path(['new', entry, 'file_attachment']), :class => 'pui-button small' %>
+    </p>
+  <% end %>
+</div>

@@ -4,32 +4,41 @@
     <%= javascript_include_tag 'sem_apps/books.js' %>
     <%= javascript_include_tag 'sem_apps/media.js' %>
   <% end %>
+<% end %>
 
-  <div class="pui-panel align-right">
-    <%= link_to 'Einstellungen', edit_sem_app_path(@sem_app), :class => 'pui-button' -%>
-    <% if current_user and current_user.is_admin? %>
-      <%= link_to 'Administrieren', admin_sem_app_path(@sem_app), :class => 'pui-button' -%>
+
+<h3 class="section">
+  <%= link_to h(@sem_app.title), sem_app_path(@sem_app) %>
+</h3>
+
+<div class="pui-view clearfix section">
+  <div class="grid_6 alpha">
+    im <%= h(@sem_app.semester.title) %><br/>
+    Tutor(en): <strong><%= h(@sem_app.tutors) %></strong>
+  </div>
+
+  <div class="grid_6 omega align-right">
+    <% if @sem_app.is_editable_for?(current_user) %>
+      <% link_to edit_sem_app_path(@sem_app), :class => 'pui-button' do %>
+        <%= icon 'wrench.png' %>
+        Einstellungen
+      <% end %>
+      <% if current_user and current_user.is_admin? %>
+        <% link_to admin_sem_app_path(@sem_app), :class => 'pui-button' do %>
+          <%= icon 'user-black.png' %>
+          Administrieren
+        <% end %>
+      <% end %>
     <% end %>
   </div>
-<% end %>
+</div>
 
-<% unless @sem_app.is_from_current_semester? %>
-  <div class="pui-panel notice align-center">
-    <strong>Bitte beachten Sie:</strong>
-    Dieser Apparat gehört zu einer Veranstaltung aus dem Semester<br/>
-    <strong><%=h @sem_app.semester.title %></strong>
-  </div>
-<% end %>
 
 <div class="sem-app">
-  <div class="pui-view">
-    <%= render 'title', :sem_app => @sem_app %>
-  </div>
-
   <div class="pui-tabs-wrapper">
     <ul class="pui-tabs">
-      <li><a href="#books">Bücher</a></li>
-      <li><a href="#media">Texte und Medien</a></li>
+      <li><a href="#books"><%= icon 'books.png' %> Bücher</a></li>
+      <li><a href="#media"><%= icon 'block.png' %> Texte und Medien</a></li>
     </ul>
 
     <div class="pui-tab-panes">

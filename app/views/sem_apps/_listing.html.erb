@@ -1,11 +1,29 @@
 <% if sem_apps.present? %>
-  <div id="sem-apps-listing" class="pui-collection-view">
-    <% for sem_app in sem_apps %>
-      <div class="item sem-app">
-        <%= render 'title', :sem_app => sem_app %>
-      </div>
-    <% end %>
-  </div>
+  <table class="pui-tableview">
+    <thead>
+      <tr>
+        <th>eSeminarapparat</th>
+        <th>Aktion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% sem_apps.each_with_index do |sem_app, n| %>
+        <tr class="<%= (n % 2 == 0) ? 'even' : 'odd' -%>">
+          <td>
+            <strong><%= link_to h(sem_app.title), sem_app_path(sem_app) %></strong><br/>
+            im <%= h(sem_app.semester.title) %><br/>
+            Tutor(en): <strong><%= h(sem_app.tutors) %></strong>
+          </td>
+          <th>
+            <% link_to sem_app_path(sem_app), :class => 'pui-button small' do %>
+              <%= icon 'eye.png' %>
+              Anzeigen
+            <% end %>
+          </th>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% else %>
   <div class="pui-panel notice align-center">
     Es wurden <strong>keine</strong> eSeminarapparate gefunden.

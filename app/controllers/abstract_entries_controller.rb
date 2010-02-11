@@ -70,7 +70,7 @@ class AbstractEntriesController < ApplicationController
   private
 
   def get_position(origin_id)
-    position = 1
+    position = 1000 # TODO: FIX THIS
 
     begin
       if origin_id.present?

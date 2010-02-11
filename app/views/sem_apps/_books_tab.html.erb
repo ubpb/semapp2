@@ -1,8 +1,8 @@
 <% if @sem_app.is_editable_for?(current_user) %>
-  <div class="pui-panel align-right">
+  <div class="pui-view align-right">
     <% link_to sem_app_books_path(@sem_app), :class => 'pui-button' do %>
-      <%= icon 'book.png' %>
-      Buchaufträge
+      <%= icon 'books-stack.png' %>
+      Bücher verwalten
     <% end %>
   </div>
 <% end %>
@@ -19,7 +19,7 @@
     </div>
   <% end %>
 
-  <div id="books-listing" class="listing pui-collection-view">
+  <div id="books-listing" class="listing">
     <% @books.each do |book| %>
       <%= render 'book', :book => book, :sem_app => @sem_app %>
     <% end %>

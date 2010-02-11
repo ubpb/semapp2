@@ -1,0 +1,13 @@
+<div class="pui-view">
+  <% if entry.scanjob.present? %>
+    <div class="pui-panel align-center">
+      <%= icon 'asterisk.png' %>
+      Für diesen Eintrag wurde ein Scan in der Bibliothek beauftragt.<br/>
+      <i>Der Scan wird in kürze bereitgestellt.</i>
+    </div>
+  <% else %>
+    <p class="align-right">
+      <%= link_to 'Einen Scan beaufragen', new_monograph_entry_scanjob_path(entry), :class => 'pui-button small' %>
+    </p>
+  <% end %>
+</div>

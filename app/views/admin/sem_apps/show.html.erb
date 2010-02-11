@@ -19,10 +19,10 @@
 <% if @ordered_books.present? or @removed_books.present? %>
   <div class="pui-panel notice align-center">
     Es gibt Buchaufträge für diesen Seminarapparat
-    <a href="#" class="print pui-button">
+    <% link_to admin_sem_app_path(@sem_app, :format => :print), :class => "print pui-button" do %>
       <%= icon 'printer.png' %>
       Aufträge Drucken
-    </a>
+    <% end %>
   </div>
 <% end %>
 
@@ -104,28 +104,3 @@
     </div>
   </div>
 </div>
-
-<iframe 
-  id="print-frame"
-  name="print-frame"
-  src="<%= admin_sem_app_path(@sem_app, :format => :print) -%>"
-  style="width:0; height:0; position:absolute; left:-9999px;">
-</iframe>
-
-<script type="text/javascript">
-  (function($) {
-    $(function() {
-
-      $(".print").live('click', function(e) {
-        e.preventDefault();
-
-        var frame = $("#print-frame");
-        if (frame != null) {
-          window.frames["print-frame"].focus();
-          window.frames["print-frame"].print();
-        }
-      });
-    
-    });
-  })(jQuery);
-</script>
