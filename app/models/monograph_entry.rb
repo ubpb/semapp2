@@ -17,6 +17,10 @@ class MonographEntry < Entry
   #
   ######################################################################################################
 
+  def title=(value)
+    write_attribute :title, value.gsub("<", "").gsub(">", "")
+  end
+
   def to_s
     out  = ""
     out << author_to_s

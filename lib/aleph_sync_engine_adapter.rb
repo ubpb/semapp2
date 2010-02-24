@@ -30,6 +30,8 @@ class AlephSyncEngineAdapter < SyncEngineAdapter
         end
       end
       return books
+    else
+      return {}
     end
   end
 

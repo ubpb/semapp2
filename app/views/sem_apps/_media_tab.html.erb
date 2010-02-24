@@ -5,23 +5,7 @@
         <%= render 'entry', :entry => entry %>
       <% end %>
     <% else %>
-      <div class="pui-panel notice">
-        <p>
-          Texte und Medien sind urheberrechtlich geschützt. Sie müssen
-          diesen eSeminarapparat zunächst mittels der <strong>Kennung für den Lesezugriff</strong>
-          freischalten.
-        </p>
-
-        <p>
-          Diese Kennung erhalten Sie in der Regel von den Tutoren.
-        </p>
-
-        <% form_tag unlock_sem_app_path do %>
-          <%= label_tag 'shared_secret', 'Kennung für den Lesezugriff:' %>
-          <%= password_field_tag 'shared_secret' %>
-          <%= submit_tag "Freischalten" %>
-        <% end %>
-      </div>
+      <%= render 'unlock_panel' %>
     <% end %>
   <% else %>
     <div id="no-entries-message" class="pui-panel notice align-center">
@@ -29,9 +13,8 @@
     </div>
 
     <% if @sem_app.is_editable_for?(current_user) %>
-      <div id="dummy-entry" class="item no-hover">
-        <h1>Erstellen Sie einen neuen Eintrag</h1>
-        <%= render 'sem_apps/entry_dropdown_panel', :origin_id => nil, :inline_style => nil %>
+      <div class="pui-panel align-center">
+        <%= link_to 'Einen neuen Eintrag erstellen', '#', :class => 'pui-button pui-overlay-trigger', :rel => 'pui-overlay' %>
       </div>
     <% end %>
   <% end %>
@@ -60,14 +43,14 @@
       <li>
         <h5><%= link_to "Verweis auf eine Monographie", new_sem_app_monograph_entry_path(@sem_app, :origin_id => nil) %></h5>
         <div class="info">
-          Verwenden Sie diesen Eintrag um eine Quellenangabe zu einer Mongogrphie aufzunehmen. Sie können selbst 
+          Verwenden Sie diesen Eintrag um eine Quellenangabe zu einer Mongogrphie aufzunehmen. Sie können selbst
           PDF-Dateien anhängen oder einzelne Kapitel durch die Bibliothek Scannen lassen (wenn im Bestand vorhanden).
         </div>
       </li>
       <li>
         <h5><%= link_to "Verweis auf einen Zeitschriftenartikel", new_sem_app_article_entry_path(@sem_app, :origin_id => nil) %></h5>
         <div class="info">
-          Verwenden Sie diesen Eintrag um eine Quellenangabe zu einem Zeitschriftenartikel aufzunehmen. Sie können 
+          Verwenden Sie diesen Eintrag um eine Quellenangabe zu einem Zeitschriftenartikel aufzunehmen. Sie können
           selbst PDF-Dateien anhängen oder den Artikel durch die Bibliothek Scannen lassen (wenn im Bestand vorhanden).
         </div>
       </li>

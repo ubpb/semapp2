@@ -83,12 +83,15 @@ CREATE TABLE sem_apps (
   tutors text NOT NULL,
   shared_secret character varying NOT NULL,
   course_id character varying,
+  miless_document_id character varying,
+  miless_derivate_id character varying,
   created_at timestamp without time zone,
   updated_at timestamp without time zone
 );
 
-CREATE UNIQUE INDEX index_sem_apps_on_semester_id_and_title ON sem_apps(semester_id, title);
 CREATE UNIQUE INDEX index_sem_apps_on_semester_id_and_course_id ON sem_apps(semester_id, course_id);
+CREATE INDEX index_sem_apps_on_miless_document_id ON sem_apps(miless_document_id);
+CREATE INDEX index_sem_apps_on_miless_derivate_id ON sem_apps(miless_derivate_id);
 
 --
 -- Book Shelves
@@ -155,44 +158,51 @@ CREATE TABLE entries (
   "position" integer,
   publish_on timestamp without time zone,
   created_at timestamp without time zone,
-  updated_at timestamp without time zone
+  updated_at timestamp without time zone,
+  miless_entry_id character varying
 );
 
+CREATE INDEX index_entries_on_miless_entry_id ON entries(miless_entry_id);
+
 CREATE TABLE headline_entries (
-  headline character varying NOT NULL
+  headline character varying
 ) INHERITS (entries);
 
 CREATE TABLE text_entries (
-  text text NOT NULL
+  text text
 ) INHERITS (entries);
 
 CREATE TABLE monograph_entries (
-  author character varying NOT NULL,
-  title text NOT NULL,
+  author character varying,
+  title text,
   subtitle text,
   "year" character varying,
   place character varying,
   publisher character varying,
   edition character varying,
   isbn character varying,
-  signature character varying
+  signature character varying,
+  comment text
 ) INHERITS (entries);
 
 CREATE TABLE article_entries (
-  author character varying NOT NULL,
-  title text NOT NULL,
+  author character varying,
+  title text,
   subtitle text,
   journal character varying,
+  place character varying,
+  publisher character varying,
   volume character varying,
   "year" character varying,
   issue character varying,
   pages character varying,
   issn character varying,
-  signature character varying
+  signature character varying,
+  comment text
 ) INHERITS (entries);
 
 CREATE TABLE collected_article_entries (
-  source_editor character varying NOT NULL,
+  source_editor character varying,
   source_title text,
   source_subtitle text,
   source_year character varying,
@@ -207,7 +217,8 @@ CREATE TABLE collected_article_entries (
   title text,
   subtitle text,
   volume character varying,
-  pages character varying
+  pages character varying,
+  comment text
 ) INHERITS (entries);
 
 --

@@ -1,9 +1,5 @@
 <%= entry.to_s %>
 
-<% if entry.scanjob.present? %>
-  <i>Scan wird in kürze bereitgestellt</i>
-<% else %>
-  <%= link_to 'Einen Scan beaufragen', new_article_entry_scanjob_path(entry) %>
-<% end %>
+<%= render 'entries/scan', :entry => entry %>
 
 <%= render 'entries/attachments', :entry => entry %>

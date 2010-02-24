@@ -5,11 +5,12 @@ class SemApp < ActiveRecord::Base
   belongs_to :semester
   belongs_to :location
 
-  has_one    :book_shelf
+  has_one    :book_shelf, :dependent => :destroy
   has_many   :ownerships, :dependent => :destroy
   has_many   :owners, :through => :ownerships, :source => :user
   has_many   :books, :order => "title desc", :dependent => :destroy
   has_many   :entries, :order => "position asc", :dependent => :destroy
+  has_many   :miless_passwords, :dependent => :destroy
 
   # Behavior
   accepts_nested_attributes_for :book_shelf, :allow_destroy => true, :reject_if => lambda { 
@@ -24,7 +25,6 @@ class SemApp < ActiveRecord::Base
   validates_presence_of   :tutors
   validates_presence_of   :shared_secret
   
-  validates_uniqueness_of :title,     :scope => :semester_id
   validates_uniqueness_of :course_id, :scope => :semester_id, :allow_nil => true, :allow_blank => false
 
   ###########################################################################################
@@ -88,12 +88,15 @@ class SemApp < ActiveRecord::Base
   alias_method :editable?, :is_editable_for?
 
   def is_unlocked_in_session?(session)
-    unlocks = session[:unlockes]
-    unlocks.present? and unlocks[self.id.to_s].present?
+    unlocks = session[:unlocked]
+    unlocks.present? and unlocks[self.id.to_s] == true
   end
 
   def unlock_in_session(session)
-    session[:unlockes] = {self.id.to_s => true}
+    unlocks = session[:unlocked]
+    unlocks = {} unless unlocks.present?
+    unlocks[self.id.to_s] = true
+    session[:unlocked] = unlocks
   end
 
   def is_from_current_semester?

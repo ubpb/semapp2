@@ -19,4 +19,18 @@ namespace :app do
     engine.sync
   end
 
+  #
+  # Import from Miless
+  #
+  desc "Miless Import Step 1 (Import all Sem App data)"
+  task(:import_sem_apps => :environment) do
+    SemApp.destroy_all
+    UbdokImporter.new.import_sem_apps
+  end
+
+  desc "Miless Import Step 2 (Import shared secrets)"
+  task(:import_rights => :environment) do
+    UbdokRightsImporter.new.import_rights
+  end
+
 end

@@ -1,0 +1,17 @@
+<div class="pui-panel notice">
+  <p>
+    Texte und Medien sind urheberrechtlich geschützt. Sie müssen
+    diesen eSeminarapparat zunächst mittels der <strong>Kennung für den Lesezugriff</strong>
+    freischalten.
+  </p>
+
+  <p>
+    Diese Kennung erhalten Sie in der Regel von den Dozenten oder den Tutoren der Veranstaltung.
+  </p>
+
+  <% form_tag unlock_sem_app_path do %>
+    <%= label_tag 'shared_secret', 'Kennung für den Lesezugriff:' %>
+    <%= password_field_tag 'shared_secret' %>
+    <%= submit_tag "Freischalten" %>
+  <% end %>
+</div>

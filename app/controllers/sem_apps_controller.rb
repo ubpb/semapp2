@@ -11,10 +11,10 @@ class SemAppsController < ApplicationController
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
     if @filter
       @sem_apps = @filter.scope.paginate(:all, :conditions => {:approved => true}, :per_page => 10, :page => params[:page],
-        :order => "sem_apps.created_at")
+        :order => "sem_apps.semester_id asc, sem_apps.title asc")
     else
       @sem_apps = SemApp.paginate(:all, :conditions => {:approved => true}, :per_page => 10, :page => params[:page],
-        :order => "sem_apps.created_at")
+        :order => "sem_apps.semester_id asc, sem_apps.title asc")
     end
   end
 
@@ -86,7 +86,7 @@ class SemAppsController < ApplicationController
 
   def unlock
     shared_secret = params[:shared_secret]
-    if shared_secret == @sem_app.shared_secret
+    if (shared_secret == @sem_app.shared_secret) or @sem_app.miless_passwords.map{|p| p.password}.include?(shared_secret)
       @sem_app.unlock_in_session(session)
     else
       flash[:error] = "Die eingegebene Kennung stimmt leider nicht. Texte und Medien können nicht freigeschaltet werden."
