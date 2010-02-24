@@ -20,6 +20,14 @@ namespace :app do
   end
 
   #
+  # Synchronize books
+  #
+  desc "Upload scanjobs"
+  task(:upload_scanjobs => :environment) do
+    ScanjobUploader.new.upload_scanjobs
+  end
+
+  #
   # Import from Miless
   #
   desc "Miless Import Step 1 (Import all Sem App data)"
