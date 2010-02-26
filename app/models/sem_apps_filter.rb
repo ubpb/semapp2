@@ -20,4 +20,8 @@ class SemAppsFilter
     scope
   end
 
+  def filtered?
+    [@title, @tutors, @creator, @location, @semester].any? {|f| f.present?}
+  end
+
 end

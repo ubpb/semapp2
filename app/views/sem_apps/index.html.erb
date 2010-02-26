@@ -6,7 +6,7 @@
     <fieldset class="inputs">
       <ol>
         <li class="string">
-          <label>Angezeigtes Semester</label>
+          <label>Semester</label>
           <%= collection_select(:filter, :semester, Semester.all, :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
         </li>
         <li class="string">
@@ -14,11 +14,11 @@
           <%= collection_select(:filter, :location, Location.all, :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
         </li>
         <li class="string">
-          <label>Titel enthält</label>
+          <label>Titel</label>
           <%= text_field_tag "filter[title]", @filter.title, {:style => 'width: 190px'} %>
         </li>
         <li class="string">
-          <label>Tutor(en) (Name enthält)</label>
+          <label>Dozent</label>
           <%= text_field_tag "filter[tutors]", @filter.tutors, {:style => 'width: 190px'}  %>
         </li>
       </ol>
@@ -28,30 +28,40 @@
         <li class="commit">
           <%= submit_tag 'Filtern' %>
         </li>
-        <% if @filtered %>
-          <li>
-            <%= link_to 'Filter zurücksetzen', sem_apps_path %>
-          </li>
-        <% end %>
       </ol>
     </fieldset>
   <% end %>
 </div>
 
-<div id="filter-info-panel" class="pui-panel align-right">
-  <% if @filtered %>
-    Anzahl der Seminarapparate: <%= @count %> <strong>(Gefiltert)</strong>
-    <a href="#" rel="#filter-panel" class="pui-overlay-trigger pui-button">
-      <%= image_tag 'icons/ui-search-field.png', :plugin => 'pui' %>
-      Filter ändern
-    </a>
-  <% else %>
-    Anzahl der Seminarapparate: <%= @count %> <strong>(Gesamt)</strong>
-    <a href="#" rel="#filter-panel" class="pui-overlay-trigger pui-button">
-      <%= image_tag 'icons/ui-search-field.png', :plugin => 'pui' %>
-      Liste Filtern
-    </a>
-  <% end %>
+<div id="filter-info-panel" class="pui-panel align-center">
+  <p>
+    Anzahl der Seminarapparate: <%= @filter.scope.count %>
+    <% if @filter.filtered? %>
+      <strong>(Gefiltert)</strong>
+      <% filter_strings = [] %>
+      <% filter_strings << "Semester = '#{Semester.find(@filter.semester).title}'" if @filter.semester.present? %>
+      <% filter_strings << "Fachbibliothek = '#{Location.find(@filter.location).title}'" if @filter.location.present? %>
+      <% filter_strings << "Titel = '#{@filter.title}'" if @filter.title.present? %>
+      <% filter_strings << "Dozent(en) = '#{@filter.tutors}'" if @filter.tutors.present? %>
+      <%= filter_strings.join(", ") %>
+    <% else %>
+      <strong>(Gesamt)</strong>
+    <% end %>
+  </p>
+  <div>
+    <% if @filter.filtered? %>
+      <a href="#" rel="#filter-panel" class="pui-overlay-trigger pui-button">
+        <%= image_tag 'icons/ui-search-field.png', :plugin => 'pui' %>
+        Filter ändern
+      </a>
+      <%= link_to 'Zurücksetzen', filter_sem_apps_path, :method => :post %>
+    <% else %>
+      <a href="#" rel="#filter-panel" class="pui-overlay-trigger pui-button">
+        <%= image_tag 'icons/ui-search-field.png', :plugin => 'pui' %>
+        Liste Filtern
+      </a>
+    <% end %>
+  </div>
 </div>
 
 <%= render 'listing', :sem_apps => @sem_apps %>

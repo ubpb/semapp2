@@ -9,17 +9,16 @@ class SemAppsController < ApplicationController
 
   def index
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
-    if @filter
-      @sem_apps = @filter.scope.paginate(:all, :conditions => {:approved => true}, :per_page => 10, :page => params[:page],
-        :order => "sem_apps.semester_id asc, sem_apps.title asc")
-    else
-      @sem_apps = SemApp.paginate(:all, :conditions => {:approved => true}, :per_page => 10, :page => params[:page],
-        :order => "sem_apps.semester_id asc, sem_apps.title asc")
-    end
+    @sem_apps = @filter.scope.paginate(
+      :all,
+      :conditions => {:approved => true},
+      :per_page => 10,
+      :page => params[:page],
+      :order => "sem_apps.semester_id asc, sem_apps.title asc")
   end
 
   def filter
-    filter = SemAppsFilter.new(params[:filter])
+    filter = params[:filter].present? ? SemAppsFilter.new(params[:filter]) : SemAppsFilter.new()
     session[SEM_APP_FILTER_NAME] = filter
     redirect_to :action => :index
   end
