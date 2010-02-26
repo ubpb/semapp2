@@ -1,29 +1,35 @@
-<div class="pui-tabs-wrapper">
-  <ul class="pui-tabs">
-    <li><a href="#bib">Anmeldung</a></li>
-  </ul>
+<h3 class="section">Anmeldung für Lehrende</h3>
 
-  <div class="pui-tab-panes">
-    <div id="bib-login-panel">
-      <% semantic_form_for resource_name, resource, :url => session_path(resource_name) do |f| %>
-        <% f.inputs :name => "Anmelden (mit Bibliothekslogin*)" do %>
-          <%= f.input :login,    :label => 'Login' %>
-          <%= f.input :password, :label => 'Passwort' %>
-        <% end %>
-
-        <% f.buttons do %>
-          <%= f.commit_button 'Anmelden' %>
-        <% end %>
-      <% end %>
-
-      <p>
-        * Um sich an diesem System anzumelden verwenden Sie bitte die persönlichen
-        Zugangsdaten Ihres Bibliothekskontos. Den Benutzernamen finden Sie auf Ihrem
-        Bibliotheksausweis.
-      </p>
-      <p>
-        Bitte beachten Sie: <strong>Nur Benutzer mit Ausweisen vom Typ PS oder PA können sich hier anmelden.</strong>
-      </p>
-    </div>
-  </div>
+<div class="pui-panel">
+  <%= icon 'asterisk.png' %>
+  <strong>Bitte beachten Sie:</strong> Diese Anmeldung ist für Lehrende die einen Seminarapparat erstellen oder
+  bearbeiten wollen. Studierende melden sich mittels der bekanntgegebenen Lesekennung am jeweiligen Apparat an*.
 </div>
+
+<% semantic_form_for resource_name, resource, :url => session_path(resource_name) do |f| %>
+  <%= f.error_messages %>
+  <% f.inputs :name => "Anmeldung (mit Bibliothekslogin**)" do %>
+    <%= f.input :login,    :label => 'Login', :required => false %>
+    <%= f.input :password, :label => 'Passwort', :required => false %>
+  <% end %>
+
+  <% f.buttons do %>
+    <%= f.commit_button 'Anmelden' %>
+  <% end %>
+<% end %>
+
+
+<p>
+  * Die Lesekennung wird vom Dozenten festgelegt und wird in der Regel in der Veranstaltung bekannt gegeben.
+  Alternativ ist ein Zugriff auf die eSeminarapparate über <a href="http://koala.uni-paderborn.de">KoaLA</a>
+  möglich (sofern ein entsprechender Kurs in KoaLA eingerichtet wurde).
+  Zu einem späteren Zeitpunkt wird eine Anmeldung auch über die IMT Zugangsdaten möglich sein.
+</p>
+
+<p>
+  ** Um sich an diesem System anzumelden verwenden Sie bitte die persönlichen
+  Zugangsdaten Ihres Bibliothekskontos. Die Benutzernummer finden Sie auf Ihrem
+  Bibliotheksausweis. Die Anmeldung setzt einen A-Ausweis vorraus. Bei Fragen
+  wenden Sie sich bitte an das <a href="#" class="pui-overlay-trigger" rel="#common-help">Informationszentrum der Bibliothek</a>.
+</p>
+
