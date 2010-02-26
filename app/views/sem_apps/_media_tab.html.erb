@@ -14,7 +14,7 @@
 
     <% if @sem_app.is_editable_for?(current_user) %>
       <div class="pui-panel align-center">
-        <%= link_to 'Einen neuen Eintrag erstellen', '#', :class => 'pui-button pui-overlay-trigger', :rel => 'pui-overlay' %>
+        <%= link_to 'Einen neuen Eintrag erstellen', '#', :class => 'pui-button pui-overlay-trigger', :rel => '#entry-type-panel' %>
       </div>
     <% end %>
   <% end %>
