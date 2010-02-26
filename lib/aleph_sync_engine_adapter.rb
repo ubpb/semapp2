@@ -14,8 +14,9 @@ class AlephSyncEngineAdapter < SyncEngineAdapter
       books = {}
       lendings.each do |l|
         sleep(1/100)
-        record = @aleph.get_record(l)
-        item   = @aleph.get_item(l)
+        record = @aleph.get_record(l[:doc_number])
+        item   = @aleph.get_item(l[:doc_number], l[:barcode])
+
         if record.present? and item.present?
           books[record.doc_number] = {
             :signature  => item.call_no_1,
@@ -34,5 +35,9 @@ class AlephSyncEngineAdapter < SyncEngineAdapter
       return {}
     end
   end
+
+  private
+
+  
 
 end

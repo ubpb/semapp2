@@ -1,5 +1,19 @@
 class Admin::BooksController < Admin::ApplicationController
 
+  def edit
+    @book = Book.find(params[:id])
+  end
+
+  def update
+    @book = Book.find(params[:id])
+    if @book.update_attributes(params[:book].merge(:state => :in_shelf))
+      flash[:success] = "Erfolgreich gespeichert"
+      redirect_to admin_sem_app_path(@book.sem_app, :anchor => 'new-books')
+    else
+      render :edit
+    end
+  end
+
   def defer
     @book = Book.find(params[:id])
     unless @book.set_state(:deferred)

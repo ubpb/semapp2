@@ -13,10 +13,6 @@
       Sie finden die Bücher in der <strong><%= h(@sem_app.location.title) %></strong> im
       Seminarapparat <strong>Nr. <%= h(@sem_app.book_shelf.slot_number) %></strong>
     </div>
-  <% else %>
-    <div class="pui-panel notice align-center">
-      <p>Die Bücher dieses Seminarapparates finden Sie regulären Bestand.</p>
-    </div>
   <% end %>
 
   <div id="books-listing" class="listing">

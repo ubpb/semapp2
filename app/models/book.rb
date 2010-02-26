@@ -9,7 +9,8 @@ class Book < ActiveRecord::Base
 
   # Relations
   belongs_to :sem_app
-  belongs_to :creator, :class_name => 'User'
+  belongs_to :creator,     :class_name => 'User'
+  belongs_to :placeholder, :class_name => 'SemApp'
 
   # Validation
   validates_presence_of   :sem_app
@@ -36,6 +37,8 @@ class Book < ActiveRecord::Base
   def state=(value)
     if value.present? and States[value.to_sym].present?
       self.write_attribute(:state, States[value.to_sym])
+    else
+      self.write_attribute(:state, '')
     end
   end
 
@@ -47,6 +50,10 @@ class Book < ActiveRecord::Base
 
   def base_signature
     Book.get_base_signature(signature)
+  end
+
+  def placeholder?
+    placeholder.present?
   end
 
   ###########################################################################################

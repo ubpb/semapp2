@@ -47,7 +47,7 @@ class BooksController < ApplicationController
 
   def destroy
     book = Book.find(params[:id])
-    book.set_state(:removed)
+    book.set_state(:rejected)
     render :nothing => true
   end
 

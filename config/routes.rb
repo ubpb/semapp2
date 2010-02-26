@@ -6,7 +6,7 @@ ActionController::Routing::Routes.draw do |map|
 
     admin.resources :sem_apps, :as => 'apps', :collection => {:filter => :post}
 
-    admin.resources :books, :only => [:defer, :dedefer, :placed_in_shelf, :removed_from_shelf], :member => {:defer => :put, :dedefer => :put, :placed_in_shelf => :put, :removed_from_shelf => :put}
+    admin.resources :books, :only => [:edit, :update, :defer, :dedefer, :placed_in_shelf, :removed_from_shelf], :member => {:defer => :put, :dedefer => :put, :placed_in_shelf => :put, :removed_from_shelf => :put}
 
     admin.resources :scanjobs, :member => {:defer => :put, :dedefer => :put}
     admin.scanjob_print_job   'scanjobs/:id/print-job',         :controller => 'scanjobs', :action => 'print_job'

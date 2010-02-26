@@ -15,13 +15,15 @@ class SyncEngine
     puts "#"
     puts "# Found #{sem_apps.size} app(s) for the current semester: #{Semester.current.title}"
     puts "#\n\n"
-    
-    sem_apps.each_with_index do |sem_app, i|
-      sync_sem_app(sem_app, i)      
+
+    @errors = 0
+    sem_apps.each do |sem_app|
+      sync_sem_app(sem_app)      
     end
 
     puts "\n#"
     puts "# Synchronization finished in #{Time.now()-started_on}s"
+    puts "# #{@errors} Error(s)"
     puts "#"
   end
 
@@ -33,8 +35,8 @@ class SyncEngine
     return SemApp.find_all_by_semester_id(current_semester.id)
   end
 
-  def sync_sem_app(sem_app, index)
-    print "#{index+1}. Syncing SemApp #{sem_app.id}: "
+  def sync_sem_app(sem_app)
+    print "Syncing #{sem_app.id}... "
     
     if sem_app.has_book_shelf?
       begin
@@ -58,8 +60,10 @@ class SyncEngine
           db_entries.each do |s, e|
             unless ils_entries.include?(s)
               # found a book that is in the db AND NOT in the ILS
-              # skip books that are scheduled for addition
-              delete_entry(e) unless e.scheduled_for_addition
+              # skip placeholder and books that are in ordered state
+              unless e.placeholder?
+                delete_entry(e) if e.state != Book::States[:ordered]
+              end
             else
               # found a book that is in the db AND in the ILS
               # do nothing: handled in the other case
@@ -68,14 +72,15 @@ class SyncEngine
         end
         
         # finished we are
-        print "Done.\n"
-      rescue RuntimeError => e
-        print "Error! #{e}\n"
+        print "Ok."
+      rescue Exception => e
+        @errors += 1
+        print "Error! #{e}"
       ensure
         print "\n"
       end
     else
-      print "Skipped. Has no book shelf applied.\n"
+      print "Skipped (no book shelf)\n"
     end
   end
 
@@ -97,16 +102,17 @@ class SyncEngine
   #
   def create_or_update_entry(sem_app, ils_id, ils_entry)
     options = {
-      :sem_app   => sem_app,
-      :ils_id    => ils_id,
-      :signature => ils_entry[:signature],
-      :title     => ils_entry[:title],
-      :author    => ils_entry[:author],
-      :year      => ils_entry[:year],
-      :edition   => ils_entry[:edition],
-      :place     => ils_entry[:place],
-      :publisher => ils_entry[:publisher],        
-      :isbn      => ils_entry[:isbn],
+      :sem_app     => sem_app,
+      :ils_id      => ils_id,
+      :placeholder => nil,
+      :signature   => ils_entry[:signature],
+      :title       => ils_entry[:title],
+      :author      => ils_entry[:author],
+      :year        => ils_entry[:year],
+      :edition     => ils_entry[:edition],
+      :place       => ils_entry[:place],
+      :publisher   => ils_entry[:publisher],
+      :isbn        => ils_entry[:isbn],
     }
 
     db_entry = sem_app.book_by_ils_id(ils_id)
@@ -115,8 +121,9 @@ class SyncEngine
 
   def create_entry(options)
     options.merge!(:state => :in_shelf)
-    unless Book.new(options).save
-      raise "Failed for signature #{options[:signature]} while creating a new entry."
+    book = Book.new(options)
+    unless book.save
+      raise book.errors.full_messages.to_sentence
     end
   end
 

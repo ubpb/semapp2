@@ -8,34 +8,46 @@
   <% end %>
 
   <div class="book clearfix">
+    <!--
     <div style="float: left">
-      <%= image_tag "http://ecx.images-amazon.com/images/P/#{book.isbn.present? ? book.isbn.gsub('-', '') : ''}.03._SCTZZZZZZZ_.jpg", :class => 'book-cover' %>
+<%#= image_tag "http://ecx.images-amazon.com/images/P/#{book.isbn.present? ? book.isbn.gsub('-', '') : ''}.03._SCTZZZZZZZ_.jpg", :class => 'book-cover' %>
     </div>
+    -->
 
-    <div style="padding-left: 100px">
-      <%= render 'shared_partials/book_ref', :book => book %>
+    <%= render 'shared_partials/book_ref', :book => book %>
 
-      <% if book.signature.present? %>
-        <br/>
-        <span>
-          Signatur: <%= book.base_signature -%>
-          <% link_to "https://ubaleph.uni-paderborn.de/F/?func=find-b&find_code=PSG&request=#{book.base_signature}?" do %>
-            &raquo; Im Bibliothekskatalog anzeigen
-          <% end %>
-        </span>
-      <% end %>
+    <% if book.placeholder? %>
+      <p>
+        <%= icon 'asterisk.png' %>
+        <% if book.placeholder.book_shelf.present? %>
+          <i>Dieses Exemplar finden Sie in der <strong><%= h(book.placeholder.location.title) %></strong> im
+            Seminarapparat <strong>Nr. <%= h(book.placeholder.book_shelf.slot_number) %></strong></i>
+        <% else %>
+          <i>Dieses Exemplar finden Sie in einem anderen Seminarapparat.</i>
+        <% end %>
+      </p>
+    <% end %>
 
-      <% if book.isbn.present? %>
-        <br/>
+    <% if book.signature.present? %>
+      <div>
+        Signatur: <%= book.base_signature -%>
+        <% link_to "https://ubaleph.uni-paderborn.de/F/?func=find-b&find_code=PSG&request=#{book.base_signature}?" do %>
+          &raquo; Im Bibliothekskatalog anzeigen
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if book.isbn.present? %>
+      <div>
         Dieses Buch bei:
         <%= link_to 'Amazon.de', "http://www.amazon.de/dp/#{book.isbn.gsub('-', '')}" %>,
         <%= link_to 'Google Books', "http://books.google.com/books?as_isbn=#{book.isbn.gsub('-', '')}" %>
-      <% end %>
-        
-      <% if book.comment.present? %>
-        <br/>
-        <span class="comment"><%= book.comment %></span>
-      <% end %>
-    </div>
+      </div
+    <% end %>
+
+    <% if book.comment.present? %>
+      <br/>
+      <span class="comment"><%= book.comment %></span>
+    <% end %>
   </div>
 </div>

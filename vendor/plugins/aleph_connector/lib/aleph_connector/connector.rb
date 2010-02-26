@@ -46,8 +46,12 @@ module Aleph #:nodoc:
       load_record(doc_number)
     end
 
-    def get_item(doc_number)
-      load_item(doc_number)
+    def get_item(doc_number, barcode)
+      load_item(doc_number, barcode)
+    end
+
+    def get_items(doc_number)
+      load_items(doc_number)
     end
 
     def find(term)
@@ -93,7 +97,10 @@ module Aleph #:nodoc:
 
       lendings = []
       data.find('//bor-info/item-l').each do |l|
-        lendings << content_from_node(l, 'z13/z13-doc-number')
+        lendings << {
+          :doc_number => content_from_node(l, 'z13/z13-doc-number'),
+          :barcode    => content_from_node(l, 'z30/z30-barcode')
+        }
       end
 
       return lendings.compact
@@ -109,11 +116,23 @@ module Aleph #:nodoc:
       return Aleph::Record.new(doc_number, node) if node.present?
     end
 
-    def load_item(doc_number)
+    def load_items(doc_number)
       url  = "#{@base_url}?op=item-data&doc_num=#{doc_number}&base=#{@search_base}"
       data = load_url(url)
-      node = data.find_first('//item-data/item')
-      return Aleph::Item.new(doc_number, node) if node.present?
+      items = []
+      data.find('//item-data/item').each do |item|
+        items << Aleph::Item.new(doc_number, item)
+      end
+
+      return items
+    end
+
+    def load_item(doc_number, barcode)
+      items = load_items(doc_number)
+      items.each do |item|
+        return item if item.barcode == barcode
+      end
+      return nil
     end
 
     def do_find(term)

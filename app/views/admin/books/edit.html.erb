@@ -1,0 +1,14 @@
+<% semantic_form_for ['admin', @book] do |f| %>
+  <% f.inputs do %>
+    <%= f.input :placeholder, :label => 'Sem App ID', :input_html => {:style => 'width:200px'}, :label_method => Proc.new {|sem_app| "#{sem_app.title} - #{sem_app.tutors}"}, :collection => SemApp.all(:conditions => {:semester_id => Semester.current.id}, :order => 'title') %>
+  <% end %>
+
+  <% f.buttons do %>
+    <%= f.commit_button 'Speichern' %>
+    <li>
+      <%= link_to 'Abbrechen', admin_sem_app_path(@book.sem_app, :anchor => 'new-books') %>
+    </li>
+  <% end %>
+<% end %>
+
+<span>* Pflichtfelder</span>
