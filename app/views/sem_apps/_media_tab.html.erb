@@ -8,13 +8,16 @@
       <%= render 'unlock_panel' %>
     <% end %>
   <% else %>
-    <div id="no-entries-message" class="pui-panel notice align-center">
-      Für diesen Seminarapparat sind hier aktuell <strong>keine</strong> Inhalte verfügbar.
-    </div>
-
     <% if @sem_app.is_editable_for?(current_user) %>
       <div class="pui-panel align-center">
-        <%= link_to 'Einen neuen Eintrag erstellen', '#', :class => 'pui-button pui-overlay-trigger', :rel => '#entry-type-panel' %>
+        <p>
+          <%= icon 'asterisk.png' %>
+          Für diesen Seminarapparat sind hier aktuell <strong>keine</strong> Inhalte verfügbar.
+        </p>
+        <% link_to '#', :class => 'pui-button pui-overlay-trigger', :rel => '#entry-type-panel' do %>
+          <%= icon 'plus.png' %>
+          Einen neuen Eintrag erstellen
+        <% end %>
       </div>
     <% end %>
   <% end %>
