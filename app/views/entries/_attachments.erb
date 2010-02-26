@@ -1,5 +1,5 @@
-<div class="pui-view">
-  <% if entry.file_attachments.present? %>
+<% if entry.file_attachments.present? %>
+  <div class="pui-view">
     <ol class="attachments clearfix">
       <% entry.file_attachments.each do |a| %>
         <li class="attachment">
@@ -25,11 +25,11 @@
         </li>
       <% end %>
     </ol>
-  <% end %>
+  </div>
+<% end %>
 
-  <% if entry.sem_app.editable?(current_user) %>
-    <p class="align-right">
-      <%= link_to 'Eine Datei anhängen', polymorphic_path(['new', entry, 'file_attachment']), :class => 'pui-button small' %>
-    </p>
-  <% end %>
-</div>
+<% if entry.sem_app.editable?(current_user) %>
+  <p class="align-right">
+    <%= link_to 'Eine Datei anhängen', polymorphic_path(['new', entry, 'file_attachment']), :class => 'pui-button small' %>
+  </p>
+<% end %>

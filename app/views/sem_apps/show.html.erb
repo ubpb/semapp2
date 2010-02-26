@@ -6,15 +6,14 @@
   <% end %>
 <% end %>
 
-
 <h3 class="section">
   <%= link_to h(@sem_app.title), sem_app_path(@sem_app) %>
 </h3>
 
-<div class="pui-view clearfix section">
+<div class="pui-view clearfix section" style="margin-bottom: 30px">
   <div class="grid_6 alpha">
     im <%= h(@sem_app.semester.title) %><br/>
-    Tutor(en): <strong><%= h(@sem_app.tutors) %></strong>
+    Dozent(en): <strong><%= h(@sem_app.tutors) %></strong>
   </div>
 
   <div class="grid_6 omega align-right">
@@ -32,7 +31,6 @@
     <% end %>
   </div>
 </div>
-
 
 <div class="sem-app">
   <div class="pui-tabs-wrapper">

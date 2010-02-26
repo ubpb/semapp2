@@ -9,8 +9,9 @@
 
 <% if @books.present? %>
   <% if @sem_app.has_book_shelf? %>
-    <div class="pui-panel notice align-center">
-      Sie finden die Bücher in der <strong><%= h(@sem_app.location.title) %></strong> im
+    <div class="pui-panel align-center">
+      <%= icon 'asterisk.png' %>
+      Sie finden die folgenden Bücher in der <strong><%= h(@sem_app.location.title) %></strong> im
       Seminarapparat <strong>Nr. <%= h(@sem_app.book_shelf.slot_number) %></strong>
     </div>
   <% end %>

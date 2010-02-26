@@ -7,13 +7,7 @@
     </div>
   <% end %>
 
-  <div class="book clearfix">
-    <!--
-    <div style="float: left">
-<%#= image_tag "http://ecx.images-amazon.com/images/P/#{book.isbn.present? ? book.isbn.gsub('-', '') : ''}.03._SCTZZZZZZZ_.jpg", :class => 'book-cover' %>
-    </div>
-    -->
-
+  <div class="book">
     <%= render 'shared_partials/book_ref', :book => book %>
 
     <% if book.placeholder? %>
@@ -42,12 +36,13 @@
         Dieses Buch bei:
         <%= link_to 'Amazon.de', "http://www.amazon.de/dp/#{book.isbn.gsub('-', '')}" %>,
         <%= link_to 'Google Books', "http://books.google.com/books?as_isbn=#{book.isbn.gsub('-', '')}" %>
-      </div
+      </div>
     <% end %>
 
     <% if book.comment.present? %>
-      <br/>
-      <span class="comment"><%= book.comment %></span>
+      <div class="comment">
+        <%= book.comment %>
+      </div>
     <% end %>
   </div>
 </div>

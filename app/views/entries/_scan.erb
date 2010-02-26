@@ -1,10 +1,10 @@
 <% if entry.sem_app.editable?(current_user)  %>
   <div class="pui-view">
     <% if entry.scanjob.present? %>
-      <div class="pui-panel align-center">
+      <div>
         <%= icon 'asterisk.png' %>
-        Für diesen Eintrag wurde ein Scan in der Bibliothek beauftragt.<br/>
-        <i>Der Scan wird in kürze bereitgestellt.</i>
+        <i>Für diesen Eintrag wurde ein Scan in der Bibliothek beauftragt.
+        Der Scan wird in kürze bereitgestellt.</i>
       </div>
     <% else %>
       <p class="align-right">
