@@ -1,16 +1,16 @@
 <div class="section">
-  <h3>&raquo; eSeminarapparate</h3>
+  <h3>&raquo; Seminarapparate</h3>
   <ul>
     <li><%= link_to('Gesamtliste', sem_apps_path) %></li>
-    <% if current_user %>
-      <li><%= link_to('Meine eSeminarapparate', user_path(:anchor => 'apps')) %></li>
-    <% end %>
   </ul>
 </div>
 
 <div class="section">
   <h3>&raquo; Für Lehrende</h3>
   <ul>
-    <li><%= link_to('eSeminarapparat beantragen', new_sem_app_path) %></li>
+    <% if current_user %>
+      <li><%= link_to('Meine Seminarapparate', user_path(:anchor => 'apps')) %></li>
+    <% end %>
+    <li><%= link_to('Seminarapparat beantragen', new_sem_app_path) %></li>
   </ul>
 </div>

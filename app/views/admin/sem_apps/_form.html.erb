@@ -31,18 +31,14 @@
 
   <% f.inputs :name => 'Bibliotheksdaten' do %>
     <% if @sem_app.new_record? %>
-      <%= f.input :location, :label => 'Standort', :hint => 'Welcher Fachbibliothek soll der eSeminarapparat zugeordnet werden?' %>
+      <%= f.input :location, :label => 'Standort', :hint => 'Welcher Fachbibliothek soll der Seminarapparat zugeordnet werden?' %>
     <% else %>
       <%= f.input :location, :label => 'Standort' %>
     <% end %>
   <% end %>
 
   <% f.inputs :name => 'Zugriffsschutz' do %>
-    <%= f.input :shared_secret, :label => 'Kennung für den Lesezugriff',
-      :hint => "Bitte vergeben Sie eine Kennung für den Lesezugriff auf die elektronischen Volltexte.
-    Jeder der diese Kennung kennt hat damit Lesezugriff auf die
-    in diesem eSeminarapparat hinterlegten Dateien. Sie sollten dieses Passwort
-    nur dem begrenzten Teilnehmerkreis Ihrer Veranstaltung bekannt machen." %>
+    <%= f.input :shared_secret, :label => 'Lesekennung' %>
   <% end %>
 
   <% f.buttons do %>

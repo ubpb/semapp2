@@ -48,9 +48,9 @@ class SemAppsController < ApplicationController
     SemApp.transaction do
       if @sem_app.save and @sem_app.add_ownership(current_user)
         flash[:success] = """
-          <p>Ihr eSeminarapparat wurde erfolgreich beantragt. Wir prüfen die Angaben und schalten
-          den eSeminarappat nach erfolgter Prüfung für Sie frei. Sie sehen den Status unter
-          <strong>Meine eSeminarapparate</strong>.</p>
+          <p>Ihr Seminarapparat wurde erfolgreich beantragt. Wir prüfen die Angaben und schalten
+          den Seminarapparat nach erfolgter Prüfung für Sie frei. Sie sehen den Status unter
+          <strong>Meine Seminarapparate</strong>.</p>
         """
         redirect_to user_path(:anchor => 'apps')
       else
@@ -100,7 +100,7 @@ class SemAppsController < ApplicationController
   def load_sem_app
     @sem_app = SemApp.find_by_id(params[:id])
     unless @sem_app
-      flash[:error] = "Der eSeminarapparat den Sie versucht haben aufzurufen existiert nicht."
+      flash[:error] = "Der Seminarapparat den Sie versucht haben aufzurufen existiert nicht."
       redirect_to sem_apps_path
       return false
     end

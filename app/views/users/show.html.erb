@@ -1,47 +1,37 @@
-<h2 class="section">Mein Bereich</h2>
+<h3 class="section">Meine Seminarapparate</h3>
 
-<div class="pui-tabs-wrapper">
-  <ul class="pui-tabs">
-    <li><a href="#apps">Meine eSeminarapparate</a></li>
-  </ul>
-
-  <div class="pui-tab-panes">
-    <div id="my-semapps-panel">
-      <% if @user.ownerships.present? %>
-        <table class="pui-tableview">
-          <thead>
-            <tr>
-              <th>eSeminarapparat</th>
-              <th>Aktion</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @user.ownerships.each_with_index do |owner, n| %>
-              <% next unless owner.sem_app.present? %>
-              <tr class="<%= (n % 2 == 0) ? 'even' : 'odd' -%>">
-                <td>
-                  <strong><%= link_to h(owner.sem_app.title), sem_app_path(owner.sem_app) %></strong><br/>
-                  im <%= h(owner.sem_app.semester.title) %><br/>
-                  Tutor(en): <strong><%= h(owner.sem_app.tutors) %></strong><br/>
-                  <%= render 'shared_partials/sem_app_states', :sem_app => owner.sem_app %>
-                </td>
-                <th>
-                  <% link_to sem_app_path(owner.sem_app), :class => 'pui-button small' do %>
-                    <%= icon 'eye.png' %>
-                    Anzeigen
-                  <% end %>
-                </th>
-              </tr>
+<% if @user.ownerships.present? %>
+  <table class="pui-tableview">
+    <thead>
+      <tr>
+        <th>Seminarapparat</th>
+        <th>Aktion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @user.ownerships.each_with_index do |owner, n| %>
+        <% next unless owner.sem_app.present? %>
+        <tr class="<%= (n % 2 == 0) ? 'even' : 'odd' -%>">
+          <td>
+            <strong><%= link_to h(owner.sem_app.title), sem_app_path(owner.sem_app) %></strong><br/>
+            im <%= h(owner.sem_app.semester.title) %><br/>
+            Tutor(en): <strong><%= h(owner.sem_app.tutors) %></strong><br/>
+            <%= render 'shared_partials/sem_app_states', :sem_app => owner.sem_app %>
+          </td>
+          <th>
+            <% link_to sem_app_path(owner.sem_app), :class => 'pui-button small' do %>
+              <%= icon 'eye.png' %>
+              Anzeigen
             <% end %>
-          </tbody>
-        </table>
-        <span style="font-size:90%">*eSeminarapparate sind erst dann öffentlich sichtbar wenn sie durch die Universitätsbibliothek geprüft wurden.</span>
-      <% else %>
-        <div class="pui-panel notice align-center">
-          Sie haben noch keine eSeminarapparate beantragt.<br/>
-          <%= link_to '&raquo; eSeminarapparat beantragen', new_sem_app_path %>
-        </div>
+          </th>
+        </tr>
       <% end %>
-    </div>
+    </tbody>
+  </table>
+  <span style="font-size:90%">*Seminarapparate sind erst dann öffentlich sichtbar wenn sie durch die Universitätsbibliothek geprüft wurden.</span>
+<% else %>
+  <div class="pui-panel notice align-center">
+    Sie haben noch keine Seminarapparate beantragt.<br/>
+    <%= link_to '&raquo; Seminarapparat beantragen', new_sem_app_path %>
   </div>
-</div>
+<% end %>

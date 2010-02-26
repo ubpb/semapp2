@@ -3,34 +3,34 @@
     <% if @sem_app.new_record? %>
       <%= f.input :semester,  :label => 'Semester', :hint => 'In welchem Semester findet Ihre Veranstaltung statt?' %>
       <%= f.input :title,     :label => 'Titel',    :hint => 'Titel der Veranstaltung' %>
-      <%= f.input :course_id, :label => 'Kurs-ID',  :hint => 'Wenn bekannt geben Sie bitte die eindeutige Kurs-ID an.', :required => false %>
+      <%= f.input :course_id, :label => 'Kurs-ID',  :hint => 'Wenn bekannt geben Sie bitte die eindeutige Kurs-ID an (z.B. aus Paul).', :required => false %>
     <% else %>
       <%= f.input :semester,  :label => 'Semester', :input_html => {:disabled => true} %>
       <%= f.input :title,     :label => 'Titel',    :input_html => {:disabled => true} %>
       <%= f.input :course_id, :label => 'Kurs-ID',  :input_html => {:disabled => true}, :required => false %>
     <% end %>
-    <%= f.input :tutors, :label => 'Tutor(en)', :as => :string, :hint => 'Die Namen der beteiligten Dozierenden und/oder Tutoren. Trennen Sie mehrere Tutoren durch ein Komma.' %>
+    <%= f.input :tutors, :label => 'Dozent(en)', :as => :string, :hint => 'Die Namen der beteiligten Dozenten (Format: Nachname, Vorname). Trennen Sie mehrere Namen durch ein Semikolon.' %>
   <% end %>
 
   <% f.inputs :name => 'Bibliotheksdaten' do %>
     <% if @sem_app.new_record? %>
-      <%= f.input :location, :label => 'Standort', :hint => 'Welcher Fachbibliothek soll der eSeminarapparat zugeordnet werden?' %>
+      <%= f.input :location, :label => 'Standort', :hint => 'Welcher Fachbibliothek soll der Seminarapparat zugeordnet werden?' %>
     <% else %>
       <%= f.input :location, :label => 'Standort', :input_html => {:disabled => true} %>
     <% end %>
   <% end %>
 
   <% f.inputs :name => 'Zugriffsschutz' do %>
-    <%= f.input :shared_secret, :label => 'Kennung für den Lesezugriff',
-      :hint => "Bitte vergeben Sie eine Kennung für den Lesezugriff auf die elektronischen Volltexte.
-    Jeder der diese Kennung kennt hat damit Lesezugriff auf die
-    in diesem eSeminarapparat hinterlegten Dateien. Sie sollten dieses Passwort
+    <%= f.input :shared_secret, :label => 'Lesekennung',
+      :hint => "Bitte vergeben Sie eine Lesenkennung für die elektronischen Volltexte.
+    Jeder der diese Kennung kennt bekommt damit Lesezugriff auf die
+    in diesem Seminarapparat hinterlegten Dateien. Sie dürfen diese Kennung
     nur dem begrenzten Teilnehmerkreis Ihrer Veranstaltung bekannt machen." %>
   <% end %>
 
   <% f.buttons do %>
     <% if @sem_app.new_record? %>
-      <%= f.commit_button 'eSeminarapparat beantragen' %>
+      <%= f.commit_button 'Seminarapparat beantragen' %>
       <li>
         <%= link_to 'Abbrechen', user_path(:anchor => :apps) %>
       </li>

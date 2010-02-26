@@ -3,7 +3,7 @@
   <%= labeled_item :label => 'Auftrag #',       :content => h(scanjob.id) %>
   <%= labeled_item :label => 'Auftrag vom',     :content => h(scanjob.created_at.to_formatted_s(:short)) %>
   <%= labeled_item :label => 'Quelle',          :content => h(scanjob.entry.to_s) %>
-  <%= labeled_item :label => 'eSeminarapparat', :content => h(scanjob.entry.sem_app.full_title) %>
+  <%= labeled_item :label => 'Seminarapparat',  :content => h(scanjob.entry.sem_app.full_title) %>
   <div class="no-print">
     <%= labeled_item :label => 'Auftrag von',     :content => scanjob.creator.present? ? scanjob.creator.to_s : '-' %>
   </div>

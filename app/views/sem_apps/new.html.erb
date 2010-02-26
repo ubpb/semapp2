@@ -1,23 +1,22 @@
 <% unless current_user %>
   <div class="pui-panel notice align-center">
-    Um einen eSeminarapparat zu beantragen, müssen Sie sich zunächst anmelden.
+    Um einen Seminarapparat zu beantragen, müssen Sie sich zunächst anmelden.
     <%= link_to('&raquo; Zur Anmeldung', new_user_session_path) %>
   </div>
 <% else %>
   <% unless current_user.has_authority?(Authority::LECTURER_ROLE) %>
     <div class="pui-panel error align-center">
-      Um einen eSeminarapparat beantragen zu können müssen Sie sich mit einem
-      Bibliotheksausweis von Typ PA anmelden. Dieser Ausweis wird in der
-      Regel nur Mitarbeitenden der Universität ausgestellt.
+      Um einen Seminarapparat beantragen zu können müssen Sie sich mit einem
+      Bibliotheksausweis (Mitarbeiterausweis) anmelden.
     </div>
   <% else %>
-    <h2 class="section">Einen neuen eSeminarapparat beantragen</h2>
+    <h3 class="section">Einen neuen Seminarapparat beantragen</h3>
 
-    <div class="pui-panel notice">
-      Beantragte eSeminarapparate werden durch die Universitätsbibliothek <strong>überprüft</strong> und
+    <div class="pui-panel">
+      <%= icon 'asterisk.png' %>
+      Beantragte Seminarapparate werden durch die Universitätsbibliothek <strong>überprüft</strong> und
       <strong>aktiviert</strong>.
-      Jeder Lehrende (oder eine im Auftrag handelnde Person z.B. SHK) kann einen eSeminarapparat
-      für eine Veranstaltung beantragen.
+      Jeder Lehrende kann einen Seminarapparat für eine Veranstaltung beantragen.
       <strong>Vorraussetzung ist, dass die Veranstaltung im Semester offiziell stattfindet</strong>
       (z.B. Nachweis im <a href="http://paul.uni-paderborn.de">Vorlesungsverzeichnis</a>).
     </div>

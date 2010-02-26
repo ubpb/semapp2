@@ -9,7 +9,7 @@
     <% end %>
   <% else %>
     <div id="no-entries-message" class="pui-panel notice align-center">
-      Für diesen eSeminarapparat sind hier aktuell <strong>keine</strong> Inhalte verfügbar.
+      Für diesen Seminarapparat sind hier aktuell <strong>keine</strong> Inhalte verfügbar.
     </div>
 
     <% if @sem_app.is_editable_for?(current_user) %>
@@ -27,7 +27,7 @@
       <li>
         <h5><%= link_to "Überschrift", new_sem_app_headline_entry_path(@sem_app, :origin_id => nil) %></h5>
         <div class="info">
-          Mit Überschriften können Sie Ihren eSeminarapparates strukturieren.
+          Mit Überschriften können Sie Ihren Seminarapparates strukturieren.
         </div>
       </li>
       <li>

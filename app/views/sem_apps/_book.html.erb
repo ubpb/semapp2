@@ -2,7 +2,7 @@
   <% if book.sem_app.is_editable_for?(current_user) %>
     <div class="toolbar">
       <% link_to sem_app_book_path(book.sem_app, book), :class => "toolbar-item delete-book-action" do %>
-        <%= image_tag 'icons/cross-circle-frame.png', :plugin => 'pui', :title => 'Dieses Buch aus dem eSeminarapparat entfernen' %>
+        <%= image_tag 'icons/cross-circle-frame.png', :plugin => 'pui', :title => 'Dieses Buch aus dem Seminarapparat entfernen' %>
       <% end %>
     </div>
   <% end %>

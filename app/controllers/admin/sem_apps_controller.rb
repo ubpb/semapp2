@@ -42,7 +42,7 @@ class Admin::SemAppsController < Admin::ApplicationController
     @sem_app = SemApp.new(params[:sem_app])
     @sem_app.creator = current_user
     if @sem_app.save
-      flash[:success] = "Der eSeminarapparat wurde erfolgreich erstellt"
+      flash[:success] = "Der Seminarapparat wurde erfolgreich erstellt"
       redirect_to :action => :index
     else
       @sem_app.build_book_shelf unless @sem_app.book_shelf.present?

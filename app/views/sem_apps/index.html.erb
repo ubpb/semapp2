@@ -1,7 +1,7 @@
-<h2 class="section">Gesamtliste</h2>
+<h3 class="section">Gesamtliste</h3>
 
 <div id="filter-panel" class="pui-overlay">
-  <h2 class="section">Liste filtern</h2>
+  <h3 class="section">Liste filtern</h3>
   <% form_tag(filter_sem_apps_path, :class => 'formtastic') do %>
     <fieldset class="inputs">
       <ol>
@@ -40,13 +40,13 @@
 
 <div id="filter-info-panel" class="pui-panel align-right">
   <% if @filtered %>
-    Anzahl der eSeminarapparate: <%= @count %> <strong>(Gefiltert)</strong>
+    Anzahl der Seminarapparate: <%= @count %> <strong>(Gefiltert)</strong>
     <a href="#" rel="#filter-panel" class="pui-overlay-trigger pui-button">
       <%= image_tag 'icons/ui-search-field.png', :plugin => 'pui' %>
       Filter ändern
     </a>
   <% else %>
-    Anzahl der eSeminarapparate: <%= @count %> <strong>(Gesamt)</strong>
+    Anzahl der Seminarapparate: <%= @count %> <strong>(Gesamt)</strong>
     <a href="#" rel="#filter-panel" class="pui-overlay-trigger pui-button">
       <%= image_tag 'icons/ui-search-field.png', :plugin => 'pui' %>
       Liste Filtern
