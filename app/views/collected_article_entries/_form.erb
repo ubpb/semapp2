@@ -16,11 +16,12 @@
   <% end %>
 
   <% f.inputs :name => "Angaben zum Beitrag" do %>
-    <%= f.input :author,   :label => 'Author(en)' %>
-    <%= f.input :title,    :label => 'Titel', :input_html => {:rows => 1} %>
-    <%= f.input :subtitle, :label => 'Untertitel', :input_html => {:rows => 1}, :required => false %>
-    <%= f.input :volume,   :label => 'Band', :required => false %>
-    <%= f.input :pages,    :label => 'Seiten von-bis', :required => true %>
+    <%= f.input :author,     :label => 'Author(en)' %>
+    <%= f.input :title,      :label => 'Titel', :input_html => {:rows => 1} %>
+    <%= f.input :subtitle,   :label => 'Untertitel', :input_html => {:rows => 1}, :required => false %>
+    <%= f.input :volume,     :label => 'Band', :required => false %>
+    <%= f.input :pages_from, :label => 'Seiten von', :required => true %>
+    <%= f.input :pages_to,   :label => 'Seiten bis', :required => true %>
   <% end %>
 
   <% f.buttons do %>

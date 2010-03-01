@@ -17,13 +17,13 @@ class BooksController < ApplicationController
   def create
     aleph  = get_aleph
     record = aleph.get_record(params[:doc_number])
-    item   = aleph.get_item(params[:doc_number])
+    base_signature = aleph.get_base_signature(params[:doc_number])
 
-    if record.present? and item.present?
+    if record.present? and base_signature.present?
       @book = Book.new(:sem_app => @sem_app)
       @book.creator    = current_user
       @book.ils_id     = record.doc_number
-      @book.signature  = item.call_no_1
+      @book.signature  = base_signature
       @book.title      = record.title
       @book.author     = record.author
       @book.year       = record.year
@@ -52,15 +52,16 @@ class BooksController < ApplicationController
   end
 
   def lookup
-    @title     = params[:title]
-    @author    = params[:author]
-    @isbn      = params[:isbn]
+    #@title     = params[:title]
+    #@author    = params[:author]
+    #@isbn      = params[:isbn]
     @signature = params[:signature]
+    @signature = Book.get_base_signature(@signature) if @signature.present?
 
     search_terms  = []
-    search_terms << "pti=#{@title}"     if @title.present?
-    search_terms << "wpe=#{@author}"    if @author.present?
-    search_terms << "ibn=#{@isbn}"      if @isbn.present?
+    #search_terms << "pti=#{@title}"     if @title.present?
+    #search_terms << "wpe=#{@author}"    if @author.present?
+    #search_terms << "ibn=#{@isbn}"      if @isbn.present?
     search_terms << "psg=#{@signature}" if @signature.present?
 
     search_term = "(#{search_terms.join(" and ")})"

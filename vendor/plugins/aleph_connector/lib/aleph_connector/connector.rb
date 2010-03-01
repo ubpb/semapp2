@@ -54,6 +54,10 @@ module Aleph #:nodoc:
       load_items(doc_number)
     end
 
+    def get_base_signature(doc_number)
+      load_base_signature(doc_number)
+    end
+
     def find(term)
       do_find(term)
     end
@@ -131,6 +135,15 @@ module Aleph #:nodoc:
       items = load_items(doc_number)
       items.each do |item|
         return item if item.barcode == barcode
+      end
+      return nil
+    end
+
+    def load_base_signature(doc_number)
+      items = load_items(doc_number)
+      items.each do |item|
+        signature = item.call_no_1
+        return signature.gsub(/\+.+/, '') if signature.present?
       end
       return nil
     end

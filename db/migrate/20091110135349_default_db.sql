@@ -115,6 +115,7 @@ CREATE TABLE books (
   id serial NOT NULL PRIMARY KEY,
   sem_app_id integer REFERENCES sem_apps NOT NULL,
   creator_id integer REFERENCES users NULL,
+  placeholder_id integer REFERENCES sem_apps NULL,
   ils_id character varying NOT NULL,
   signature character varying NOT NULL,
   title character varying NOT NULL,
@@ -195,7 +196,8 @@ CREATE TABLE article_entries (
   volume character varying,
   "year" character varying,
   issue character varying,
-  pages character varying,
+  pages_from integer,
+  pages_to integer,
   issn character varying,
   signature character varying,
   comment text
@@ -217,7 +219,8 @@ CREATE TABLE collected_article_entries (
   title text,
   subtitle text,
   volume character varying,
-  pages character varying,
+  pages_from integer,
+  pages_to integer,
   comment text
 ) INHERITS (entries);
 
@@ -246,10 +249,23 @@ CREATE TABLE scanjobs (
   entry_id integer NOT NULL, --REFERENCES entries NOT NULL,
   "state" character varying,
   message text,
-  pages character varying,
+  pages_from integer,
+  pages_to integer,
   signature character varying,
   created_at timestamp without time zone,
   updated_at timestamp without time zone
 );
 
 CREATE INDEX index_scanjobs_on_entry_id ON scanjobs(entry_id);
+
+
+--
+-- Miless Passwords
+--
+CREATE TABLE miless_passwords (
+  id serial NOT NULL PRIMARY KEY,
+  sem_app_id integer REFERENCES sem_apps NOT NULL,
+  password character varying NOT NULL
+);
+
+CREATE INDEX index_miless_passwords_on_password ON miless_passwords(password);

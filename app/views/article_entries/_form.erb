@@ -2,16 +2,17 @@
   <%= hidden_field_tag :origin_id, @origin_id %>
 
   <% f.inputs do %>
-    <%= f.input :author,    :label => 'Author(en)' %>
-    <%= f.input :title,     :label => 'Titel',      :input_html => {:rows => 1} %>
-    <%= f.input :subtitle,  :label => 'Untertitel', :input_html => {:rows => 1}, :required => false %>
-    <%= f.input :journal,   :label => 'Zeitschrift', :required => true %>
-    <%= f.input :volume,    :label => 'Jahrgang', :required => true %>
-    <%= f.input :year,      :label => 'Erscheinungsjahr', :required => true %>
-    <%= f.input :issue,     :label => 'Heftnummer', :required => true %>
-    <%= f.input :pages,     :label => 'Seiten von-bis', :required => true %>
-    <%= f.input :issn,      :label => 'ISSN', :required => false %>
-    <%= f.input :signature, :label => 'Signatur in der Bibliothek', :required => false %>
+    <%= f.input :author,     :label => 'Author(en)' %>
+    <%= f.input :title,      :label => 'Titel',      :input_html => {:rows => 1} %>
+    <%= f.input :subtitle,   :label => 'Untertitel', :input_html => {:rows => 1}, :required => false %>
+    <%= f.input :journal,    :label => 'Zeitschrift', :required => true %>
+    <%= f.input :volume,     :label => 'Jahrgang', :required => true %>
+    <%= f.input :year,       :label => 'Erscheinungsjahr', :required => true %>
+    <%= f.input :issue,      :label => 'Heftnummer', :required => true %>
+    <%= f.input :pages_from, :label => 'Seiten von', :required => true %>
+    <%= f.input :pages_to,   :label => 'Seiten bis', :required => true %>
+    <%= f.input :issn,       :label => 'ISSN', :required => false %>
+    <%= f.input :signature,  :label => 'Signatur in der Bibliothek', :required => false %>
   <% end %>
 
   <% f.buttons do %>

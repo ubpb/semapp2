@@ -12,7 +12,10 @@ class CollectedArticleEntry < Entry
   validates_presence_of :source_year
   validates_presence_of :author
   validates_presence_of :title
-  validates_presence_of :pages
+  validates_presence_of :pages_from
+  validates_presence_of :pages_to
+  validates_numericality_of :pages_from, :only_integer => true
+  validates_numericality_of :pages_to, :only_integer => true
 
   ######################################################################################################
   #
@@ -103,7 +106,7 @@ class CollectedArticleEntry < Entry
   end
   
   def pages_to_s
-    pages.present? ? ", S. #{pages.strip.gsub(/\s/, '')}" : ""
+    pages_from.present? and pages_to.present? ? ", S. #{pages_from}-#{pages_to}" : ""
   end
 
 end

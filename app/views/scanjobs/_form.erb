@@ -6,9 +6,10 @@
 <% semantic_form_for [@entry, @scanjob] do |f| %>
 
   <% f.inputs do %>
-    <%= f.input :signature, :label => 'Signatur in der Bibliothek', :required => true, :hint => '<b>Bitte beachten Sie:</b> Wir scannen ausschließlich Bücher und Zeitschriften aus unserem Bestand. Geben Sie bitte dazu die Signatur der o.g. Quelle an. Bitte recherchieren Sie die Signatur mit unserem <a href="https://ubaleph.uni-paderborn.de/F" target="blank">Katalog</a>' %>
-    <%= f.input :pages,     :label => 'Seiten von-bis', :required => true %>
-    <%= f.input :message,   :label => 'Ihre Nachricht an uns', :required => false, :input_html => {:rows => 2} %>
+    <%= f.input :signature,  :label => 'Signatur in der Bibliothek', :required => true, :hint => '<b>Bitte beachten Sie:</b> Wir scannen ausschließlich Bücher und Zeitschriften aus unserem Bestand. Geben Sie bitte dazu die Signatur der o.g. Quelle an. Bitte recherchieren Sie die Signatur mit unserem <a href="https://ubaleph.uni-paderborn.de/F" target="blank">Katalog</a>' %>
+    <%= f.input :pages_from, :label => 'Seiten von', :required => true %>
+    <%= f.input :pages_to,   :label => 'Seiten bis', :required => true %>
+    <%= f.input :message,    :label => 'Ihre Nachricht an uns', :required => false, :input_html => {:rows => 2} %>
   <% end %>
 
   <% f.buttons do %>

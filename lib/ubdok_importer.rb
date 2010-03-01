@@ -285,7 +285,8 @@ class UbdokImporter
     options[:issue]           = content_from_node(node, 'article/location/issue')
     pages_node = node.find_first('article/location/pages')
     if (pages_node)
-      options[:pages] = attribute_from_node(pages_node, 'from') << "-" << attribute_from_node(pages_node, 'to')
+      options[:pages_from] = attribute_from_node(pages_node, 'from')
+      options[:pages_to]   = attribute_from_node(pages_node, 'to')
     end
 
     # Create the entry
@@ -295,7 +296,7 @@ class UbdokImporter
       if file_name.present?
         attach_file(entry, derivate_id, entry_id, file_name, true)
       else
-        create_scanjob(entry, options[:pages], options[:signature], get_entry_created_at(node))
+        create_scanjob(entry, options[:pages_from], options[:pages_to], options[:signature], get_entry_created_at(node))
       end
     else
       raise "Failed to save an ArticleEntry"
@@ -329,7 +330,8 @@ class UbdokImporter
     options[:source_isbn]      = content_from_node(node, 'chapter/book/isbn')
     pages_node = node.find_first('chapter/location/pages')
     if (pages_node)
-      options[:pages] = attribute_from_node(pages_node, 'from') << "-" << attribute_from_node(pages_node, 'to')
+      options[:pages_from] = attribute_from_node(pages_node, 'from')
+      options[:pages_to]   = attribute_from_node(pages_node, 'to')
     end
 
     # Create the entry
@@ -339,7 +341,7 @@ class UbdokImporter
       if file_name.present?
         attach_file(entry, derivate_id, entry_id, file_name, true)
       else
-        create_scanjob(entry, options[:pages], options[:source_signature], get_entry_created_at(node))
+        create_scanjob(entry, options[:pages_from], options[:pages_to], options[:source_signature], get_entry_created_at(node))
       end
     else
       raise "Failed to save an CollectedArticleEntry"
@@ -350,8 +352,8 @@ class UbdokImporter
   # Common Utils
   # ------------------------------------------------------------------------------
 
-  def create_scanjob(entry, pages, signature, created_at)
-    Scanjob.create!(:entry => entry, :pages => pages, :signature => signature, :created_at => created_at)
+  def create_scanjob(entry, pages_from, pages_to, signature, created_at)
+    Scanjob.create!(:entry => entry, :pages_from => pages_from, :pages_to => pages_to, :signature => signature, :created_at => created_at)
   end
 
   def attach_file(entry, derivate_id, entry_id, file_name, scanjob = false)

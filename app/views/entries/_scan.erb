@@ -8,7 +8,7 @@
       </div>
     <% else %>
       <p class="align-right">
-        <%= link_to 'Einen Scan beaufragen', new_monograph_entry_scanjob_path(entry), :class => 'pui-button small' %>
+        <%= link_to 'Einen Scan beaufragen', polymorphic_path(['new', entry, 'scanjob']), :class => 'pui-button small' %>
       </p>
     <% end %>
   </div>

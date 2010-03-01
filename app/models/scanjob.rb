@@ -13,8 +13,11 @@ class Scanjob < ActiveRecord::Base
 
   # Validation
   validates_presence_of :entry
-  validates_presence_of :pages
   validates_presence_of :signature
+  validates_presence_of :pages_from
+  validates_presence_of :pages_to
+  validates_numericality_of :pages_from, :only_integer => true
+  validates_numericality_of :pages_to, :only_integer => true
 
   # Scopes
   named_scope :ordered,    lambda { { :conditions => { :state => Scanjob::States[:ordered]  } } }

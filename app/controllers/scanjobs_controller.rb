@@ -7,8 +7,11 @@ class ScanjobsController < ApplicationController
     @scanjob= @entry.build_scanjob
 
     # Inspect the entry
-    if @entry.respond_to?(:pages)
-      @scanjob.pages = @entry.pages
+    if @entry.respond_to?(:pages_from)
+      @scanjob.pages_from = @entry.pages_from
+    end
+    if @entry.respond_to?(:pages_to)
+      @scanjob.pages_to = @entry.pages_to
     end
     if @entry.respond_to?(:signature)
       @scanjob.signature = @entry.signature
