@@ -1,3 +1,7 @@
+#
+# mysql --default-character-set=utf8 -u miless -pmiless miless -B -e "select ID from DOCUMENTS where types='a.6@@';" > semapps.txt
+#
+
 require 'net/http'
 require 'xml'
 require 'tempfile'
@@ -28,7 +32,7 @@ class UbdokImporter
 
   def import_sem_apps!
     i = 0
-    File.open(File.join(RAILS_ROOT, 'semapps.txt')).each do |line|
+    File.open(File.join(RAILS_ROOT, 'import', 'semapps.txt')).each do |line|
       if line.present? and line.strip!.present?
         import_sem_app!(line)
         i += 1

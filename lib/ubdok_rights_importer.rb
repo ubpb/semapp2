@@ -14,7 +14,7 @@ class UbdokRightsImporter
   def import_rights!
     MilessPassword.destroy_all
     
-    File.open(File.join(RAILS_ROOT, 'miless_rights.csv')).each_with_index do |line, i|
+    File.open(File.join(RAILS_ROOT, 'import', 'miless_rights.csv')).each_with_index do |line, i|
       next if i == 0 # skip the first line (CSV header)
       
       if line.present? and line.strip!.present?
