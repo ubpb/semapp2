@@ -1,10 +1,8 @@
 class ScanjobsController < ApplicationController
 
-  # TODO: Secure the controller
-
   def new
     @entry = find_entry
-    @scanjob= @entry.build_scanjob
+    @scanjob = @entry.build_scanjob
 
     # Inspect the entry
     if @entry.respond_to?(:pages_from)
@@ -40,6 +38,7 @@ class ScanjobsController < ApplicationController
     params.each do |name, value|
       if name =~ /(.+_entry)_id$/
         entry = $1.classify.constantize.find(value)
+        unauthorized! if cannot? :edit, entry.sem_app
         return entry
       end
     end

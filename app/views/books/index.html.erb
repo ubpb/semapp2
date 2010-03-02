@@ -1,16 +1,27 @@
-<h3 class="section">Buchaufträge</h3>
+<h3 class="section">
+  <div style="float: left">
+    Buchaufträge
+  </div>
 
-<div class="pui-panel align-right">
-  <%= link_to('Neues Buch', new_sem_app_book_path(@sem_app), :class => 'pui-button') %>
-  <%= link_to('Zurück', sem_app_path(@sem_app, :anchor => :books), :class => 'pui-button') %>
-</div>
+  <div class="align-right" style="margin-bottom: 5px">
+    <% link_to sem_app_path(@sem_app, :anchor => :books), :class => 'pui-button' do %>
+      <%= icon 'arrow-curve-180-left.png' %>
+      Zurück zum Seminarapparat
+    <% end %>
+      
+    <% link_to new_sem_app_book_path(@sem_app), :class => 'pui-button' do %>
+      <%= icon 'overlay/book--plus.png' %>
+      Neues Buch
+    <% end %>
+  </div>
+</h3>
 
 <div class="pui-tabs-wrapper">
 
   <ul class="pui-tabs">
-    <li><a href="#additions">Bücher neu</a></li>
-    <li><a href="#deferred">Bücher vorgemerkt</a></li>
-    <li><a href="#removals">Bücher zurück</a></li>
+    <li><a href="#additions"><%= icon 'overlay/book--plus.png' %> Bücher neu</a></li>
+    <li><a href="#deferred"><%= icon 'overlay/book--exclamation.png' %> Bücher vorgemerkt</a></li>
+    <li><a href="#removals"><%= icon 'overlay/book--minus.png' %> Bücher zurück</a></li>
   </ul>
 
   <div class="pui-tab-panes">

@@ -1,4 +1,4 @@
-<% if @sem_app.is_editable_for?(current_user) %>
+<% if can?(:edit, @sem_app) %>
   <% content_for :head do %>
     <%= javascript_include_tag 'sem_apps/common.js' %>
     <%= javascript_include_tag 'sem_apps/books.js' %>
@@ -14,15 +14,19 @@
   <div class="grid_6 alpha">
     im <%= h(@sem_app.semester.title) %><br/>
     Dozent(en): <strong><%= h(@sem_app.tutors) %></strong>
+    <% unless @sem_app.approved? %>
+      <br/>
+      <%= render 'shared_partials/sem_app_states', :sem_app => @sem_app %>
+    <% end %>
   </div>
 
   <div class="grid_6 omega align-right">
-    <% if @sem_app.is_editable_for?(current_user) %>
+    <% if can?(:edit, @sem_app) %>
       <% link_to edit_sem_app_path(@sem_app), :class => 'pui-button' do %>
         <%= icon 'wrench.png' %>
         Einstellungen
       <% end %>
-      <% if current_user and current_user.is_admin? %>
+      <% if can?(:manage, @sem_app) %>
         <% link_to admin_sem_app_path(@sem_app), :class => 'pui-button' do %>
           <%= icon 'user-black.png' %>
           Administrieren

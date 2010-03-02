@@ -4,7 +4,7 @@ class DownloadController < ApplicationController
     attachment = FileAttachment.find(params[:id])
 
     sem_app = attachment.entry.sem_app
-    if sem_app.is_unlocked_in_session?(session) or sem_app.is_editable_for?(current_user)
+    if sem_app.is_unlocked_in_session?(session) or can?(:edit, sem_app)
       send_file(attachment.file.path(params[:style]),
         :stream      => true,
         :filename    => attachment.file_file_name,

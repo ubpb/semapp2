@@ -1,4 +1,4 @@
-<% if @sem_app.is_editable_for?(current_user) %>
+<% if can?(:edit, @sem_app) %>
   <div class="pui-view align-right">
     <% link_to sem_app_books_path(@sem_app), :class => 'pui-button' do %>
       <%= icon 'books-stack.png' %>
@@ -22,7 +22,8 @@
     <% end %>
   </div>
 <% else %>
-  <div class="pui-panel notice align-center">
+  <div class="pui-panel align-center">
+    <%= icon 'asterisk.png' %>
     Für diesen Seminarapparat sind aktuell <strong>keine</strong> Bücher gelistet.
   </div>
 <% end %>

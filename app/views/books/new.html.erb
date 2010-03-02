@@ -1,17 +1,51 @@
 <h3 class="section">
-  Ein neues Buch beauftragen
+  <div style="float: left">
+    Ein neues Buch beauftragen
+  </div>
+
+  <div class="align-right" style="margin-bottom: 5px">
+    <% link_to sem_app_books_path(@sem_app), :class => 'pui-button' do %>
+      <%= icon 'arrow-curve-180-left.png' %>
+      Zurück
+    <% end %>
+  </div>
 </h3>
 
-<div class="pui-panel align-right">
-  <%= link_to('Zurück', sem_app_books_path(@sem_app), :class => 'pui-button') %>
-</div>
-
-<div class="pui-panel notice">
-  <p>
-    <strong>Bitte beachten Sie, dass bestehende Leihfristen und Vormerkungen den Vorgang verzögern können.</strong>
-    Sie können den Status jederzeit über die Seite <%= link_to 'Buchaufträge', sem_app_books_path(@sem_app) %>
-    einsehen.
-  </p>
-</div>
-
 <%= render 'lookup_form' %>
+
+<% if @results.present? %>
+  Gefundene Treffer: <strong><%= @total_results %></strong>
+  <div class="pui-panel" style="padding: 0px">
+    <%= will_paginate @results %>
+  </div>
+
+  <table class="pui-tableview">
+    <thead>
+      <tr>
+        <th>Buch</th>
+        <th>Aktion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @results.each_with_index do |r, n| %>
+        <tr class="<%= (n % 2 == 0) ? 'even' : 'odd' -%>">
+          <td>
+            <%= render 'shared_partials/book_ref', :book => r %>
+          </td>
+          <th>
+            <% form_tag(sem_app_books_path(@sem_app)) do %>
+              <%= hidden_field_tag 'doc_number', r.doc_number %>
+              <%= submit_tag 'Auswählen', :class => 'pui-button small' %>
+            <% end %>
+          </th>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <% if @signature.present? %>
+    <div class="pui-panel notice align-center">
+      Keine Bücher gefunden.
+    </div>
+  <% end %>
+<% end %>

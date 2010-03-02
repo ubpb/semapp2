@@ -70,7 +70,7 @@ class UbdokImporter
         :approved           => true,
         :title              => get_title(document),
         :tutors             => get_author(document),
-        :shared_secret      => 'secret' # TODO
+        :shared_secret      => 'ubpad466'
       )
 
       puts "\nImporting Miless Document/Derivate: #{document_id}/#{derivate_id} => #{sem_app.id}"

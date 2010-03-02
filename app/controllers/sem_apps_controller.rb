@@ -2,11 +2,8 @@ class SemAppsController < ApplicationController
 
   SEM_APP_FILTER_NAME = 'sem_app_filter_name'.freeze
 
-  before_filter :authenticate_user!, :only => [:create, :edit, :update] # :new is handled in the view to better guide the user
   before_filter :load_sem_app, :only => [:show, :edit, :update, :unlock]
-  before_filter :check_lecturer, :only => [:create]
-  before_filter :check_access, :only => [:edit, :update]
-
+  
   def index
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
     @sem_apps = @filter.scope.paginate(
@@ -24,58 +21,52 @@ class SemAppsController < ApplicationController
   end
 
   def show
-    # deny read access until the app has been approved
-    if (not @sem_app.approved?) and not (current_user and current_user.is_admin?)
-      flash[:error] = "Zugriff verweigert"
-      redirect_to sem_apps_path
-      return false
-    else
-      @books = Book.for_sem_app(@sem_app).in_shelf.ordered_by
-      @media = Entry.for_sem_app(@sem_app).ordered_by
-    end
+    unauthorized! if cannot? :read, @sem_app
+
+    @books = Book.for_sem_app(@sem_app).in_shelf.ordered_by
+    @media = Entry.for_sem_app(@sem_app).ordered_by
   end
 
   def new
+    authenticate_user! unless current_user
     @sem_app = SemApp.new
+    unauthorized! if cannot? :create, @sem_app
+    @sem_app.tutors = current_user.name
   end
 
   def create
     @sem_app = SemApp.new(params[:sem_app])
+    unauthorized! if cannot? :create, @sem_app
+
     @sem_app.creator = current_user
 
     # Finally create the semapp and add the ownership
-    SemApp.transaction do
-      if @sem_app.save and @sem_app.add_ownership(current_user)
-        flash[:success] = """
+    if @sem_app.save and @sem_app.add_ownership(current_user)
+      flash[:success] = """
           <p>Ihr Seminarapparat wurde erfolgreich beantragt. Wir prüfen die Angaben und schalten
           den Seminarapparat nach erfolgter Prüfung für Sie frei. Sie sehen den Status unter
-          <strong>Meine Seminarapparate</strong>.</p>
-        """
-        redirect_to user_path(:anchor => 'apps')
-      else
-        render :action => :new
-      end
+          <strong>Meine Seminarapparate</strong>. Bis zur Freischaltung können nur Sie den Seminarapparat
+          sehen und bearbeiten.</p>
+      """
+      redirect_to user_path(:anchor => 'apps')
+    else
+      render :action => :new
     end
   end
 
   def edit
-    # nothing
+    unauthorized! if cannot? :edit, @sem_app
   end
 
-  # TODO: Cherrypick the values for security reasons
   def update
-    options = params[:sem_app]
-    # Protect some attributes
-    options.merge!({
-        :approved  => @sem_app.approved,
-        :creator   => @sem_app.creator,
-        :semester  => @sem_app.semester,
-        :title     => @sem_app.title,
-        :course_id => @sem_app.course_id,
-        :location  => @sem_app.location
-      })
+    unauthorized! if cannot? :edit, @sem_app
 
-    if @sem_app.update_attributes(params[:sem_app])
+    # Cherrypick the values for security reasons
+    options = {}
+    options[:tutors]        = params[:sem_app][:tutors]
+    options[:shared_secret] = params[:sem_app][:shared_secret]
+    
+    if @sem_app.update_attributes(options)
       flash[:success] = "Änderungen erfolgreich gespeichert."
       redirect_to sem_app_path(@sem_app)
     else
@@ -100,22 +91,6 @@ class SemAppsController < ApplicationController
     @sem_app = SemApp.find_by_id(params[:id])
     unless @sem_app
       flash[:error] = "Der Seminarapparat den Sie versucht haben aufzurufen existiert nicht."
-      redirect_to sem_apps_path
-      return false
-    end
-  end
-
-  def check_access
-    unless @sem_app.is_editable_for?(current_user)
-      flash[:error] = "Zugriff verweigert"
-      redirect_to sem_apps_path
-      return false
-    end
-  end
-
-  def check_lecturer
-    unless current_user.has_authority?(Authority::LECTURER_ROLE)
-      flash[:error] = "Zugriff verweigert"
       redirect_to sem_apps_path
       return false
     end

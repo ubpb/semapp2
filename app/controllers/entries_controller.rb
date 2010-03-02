@@ -1,9 +1,9 @@
 class EntriesController < ApplicationController
 
-  # TODO: Secure the controller
-
   def reorder
     @sem_app = SemApp.find(params[:sem_app_id])
+    unauthorized! if cannot? :edit, @sem_app
+
     entries = params[:entry]
     if entries.present?
       entries.each_index do |i|

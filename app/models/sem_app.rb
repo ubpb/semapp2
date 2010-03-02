@@ -50,42 +50,11 @@ class SemApp < ActiveRecord::Base
       })
   end
 
-#  def media(user = nil)
-#    if user.present? and self.is_editable_for?(user)
-#      SemAppEntry.find(:all,
-#        :order      => :position,
-#        :conditions => ["sem_app_id = :sem_app_id", {:sem_app_id => self.id}]
-#      )
-#    else
-#      SemAppEntry.find(:all,
-#        :order      => :position,
-#        :conditions => ["sem_app_id = :sem_app_id and (publish_on < :date or publish_on is null)", {:sem_app_id => self.id, :date => Time.new}]
-#      )
-#    end
-#  end
-#
-#  def scanjobs
-#    scanjobs = []
-#    SemAppEntry.find(:all, :conditions => { :sem_app_id => id}, :order => "created_at DESC").each do |e|
-#      if (e.class == SemAppMonographScanjobEntry or
-#            e.class == SemAppArticleScanjobEntry or
-#            e.class == SemAppCollectedArticleScanjobEntry)
-#        scanjobs << e
-#      end
-#    end
-#    return scanjobs
-#  end
-
   def add_ownership(user)
     unless self.new_record?
       Ownership.new(:user => user, :sem_app => self).save
     end
   end
-
-  def is_editable_for?(user)
-    user and (user.is_admin? or (user.owns_sem_app?(self) and self.approved?))
-  end
-  alias_method :editable?, :is_editable_for?
 
   def is_unlocked_in_session?(session)
     unlocks = session[:unlocked]

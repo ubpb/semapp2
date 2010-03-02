@@ -14,7 +14,7 @@
             <%= number_to_human_size(a.file_file_size) %>
           </span>
 
-          <% if entry.sem_app.editable?(current_user) %>
+          <% if can?(:edit, entry.sem_app) %>
             <% link_to file_attachment_path(a), :method => :delete, :confirm => "Angang wirklich löschen" do %>
               <%= icon 'cross.png' %>
             <% end %>
@@ -26,10 +26,4 @@
       <% end %>
     </ol>
   </div>
-<% end %>
-
-<% if entry.sem_app.editable?(current_user) %>
-  <p class="align-right">
-    <%= link_to 'Eine Datei anhängen', polymorphic_path(['new', entry, 'file_attachment']), :class => 'pui-button small' %>
-  </p>
 <% end %>

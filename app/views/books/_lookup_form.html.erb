@@ -1,11 +1,12 @@
-<% form_tag(lookup_sem_app_books_path, :method => :get, :class => 'formtastic') do %>
+<% form_tag(new_sem_app_book_path, :method => :get, :class => 'formtastic') do %>
   <fieldset class="inputs">
     <ol>
       <li class="string">
         <label>Signatur beginnt mit</label>
         <%= text_field_tag 'signature', @signature %>
         <p class="inline-hints">
-          Bitte recherchieren Sie die Signatur mit unserem <a href="https://ubaleph.uni-paderborn.de/F" target="blank">Katalog</a>
+          Bitte recherchieren Sie die Signatur mit unserem <a href="https://ubaleph.uni-paderborn.de/F" target="blank">Katalog</a>.
+          <strong>Bitte beachten Sie, dass bestehende Leihfristen und Vormerkungen den Vorgang verzögern können.</strong>
         </p>
       </li>
     </ol>

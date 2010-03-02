@@ -1,17 +1,18 @@
 class AbstractEntriesController < ApplicationController
 
-  # TODO: Secure the controller
-  # TODO: Ajaxify the controller
-
   def new
-    @sem_app       = SemApp.find(params[:sem_app_id])
+    @sem_app = SemApp.find(params[:sem_app_id])
+    unauthorized! if cannot? :edit, @sem_app
+
     @entry         = self.controller_class.new
     @entry.sem_app = @sem_app
     @origin_id     = params[:origin_id]
   end
 
   def create
-    @sem_app        = SemApp.find(params[:sem_app_id])
+    @sem_app = SemApp.find(params[:sem_app_id])
+    unauthorized! if cannot? :edit, @sem_app
+
     @entry          = self.controller_class.new(params[self.controller_class.name.underscore.to_sym])
     @entry.sem_app  = @sem_app
     @entry.position = get_position(params[:origin_id])
@@ -27,6 +28,8 @@ class AbstractEntriesController < ApplicationController
 
   def edit
     @entry = self.controller_class.find(params[:id])
+    unauthorized! if cannot? :edit, @entry.sem_app
+
     if @entry.respond_to?(:scanjob) and @entry.scanjob.present?
       flash[:error] = "Für diesen Eintrag wurde ein Scan beauftragt, der noch nicht abgeschlossen ist. Solange der Scanauftrag durch die Bibliothek bearbeitet wird, kann der Eintrag nicht bearbeitet werden."
       redirect_to sem_app_path(@entry.sem_app, :anchor => 'media')
@@ -35,6 +38,8 @@ class AbstractEntriesController < ApplicationController
 
   def update
     @entry = self.controller_class.find(params[:id])
+    unauthorized! if cannot? :edit, @entry.sem_app
+    
     if @entry.update_attributes(params[self.controller_class.name.underscore.to_sym])
       redirect_to sem_app_path(@entry.sem_app, :anchor => 'media')
     else
@@ -44,6 +49,7 @@ class AbstractEntriesController < ApplicationController
 
   def destroy
     @entry = self.controller_class.find(params[:id])
+    unauthorized! if cannot? :edit, @entry.sem_app
 
     if @entry.respond_to?(:scanjob) and @entry.scanjob.present?
       flash[:error] = "Für diesen Eintrag wurde ein Scan beauftragt, der noch nicht abgeschlossen ist. Solange der Scanauftrag durch die Bibliothek bearbeitet wird, kann der Eintrag nicht gelöscht werden."

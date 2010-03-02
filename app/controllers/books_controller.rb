@@ -1,8 +1,6 @@
 class BooksController < ApplicationController
 
-  before_filter :authenticate_user!
   before_filter :load_sem_app
-  before_filter :check_access
 
   def index
     @ordered_books  = Book.for_sem_app(@sem_app).ordered.ordered_by('created_at')
@@ -11,7 +9,32 @@ class BooksController < ApplicationController
   end
 
   def new
-    @book = Book.new
+    #@title     = params[:title]
+    #@author    = params[:author]
+    #@isbn      = params[:isbn]
+    @signature = params[:signature]
+    @signature = Book.get_base_signature(@signature) if @signature.present?
+
+    search_terms  = []
+    #search_terms << "pti=#{@title}"     if @title.present?
+    #search_terms << "wpe=#{@author}"    if @author.present?
+    #search_terms << "ibn=#{@isbn}"      if @isbn.present?
+    search_terms << "psg=#{@signature}" if @signature.present?
+
+    search_term = "(#{search_terms.join(" and ")})"
+
+    aleph = get_aleph
+    t     = aleph.find(search_term)
+    if t.present?
+      @page          = params[:page].present? ? params[:page].to_i : 1
+      @per_page      = 10
+      @total_results = t[1]
+
+      # Use pagination with will_paginate
+      @results = WillPaginate::Collection.create(@page, @per_page, @total_results) do |pager|
+        pager.replace aleph.get_records(t, @page, @per_page)
+      end
+    end
   end
 
   def create
@@ -51,48 +74,12 @@ class BooksController < ApplicationController
     render :nothing => true
   end
 
-  def lookup
-    #@title     = params[:title]
-    #@author    = params[:author]
-    #@isbn      = params[:isbn]
-    @signature = params[:signature]
-    @signature = Book.get_base_signature(@signature) if @signature.present?
-
-    search_terms  = []
-    #search_terms << "pti=#{@title}"     if @title.present?
-    #search_terms << "wpe=#{@author}"    if @author.present?
-    #search_terms << "ibn=#{@isbn}"      if @isbn.present?
-    search_terms << "psg=#{@signature}" if @signature.present?
-
-    search_term = "(#{search_terms.join(" and ")})"
-
-    aleph = get_aleph
-    t     = aleph.find(search_term)
-    if t.present?
-      @page          = params[:page].present? ? params[:page].to_i : 1
-      @per_page      = 10
-      @total_results = t[1]
-
-      # Use pagination with will_paginate   
-      @results = WillPaginate::Collection.create(@page, @per_page, @total_results) do |pager|
-        pager.replace aleph.get_records(t, @page, @per_page)
-      end
-    end
-  end
-
   private
 
   def load_sem_app
+    authenticate_user!
     @sem_app = SemApp.find(params[:sem_app_id])
-  end
-
-  # allow access only for owners and admins
-  def check_access
-    unless @sem_app.is_editable_for?(current_user)
-      flash[:error] = "Zugriff verweigert"
-      redirect_to sem_apps_path
-      return false
-    end
+    unauthorized! if cannot? :edit, @sem_app
   end
 
   def get_aleph

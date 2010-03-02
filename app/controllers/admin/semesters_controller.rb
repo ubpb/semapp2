@@ -1,5 +1,7 @@
 class Admin::SemestersController < Admin::ApplicationController
 
+  # TODO: Remove me
+
 #  resource_controller
 #
 #  new_action.before do

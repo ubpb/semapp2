@@ -56,7 +56,7 @@ ActionController::Routing::Routes.draw do |map|
       entry.resources :scanjobs, :as => 'scans', :only => [:new, :create]
     end
 
-    sem_app.resources :books, :collection => {:lookup => :get}
+    sem_app.resources :books
   end
 
   # ubdok import

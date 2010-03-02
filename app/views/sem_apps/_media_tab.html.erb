@@ -1,6 +1,6 @@
 <div id="media-listing" class="listing">
   <% if @media.present? %>
-    <% if @sem_app.is_unlocked_in_session?(session) or @sem_app.is_editable_for?(current_user) %>
+    <% if @sem_app.is_unlocked_in_session?(session) or can?(:edit, @sem_app) %>
       <% @media.each do |entry| %>
         <%= render 'entry', :entry => entry %>
       <% end %>
@@ -8,12 +8,13 @@
       <%= render 'unlock_panel' %>
     <% end %>
   <% else %>
-    <% if @sem_app.is_editable_for?(current_user) %>
-      <div class="pui-panel align-center">
-        <p>
-          <%= icon 'asterisk.png' %>
-          Für diesen Seminarapparat sind hier aktuell <strong>keine</strong> Inhalte verfügbar.
-        </p>
+    <div class="pui-panel align-center">
+      <%= icon 'asterisk.png' %>
+      Für diesen Seminarapparat sind hier aktuell <strong>keine</strong> Inhalte verfügbar.
+    </div>
+
+    <% if can?(:edit, @sem_app) %>
+      <div class="pui-view align-center">
         <% link_to '#', :class => 'pui-button pui-overlay-trigger', :rel => '#entry-type-panel' do %>
           <%= icon 'plus.png' %>
           Einen neuen Eintrag erstellen
@@ -23,7 +24,7 @@
   <% end %>
 </div>
 
-<% if @sem_app.is_editable_for?(current_user) %>
+<% if can?(:edit, @sem_app) %>
   <div class="pui-overlay" id="entry-type-panel">
     <h3 class="section">Wählen Sie bitte aus...</h3>
     <ol>

@@ -14,24 +14,11 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password").
   filter_parameter_logging :password, :password_confirmation
 
-  helper_method :partial_path_for_entry, :partial_path_for_entry_form, :form_url_for_entry
-
   protected
 
-  def partial_path_for_entry(entry)
-    entry.class.name.tableize + '/entry'
-  end
-
-  def partial_path_for_entry_form(entry)
-    partial_path_for_entry(entry) << "_form"
-  end
-
-  def form_url_for_entry(entry)
-    if entry.new_record?
-      entries_path
-    else
-      entry_path
-    end
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = exception.message
+    redirect_to root_url
   end
 
 end

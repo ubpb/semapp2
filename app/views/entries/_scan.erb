@@ -1,15 +1,7 @@
-<% if entry.sem_app.editable?(current_user)  %>
+<% if can?(:edit, entry.sem_app) and entry.scanjob.present? %>
   <div class="pui-view">
-    <% if entry.scanjob.present? %>
-      <div>
-        <%= icon 'asterisk.png' %>
-        <i>Für diesen Eintrag wurde ein Scan in der Bibliothek beauftragt.
-        Der Scan wird in kürze bereitgestellt.</i>
-      </div>
-    <% else %>
-      <p class="align-right">
-        <%= link_to 'Einen Scan beaufragen', polymorphic_path(['new', entry, 'scanjob']), :class => 'pui-button small' %>
-      </p>
-    <% end %>
+    <%= icon 'asterisk.png' %>
+    <i>Für diesen Eintrag wurde ein Scan in der Bibliothek beauftragt.
+      Der Scan wird in kürze bereitgestellt.</i>
   </div>
 <% end %>

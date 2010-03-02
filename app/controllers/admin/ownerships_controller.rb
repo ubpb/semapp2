@@ -1,5 +1,7 @@
 class Admin::OwnershipsController < Admin::ApplicationController
 
+  # TODO: Remove me
+
 #  resource_controller
 #  belongs_to :sem_app
 #

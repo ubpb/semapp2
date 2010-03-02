@@ -23,6 +23,7 @@ Rails::Initializer.run do |config|
   config.gem 'acts_as_list',  :version => '0.1.2',   :lib => 'acts_as_list'
   config.gem 'barby',         :version => '0.3.2',   :lib => 'barby'
   config.gem 'png',           :version => '1.1.0',   :lib => 'png'
+  config.gem 'cancan',        :version => '1.0.2',   :lib => 'cancan'
 
   config.gem 'provideal-ui',                :version => '0.2.0', :lib => 'pui'
   config.gem 'provideal-migration-helpers', :version => '1.1.2', :lib => 'provideal_migration_helpers'
