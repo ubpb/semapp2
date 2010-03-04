@@ -83,7 +83,32 @@ class SemApp < ActiveRecord::Base
           clone = entry.clone(:include => [:file_attachments])
           clone.sem_app = self
           clone.save!
+          clone.resync_positions
         end
+      end
+    end
+  end
+
+  def next_position(origin_id)
+    position = 0
+
+    begin
+      if origin_id.present?
+        origin_entry = Entry.find(origin_id)
+        position     = origin_entry.position + 1
+      end
+    rescue
+      # nothing
+    end
+
+    return position
+  end
+
+  def resync_positions
+    Entry.transaction do
+      entries = Entry.for_sem_app(self).ordered_by('position asc')
+      if entries.present?
+        entries.each_with_index { |entry, i| entry.update_attribute(:position, i+1) }
       end
     end
   end

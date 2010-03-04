@@ -2,7 +2,7 @@
   <% cache("#{entry.cache_key}_toolbar") do %>
     <div class="toolbar-wrapper" style="display: none">
       <div class="toolbar" style="display: none">
-        <% link_to '#', :class => "toolbar-item pui-overlay-trigger", :rel => "#entry-type-panel" do %>
+        <% link_to '#', :class => "toolbar-item pui-overlay-trigger", :rel => "#entry-type-panel-#{entry.id}" do %>
           <%= image_tag 'icons/plus-circle-frame.png', :plugin => 'pui', :title => 'Einen neuen Eintrag unterhalb dieses Eintrags erstellen' %>
         <% end %>
 
@@ -37,3 +37,7 @@
     <%= render "#{entry.class.name.tableize}/entry", :entry => entry %>
   </div>
 </div>
+
+<% cache("#{entry.cache_key}_new_entry_panel") do %>
+  <%= render 'new_entry_panel', :entry_id => entry.id, :sem_app => @sem_app %>
+<% end %>

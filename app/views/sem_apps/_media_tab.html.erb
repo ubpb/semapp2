@@ -28,7 +28,7 @@
 
     <% if can?(:edit, @sem_app) %>
       <div class="pui-view align-center">
-        <% link_to '#', :class => 'pui-button pui-overlay-trigger', :rel => '#entry-type-panel' do %>
+        <% link_to '#', :class => 'pui-button pui-overlay-trigger', :rel => '#entry-type-panel-0' do %>
           <%= icon 'plus.png' %>
           Einen neuen Eintrag erstellen
         <% end %>
@@ -37,46 +37,4 @@
   <% end %>
 </div>
 
-<div class="pui-overlay" id="entry-type-panel">
-  <h3 class="section">Wählen Sie bitte aus...</h3>
-  <ol>
-    <li>
-      <h5><%= link_to "Überschrift", new_sem_app_headline_entry_path(@sem_app, :origin_id => nil) %></h5>
-      <div class="info">
-        Mit Überschriften können Sie Ihren Seminarapparates strukturieren.
-      </div>
-    </li>
-    <li>
-      <h5><%= link_to "Text / HTML", new_sem_app_text_entry_path(@sem_app, :origin_id => nil) %></h5>
-      <div class="info">
-        Mit diesem Element können Sie beliebigen Text darstellen. Sie können den Text mit einer Wiki-ähnlichen
-        Spache Formatieren oder HTML verwenden. Die können dieses Element verwenden, um Inhalte aus anderen
-        Systemen wie <a href="http://youtube.de">YouTube</a>, <a href="http://slideshare.com">Slideshare</a>,
-        oder <a href="http://flickr.com">Flickr</a> einzubinden.<br/>
-        Sie können an jeden Texteintrag Dateien anhängen.
-      </div>
-    </li>
-    <li>
-      <h5><%= link_to "Verweis auf eine Monographie", new_sem_app_monograph_entry_path(@sem_app, :origin_id => nil) %></h5>
-      <div class="info">
-        Verwenden Sie diesen Eintrag um eine Quellenangabe zu einer Mongogrphie aufzunehmen. Sie können selbst
-        PDF-Dateien anhängen oder einzelne Kapitel durch die Bibliothek Scannen lassen (wenn im Bestand vorhanden).
-      </div>
-    </li>
-    <li>
-      <h5><%= link_to "Verweis auf einen Zeitschriftenartikel", new_sem_app_article_entry_path(@sem_app, :origin_id => nil) %></h5>
-      <div class="info">
-        Verwenden Sie diesen Eintrag um eine Quellenangabe zu einem Zeitschriftenartikel aufzunehmen. Sie können
-        selbst PDF-Dateien anhängen oder den Artikel durch die Bibliothek Scannen lassen (wenn im Bestand vorhanden).
-      </div>
-    </li>
-    <li>
-      <h5><%= link_to "Verweis auf einen Beitrag in einem Sammelwerk", new_sem_app_collected_article_entry_path(@sem_app, :origin_id => nil) %></h5>
-      <div class="info">
-        Verwenden Sie diesen Eintrag um eine Quellenangabe zu einem Beitrag in einem Sammelwerk aufzunehmen. Sie können
-        selbst PDF-Dateien anhängen oder den Beitrag durch die Bibliothek Scannen lassen (wenn im Bestand vorhanden).
-      </div>
-    </li>
-  </ol>
-</div>
-
+<%= render 'new_entry_panel', :entry_id => nil, :sem_app => @sem_app %>

@@ -15,11 +15,11 @@ class AbstractEntriesController < ApplicationController
 
     @entry          = self.controller_class.new(params[self.controller_class.name.underscore.to_sym])
     @entry.sem_app  = @sem_app
-    @entry.position = get_position(params[:origin_id])
+    @entry.position = @sem_app.next_position(params[:origin_id])
     @entry.creator  = current_user
 
     if @entry.save
-      resync_positions(@sem_app)
+      @sem_app.resync_positions
       redirect_to sem_app_path(@sem_app, :anchor => 'media')
     else
       render :new
@@ -58,7 +58,7 @@ class AbstractEntriesController < ApplicationController
     end
 
     if @entry.destroy
-      resync_positions(@entry.sem_app)
+      @entry.sem_app.resync_positions
       redirect_to sem_app_path(@entry.sem_app, :anchor => 'media')
     else
       flash[:error] = "Der Eintrag konnte nicht gelöscht werden. Es ist ein Fehler aufgetreten."
@@ -71,30 +71,6 @@ class AbstractEntriesController < ApplicationController
   def self.controller_for(value)
     cattr_accessor :controller_class
     self.controller_class = value.to_s.classify.constantize
-  end
-
-  private
-
-  def get_position(origin_id)
-    position = 1000 # TODO: FIX THIS
-
-    begin
-      if origin_id.present?
-        origin_entry = SemAppEntry.find(origin_id)
-        position     = origin_entry.position + 1
-      end
-    rescue
-      # nothing
-    end
-
-    return position
-  end
-
-  def resync_positions(sem_app)
-    entries = Entry.for_sem_app(sem_app).ordered_by('position asc')
-    if entries.present?
-      entries.each_with_index { |entry, i| entry.update_attribute(:position, i+1) }
-    end
   end
 
 end
