@@ -1,8 +1,9 @@
 class SemAppsController < ApplicationController
 
-  SEM_APP_FILTER_NAME = 'sem_app_filter_name'.freeze
+  SEM_APP_FILTER_NAME        = 'sem_app_filter_name'.freeze
+  SEM_APP_CLONES_FILTER_NAME = 'sem_app_clones_filter_name'.freeze
 
-  before_filter :load_sem_app, :only => [:show, :edit, :update, :unlock]
+  before_filter :load_sem_app, :only => [:show, :edit, :update, :unlock, :clones, :filter_clones, :clone]
   
   def index
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
@@ -82,6 +83,50 @@ class SemAppsController < ApplicationController
       flash[:error] = "Die eingegebene Kennung stimmt leider nicht. Texte und Medien können nicht freigeschaltet werden."
     end
 
+    redirect_to sem_app_path(@sem_app, :anchor => 'media')
+  end
+
+  def clones
+    unauthorized! if cannot? :edit, @sem_app
+
+    @filter = session[SEM_APP_CLONES_FILTER_NAME] || SemAppsFilter.new
+    @sem_apps = @filter.scope.paginate(
+      :all,
+      :conditions => {:approved => true},
+      :per_page => 10,
+      :page => params[:page],
+      :order => "sem_apps.semester_id asc, sem_apps.title asc")
+  end
+
+  def filter_clones
+    unauthorized! if cannot? :edit, @sem_app
+
+    filter = params[:filter].present? ? SemAppsFilter.new(params[:filter]) : SemAppsFilter.new()
+    session[SEM_APP_CLONES_FILTER_NAME] = filter
+    redirect_to clones_sem_app_path(@sem_app)
+  end
+
+  def clone
+    unauthorized! if cannot? :edit, @sem_app
+    begin
+      password = params[:password]
+      unless password.present?
+        flash[:error] = "Bitte geben Sie das Passwort des Seminarapparates ein das sie damals (im alten System) bei der Beantragung gesetzt haben."
+        redirect_to :action => :clones
+        return false
+      end
+
+      unless @sem_app.miless_passwords.map{|p| p.password}.include?(password)
+        flash[:error] = "Das Passwort ist falsch. Der Seminarapparat konnte nicht geklont werden."
+        redirect_to :action => :clones
+        return false
+      end
+
+      @sem_app.clone_entries(params[:source])
+      flash[:success] = 'Einträge wurden erfolgreich kopiert.'
+    rescue
+      flash[:error] = 'Beim kopieren ist leider ein Fehler aufgetrten. Der Vorgang konnte nicht erfolgreich abgeschlossen werden.'
+    end
     redirect_to sem_app_path(@sem_app, :anchor => 'media')
   end
 

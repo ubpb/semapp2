@@ -76,6 +76,17 @@ class SemApp < ActiveRecord::Base
     self.book_shelf != nil
   end
 
+  def clone_entries(source_id)
+    source_sem_app = SemApp.find(source_id)
+    Entry.transaction do
+      source_sem_app.entries.each_with_index do |entry, i|
+        clone = entry.clone(:include => [:file_attachments])
+        clone.sem_app = self
+        clone.save!
+      end
+    end
+  end
+
   ###########################################################################################
   #
   # Override accessors

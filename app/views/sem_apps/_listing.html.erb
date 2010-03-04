@@ -1,3 +1,12 @@
+<div class="pui-view align-center">
+  <%= icon 'asterisk.png' %>
+  <i>
+    Wenn Sie nach einem <strong>Passwort</strong> gefragt werden, geben sie bitte die
+    Dozenten-Kennung aus dem alten System für eSeminarapparate ein,
+    welches sie damals bei der Beantragung festgelegt haben.
+  </i>
+</div>
+
 <% if sem_apps.present? %>
   <table class="pui-tableview">
     <thead>
@@ -15,9 +24,22 @@
             Tutor(en): <strong><%= h(sem_app.tutors) %></strong>
           </td>
           <th>
-            <% link_to sem_app_path(sem_app), :class => 'pui-button small' do %>
-              <%= icon 'eye.png' %>
-              Anzeigen
+            <% if actions.include?(:show) %>
+              <% link_to sem_app_path(sem_app), :class => 'pui-button small' do %>
+                <%= icon 'eye.png' %>
+                Anzeigen
+              <% end %>
+            <% end %>
+
+            <% if actions.include?(:clone) %>
+              <% form_tag clone_sem_app_path do %>
+                <%= hidden_field_tag 'source', sem_app.id %>
+                <% if cannot?(:edit, sem_app) %>
+                  Passwort:
+                  <%= password_field_tag 'password', '', :size => 10 %>
+                <% end %>
+                <%= submit_tag 'Klonen' %>
+              <% end %>
             <% end %>
           </th>
         </tr>

@@ -32,7 +32,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :user, :only => [:show]
 
   # Sem Apps
-  map.resources :sem_apps, :as => 'apps', :controller => 'sem_apps', :member => {:unlock => :post}, :collection => {:filter => :post} do |sem_app|
+  map.resources :sem_apps, :as => 'apps', :controller => 'sem_apps', :member => {:unlock => :post, :clones => :get, :clone => :post, :filter_clones => :post}, :collection => {:filter => :post} do |sem_app|
     sem_app.resources :entries, :only => [:reorder], :collection => {:reorder => :put}, :shallow => true do |entry|
       entry.resources :file_attachments, :as => 'attachments', :only => [:edit, :update, :destroy]
       entry.resources :scanjobs, :as => 'scans', :only => [:edit, :update, :destroy]
