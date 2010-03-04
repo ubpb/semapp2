@@ -1,7 +1,7 @@
 class FileAttachment < ActiveRecord::Base
 
   # Relations
-  belongs_to :entry
+  belongs_to :entry, :touch => true
   belongs_to :creator, :class_name => 'User'
 
   # Behavior

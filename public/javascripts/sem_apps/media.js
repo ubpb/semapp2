@@ -121,7 +121,7 @@
           $('#no-entries-message').remove();
           $('#dummy-entry').remove();
           // We have created a new element, lets rebind some events
-          rebindDropDownMenu();
+          //rebindDropDownMenu();
         } else {
           item.find(".entry").html(content);
           item.effect("highlight", {}, 1000);
@@ -134,6 +134,7 @@
       }
     }
 
+    /*
     function rebindDropDownMenu() {
       $('.dropdown li.trigger').unbind("click");
       $('.dropdown li.trigger').unbind("mouseleave");
@@ -145,7 +146,7 @@
       $('.dropdown li.trigger').bind("mouseleave", function() {
         jQuery('ul', this).css('display', 'none');
       });
-    }
+    }*/
 
     function isEncHTML(str) {
       if(str.search(/&amp;/g) != -1 || str.search(/&lt;/g) != -1 || str.search(/&gt;/g) != -1)
@@ -225,7 +226,7 @@
     })
 
     /** (re)bind entry type dropdowns */
-    rebindDropDownMenu();
+    //rebindDropDownMenu();
 
   });
 

@@ -8,7 +8,7 @@ class Scanjob < ActiveRecord::Base
   }.freeze
 
   # Realations
-  belongs_to :entry
+  belongs_to :entry, :touch => true
   belongs_to :creator, :class_name => 'User'
 
   # Validation

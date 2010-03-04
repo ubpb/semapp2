@@ -1,33 +1,37 @@
 <div id="entry-<%=entry.id-%>" class="item">
-  <div class="toolbar" style="display: none">
-    <% link_to '#', :class => "toolbar-item pui-overlay-trigger", :rel => "#entry-type-panel" do %>
-      <%= image_tag 'icons/plus-circle-frame.png', :plugin => 'pui', :title => 'Einen neuen Eintrag unterhalb dieses Eintrags erstellen' %>
-    <% end %>
+  <% cache("#{entry.cache_key}_toolbar") do %>
+    <div class="toolbar-wrapper" style="display: none">
+      <div class="toolbar" style="display: none">
+        <% link_to '#', :class => "toolbar-item pui-overlay-trigger", :rel => "#entry-type-panel" do %>
+          <%= image_tag 'icons/plus-circle-frame.png', :plugin => 'pui', :title => 'Einen neuen Eintrag unterhalb dieses Eintrags erstellen' %>
+        <% end %>
 
-    <% link_to polymorphic_path(['edit', entry]), :class => "toolbar-item" do %>
-      <%= image_tag 'icons/wrench.png', :plugin => 'pui', :title => 'Diesen Eintrag bearbeiten' %>
-    <% end %>
+        <% link_to polymorphic_path(['edit', entry]), :class => "toolbar-item" do %>
+          <%= image_tag 'icons/wrench.png', :plugin => 'pui', :title => 'Diesen Eintrag bearbeiten' %>
+        <% end %>
 
-    <% link_to polymorphic_path([entry]), :class => "toolbar-item", :method => :delete, :confirm => 'Diesen Eintrag wirklich löschen?' do %>
-      <%= image_tag 'icons/cross-circle-frame.png', :plugin => 'pui', :title => 'Diesen Eintrag entfernen' %>
-    <% end %>
+        <% link_to polymorphic_path([entry]), :class => "toolbar-item", :method => :delete, :confirm => 'Diesen Eintrag wirklich löschen?' do %>
+          <%= image_tag 'icons/cross-circle-frame.png', :plugin => 'pui', :title => 'Diesen Eintrag entfernen' %>
+        <% end %>
 
-    <% link_to reorder_sem_app_entries_path(@sem_app), :class => "toolbar-item reorder-entry-action" do %>
-      <%= image_tag 'icons/arrow-move.png', :plugin => 'pui', :title => 'Diese Eintrag mittels Drag&Drop umsortieren' %>
-    <% end %>
+        <% link_to reorder_sem_app_entries_path(@sem_app), :class => "toolbar-item reorder-entry-action" do %>
+          <%= image_tag 'icons/arrow-move.png', :plugin => 'pui', :title => 'Diese Eintrag mittels Drag&Drop umsortieren' %>
+        <% end %>
 
-    <% if entry.is_a?(TextEntry) or entry.is_a?(MonographEntry) or entry.is_a?(ArticleEntry) or entry.is_a?(CollectedArticleEntry) %>
-      <% link_to polymorphic_path(['new', entry, 'file_attachment']), :class => 'toolbar-item' do %>
-        <%= image_tag 'icons/overlay/document--plus.png', :plugin => 'pui', :title => 'Eine Datei anhängen' %>
-      <% end %>
-    <% end %>
+        <% if entry.is_a?(TextEntry) or entry.is_a?(MonographEntry) or entry.is_a?(ArticleEntry) or entry.is_a?(CollectedArticleEntry) %>
+          <% link_to polymorphic_path(['new', entry, 'file_attachment']), :class => 'toolbar-item' do %>
+            <%= image_tag 'icons/overlay/document--plus.png', :plugin => 'pui', :title => 'Eine Datei anhängen' %>
+          <% end %>
+        <% end %>
 
-    <% if !entry.scanjob.present? and (entry.is_a?(MonographEntry) or entry.is_a?(ArticleEntry) or entry.is_a?(CollectedArticleEntry)) %>
-      <% link_to polymorphic_path(['new', entry, 'scanjob']), :class => 'toolbar-item' do %>
-        <%= image_tag 'icons/overlay/photo-album--plus.png', :plugin => 'pui', :title => 'Einen Scan beauftragen' %>
-      <% end %>
-    <% end %>
-  </div>
+        <% if !entry.scanjob.present? and (entry.is_a?(MonographEntry) or entry.is_a?(ArticleEntry) or entry.is_a?(CollectedArticleEntry)) %>
+          <% link_to polymorphic_path(['new', entry, 'scanjob']), :class => 'toolbar-item' do %>
+            <%= image_tag 'icons/overlay/photo-album--plus.png', :plugin => 'pui', :title => 'Einen Scan beauftragen' %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 
   <div class="entry">
     <%= render "#{entry.class.name.tableize}/entry", :entry => entry %>

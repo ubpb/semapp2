@@ -14,12 +14,14 @@
 
   $.fn.item_toolbar_show = function() {
     if ($.frozen == true) return this;
+    this.find(".toolbar-wrapper").show();
     this.find(".toolbar").show();
     return this;
   };
 
   $.fn.item_toolbar_hide = function() {
     if ($.frozen == true) return this;
+    this.find(".toolbar-wrapper").hide();
     this.find(".toolbar").hide();
     return this;
   };

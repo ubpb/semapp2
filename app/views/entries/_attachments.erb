@@ -9,19 +9,19 @@
             </span>
           <% end %>
           <span class="download-link">
-            <%= link_to 'Datei herunterladen', a.file.url %>
             <%= a.file_file_name %>,
             <%= number_to_human_size(a.file_file_size) %>
+            <%= link_to 'Datei herunterladen', a.file.url, :class => 'pui-button small' %>
           </span>
 
-          <% if can?(:edit, entry.sem_app) %>
-            <% link_to file_attachment_path(a), :method => :delete, :confirm => "Angang wirklich löschen" do %>
+          <span class="toolbar" style="display: none">
+            <% link_to file_attachment_path(a), :class => "toolbar-item", :method => :delete, :confirm => "Angang wirklich löschen" do %>
               <%= icon 'cross.png' %>
             <% end %>
-            <% link_to edit_file_attachment_path(a) do %>
+            <% link_to edit_file_attachment_path(a), :class => "toolbar-item" do %>
               <%= icon 'wrench.png' %>
             <% end %>
-          <% end %>
+          </span>
         </li>
       <% end %>
     </ol>
