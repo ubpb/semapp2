@@ -1,11 +1,9 @@
 <div id="book-<%=book.id-%>" class="item">
-  <% if can?(:edit, book.sem_app) %>
-    <div class="toolbar">
-      <% link_to sem_app_book_path(book.sem_app, book), :class => "toolbar-item delete-book-action" do %>
-        <%= image_tag 'icons/cross-circle-frame.png', :plugin => 'pui', :title => 'Dieses Buch aus dem Seminarapparat entfernen' %>
-      <% end %>
-    </div>
-  <% end %>
+  <div class="toolbar" style="display:none">
+    <% link_to sem_app_book_path(book.sem_app, book), :class => "toolbar-item delete-book-action" do %>
+      <%= image_tag 'icons/cross-circle-frame.png', :plugin => 'pui', :title => 'Dieses Buch aus dem Seminarapparat entfernen' %>
+    <% end %>
+  </div>
 
   <div class="book">
     <%= render 'shared_partials/book_ref', :book => book %>
