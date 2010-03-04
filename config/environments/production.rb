@@ -7,6 +7,7 @@ config.cache_classes = true
 # Full error reports are disabled and caching is turned on
 config.action_controller.consider_all_requests_local = false
 config.action_controller.perform_caching             = true
+config.cache_store                                   = :file_store, File.join(RAILS_ROOT, 'tmp', 'cache')
 
 # See everything in the log (default is :info)
 config.log_level = :warn
