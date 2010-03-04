@@ -11,7 +11,7 @@
           <span class="download-link">
             <%= a.file_file_name %>,
             <%= number_to_human_size(a.file_file_size) %>
-            <%= link_to 'Datei herunterladen', a.file.url, :class => 'pui-button small' %>
+            <%= link_to '[Download]', a.file.url %>
           </span>
 
           <span class="toolbar" style="display: none">
