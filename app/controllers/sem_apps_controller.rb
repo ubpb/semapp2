@@ -108,7 +108,13 @@ class SemAppsController < ApplicationController
 
   def clone
     unauthorized! if cannot? :edit, @sem_app
-    begin
+
+    # Try to find the source sem app we want to clone
+    source_sem_app = SemApp.find(params[:source])
+
+    # Check the password in the case the user has no edit rights
+    # on the source sem app (needed for old Miless sem apps)
+    if cannot? :edit, source_sem_app
       password = params[:password]
       unless password.present?
         flash[:error] = "Bitte geben Sie das Passwort des Seminarapparates ein das sie damals (im alten System) bei der Beantragung gesetzt haben."
@@ -121,8 +127,10 @@ class SemAppsController < ApplicationController
         redirect_to :action => :clones
         return false
       end
+    end
 
-      @sem_app.clone_entries(params[:source])
+    begin
+      @sem_app.clone_entries(source_sem_app)
       flash[:success] = 'Einträge wurden erfolgreich kopiert.'
     rescue
       flash[:error] = 'Beim kopieren ist leider ein Fehler aufgetrten. Der Vorgang konnte nicht erfolgreich abgeschlossen werden.'
