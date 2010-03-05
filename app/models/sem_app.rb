@@ -78,14 +78,14 @@ class SemApp < ActiveRecord::Base
 
   def clone_entries(source_sem_app)
     if source_sem_app.present? and source_sem_app.is_a?(SemApp)
-      Entry.transaction do
+      #Entry.transaction do
         source_sem_app.entries.each_with_index do |entry, i|
           clone = entry.clone(:include => [:file_attachments])
           clone.sem_app = self
           clone.save!
         end
         self.resync_positions
-      end
+      #end
     end
   end
 
