@@ -87,7 +87,7 @@ class SemApp < ActiveRecord::Base
           puts "-------------------------------------------------------"
           if File.exists?(path)
             puts "++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-            attachment = FileAttachment.new(:file => path, :description => a.description, :scanjob => a.scanjob)
+            attachment = FileAttachment.new(:file => File.new(path), :description => a.description, :scanjob => a.scanjob)
             attachment.file.instance_write(:file_name, a.file_file_name)
             clone.file_attachments << attachment
           end
