@@ -1,5 +1,10 @@
 <h3 class="section">Meine Seminarapparate</h3>
 
+<div class="pui-view align-center">
+  <%= icon 'asterisk.png' %>
+  <i>Seminarapparate sind erst dann öffentlich sichtbar wenn sie durch die Universitätsbibliothek geprüft und freigeschaltet wurden.</i>
+</div>
+
 <% if @user.ownerships.present? %>
   <table class="pui-tableview">
     <thead>
@@ -28,7 +33,6 @@
       <% end %>
     </tbody>
   </table>
-  <span style="font-size:90%">*Seminarapparate sind erst dann öffentlich sichtbar wenn sie durch die Universitätsbibliothek geprüft wurden.</span>
 <% else %>
   <div class="pui-panel notice align-center">
     Sie haben noch keine Seminarapparate beantragt.<br/>
