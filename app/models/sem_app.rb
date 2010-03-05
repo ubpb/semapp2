@@ -80,7 +80,17 @@ class SemApp < ActiveRecord::Base
     if source_sem_app.present? and source_sem_app.is_a?(SemApp)
       #Entry.transaction do
         source_sem_app.entries.each_with_index do |entry, i|
-          clone = entry.clone(:include => [:file_attachments])
+          clone = entry.clone(:exclude => [:file_attachments])
+
+          if clone.respond_to?(:file_attachments)
+            entry.file_attachments.each do |a|
+              path = a.file.path
+              if File.exists?(path)
+                FileAttachment.new(:entry => clone, :file => path, :description => a.description)
+              end
+            end
+          end
+
           clone.sem_app = self
           clone.save(false)
         end
