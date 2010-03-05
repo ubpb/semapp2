@@ -140,14 +140,12 @@ class SemAppsController < ApplicationController
       end
     end
 
-    begin
+    #begin
       @sem_app.clone_entries(source_sem_app)
       flash[:success] = 'Einträge wurden erfolgreich kopiert.'
-    rescue Exception => e
-      puts e.message
-      puts e.backtrace
-      flash[:error] = 'Beim kopieren ist leider ein Fehler aufgetrten. Der Vorgang konnte nicht erfolgreich abgeschlossen werden.'
-    end
+    #rescue Exception => e
+    #  flash[:error] = 'Beim kopieren ist leider ein Fehler aufgetrten. Der Vorgang konnte nicht erfolgreich abgeschlossen werden.'
+    #end
     redirect_to sem_app_path(@sem_app, :anchor => 'media')
   end
 
