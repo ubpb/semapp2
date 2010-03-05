@@ -3,7 +3,7 @@ class SemAppsController < ApplicationController
   SEM_APP_FILTER_NAME        = 'sem_app_filter_name'.freeze
   SEM_APP_CLONES_FILTER_NAME = 'sem_app_clones_filter_name'.freeze
 
-  before_filter :load_sem_app, :only => [:show, :edit, :update, :unlock, :clones, :filter_clones, :clone]
+  before_filter :load_sem_app, :only => [:show, :edit, :update, :unlock, :transit, :clones, :filter_clones, :clone]
   
   def index
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
@@ -86,6 +86,17 @@ class SemAppsController < ApplicationController
     redirect_to sem_app_path(@sem_app, :anchor => 'media')
   end
 
+  def transit
+    unauthorized! if cannot? :manage, @sem_app
+    begin
+      @sem_app.transit(Semester.current)
+      flash[:success] = 'Der Seminarapparat wurde ins aktuelle Semester übernommen.'
+    rescue
+      flash[:error] = 'Es ist leider ein Fehler aufgetrten. Der Vorgang konnte nicht erfolgreich abgeschlossen werden.'
+    end
+    redirect_to sem_apps_path
+  end
+
   def clones
     unauthorized! if cannot? :edit, @sem_app
 
@@ -132,7 +143,9 @@ class SemAppsController < ApplicationController
     begin
       @sem_app.clone_entries(source_sem_app)
       flash[:success] = 'Einträge wurden erfolgreich kopiert.'
-    rescue
+    rescue Exception => e
+      puts e.message
+      puts e.backtrace
       flash[:error] = 'Beim kopieren ist leider ein Fehler aufgetrten. Der Vorgang konnte nicht erfolgreich abgeschlossen werden.'
     end
     redirect_to sem_app_path(@sem_app, :anchor => 'media')

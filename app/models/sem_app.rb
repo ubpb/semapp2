@@ -83,8 +83,18 @@ class SemApp < ActiveRecord::Base
           clone = entry.clone(:include => [:file_attachments])
           clone.sem_app = self
           clone.save!
-          clone.resync_positions
         end
+        self.resync_positions
+      end
+    end
+  end
+
+  def transit(semester)
+    if semester.present? and semester.is_a?(Semester)
+      SemApp.transaction do
+        clone = self.clone
+        clone.semester = semester
+        clone.save!
       end
     end
   end

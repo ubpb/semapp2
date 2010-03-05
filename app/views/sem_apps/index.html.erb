@@ -2,6 +2,6 @@
 
 <%= render 'filter_panel', :filter_path => filter_sem_apps_path %>
 
-<%= render 'listing', :sem_apps => @sem_apps, :actions => [:show] %>
+<%= render 'listing', :sem_apps => @sem_apps, :actions => [:show, :transit] %>
 
 <%= will_paginate @sem_apps %>
