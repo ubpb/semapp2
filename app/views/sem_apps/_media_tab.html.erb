@@ -1,8 +1,10 @@
 <% if can?(:edit, @sem_app) %>
-  <div class="pui-view align-center" style="font-size:90%">
-    <%= icon 'asterisk.png' %>
-    <i>Zum <strong>Erstellen</strong> oder <strong>Bearbeiten</strong> fahren Sie mit der Maus über die Einträge um weitere Optionen zu sehen.</i>
-  </div>
+  <% if @media.present? %>
+    <div class="pui-view align-center" style="font-size:90%">
+      <%= icon 'asterisk.png' %>
+      <i>Zum <strong>Erstellen</strong> oder <strong>Bearbeiten</strong> fahren Sie mit der Maus über die Einträge um weitere Optionen zu sehen.</i>
+    </div>
+  <% end %>
   <div class="pui-view align-right">
     <% link_to clones_sem_app_path(@sem_app), :class => 'pui-button' do %>
       <%= icon 'document-copy.png' %>
