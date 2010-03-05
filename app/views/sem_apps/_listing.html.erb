@@ -32,7 +32,7 @@
               <% end %>
             <% end %>
                 
-            <% if actions.include?(:clone) %>
+            <% if actions.include?(:clone) and @sem_app != sem_app %>
               <% form_tag clone_sem_app_path do %>
                 <%= hidden_field_tag 'source', sem_app.id %>
                 <% if cannot?(:edit, sem_app) %>
