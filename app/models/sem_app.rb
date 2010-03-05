@@ -85,7 +85,9 @@ class SemApp < ActiveRecord::Base
         entry.file_attachments.each do |a|
           path = a.file.path
           if File.exists?(path)
-            FileAttachment.new(:entry => clone, :file => path, :description => a.description).save
+            attachment = FileAttachment.new(:entry => clone, :file => path, :description => a.description, :scanjob => a.scanjob)
+            attachment.file.instance_write(:file_name, a.file_file_name)
+            clone.file_attachments << attachment
           end
         end
           
