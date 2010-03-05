@@ -78,15 +78,12 @@ class SemApp < ActiveRecord::Base
 
   def clone_entries(source_sem_app)
     if source_sem_app.present? and source_sem_app.is_a?(SemApp)
-      #Entry.transaction do
       source_sem_app.entries.each do |entry|
         clone = entry.clone(:exclude => [:file_attachments])
 
         entry.file_attachments.each do |a|
           path = a.file.path
-          puts "-------------------------------------------------------"
           if File.exists?(path)
-            puts "++++++++++++++++++++++++++++++++++++++++++++++++++++++"
             attachment = FileAttachment.new(:file => File.new(path), :description => a.description, :scanjob => a.scanjob)
             attachment.file.instance_write(:file_name, a.file_file_name)
             clone.file_attachments << attachment
@@ -97,7 +94,6 @@ class SemApp < ActiveRecord::Base
         clone.save(false)
       end
       self.resync_positions
-      #end
     end
   end
 
