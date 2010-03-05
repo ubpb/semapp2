@@ -82,7 +82,7 @@ class SemApp < ActiveRecord::Base
         source_sem_app.entries.each_with_index do |entry, i|
           clone = entry.clone(:include => [:file_attachments])
           clone.sem_app = self
-          clone.save!
+          clone.save(false)
         end
         self.resync_positions
       #end
