@@ -57,7 +57,13 @@ class Admin::SemAppsController < Admin::ApplicationController
 
   def update
     @sem_app = SemApp.find(params[:id])
+    
+    was_approved = @sem_app.approved
+
     if @sem_app.update_attributes(params[:sem_app])
+      if (@sem_app.approved and not was_approved)
+        Notifications.deliver_sem_app_activated_notification(@sem_app.creator, @sem_app)
+      end
       flash[:success] = "Die Daten wurden erfolgreich gespeichert"
       redirect_to :action => :show
     else

@@ -144,5 +144,6 @@ class SemApp < ActiveRecord::Base
   def course_id=(value)
     write_attribute :course_id, (value.blank? ? nil : value)
   end
-  
+
+
 end

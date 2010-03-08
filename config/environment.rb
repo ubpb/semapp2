@@ -51,4 +51,7 @@ Rails::Initializer.run do |config|
   # Use SQL schema format
   config.active_record.schema_format = :sql
 
+  # Send mails using sendmail
+  config.action_mailer.delivery_method = :sendmail
+
 end
