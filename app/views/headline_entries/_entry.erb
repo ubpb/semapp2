@@ -1,1 +1,7 @@
-<h1 class="headline"><%= entry.headline %></h1>
+<% if entry.style == 2 %>
+  <h3 class="headline"><%= entry.headline %></h3>
+<% elsif entry.style == 1 %>
+  <h2 class="headline"><%= entry.headline %></h2>
+<% else %>
+  <h1 class="headline"><%= entry.headline %></h1>
+<% end %>
