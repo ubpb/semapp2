@@ -68,6 +68,16 @@ class BooksController < ApplicationController
     end
   end
 
+  def edit
+    @book = Book.find(params[:id])
+  end
+
+  def update
+    @book = Book.find(params[:id])
+    @book.update_attribute(:comment, params[:book][:comment])
+    redirect_to sem_app_path(@sem_app, :anchor => 'books')
+  end
+
   def destroy
     book = Book.find(params[:id])
     book.set_state(:rejected)

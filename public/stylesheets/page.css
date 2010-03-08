@@ -285,6 +285,7 @@ html[xmlns] .clearfix {
 .sem-app .listing .item .toolbar .toolbar-item { margin: 0 4px; }
 
 .sem-app .listing .item .book { padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid #efefef }
+.sem-app .listing .item .book .comment { font-style: italic }
 
 .sem-app .listing .item .entry { margin-bottom: 10px; }
 .sem-app .listing .item .entry .headline { margin-bottom: 10px; border-bottom: 1px solid #efefef }
