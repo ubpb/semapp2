@@ -1,11 +1,11 @@
 <h3 class="section">Meine Seminarapparate</h3>
 
-<div class="pui-view align-center">
-  <%= icon 'asterisk.png' %>
-  <i>Seminarapparate sind erst dann öffentlich sichtbar wenn sie durch die Universitätsbibliothek geprüft und freigeschaltet wurden.</i>
-</div>
-
 <% if @user.ownerships.present? %>
+  <div class="pui-view align-center">
+    <%= icon 'asterisk.png' %>
+    <i>Seminarapparate sind erst dann öffentlich sichtbar wenn sie durch die Universitätsbibliothek geprüft und freigeschaltet wurden.</i>
+  </div>
+
   <table class="pui-tableview">
     <thead>
       <tr>
