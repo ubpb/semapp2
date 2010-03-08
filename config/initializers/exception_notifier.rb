@@ -1,1 +1,0 @@
-ExceptionNotifier.exception_recipients = %w(r.sprotte@ub.uni-paderborn.de)
