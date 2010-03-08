@@ -1,0 +1,17 @@
+<h3 class="section">Systemfehler</h3>
+
+<div class="pui-panel error align-center">
+  Es tut uns leid. Es ist ein Fehler aufgetreten. Die letzte Operation wurde abgebrochen.
+  Bitte versuchen Sie es erneut. Sollte der Fehler weiterhin auftreten, wenden Sie sich bitte an
+  den <a href="#" class="pui-overlay-trigger" rel="#common-help">technischen Support</a>.
+</div>
+
+<div class="pui-panel">
+  <%= icon 'asterisk.png' %>
+  <strong>Meldung:</strong>
+  <code><%= exception.message %></code>
+</div>
+
+<div class="pui-view align-center">
+  <%= link_to 'Zur Startseite', sem_apps_path, :class => 'pui-button' %>
+</div>

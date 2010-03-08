@@ -1,9 +1,6 @@
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
 class ApplicationController < ActionController::Base
-  # Includes
-  include ExceptionNotifiable
-
   # Include all helpers, all the time
   helper :all
 
@@ -23,4 +20,9 @@ class ApplicationController < ActionController::Base
     redirect_to root_url
   end
 
+  rescue_from Exception do |exception|
+    logger.fatal("\n\n#{exception.class} (#{exception.message}):\n    " + exception.backtrace.join("\n    ") + "\n\n")
+    render 'shared_partials/unhandled_error', :locals => {:exception => exception}
+  end
+  
 end
