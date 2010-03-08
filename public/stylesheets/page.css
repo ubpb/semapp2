@@ -261,7 +261,7 @@ html[xmlns] .clearfix {
 
 .sem-app .listing {}
 .sem-app .listing .item { position: relative; margin: 0; padding: 0; }
-.sem-app .listing .item.highlight { background-color: #e3e3e3; }
+.sem-app .listing .item.highlight { background-color: #fff59e; }
 
 .sem-app .listing .item ol,
 .sem-app .listing .item ul,
@@ -280,7 +280,7 @@ html[xmlns] .clearfix {
 .sem-app .listing .item h2 { font-size: 130% }
 .sem-app .listing .item h3 { font-size: 110% }
 
-.sem-app .listing .item .toolbar-wrapper { position: absolute; top: -25px; right: 0; background-color: #e3e3e3; padding: 5px 25px; z-index: 100; -moz-border-radius-topleft: 4px; -moz-border-radius-topright: 4px; -webkit-border-top-left-radius: 4px; -webkit-border-top-right-radius: 4px; }
+.sem-app .listing .item .toolbar-wrapper { position: absolute; top: -29px; right: 0; background-color: #fff59e; padding: 5px 25px; z-index: 100; -moz-border-radius-topleft: 4px; -moz-border-radius-topright: 4px; -webkit-border-top-left-radius: 4px; -webkit-border-top-right-radius: 4px; }
 .sem-app .listing .item .toolbar { display: none; }
 .sem-app .listing .item .toolbar a { text-decoration: none !important; }
 .sem-app .listing .item .toolbar a:hover { text-decoration: none !important; }
