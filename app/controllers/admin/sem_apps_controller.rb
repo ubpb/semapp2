@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class Admin::SemAppsController < Admin::ApplicationController
 
   SEM_APP_FILTER_NAME = 'admin_sem_app_filter_name'.freeze

@@ -1,9 +1,9 @@
 <div class="pui-view">
-  <h4 class="section">Neue Bücher</h4>
+  <h4 class="section">Neue B&uuml;cher</h4>
   <% if @ordered_books.present? %>
     <div class="pui-panel align-center">
       <%= icon 'plus.png' %>
-      Die folgenden Bücher bitte in den Apparat einstellen
+      Die folgenden B&uuml;cher bitte in den Apparat einstellen
     </div>
 
     <div class="pui-colletion-view">
@@ -13,7 +13,7 @@
     </div>
   <% else %>
     <div class="pui-panel success align-center">
-      Aktuell keine neuen Bücher
+      Aktuell keine neuen B&uuml;cher
     </div>
   <% end %>
 
@@ -21,7 +21,7 @@
   <% if @deferred_books.present? %>
     <div class="pui-panel align-center">
       <%= icon 'lock.png' %>
-      Die folgenden Bücher wurden vorgemerkt
+      Die folgenden B&uuml;cher wurden vorgemerkt
     </div>
 
     <div class="pui-colletion-view">
@@ -31,7 +31,7 @@
     </div>
   <% else %>
     <div class="pui-panel success align-center">
-      Aktuell keine Bücher vorgemerkt
+      Aktuell keine B&uuml;cher vorgemerkt
     </div>
   <% end %>
 </div>

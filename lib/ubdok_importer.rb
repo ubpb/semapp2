@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 #
 # mysql --default-character-set=utf8 -u miless -pmiless miless -B -e "select ID from DOCUMENTS where types='a.6@@';" > semapps.txt
 #

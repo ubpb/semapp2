@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class Notifications < ActionMailer::Base
 
   def sem_app_activated_notification(user, sem_app)

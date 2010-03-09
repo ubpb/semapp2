@@ -12,7 +12,7 @@
 
   <div>
     <% if book.state == Book::States[:ordered] %>
-      <%= link_to 'Wurde vorgemerkt/zurückgestellt', defer_admin_book_path(book), :method => :put, :class => 'pui-button' %>
+      <%= link_to 'Wurde vorgemerkt/zur&uuml;ckgestellt', defer_admin_book_path(book), :method => :put, :class => 'pui-button' %>
       <%= link_to 'Als Platzhalter', edit_admin_book_path(book), :class => 'pui-button' %>
     <% end %>
     <% if book.state == Book::States[:deferred] %>

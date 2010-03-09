@@ -1,15 +1,4 @@
-# == Schema Information
-# Schema version: 20091110135349
-#
-# Table name: book_shelves
-#
-#  id          :integer         not null, primary key
-#  ils_account :string(255)     not null
-#  slot_number :string(255)     not null
-#  sem_app_id  :integer
-#  created_at  :datetime
-#  updated_at  :datetime
-#
+# encoding: utf-8
 
 class BookShelf < ActiveRecord::Base
 

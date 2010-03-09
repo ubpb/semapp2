@@ -1,11 +1,11 @@
 <% semantic_form_for [:admin, @sem_app] do |f| %>
   <% f.inputs :name => 'Administrative Daten' do %>
-    <%= f.input :approved, :label => 'Von der UB geprüft und freigebegen?', :required => false %>
+    <%= f.input :approved, :label => 'Von der UB gepr&uuml;ft und freigebegen?', :required => false %>
   <% end %>
 
   <% f.inputs :name => 'Ausweis / Regal' do %>
     <div class="pui-panel">
-      Um Bücher in diesen Apparat einstellen zu können bitte die folgenden Felder ausfüllen. Ansonsten die Felder leer lassen.
+      Um B&uuml;cher in diesen Apparat einstellen zu können bitte die folgenden Felder ausf&uuml;llen. Ansonsten die Felder leer lassen.
     </div>
     <% f.semantic_fields_for :book_shelf do |shelf| %>
       <% unless shelf.object.new_record? %>

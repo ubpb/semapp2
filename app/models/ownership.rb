@@ -1,14 +1,4 @@
-# == Schema Information
-# Schema version: 20091110135349
-#
-# Table name: ownerships
-#
-#  id         :integer         not null, primary key
-#  user_id    :integer         not null
-#  sem_app_id :integer         not null
-#  created_at :datetime
-#  updated_at :datetime
-#
+# encoding: utf-8
 
 class Ownership < ActiveRecord::Base
 

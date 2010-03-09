@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Aleph #:nodoc:
   module XmlUtils #:nodoc:
 

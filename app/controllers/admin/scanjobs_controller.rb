@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'barby'
 require 'barby/outputter/png_outputter'
 

@@ -20,7 +20,7 @@
 
         <% if entry.is_a?(TextEntry) or entry.is_a?(MonographEntry) or entry.is_a?(ArticleEntry) or entry.is_a?(CollectedArticleEntry) %>
           <% link_to polymorphic_path(['new', entry, 'file_attachment']), :class => 'toolbar-item' do %>
-            <%= image_tag 'icons/overlay/document--plus.png', :plugin => 'pui', :title => 'Eine Datei anhängen' %>
+            <%= image_tag 'icons/overlay/document--plus.png', :plugin => 'pui', :title => 'Eine Datei anh&auml;ngen' %>
           <% end %>
         <% end %>
 

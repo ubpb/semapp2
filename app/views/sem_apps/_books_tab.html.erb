@@ -2,7 +2,7 @@
   <div class="pui-view align-right">
     <% link_to sem_app_books_path(@sem_app), :class => 'pui-button' do %>
       <%= icon 'books-stack.png' %>
-      Bücher verwalten
+      B&uuml;cher verwalten
     <% end %>
   </div>
 <% end %>
@@ -11,7 +11,7 @@
   <% if @sem_app.has_book_shelf? %>
     <div class="pui-panel align-center">
       <%= icon 'asterisk.png' %>
-      Sie finden die folgenden Bücher in der <strong><%= h(@sem_app.location.title) %></strong> im
+      Sie finden die folgenden B&uuml;cher in der <strong><%= h(@sem_app.location.title) %></strong> im
       Seminarapparat <strong>Nr. <%= h(@sem_app.book_shelf.slot_number) %></strong>
     </div>
   <% end %>
@@ -26,6 +26,6 @@
 <% else %>
   <div class="pui-panel align-center">
     <%= icon 'asterisk.png' %>
-    Für diesen Seminarapparat sind aktuell <strong>keine</strong> Bücher gelistet.
+    F&uuml;r diesen Seminarapparat sind aktuell <strong>keine</strong> B&uuml;cher gelistet.
   </div>
 <% end %>

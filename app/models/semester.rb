@@ -1,15 +1,4 @@
-# == Schema Information
-# Schema version: 20091110135349
-#
-# Table name: semesters
-#
-#  id         :integer         not null, primary key
-#  current    :boolean
-#  title      :string(255)     not null
-#  position   :integer         default(0), not null
-#  created_at :datetime
-#  updated_at :datetime
-#
+# encoding: utf-8
 
 class Semester < ActiveRecord::Base
   # model relations

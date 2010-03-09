@@ -6,7 +6,7 @@
   <div class="align-right" style="margin-bottom: 5px">
     <% link_to admin_sem_apps_path, :class => 'pui-button' do %>
       <%= icon 'arrow-curve-180-left.png' %>
-      Zurück zur Übersicht
+      Zur&uuml;ck zur &uuml;bersicht
     <% end %>
 
     <% link_to edit_admin_sem_app_path(@sem_app), :class => "pui-button" do %>
@@ -18,10 +18,10 @@
 
 <% if @ordered_books.present? or @removed_books.present? %>
   <div class="pui-panel notice align-center">
-    Es gibt Buchaufträge für diesen Seminarapparat
+    Es gibt Buchauftr&auml;ge f&uuml;r diesen Seminarapparat
     <% link_to admin_sem_app_path(@sem_app, :format => :print), :class => "print pui-button" do %>
       <%= icon 'printer.png' %>
-      Aufträge Drucken
+      Auftr&auml;ge Drucken
     <% end %>
   </div>
 <% end %>
@@ -30,7 +30,7 @@
   <div class="grid_8 alpha">
     <% unless @sem_app.approved %>
       <div class="pui-panel notice align-center">
-        Der Seminarapparat muss noch überprüft und freigeschaltet werden!
+        Der Seminarapparat muss noch &uuml;berpr&uuml;ft und freigeschaltet werden!
       </div>
     <% end %>
 
@@ -79,13 +79,13 @@
     <li>
       <a href="#new-books">
         <%= icon 'overlay/book--plus.png' %>
-        Bücher neu
+        B&uuml;cher neu
       </a>
     </li>
     <li>
       <a href="#removed-books">
         <%= icon 'overlay/book--minus.png' %>
-        Bücher zurück
+        B&uuml;cher zur&uuml;ck
       </a>
     </li>
   </ul>

@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class SemAppsFilter
 
   attr_accessor :title, :tutors, :creator, :location, :semester

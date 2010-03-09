@@ -29,7 +29,7 @@
           <% if sj.state == "ordered" or sj.state == "accepted" %>
             <% link_to defer_admin_scanjob_path(sj), :class => "pui-button", :method => :put do %>
               <%= icon 'lock.png' %>
-              Zurückstellen
+              Zur&uuml;ckstellen
             <% end %>
           <% end %>
 
@@ -45,6 +45,6 @@
   </div>
 <% else %>
   <div class="pui-panel notice align-center">
-    Keine Scanaufträge vorhanden
+    Keine Scanauftr&auml;ge vorhanden
   </div>
 <% end %>

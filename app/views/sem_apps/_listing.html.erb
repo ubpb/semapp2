@@ -3,7 +3,7 @@
     <%= icon 'asterisk.png' %>
     <i>
       Wenn Sie nach einem <strong>Passwort</strong> gefragt werden, geben sie bitte die
-      Dozenten-Kennung aus dem alten System für eSeminarapparate ein,
+      Dozenten-Kennung aus dem alten System f&uuml;r eSeminarapparate ein,
       welches sie damals bei der Beantragung festgelegt haben.
     </i>
   </div>
@@ -28,7 +28,7 @@
           <th>
             <% if actions.include?(:transit) and can?(:manage, sem_app) and not sem_app.is_from_current_semester? %>
               <% link_to transit_sem_app_path(sem_app), :method => :post, :class => 'pui-button small' do %>
-                In das aktuelle Semester übernehmen
+                In das aktuelle Semester &uuml;bernehmen
               <% end %>
             <% end %>
                 

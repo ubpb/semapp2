@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class SemApp < ActiveRecord::Base
 
   # Relations

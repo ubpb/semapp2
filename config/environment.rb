@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 # Be sure to restart your server when you modify this file
 
 # Specifies gem version of Rails to use when vendor/rails is not present
@@ -15,18 +17,17 @@ Rails::Initializer.run do |config|
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
   
   # Specify gems that this application depends on and have them installed with rake gems:install
-  config.gem 'RedCloth',      :version => '4.2.2',   :lib => 'RedCloth'
-  config.gem 'devise',        :version => '1.0.3',   :lib => 'devise'
+  config.gem 'RedCloth',      :version => '4.2.3',   :lib => 'RedCloth'
+  config.gem 'devise',        :version => '1.0.4',   :lib => 'devise'
   config.gem 'libxml-ruby',   :version => '1.1.3',   :lib => 'libxml'
   config.gem 'paperclip',     :version => '2.3.1.1', :lib => 'paperclip'
-  config.gem 'will_paginate', :version => '2.3.11',  :lib => 'will_paginate'
+  config.gem 'will_paginate', :version => '2.3.12',  :lib => 'will_paginate'
   config.gem 'acts_as_list',  :version => '0.1.2',   :lib => 'acts_as_list'
   config.gem 'barby',         :version => '0.3.2',   :lib => 'barby'
   config.gem 'png',           :version => '1.1.0',   :lib => 'png'
   config.gem 'cancan',        :version => '1.0.2',   :lib => 'cancan'
 
   config.gem 'provideal-ui',                :version => '0.2.0', :lib => 'pui'
-  config.gem 'provideal-migration-helpers', :version => '1.1.2', :lib => 'provideal_migration_helpers'
   config.gem 'acts_as_inheritance_root',    :version => '0.1.0', :lib => 'acts_as_inheritance_root'
 
   # Only load the plugins named here, in the order given (default is alphabetical).

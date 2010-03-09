@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class MilessPassword < ActiveRecord::Base
 
   # Relations

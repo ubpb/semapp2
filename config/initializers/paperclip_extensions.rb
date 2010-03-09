@@ -1,5 +1,4 @@
 require 'digest'
-require 'md5'
 
 # Paperclips defaults
 Paperclip::Attachment.default_options[:path] = ':rails_root/data/attachments/:hashed_path/:id_:basename_:style.:extension'
