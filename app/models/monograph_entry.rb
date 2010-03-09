@@ -43,7 +43,7 @@ class MonographEntry < Entry
   ######################################################################################################
 
   def author_to_s
-    author.present? ? author.strip : "n.n."
+    author.present? ? author.strip : ""
   end
 
   def year_to_s

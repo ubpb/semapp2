@@ -51,7 +51,7 @@ class CollectedArticleEntry < Entry
   ######################################################################################################
 
   def source_editor_to_s
-    source_editor.present? ? "#{source_editor.strip} (Hg.)" : "n.n. (Hg.)"
+    source_editor.present? ? "#{source_editor.strip} (Hg.)" : ""
   end
 
   def source_title_to_s
@@ -84,13 +84,13 @@ class CollectedArticleEntry < Entry
 
   def source_series_title_and_volumne_to_s
     a  = []
-    a << (source_series_title.present? ? source_series_title.strip : "n.n.")
+    a << (source_series_title.present? ? source_series_title.strip : "")
     a << (source_series_volume.present? ? source_series_volume.strip : "")
     (a[0].present? or a[1].present?) ? " (#{a.join(', ')})" : ""
   end
 
   def author_to_s
-    author.present? ? author.strip : "n.n."
+    author.present? ? author.strip : ""
   end
 
   def title_to_s
