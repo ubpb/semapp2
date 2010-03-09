@@ -6,33 +6,6 @@
      * API
      **********************************************************************************/
 
-    function createEntry(item, url) {
-      loadEditorPanel(item, url, {
-        heading: "Einen neuen Eintrag erstellen"
-      });
-    }
-
-    function editEntry(item, url) {
-      loadEditorPanel(item, url);
-    }
-
-    function deleteEntry(item, url) {
-      $.ajax({
-        type: "delete",
-        data: "_method=delete",
-        dataType: 'json',
-        async: true,
-        url: url,
-        success: function(data) {
-          if (data.result == 'error') {
-            alert(data.message);
-          } else {
-            item.remove();
-          }
-        }
-      });
-    }
-
     function reorderEntries(url) {
       var orderedList = $("#media-listing").sortable('serialize');
       $.ajax({
@@ -44,164 +17,8 @@
     }
 
     /***********************************************************************************
-     * Helper
-     **********************************************************************************/
-
-    function loadEditorPanel(item, url, options) {
-      var options = jQuery.extend({
-        heading: "Eintrag bearbeiten"
-      }, options);
-
-      // Store in a global context because we use
-      // a single overlay instance.
-      $.editor_current_heading = options.heading;
-      $.editor_current_item = item;
-      $.editor_current_url  = url;
-
-      // Create the overlay
-      $('#entry-editor-panel').overlay({
-        oneInstance: true,
-        closeOnClick: false,
-        api: true,
-        expose: {
-          color: '#333',
-          loadSpeed: 150,
-          opacity: 0.6
-        },
-        onBeforeLoad: function() {
-          this.getContent().find(".heading").html($.editor_current_heading);
-          this.getContent().find(".content").html(loadPartial($.editor_current_url));
-          ajaxifyEditorForm();
-        },
-        onClose: function() {
-          this.getContent().find(".heading").html("");
-          this.getContent().find(".content").html("");
-          $.editor_current_item = null;
-          $.editor_current_url  = null;
-        }
-      }).load();
-    }
-
-    function closeEditorPanel() {
-      $('#entry-editor-panel').overlay().close();
-    }
-
-    function loadPartial(url) {
-      var content = null;
-      $.ajax({
-        type: "get",
-        dataType: "json",
-        data: "_method=get",
-        async: false,
-        url: url,
-        success: function(data) {
-          content = decHTMLifEnc(data.partial);
-        }
-      });
-
-      return content;
-    }
-
-    function ajaxifyEditorForm() {
-      $("#entry-editor-panel .ajax-form").ajaxForm({
-        dataType: 'json',
-        success: function(data) {
-          handleFormResponse(data);
-        }
-      });
-    }
-
-    function handleFormResponse(data) {
-      var content = decHTMLifEnc(data.partial); //$('<div/>').html(data.partial).html();
-      var item    = $.editor_current_item
-
-      if (data.result == 'success') {
-        if (data.type == "create") {
-          item.after(content);
-          $('#no-entries-message').remove();
-          $('#dummy-entry').remove();
-          // We have created a new element, lets rebind some events
-          //rebindDropDownMenu();
-        } else {
-          item.find(".entry").html(content);
-          item.effect("highlight", {}, 1000);
-        }
-
-        closeEditorPanel();
-      } else {
-        $('#entry-editor-panel .content').html(content);
-        ajaxifyEditorForm();
-      }
-    }
-
-    /*
-    function rebindDropDownMenu() {
-      $('.dropdown li.trigger').unbind("click");
-      $('.dropdown li.trigger').unbind("mouseleave");
-
-      $('.dropdown li.trigger').bind("click", function() {
-        jQuery('ul', this).css('display', 'block');
-      });
-
-      $('.dropdown li.trigger').bind("mouseleave", function() {
-        jQuery('ul', this).css('display', 'none');
-      });
-    }*/
-
-    function isEncHTML(str) {
-      if(str.search(/&amp;/g) != -1 || str.search(/&lt;/g) != -1 || str.search(/&gt;/g) != -1)
-        return true;
-      else
-        return false;
-    }
-
-    function decHTMLifEnc(str){
-      if(isEncHTML(str))
-        return str.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-      return str;
-    }
-
-    /***********************************************************************************
      * Event hooks
      **********************************************************************************/
-
-    /** If the user clicks the link to create a new antry */
-    $(".create-entry-action").live('click', function(event) {
-      event.preventDefault();
-      var item = $(this).closest(".item");
-      var url  = $(this).attr("href");
-
-      createEntry(item, url);
-    });
-
-    /** If the user clicks the link to create a new antry */
-    $(".edit-entry-action").live('click', function(event) {
-      event.preventDefault();
-      var item = $(this).closest(".item");
-      var url  = $(this).attr("href");
-
-      editEntry(item, url);
-    });
-
-    $(".item").live("dblclick", function(event) {
-      event.preventDefault();
-      var item = $(this);
-      var url  = $(this).find(".toolbar .edit-entry-action").attr("href");
-
-      editEntry(item, url);
-    })
-
-    /** If the user clicks the link to delete an antry */
-    $(".delete-entry-action").live('click', function(event) {
-      event.preventDefault();
-      var item = $(this).closest(".item");
-      var url  = $(this).attr("href");
-
-      var ret = confirm("Soll der Eintrag wirklich aus der Liste gelöscht werden? Diese Aktion kann nicht Rückgängig gemacht werden.");
-      if (ret == true) {
-        deleteEntry(item, url);
-      }
-    });
 
     /** Make media entries sortable with the mouse */
     $(".reorder-entry-action").live('click', function(event) {
@@ -224,9 +41,6 @@
         reorderEntries(url);
       }
     })
-
-    /** (re)bind entry type dropdowns */
-    //rebindDropDownMenu();
 
   });
 
