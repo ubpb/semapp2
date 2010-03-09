@@ -27,7 +27,8 @@
   };
 
   $(function() {
-    // Dom ready...
+    // enable markitup
+    $('.textile').markItUp(markItUpTextileSettings);
   });
 
 })(jQuery)

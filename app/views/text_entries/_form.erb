@@ -2,7 +2,7 @@
   <%= hidden_field_tag :origin_id, @origin_id %>
 
   <% f.inputs do %>
-    <%= f.input :text,       :label => 'Text', :input_html => { :rows => '10'} %>
+    <%= f.input :text,       :label => 'Text', :input_html => { :rows => '10', :class => 'textile'} %>
     <%= f.input :publish_on, :label => 'Veröffentlichen am', :required => false %>
   <% end %>
 
