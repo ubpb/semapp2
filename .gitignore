@@ -17,3 +17,4 @@ vendor/bundler_gems/environment.rb
 data
 public/stylesheets/generated-*.css
 public/javascripts/generated-*.js
+import
