@@ -107,9 +107,9 @@ class SyncEngine
       :sem_app     => sem_app,
       :ils_id      => ils_id,
       :placeholder => nil,
-      :signature   => ils_entry[:signature],
-      :title       => ils_entry[:title],
-      :author      => ils_entry[:author],
+      :signature   => ils_entry[:signature] || 'n.n',
+      :title       => ils_entry[:title] || 'n.n',
+      :author      => ils_entry[:author] || 'n.n',
       :year        => ils_entry[:year],
       :edition     => ils_entry[:edition],
       :place       => ils_entry[:place],
@@ -124,14 +124,14 @@ class SyncEngine
   def create_entry(options)
     options.merge!(:state => :in_shelf)
     book = Book.new(options)
-    unless book.save
+    unless book.save(false)
       raise book.errors.full_messages.to_sentence
     end
   end
 
   def update_entry(db_entry, options)
     db_entry.update_attributes(options)
-    unless db_entry.save
+    unless db_entry.save(false)
       raise "Failed for signature #{options[:signature]} while updating an exsisting entry."
     end
   end
