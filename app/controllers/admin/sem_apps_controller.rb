@@ -73,4 +73,11 @@ class Admin::SemAppsController < Admin::ApplicationController
     end
   end
 
+  def destroy
+    @sem_app = SemApp.find(params[:id])
+    @sem_app.destroy
+    flash[:success] = "Seminarpparat '#{@sem_app.title}' gelöscht."
+    redirect_to :action => :index
+  end
+
 end

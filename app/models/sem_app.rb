@@ -78,7 +78,7 @@ class SemApp < ActiveRecord::Base
     self.book_shelf != nil
   end
 
-  def clone_entries(source_sem_app)
+  def import_entries(source_sem_app)
     if source_sem_app.present? and source_sem_app.is_a?(SemApp)
       source_sem_app.entries.each do |entry|
         clone = entry.clone(:exclude => [:file_attachments])
@@ -99,12 +99,16 @@ class SemApp < ActiveRecord::Base
     end
   end
 
-  def transit(semester)
+  def transit(semester, import_entries = false)
     if semester.present? and semester.is_a?(Semester)
       SemApp.transaction do
         clone = self.clone
         clone.semester = semester
         clone.save!
+
+        if import_entries
+          clone.import_entries(self)
+        end
       end
     end
   end

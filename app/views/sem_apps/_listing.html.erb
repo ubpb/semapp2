@@ -27,11 +27,11 @@
           </td>
           <th>
             <% if actions.include?(:transit) and can?(:manage, sem_app) and not sem_app.is_from_current_semester? %>
-              <% link_to transit_sem_app_path(sem_app), :method => :post, :class => 'pui-button small' do %>
+              <% link_to '#', :class => 'pui-button small pui-overlay-trigger', :rel => "#transit-panel-#{sem_app.id}" do %>
                 In das aktuelle Semester &uuml;bernehmen
               <% end %>
             <% end %>
-                
+
             <% if actions.include?(:clone) and @sem_app != sem_app %>
               <% form_tag clone_sem_app_path do %>
                 <%= hidden_field_tag 'source', sem_app.id %>
@@ -57,6 +57,36 @@
 <% else %>
   <div class="pui-panel notice align-center">
     Es wurden <strong>keine</strong> Seminarapparate gefunden.
+  </div>
+<% end %>
+
+<% sem_apps.each do |sem_app| %>
+  <div id="transit-panel-<%=sem_app.id-%>" class="pui-overlay align-left">
+    <h3 class="section">Seminarapparat kopieren</h3>
+
+    <% form_tag(transit_sem_app_path(sem_app), :class => 'formtastic') do %>
+      <fieldset class="inputs">
+        <ol>
+          <li class="string">
+            <label>Titel</label>
+            <div><%= sem_app.title %></div>
+          </li>
+          <li class="boolean optional">
+            <label for="import_entries">
+              <input type="checkbox" value="0" name="import_entries"/>
+              Daten &uuml;bernehmen?
+            </label>
+          </li>
+        </ol>
+      </fieldset>
+      <fieldset class="buttons">
+        <ol>
+          <li class="commit">
+            <%= submit_tag 'In das aktuelle Semester &uuml;bernehmen' %>
+          </li>
+        </ol>
+      </fieldset>
+    <% end %>
   </div>
 <% end %>
 

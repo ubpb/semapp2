@@ -91,7 +91,8 @@ class SemAppsController < ApplicationController
   def transit
     unauthorized! if cannot? :manage, @sem_app
     begin
-      @sem_app.transit(Semester.current)
+      import_entries = params[:import_entries].present?
+      @sem_app.transit(Semester.current, import_entries)
       flash[:success] = 'Der Seminarapparat wurde ins aktuelle Semester übernommen.'
     rescue
       flash[:error] = 'Es ist leider ein Fehler aufgetrten. Der Vorgang konnte nicht erfolgreich abgeschlossen werden.'
@@ -143,7 +144,7 @@ class SemAppsController < ApplicationController
     end
 
     begin
-      @sem_app.clone_entries(source_sem_app)
+      @sem_app.import_entries(source_sem_app)
       flash[:success] = 'Einträge wurden erfolgreich kopiert.'
     rescue Exception => e
       puts e.backtrace
