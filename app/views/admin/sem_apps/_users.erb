@@ -4,3 +4,27 @@
   <%= labeled_item :label => 'E-Mail',   :content => h(@sem_app.creator.email) %>
   <%= labeled_item :label => 'UB ID',    :content => h(@sem_app.creator.login) %>
 </div>
+
+<%= link_to 'Besitzer neu festlegen', '#', :class => 'pui-button small pui-overlay-trigger', :rel => '#set-creator-panel' %>
+
+<div id="set-creator-panel" class="pui-overlay">
+  <h3 class="section">Besitzer festlegen</h3>
+
+  <% form_tag(set_creator_admin_sem_app_path(@sem_app), :class => 'formtastic', :method => :put) do %>
+    <fieldset class="inputs">
+      <ol>
+        <li class="string">
+          <label for="login">Ausweis Nr.</label>
+          <input type="text" style="width: 190px;" name="login"/>
+        </li>
+      </ol>
+    </fieldset>
+    <fieldset class="buttons">
+      <ol>
+        <li class="commit">
+          <%= submit_tag 'Speichern' %>
+        </li>
+      </ol>
+    </fieldset>
+  <% end %>
+</div>
