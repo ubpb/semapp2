@@ -1,5 +1,12 @@
 <h3 class="section">Seminarapparate verwalten &raquo; Details</h3>
 
+<% unless @sem_app.approved %>
+  <div class="pui-panel notice align-center">
+    <%= icon 'asterisk.png' %>
+    Der Seminarapparat muss noch &uuml;berpr&uuml;ft und freigeschaltet werden!
+  </div>
+<% end %>
+
 <div class="pui-panel align-right">
   <% link_to admin_sem_apps_path, :class => 'pui-button' do %>
     <%= icon 'arrow-curve-180-left.png' %>
@@ -17,21 +24,16 @@
   <% end %>
 </div>
 
-<% if @ordered_books.present? or @removed_books.present? %>
-  <div class="pui-panel notice align-center">
-    Es gibt Buchauftr&auml;ge f&uuml;r diesen Seminarapparat
-    <% link_to admin_sem_app_path(@sem_app, :format => :print), :class => "print pui-button" do %>
-      <%= icon 'printer.png' %>
-      Auftr&auml;ge Drucken
-    <% end %>
-  </div>
-<% end %>
-
 <div class="pui-view clearfix">
   <div class="grid_8 alpha">
-    <% unless @sem_app.approved %>
-      <div class="pui-panel notice align-center">
-        Der Seminarapparat muss noch &uuml;berpr&uuml;ft und freigeschaltet werden!
+    <% if @ordered_books.present? or @removed_books.present? %>
+      <div class="pui-panel align-center">
+        <%= icon 'books.png' %>
+        Es gibt Buchauftr&auml;ge f&uuml;r diesen Seminarapparat
+        <% link_to admin_sem_app_path(@sem_app, :format => :print), :class => "print pui-button" do %>
+          <%= icon 'printer.png' %>
+          Auftr&auml;ge Drucken
+        <% end %>
       </div>
     <% end %>
 
