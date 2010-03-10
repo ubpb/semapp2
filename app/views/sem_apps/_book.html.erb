@@ -28,7 +28,7 @@
 
     <% if book.signature.present? %>
       <div>
-        Signatur: <%= book.base_signature -%>
+        Signatur: <%= book.signature -%>
         <% link_to "https://ubaleph.uni-paderborn.de/F/?func=find-b&find_code=PSG&request=#{book.base_signature}?" do %>
           &raquo; Im Bibliothekskatalog anzeigen
         <% end %>
