@@ -72,13 +72,19 @@ module Aleph #:nodoc:
     private
 
     def do_authenticate(ils_account_no, verification)
+      raise "Account No. required" if ils_account_no.blank?
+      raise "Password required" if verification.blank?
+
+      ils_account_no.gsub!(/\s/, '')
+      ils_account_no.upcase!
+
       url  = "#{@base_url}?op=bor-auth&bor_id=#{ils_account_no}&verification=#{verification}&library=#{@library}"
       data = load_url(url)
 
       if data.find_first('/bor-auth/error')
         raise Aleph::AuthenticationError, "Authentication failed"
       else
-        user = Aleph::User.new(data.find_first('/bor-auth'))
+        user = Aleph::User.new(ils_account_no, data.find_first('/bor-auth'))
 
         unless @allowed_user_types.allows?(user.status)
           raise Aleph::UnsupportedAccountTypeError, "Authentication not allowed. Wrong user type."

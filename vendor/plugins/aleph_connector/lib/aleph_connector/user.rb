@@ -10,15 +10,15 @@ module Aleph
     ##
     # Inititalize the object with the given raw data as LibXML::XML::Node
     #
-    def initialize(node)
+    def initialize(user_id, node)
       raise "Node is required"                       unless node.present?
       raise "Node must be of type LibXML::XML::Node" unless node.class == LibXML::XML::Node
 
       data        = LibXML::XML::Document.new()
       data.root   = node.copy(true)
       @data       = data
-      @user_id    = content_from_node(@data, "//z303-id")
-      raise "User ID (z303-id) is required" unless @user_id.present?
+      @user_id    = user_id #content_from_node(@data, "//z303-id")
+      raise "User ID is required" unless @user_id.present?
     end
 
     #########################################################################################
