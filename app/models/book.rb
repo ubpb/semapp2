@@ -66,8 +66,7 @@ class Book < ActiveRecord::Base
 
   def self.get_base_signature(signature)
     if signature.present?
-      m = signature.match(/(.+)(\(|\+|-).*/)
-      (m and m[1]) ? m[1] : signature
+      signature[/(.+)(\(|\+|-)/, 1]
     end
   end
 
