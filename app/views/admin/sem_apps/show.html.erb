@@ -1,16 +1,16 @@
 <h3 class="section">Seminarapparate verwalten &raquo; Details</h3>
 
-<% unless @sem_app.approved %>
-  <div class="pui-panel notice align-center">
-    <%= icon 'asterisk.png' %>
-    Der Seminarapparat muss noch &uuml;berpr&uuml;ft und freigeschaltet werden!
-  </div>
-<% end %>
-
 <div class="pui-panel align-right">
   <% link_to admin_sem_apps_path, :class => 'pui-button' do %>
     <%= icon 'arrow-curve-180-left.png' %>
     Zur&uuml;ck zur &uuml;bersicht
+  <% end %>
+
+  <% if @ordered_books.present? or @removed_books.present? %>
+    <% link_to admin_sem_app_path(@sem_app, :format => :print), :class => "print pui-button" do %>
+      <%= icon 'printer.png' %>
+      Auftr&auml;ge Drucken
+    <% end %>
   <% end %>
 
   <% link_to edit_admin_sem_app_path(@sem_app), :class => "pui-button" do %>
@@ -24,55 +24,21 @@
   <% end %>
 </div>
 
-<div class="pui-view clearfix">
-  <div class="grid_8 alpha">
-    <% if @ordered_books.present? or @removed_books.present? %>
-      <div class="pui-panel align-center">
-        <%= icon 'books.png' %>
-        Es gibt Buchauftr&auml;ge f&uuml;r diesen Seminarapparat
-        <% link_to admin_sem_app_path(@sem_app, :format => :print), :class => "print pui-button" do %>
-          <%= icon 'printer.png' %>
-          Auftr&auml;ge Drucken
-        <% end %>
-      </div>
-    <% end %>
-
-    <div class="pui-collection-view labeled">
-      <%= labeled_item :label => 'Titel',       :content => link_to(h(@sem_app.title), sem_app_path(@sem_app)) %>
-      <%= labeled_item :label => 'Tutor(en)',   :content => h(@sem_app.tutors) %>
-      <%= labeled_item :label => 'Semester',    :content => h(@sem_app.semester.title) %>
-      <%= labeled_item :label => 'Standort',    :content => h(@sem_app.location.title) %>
-      <%= labeled_item :label => 'Lesekennung', :content => "<code>#{@sem_app.shared_secret}</code>" %>
-    </div>
+<% unless @sem_app.approved %>
+  <div class="pui-panel notice align-center">
+    <%= icon 'asterisk.png' %>
+    Der Seminarapparat muss noch &uuml;berpr&uuml;ft und freigeschaltet werden!
   </div>
-
-  <div class="grid_4 omega">
-    <div class="pui-panel">
-      <h5 class="section">Ausweis / Regal</h5>
-      <% if @sem_app.book_shelf.present? %>
-        <p>
-          <strong>Ausweis Nr.:</strong>
-          <%= @sem_app.book_shelf.ils_account %>
-        </p>
-        <p>
-          <strong>Regal Nr.:</strong>
-          <%= @sem_app.book_shelf.slot_number %>
-        </p>
-      <% else %>
-        <div class="pui-panel notice align-center">
-          Dem Apparat wurde noch kein Regal/Ausweis zugeordnet
-        </div>
-      <% end %>
-      <div style="font-size: 90%; text-align: center">
-        <%= h(@sem_app.location.title) %>
-      </div>
-    </div>
-  </div>
-</div>
-
+<% end %>
 
 <div class="pui-tabs-wrapper">
   <ul class="pui-tabs">
+    <li>
+      <a href="#semapp">
+        <%= icon 'block.png' %>
+        Seminarapparat
+      </a>
+    </li>
     <li>
       <a href="#users">
         <%= icon 'users.png' %>
@@ -94,6 +60,41 @@
   </ul>
 
   <div class="pui-tab-panes">
+    <div>
+      <div class="pui-view clearfix">
+        <div class="grid_8 alpha">
+          <div class="pui-collection-view labeled">
+            <%= labeled_item :label => 'Titel',       :content => link_to(h(@sem_app.title), sem_app_path(@sem_app)) %>
+            <%= labeled_item :label => 'Tutor(en)',   :content => h(@sem_app.tutors) %>
+            <%= labeled_item :label => 'Semester',    :content => h(@sem_app.semester.title) %>
+            <%= labeled_item :label => 'Standort',    :content => h(@sem_app.location.title) %>
+            <%= labeled_item :label => 'Lesekennung', :content => "<code>#{@sem_app.shared_secret}</code>" %>
+          </div>
+        </div>
+
+        <div class="grid_4 omega">
+          <div class="pui-panel">
+            <h5 class="section">Ausweis / Regal</h5>
+            <% if @sem_app.book_shelf.present? %>
+              <p>
+                <strong>Ausweis Nr.:</strong>
+                <%= @sem_app.book_shelf.ils_account %>
+              </p>
+              <p>
+                <strong>Regal Nr.:</strong>
+                <%= @sem_app.book_shelf.slot_number %>
+              </p>
+            <% else %>
+              <div class="pui-panel notice align-center">
+                <%= icon 'asterisk.png' %>
+                Dem Apparat wurde noch kein Regal/Ausweis zugeordnet
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div>
       <%= render 'users' %>
     </div>
