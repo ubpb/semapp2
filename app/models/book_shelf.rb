@@ -11,4 +11,14 @@ class BookShelf < ActiveRecord::Base
   validates_uniqueness_of :sem_app_id, :allow_nil => true, :allow_blank => false
   validates_uniqueness_of :ils_account
 
+  ###########################################################################################
+  #
+  # Public API
+  #
+  ###########################################################################################
+
+  def ils_account=(value)
+    write_attribute :ils_account, value.present? ? value.gsub(/\s/, '') : nil
+  end
+
 end
