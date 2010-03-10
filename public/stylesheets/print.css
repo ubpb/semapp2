@@ -2,3 +2,7 @@
 
 body {background: none}
 .no-print {display: none;}
+
+.scanjob-detail * {font-size: 24px !important}
+.scanjob-detail div.pui-collection-view.labeled div.item span.label { width: 25% }
+.scanjob-detail div.pui-collection-view.labeled div.item div.content { padding-left: 30% }

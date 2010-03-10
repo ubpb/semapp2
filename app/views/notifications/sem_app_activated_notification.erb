@@ -1,9 +1,24 @@
+Hallo,
+
 Ihr Seminarappatat
 
-  <%= @sem_app.title %>
+  <%= "#{@sem_app.title} (#{@sem_app.semester.title})" %>
 
-wurde überprpüft und aktiviert und steht ab sofort Ihren Studierenden zur Verfügung.
+wurde soeben aktiviert. Er steht ab sofort Ihren Studierenden
+(Lesekennung: <%= @sem_app.shared_secret %>) zur Verfügung.
 
 Viele Grüße,
 
-Universitätsbibliothek Paderborn
+Ihre Universitätsbibliothek Paderborn
+
+
+== Hilfe bei Fragen und Beratung zu Seminarapparaten ==
+Informationszentrum (Universitätsbibliothek)
+E-Mail: information@ub.uni-paderborn.de
+Tel.: 05251 / 602017
+Tel.: 05251 / 603953
+
+== Hilfe bei technischen Problemen ==
+René Sprotte (Universitätsbibliothek)
+E-Mail: r.sprotte@ub.uni-paderborn.de
+Tel.: 05251 / 604251

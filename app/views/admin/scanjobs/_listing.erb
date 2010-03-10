@@ -11,7 +11,7 @@
       <div class="item">
         Auftrag vom: <strong><%= sj.created_at.to_formatted_s(:short) %></strong> //
         Signatur: <strong><%= sj.signature %></strong> //
-        Seite von-bis: <strong><%= sj.pages %></strong>
+        Seite von-bis: <strong><%= sj.pages_from %>-<%= sj.pages_to %></strong>
         <p>
           <strong>Quelle:</strong> <%= sj.entry.to_s %>
         </p>

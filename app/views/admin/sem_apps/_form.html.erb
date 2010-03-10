@@ -1,6 +1,9 @@
 <% semantic_form_for [:admin, @sem_app] do |f| %>
   <% f.inputs :name => 'Administrative Daten' do %>
-    <%= f.input :approved, :label => 'Von der UB geprüft und freigebegen?', :required => false %>
+    <% if @sem_app.creator.email.present? %>
+      <% approve_hint = "Nach der Aktivierung wird eine E-Mail mit Informationen an #{@sem_app.creator.email} verschickt." %>
+    <% end %>
+    <%= f.input :approved, :label => 'Von der UB geprüft und freigebegen?', :required => false, :hint => approve_hint || '' %>
   <% end %>
 
   <% f.inputs :name => 'Ausweis / Regal' do %>
@@ -11,8 +14,8 @@
       <% unless shelf.object.new_record? %>
         <%= shelf.input '_destroy',  :label => 'Ausweis / Regal löschen?', :as => :boolean, :required => false %>
       <% end %>
-      <%= shelf.input :ils_account, :label => 'Ausweis Nr.', :required => false %>
-      <%= shelf.input :slot_number, :label => 'Regal Nr.',   :required => false %>
+      <%= shelf.input :ils_account, :label => 'Ausweis Nr.', :required => false, :hint => 'Die Ausweisnummer / Strichcode' %>
+      <%= shelf.input :slot_number, :label => 'Regal Nr.',   :required => false, :hint => 'Die Nummer des Seminarapparates z.B. 12' %>
     <% end %>
   <% end %>
 
@@ -26,7 +29,7 @@
       <%= f.input :title,     :label => 'Titel' %>
       <%= f.input :course_id, :label => 'Kurs-ID', :required => false %>
     <% end %>
-    <%= f.input :tutors, :label => 'Tutor(en)', :as => :string, :hint => 'Die Namen der beteiligten Dozierenden und/oder Tutoren. Trennen Sie mehrere Tutoren durch ein Komma.' %>
+    <%= f.input :tutors, :label => 'Tutor(en)', :as => :string, :hint => 'Die Namen der beteiligten Dozenten (Format: Nachname, Vorname). Trennen Sie mehrere Namen durch ein Semikolon.' %>
   <% end %>
 
   <% f.inputs :name => 'Bibliotheksdaten' do %>
