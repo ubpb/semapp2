@@ -34,9 +34,9 @@
   <% end %>
 
   <div class="entry">
-    <% cache("#{entry.cache_key}_entry") do %>
+    <%# cache("#{entry.cache_key}_entry") do %>
       <%= render "#{entry.class.name.tableize}/entry", :entry => entry %>
-    <% end %>
+    <%# end %>
   </div>
 </div>
 
