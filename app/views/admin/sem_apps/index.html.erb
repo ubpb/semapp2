@@ -8,6 +8,18 @@
   <div class="pui-panel">
     <% form_tag filter_admin_sem_apps_path do %>
       <p>
+        <%= radio_button_tag "filter[only]", 'all',  !@filter.unapproved_only or !@filter.bookjobs_only %>
+        <label>Alles anzeigen</label>
+      </p>
+      <p>
+        <%= radio_button_tag "filter[only]", 'unapproved', @filter.unapproved_only %>
+        <label>Nur neue Seminarapparate</label>
+      </p>
+      <p>
+        <%= radio_button_tag "filter[only]", 'bookjobs', @filter.bookjobs_only %>
+        <label>Nur Buchaufträge</label>
+      </p>
+      <p>
         <label>Semester</label><br/>
         <%= collection_select(:filter, :semester, Semester.all, :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
       </p>

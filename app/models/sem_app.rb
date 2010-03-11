@@ -29,6 +29,10 @@ class SemApp < ActiveRecord::Base
   
   validates_uniqueness_of :course_id, :scope => :semester_id, :allow_nil => true, :allow_blank => false
 
+  # Scopes
+  named_scope :unapproved, lambda { { :conditions => { :approved => false } } }
+  named_scope :with_book_jobs, lambda { { :include => [:books], :conditions => "books.state = '#{Book::States[:ordered]}' OR books.state = '#{Book::States[:rejected]}'" } }
+
   ###########################################################################################
   #
   # Public API
