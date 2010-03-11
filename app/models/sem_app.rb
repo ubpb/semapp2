@@ -54,8 +54,19 @@ class SemApp < ActiveRecord::Base
 
   def add_ownership(user)
     unless self.new_record?
-      Ownership.new(:user => user, :sem_app => self).save
+      unless has_ownership?(user)
+        return Ownership.new(:user => user, :sem_app => self).save
+      else
+        return true
+      end
     end
+  end
+
+  def has_ownership?(user)
+    user.ownerships.each do |os|
+      return true if os.user == user
+    end
+    return false
   end
 
   def is_unlocked_in_session?(session)
