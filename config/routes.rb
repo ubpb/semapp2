@@ -14,17 +14,6 @@ ActionController::Routing::Routes.draw do |map|
     admin.scanjob_print_job   'scanjobs/:id/print-job',         :controller => 'scanjobs', :action => 'print_job'
     admin.scanjobs_print_list 'scanjobs/print-list/:list_name', :controller => 'scanjobs', :action => 'print_list'
     admin.scanjob_barcode     'scanjobs/:id/barcode',           :controller => 'scanjobs', :action => 'barcode'
-
-    #admin.resources :semesters
-    #admin.resources :locations, :collection => {:reorder => :put}
-    #admin.resources :sem_apps, :as => 'apps' do |sem_app|
-    #  sem_app.resources :ownerships, :only => [:index, :create, :destroy]
-    #  sem_app.resources :book_orders, :as => 'book-orders', :only => [:index, :new, :create, :destroy]
-    #end
-    #admin.resources :users
-    #admin.namespace :utils do |utils|
-    #  utils.users_picker 'users_picker.:format', :controller => 'users_picker', :action => 'users_listing'
-    #end
   end
 
   # Login / Logout
@@ -60,13 +49,9 @@ ActionController::Routing::Routes.draw do |map|
 
     sem_app.resources :books
   end
-
-  # ubdok import
-  #map.ubdok_sem_apps_import 'ubdok_sem_apps_import', :controller => 'ubdok_import', :action => 'import_sem_apps'
-  #map.ubdok_sem_app_import 'ubdok_sem_app_import', :controller => 'ubdok_import', :action => 'import_sem_app'
   
   # Download (secured download of attachments)
-  map.download 'download/:id/:style', :controller => 'download', :action => 'download'
+  map.download 'download/:id/:style/:basename.:extension', :controller => 'download', :action => 'download'
 
   # Root Page
   map.root :controller => "home"

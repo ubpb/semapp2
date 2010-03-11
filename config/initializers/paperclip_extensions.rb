@@ -2,7 +2,7 @@ require 'digest'
 
 # Paperclips defaults
 Paperclip::Attachment.default_options[:path] = ':rails_root/data/attachments/:hashed_path/:id_:basename_:style.:extension'
-Paperclip::Attachment.default_options[:url]  = '/download/:id/:style'
+Paperclip::Attachment.default_options[:url]  = '/download/:id/:style/:basename.:extension'
 
 # Make use of a hashed path for paperclip
 Paperclip.interpolates(:hashed_path) do |attachment, style|
