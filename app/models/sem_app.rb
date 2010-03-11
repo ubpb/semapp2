@@ -64,7 +64,7 @@ class SemApp < ActiveRecord::Base
 
   def has_ownership?(user)
     user.ownerships.each do |os|
-      return true if os.user == user
+      return true if os.sem_app == self
     end
     return false
   end
