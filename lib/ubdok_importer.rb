@@ -80,7 +80,13 @@ class UbdokImporter
       import_entries!(sem_app, document, derivate)
     rescue Exception => e
       @errors += 1
-      puts "ERROR: #{e.message}"      
+      puts "ERROR: #{e.message}"
+    ensure
+      # FIXME: Quick hack to hopefully prevent segfaults with libxml-ruby
+      sem_app  = nil
+      document = nil
+      derivate = nil
+      GC.start 
     end
   end
 
