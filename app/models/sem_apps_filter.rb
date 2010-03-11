@@ -16,7 +16,7 @@ class SemAppsFilter
     scope = SemApp.scoped({})
     scope = scope.conditions "lower(sem_apps.title) LIKE ?", "%#{@title.downcase}%" unless @title.blank?
     scope = scope.conditions "lower(sem_apps.tutors) LIKE ?", "%#{@tutors.downcase}%" unless @tutors.blank?
-    scope = scope.conditions "lower(users.name) LIKE ?", "%#{@creator.downcase}%" unless @creator.blank?
+    scope = scope.conditions "lower(users.name) LIKE ? OR lower(users.login) LIKE ?", "%#{@creator.downcase}%", "%#{@creator.downcase}%" unless @creator.blank?
     scope = scope.conditions "location_id = ?", "#{@location}" unless @location.blank?
     scope = scope.conditions "semester_id = ?", "#{@semester}" unless @semester.blank?
     scope

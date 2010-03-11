@@ -16,15 +16,15 @@
         <%= collection_select(:filter, :location, Location.all, :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
       </p>
       <p>
-        <label>Titel (enth&auml;lt)</label><br/>
+        <label>Titel</label><br/>
         <%= text_field_tag "filter[title]", @filter.title, {:style => 'width: 190px'} %>
       </p>
       <p>
-        <label>Tutor(en) (Name enth&auml;lt)</label><br/>
+        <label>Dozent</label><br/>
         <%= text_field_tag "filter[tutors]", @filter.tutors, {:style => 'width: 190px'}  %>
       </p>
       <p>
-        <label>Besitzer (Name enth&auml;lt)</label><br/>
+        <label>Besitzer (Name oder PA Nr.)</label><br/>
         <%= text_field_tag "filter[creator]", @filter.creator, {:style => 'width: 190px'}  %>
       </p>
       <div class="align-center">

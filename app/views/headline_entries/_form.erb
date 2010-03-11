@@ -2,8 +2,8 @@
   <%= hidden_field_tag :origin_id, @origin_id %>
 
   <% f.inputs do %>
-    <%= f.input :style, :label => 'Typ', :as => :select, :collection => {"Gro&szlig; (h1)" => 0, "Mittel (h2)" => 1, "Klein (h3)" => 2}, :selected => (@entry.style || 0), :required => false %>
-    <%= f.input :headline, :label => '&uuml;berschrift' %>
+    <%= f.input :style, :label => 'Typ', :as => :select, :collection => {"Überschrift 1 (h1)" => 0, "Überschrift 2 (h2)" => 1, "Überschrift 3 (h3)" => 2}, :selected => (@entry.style || 0), :required => false %>
+    <%= f.input :headline, :label => '&Uuml;berschrift' %>
   <% end %>
 
   <% f.buttons do %>
