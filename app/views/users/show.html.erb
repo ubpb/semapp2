@@ -1,41 +1,31 @@
 <h3 class="section">Meine Seminarapparate</h3>
 
-<% if @user.ownerships.present? %>
-  <div class="pui-view align-center">
-    <%= icon 'asterisk.png' %>
-    <i>Seminarapparate sind erst dann öffentlich sichtbar wenn sie durch die Universit&auml;tsbibliothek gepr&uuml;ft und freigeschaltet wurden.</i>
-  </div>
+<div class="pui-view align-center">
+  <%= icon 'asterisk.png' %>
+  <i>Seminarapparate sind erst dann öffentlich sichtbar wenn sie durch die Universit&auml;tsbibliothek gepr&uuml;ft und freigeschaltet wurden.</i>
+</div>
 
-  <table class="pui-tableview">
-    <thead>
-      <tr>
-        <th>Seminarapparat</th>
-        <th>Aktion</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @user.ownerships.each_with_index do |owner, n| %>
-        <% next unless owner.sem_app.present? %>
-        <tr class="<%= (n % 2 == 0) ? 'even' : 'odd' -%>">
-          <td>
-            <strong><%= link_to h(owner.sem_app.title), sem_app_path(owner.sem_app) %></strong><br/>
-            im <%= h(owner.sem_app.semester.title) %><br/>
-            Tutor(en): <strong><%= h(owner.sem_app.tutors) %></strong><br/>
-            <%= render 'shared_partials/sem_app_states', :sem_app => owner.sem_app %>
-          </td>
-          <th>
-            <% link_to sem_app_path(owner.sem_app), :class => 'pui-button small' do %>
-              <%= icon 'eye.png' %>
-              Anzeigen
-            <% end %>
-          </th>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <div class="pui-panel notice align-center">
-    Sie haben noch keine Seminarapparate beantragt.<br/>
-    <%= link_to '&raquo; Seminarapparat beantragen', new_sem_app_path %>
+<div class="pui-tabs-wrapper">
+  <ul class="pui-tabs">
+    <li>
+      <a href="#byme">
+        ... von mir beantragt
+      </a>
+    </li>
+    <li>
+      <a href="#editor">
+        ... kann ich zusätzlich bearbeiten
+      </a>
+    </li>
+  </ul>
+
+  <div class="pui-tab-panes">
+    <div>
+      <%= render 'listing', :sem_apps => @my_sem_apps %>
+    </div>
+
+    <div>
+      <%= render 'listing', :sem_apps => @ownerships %>
+    </div>
   </div>
-<% end %>
+</div>

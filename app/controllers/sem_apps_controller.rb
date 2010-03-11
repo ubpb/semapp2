@@ -44,7 +44,7 @@ class SemAppsController < ApplicationController
     @sem_app.creator = current_user
 
     # Finally create the semapp and add the ownership
-    if @sem_app.save and @sem_app.add_ownership(current_user)
+    if @sem_app.save
       flash[:success] = """
           <p>Ihr Seminarapparat wurde erfolgreich beantragt. Wir prüfen die Angaben und schalten
           den Seminarapparat nach erfolgter Prüfung für Sie frei. Sie sehen den Status unter

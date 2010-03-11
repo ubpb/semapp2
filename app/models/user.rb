@@ -52,6 +52,8 @@ class User < ActiveRecord::Base
   #
   def owns_sem_app?(sem_app)
     if sem_app.present?
+      return true if sem_app.creator == self
+      
       ownerships.each do |o|
         if o.sem_app.present?
           return true if sem_app.id == o.sem_app.id

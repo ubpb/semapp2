@@ -47,7 +47,6 @@ SemApp.transaction do
 #      :tutors        => 'Prof. Dr. Meyer',
 #      :shared_secret => 'secret'
 #    )
-#    default_semapp.add_ownership(default_user)
 #
 #    # Book Shelves
 #    if i == 1

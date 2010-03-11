@@ -1,16 +1,86 @@
 <h4 class="section">Besitzer</h4>
-<div class="pui-collection-view labeled">
-  <%= labeled_item :label => 'Besitzer', :content => h(@sem_app.creator.name) %>
-  <%= labeled_item :label => 'E-Mail',   :content => h(@sem_app.creator.email) %>
-  <%= labeled_item :label => 'UB ID',    :content => h(@sem_app.creator.login) %>
+<div class="pui-view clearfix">
+  <div class="grid_8 alpha">
+    <div class="pui-collection-view labeled">
+      <%= labeled_item :label => 'Benutzer', :content => h(@sem_app.creator.name) %>
+      <%= labeled_item :label => 'E-Mail',   :content => h(@sem_app.creator.email) %>
+      <%= labeled_item :label => 'Ausweis Nr.',    :content => h(@sem_app.creator.login) %>
+    </div>
+  </div>
+  <div class="grid_4 omega align-right">
+    <%= link_to 'Besitzer neu festlegen', '#', :class => 'pui-button small pui-overlay-trigger', :rel => '#set-creator-panel' %>
+  </div>
 </div>
 
-<%= link_to 'Besitzer neu festlegen', '#', :class => 'pui-button small pui-overlay-trigger', :rel => '#set-creator-panel' %>
+<h4 class="section">Weitere Nutzer mit Bearbeitungsrechten</h4>
+<div class="pui-panel align-right">
+  <%= link_to 'Nutzer hinzufügen', '#', :class => 'pui-button small pui-overlay-trigger', :rel => '#add-ownership-panel' %>
+</div>
+<% if @sem_app.ownerships.present? %>
+  <% @sem_app.ownerships.each do |os| %>
+    <div class="pui-view clearfix">
+      <div class="grid_8 alpha">
+        <div class="pui-collection-view labeled">
+          <%= labeled_item :label => 'Benutzer', :content => h(os.user.name) %>
+          <%= labeled_item :label => 'E-Mail',   :content => h(os.user.email) %>
+          <%= labeled_item :label => 'Ausweis Nr.',    :content => h(os.user.login) %>
+        </div>
+      </div>
+      <div class="grid_4 omega align-right">
+        <% link_to admin_ownership_path(os), :class => 'pui-button small', :method => :delete do %>
+          Löschen
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <div class="pui-panel align-center">
+    <%= icon 'asterisk.png' %>
+    Keine weiteren Nutzer haben Bearbeitungsrechte
+  </div>
+<% end %>
+
+
 
 <div id="set-creator-panel" class="pui-overlay">
   <h3 class="section">Besitzer festlegen</h3>
 
+  <div class="pui-panel">
+    <%= icon 'asterisk.png' %>
+    Um den Besitzer festlegen zu können muss dieser dem System bekannt sein.
+    D.h. der Nutzer muss sich min. einmal mit seiner Bibliothekskennung angemeldet haben.
+  </div>
+
   <% form_tag(set_creator_admin_sem_app_path(@sem_app), :class => 'formtastic', :method => :put) do %>
+    <fieldset class="inputs">
+      <ol>
+        <li class="string">
+          <label for="login">Ausweis Nr.</label>
+          <input type="text" style="width: 190px;" name="login"/>
+        </li>
+      </ol>
+    </fieldset>
+    <fieldset class="buttons">
+      <ol>
+        <li class="commit">
+          <%= submit_tag 'Speichern' %>
+        </li>
+      </ol>
+    </fieldset>
+  <% end %>
+</div>
+
+
+<div id="add-ownership-panel" class="pui-overlay">
+  <h3 class="section">Besitzer festlegen</h3>
+
+  <div class="pui-panel">
+    <%= icon 'asterisk.png' %>
+    Um den Nutzer hinzufügen zu können muss dieser dem System bekannt sein.
+    D.h. der Nutzer muss sich min. einmal mit seiner Bibliothekskennung angemeldet haben.
+  </div>
+
+  <% form_tag(admin_sem_app_ownerships_path(@sem_app), :class => 'formtastic', :method => :post) do %>
     <fieldset class="inputs">
       <ol>
         <li class="string">

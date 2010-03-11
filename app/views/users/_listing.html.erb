@@ -1,0 +1,32 @@
+<% if sem_apps.present? %>
+  <table class="pui-tableview">
+    <thead>
+      <tr>
+        <th>Seminarapparat</th>
+        <th>Aktion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% sem_apps.each_with_index do |sem_app, n| %>
+        <tr class="<%= (n % 2 == 0) ? 'even' : 'odd' -%>">
+          <td>
+            <strong><%= link_to h(sem_app.title), sem_app_path(sem_app) %></strong><br/>
+            im <%= h(sem_app.semester.title) %><br/>
+            Dozent(en): <strong><%= h(sem_app.tutors) %></strong><br/>
+            <%= render 'shared_partials/sem_app_states', :sem_app => sem_app %>
+          </td>
+          <th>
+            <% link_to sem_app_path(sem_app), :class => 'pui-button small' do %>
+              <%= icon 'eye.png' %>
+              Anzeigen
+            <% end %>
+          </th>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="pui-panel align-center">
+    Keine Seminarapparate verfügbar
+  </div>
+<% end %>

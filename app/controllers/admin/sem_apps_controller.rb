@@ -79,13 +79,13 @@ class Admin::SemAppsController < Admin::ApplicationController
     login = params[:login]
     user  = User.find_by_login(login)
     if user
-      if @sem_app.update_attribute(:creator, user) and @sem_app.add_ownership(user)
+      if @sem_app.update_attribute(:creator, user)
         flash[:success] = "Besitzer erfolgreich gesetzt. #{user.name} kann den Seminarapparat <i>#{@sem_app.title}</i> nun bearbeiten."
       else
         flash[:error] = "Fehler: Der Benutzer konnte nicht als Besitzer eingetragen werden."
       end
     else
-      flash[:error] = "Es konnte kein Benutzer mit '#{login}' gefunden werden. Hat sich der Benutzer schon einmal angemeldet?"
+      flash[:error] = "Es konnte kein Benutzer mit der Kennung '#{login}' gefunden werden. Hat sich der Benutzer schon einmal angemeldet?"
     end
 
     redirect_to admin_sem_app_path(@sem_app, :anchor => 'users')
