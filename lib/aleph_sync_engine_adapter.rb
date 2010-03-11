@@ -31,6 +31,11 @@ class AlephSyncEngineAdapter < SyncEngineAdapter
             :isbn       => record.isbn,
           }
         end
+
+        # FIXME: Quick hack to hopefully prevent segfaults with libxml-ruby
+        record = nil
+        item   = nil
+        GC.start 
       end
       return books
     else
