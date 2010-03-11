@@ -9,7 +9,7 @@
     <% form_tag filter_admin_sem_apps_path do %>
       <p>
         <%= radio_button_tag "filter[only]", 'all',  !@filter.unapproved_only or !@filter.bookjobs_only %>
-        <label>Alles anzeigen</label>
+        <label>Alle Seminarapparate</label>
       </p>
       <p>
         <%= radio_button_tag "filter[only]", 'unapproved', @filter.unapproved_only %>
