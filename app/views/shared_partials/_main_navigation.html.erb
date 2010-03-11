@@ -9,7 +9,7 @@
   <h3>&raquo; F&uuml;r Lehrende</h3>
   <ul>
     <% if current_user %>
-      <li><%= link_to('Meine Seminarapparate', user_path(:anchor => 'apps')) %></li>
+      <li><%= link_to('Meine Seminarapparate', user_path) %></li>
     <% end %>
     <li><%= link_to('Seminarapparat beantragen', new_sem_app_path) %></li>
   </ul>
