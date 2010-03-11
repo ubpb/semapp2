@@ -23,7 +23,7 @@
           <td>
             <strong><%= link_to h(sem_app.title), sem_app_path(sem_app) %></strong><br/>
             im <%= h(sem_app.semester.title) %><br/>
-            Tutor(en): <strong><%= h(sem_app.tutors) %></strong>
+            Dozent(en): <strong><%= h(sem_app.tutors) %></strong>
           </td>
           <th>
             <% if actions.include?(:transit) and can?(:manage, sem_app) and not sem_app.is_from_current_semester? %>
