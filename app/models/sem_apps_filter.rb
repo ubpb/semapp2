@@ -4,7 +4,9 @@ class SemAppsFilter
 
   attr_accessor :title, :tutors, :creator, :location, :semester, :unapproved_only, :bookjobs_only
 
-  def initialize(filter = {})
+  def initialize(filter)
+    filter = {} unless filter
+
     @title           = filter[:title]         if filter[:title].present?
     @tutors          = filter[:tutors]        if filter[:tutors].present?
     @creator         = filter[:creator]       if filter[:creator].present?

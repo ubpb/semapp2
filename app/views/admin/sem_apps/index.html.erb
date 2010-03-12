@@ -41,6 +41,9 @@
       </p>
       <div class="align-center">
         <%= submit_tag 'Filtern' %>
+        <% if @filter.filtered? %>
+          <%= link_to 'Zur&uuml;cksetzen', filter_admin_sem_apps_path, :method => :post %>
+        <% end %>
       </div>
     <% end %>
   </div>
