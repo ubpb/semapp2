@@ -15,6 +15,10 @@
     <%= f.input :signature,  :label => 'Signatur in der Bibliothek', :required => false %>
   <% end %>
 
+  <% f.inputs :name => 'Kommentar' do %>
+    <%= f.input :comment, :label => 'Kommentar', :input_html => {:rows => 5}, :required => false %>
+  <% end %>
+
   <% f.buttons do %>
     <%= f.commit_button 'Speichern' %>
     <li class="commit">

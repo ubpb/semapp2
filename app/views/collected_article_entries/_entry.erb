@@ -1,5 +1,11 @@
 <%= entry.to_s %>
 
+<% if entry.comment.present? %>
+  <p style="font-style: italic">
+    <%= entry.comment %>
+  </p>
+<% end %>
+
 <%= render 'entries/scan', :entry => entry %>
 
 <%= render 'entries/attachments', :entry => entry %>
