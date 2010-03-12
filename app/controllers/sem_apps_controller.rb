@@ -163,6 +163,11 @@ class SemAppsController < ApplicationController
       m  = id.match /^m-(\d+)/
       if m and m[1]
         @sem_app = SemApp.find_by_miless_derivate_id!(m[1])
+        flash[:notice] = """
+          Sie haben einen alten Seminarapparat aufgerufen und wurden auf das neue System für
+          elektronische Seminarapparate weitergeleitet. Bitte aktualisieren die Ihre Links und
+          Lesezeichen auf diese neue URL.
+        """
         redirect_to sem_app_path(@sem_app)
         return false
       else
