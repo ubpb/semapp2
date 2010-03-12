@@ -81,12 +81,6 @@ class UbdokImporter
     rescue Exception => e
       @errors += 1
       puts "ERROR: #{e.message}"
-    #ensure
-    #  # FIXME: Quick hack to hopefully prevent segfaults with libxml-ruby
-    #  sem_app  = nil
-    #  document = nil
-    #  derivate = nil
-    #  GC.start
     end
   end
 
@@ -116,7 +110,7 @@ class UbdokImporter
           puts "WARN: Unsupported or empty entry found."
         end
       rescue Exception => e
-        puts e.backtrace
+        #puts e.backtrace
         @errors += 1
         if entry_id.present?
           puts "ERROR: #{entry_id}: #{e.message}"
