@@ -375,7 +375,11 @@ class UbdokImporter
       if file.present?
         attachment = FileAttachment.new(:file => file, :scanjob => scanjob)
         attachment.file.instance_write(:file_name, file_name)
-        entry.file_attachments << attachment
+        attachment.entry = entry
+        unless attachment.save(false)
+          raise "Attachment #{entry_id} was not valid."
+        end
+        #entry.file_attachments << attachment
       else
         raise "No such file #{file_name}"
       end
