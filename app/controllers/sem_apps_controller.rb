@@ -162,7 +162,7 @@ class SemAppsController < ApplicationController
 
       m  = id.match /^m-(\d+)/
       if m and m[1]
-        @sem_app = SemApp.find_by_miless_derivate_id!(id)
+        @sem_app = SemApp.find_by_miless_derivate_id!(m[1])
       else
         @sem_app = SemApp.find_by_id!(id)
       end
