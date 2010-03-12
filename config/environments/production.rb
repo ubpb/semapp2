@@ -26,3 +26,13 @@ config.log_level = :warn
 
 # Enable threaded mode
 # config.threadsafe!
+
+# Hack to make ruby_inline work with passenger
+# on production systems
+# @see http://www.viget.com/extend/rubyinline-in-shared-rails-environments/
+temp = Tempfile.new('ruby_inline', '/tmp')
+dir = temp.path
+temp.delete
+Dir.mkdir(dir, 0755)
+ENV['INLINEDIR'] = dir
+
