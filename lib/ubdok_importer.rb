@@ -294,6 +294,7 @@ class UbdokImporter
     options[:publisher]       = content_from_node(node, 'article/journal/publisher')
     options[:signature]       = content_from_node(node, 'article/journal/signature')
     options[:volume]          = content_from_node(node, 'article/location/volume')
+    options[:year]            = content_from_node(node, 'article/location/volume') # FIXME
     options[:issue]           = content_from_node(node, 'article/location/issue')
     pages_node = node.find_first('article/location/pages')
     if (pages_node)
@@ -384,12 +385,12 @@ class UbdokImporter
   end
 
   def load_document(id)
-    url = "http://ubdok2.uni-paderborn.de/servlets/DocumentServlet?id=#{id}&XSL.Style=xml"
+    url = "http://ubdok.uni-paderborn.de/servlets/DocumentServlet?id=#{id}&XSL.Style=xml"
     load_url(url).root
   end
 
   def load_derivate(id)
-    url = "http://ubdok2.uni-paderborn.de/servlets/DerivateServlet/Derivate-#{id}/index.msa?XSL.Style=xml"
+    url = "http://ubdok.uni-paderborn.de/servlets/DerivateServlet/Derivate-#{id}/index.msa?XSL.Style=xml"
     load_url(url).root
   end
 
