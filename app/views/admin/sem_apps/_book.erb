@@ -1,28 +1,30 @@
-<div class="pui-view item">
+<div class="pui-view item section">
   Signatur: <strong><%= book.signature %></strong>
-  //
+  -
   Auftrag vom: <strong><%= book.created_at.to_formatted_s(:short) %></strong>
   
   <% if book.placeholder? %>
     <%= icon 'asterisk.png' %>
-    <strong>Platzhalter</strong>
+    <strong>Stellvertreter</strong>
   <% end %>
 
   <%= render 'shared_partials/book_ref', :book => book %>
 
-  <div>
-    <% if book.state == Book::States[:ordered] %>
-      <%= link_to 'Wurde vorgemerkt/zur&uuml;ckgestellt', defer_admin_book_path(book), :method => :put, :class => 'pui-button' %>
-      <%= link_to 'Als Platzhalter', edit_admin_book_path(book), :class => 'pui-button' %>
-    <% end %>
+  <div class="pui-view align-right no-print">
     <% if book.state == Book::States[:deferred] %>
       <%= link_to 'Als Neu markieren', dedefer_admin_book_path(book), :method => :put %>
     <% end %>
     <% if book.state == Book::States[:ordered] or book.state == Book::States[:deferred] %>
-      <%= link_to 'Wurde im Regal aufgestellt', placed_in_shelf_admin_book_path(book), :method => :put, :class => 'pui-button' %>
+      <%= link_to 'Wurde im Regal aufgestellt', placed_in_shelf_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
+    <% end %>
+    <% if book.state == Book::States[:ordered] %>
+      <%= link_to 'Wurde vorgemerkt', defer_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
+      <%= link_to 'Als Stellvertreter', edit_admin_book_path(book), :class => 'pui-button small' %>
     <% end %>
     <% if book.state == Book::States[:rejected] %>
-      <%= link_to 'Wurde aus dem Regal entfernt', removed_from_shelf_admin_book_path(book), :method => :put, :class => 'pui-button' %>
+      <%= link_to 'Wurde aus dem Regal entfernt', removed_from_shelf_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
     <% end %>    
   </div>
+
+  <div class="only-print" style="margin-bottom: 30px">&nbsp;<!-- Notizen --></div>
 </div>

@@ -1,7 +1,7 @@
 <div class="pui-view">
   <h4 class="section">Neue B&uuml;cher</h4>
   <% if @ordered_books.present? %>
-    <div class="pui-panel align-center">
+    <div class="pui-panel align-center no-print">
       <%= icon 'plus.png' %>
       Die folgenden B&uuml;cher bitte in den Apparat einstellen
     </div>
@@ -19,7 +19,7 @@
 
   <h4 class="section">Vormerkungen</h4>
   <% if @deferred_books.present? %>
-    <div class="pui-panel align-center">
+    <div class="pui-panel align-center no-print">
       <%= icon 'lock.png' %>
       Die folgenden B&uuml;cher wurden vorgemerkt
     </div>

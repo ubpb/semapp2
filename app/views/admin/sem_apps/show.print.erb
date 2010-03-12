@@ -1,41 +1,37 @@
-<h1><%= h(@sem_app.title) %></h1>
+<div class="book-jobs-print">
+  <h1><%= h(@sem_app.title) %></h1>
 
-<div class="pui-view clearfix">
-  <div class="grid_12 alpha">
-    <div class="pui-collection-view labeled">
-      <%= labeled_item :label => 'Tutor(en)',   :content => h(@sem_app.tutors) %>
-      <%= labeled_item :label => 'Semester',    :content => h(@sem_app.semester.title) %>
-      <%= labeled_item :label => 'Standort',    :content => h(@sem_app.location.title) %>
+  <div class="pui-view clearfix">
+    <div class="grid_12 alpha">
+      <div class="pui-collection-view labeled">
+        <%= labeled_item :label => 'Tutor(en)',   :content => h(@sem_app.tutors) %>
+        <%= labeled_item :label => 'Semester',    :content => h(@sem_app.semester.title) %>
+        <%= labeled_item :label => 'Standort',    :content => h(@sem_app.location.title) %>
+      </div>
     </div>
-  </div>
 
-  <div class="grid_4 omega">
-    <div class="pui-panel">
-      <h5 class="section">Ausweis / Regal</h5>
-      <% if @sem_app.book_shelf.present? %>
-        <p>
-          <strong>Ausweis Nr.:</strong>
-          <%= @sem_app.book_shelf.ils_account %>
-        </p>
-        <p>
-          <strong>Regal Nr.:</strong>
-          <%= @sem_app.book_shelf.slot_number %>
-        </p>
-      <% else %>
-        <div class="pui-panel notice align-center">
-          Dem Apparat wurde noch kein Regal/Ausweis zugeordnet
-        </div>
-      <% end %>
-      <div style="font-size: 90%; text-align: center">
-        <%= h(@sem_app.location.title) %>
+    <div class="grid_4 omega">
+      <div class="pui-panel">
+        <h5 class="section">Ausweis / Regal</h5>
+        <% if @sem_app.book_shelf.present? %>
+          <p>
+            <strong>Ausweis Nr.:</strong>
+            <%= @sem_app.book_shelf.ils_account %>
+          </p>
+          <p>
+            <strong>Regal Nr.:</strong>
+            <%= @sem_app.book_shelf.slot_number %>
+          </p>
+        <% else %>
+          <div class="pui-panel notice align-center">
+            Dem Apparat wurde noch kein Regal/Ausweis zugeordnet
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
+
+  <%= render 'ordered_books' %>
+
+  <%= render 'removed_books' %>
 </div>
-
-
-<h3 class="section">B&uuml;cher aufstellen</h3>
-<%= render 'ordered_books' %>
-
-<h3 class="section">B&uuml;cher entfernen</h3>
-<%= render 'removed_books' %>
