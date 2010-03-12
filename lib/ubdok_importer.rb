@@ -81,12 +81,12 @@ class UbdokImporter
     rescue Exception => e
       @errors += 1
       puts "ERROR: #{e.message}"
-    ensure
-      # FIXME: Quick hack to hopefully prevent segfaults with libxml-ruby
-      sem_app  = nil
-      document = nil
-      derivate = nil
-      GC.start 
+    #ensure
+    #  # FIXME: Quick hack to hopefully prevent segfaults with libxml-ruby
+    #  sem_app  = nil
+    #  document = nil
+    #  derivate = nil
+    #  GC.start
     end
   end
 
@@ -448,7 +448,7 @@ class UbdokImporter
   end
 
   def load_file(derivate_id, entry_id, file_name)
-    host          = 'ubdok2.uni-paderborn.de'
+    host          = 'ubdok.uni-paderborn.de'
     login_path    = '/servlets/LoginServlet'
     derivate_path = '/servlets/DerivateServlet/Derivate-'
 
