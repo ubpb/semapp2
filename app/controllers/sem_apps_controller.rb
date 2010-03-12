@@ -156,8 +156,17 @@ class SemAppsController < ApplicationController
   private
 
   def load_sem_app
-    @sem_app = SemApp.find_by_id(params[:id])
-    unless @sem_app
+    begin
+      id = params[:id]
+      raise "No ID given" unless id
+
+      m  = id.match /^m-(\d+)/
+      if m and m[1]
+        @sem_app = SemApp.find_by_miless_derivate_id!(id)
+      else
+        @sem_app = SemApp.find_by_id!(id)
+      end
+    rescue Exception => e
       flash[:error] = "Der Seminarapparat den Sie versucht haben aufzurufen existiert nicht."
       redirect_to sem_apps_path
       return false
