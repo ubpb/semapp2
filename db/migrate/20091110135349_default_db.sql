@@ -115,7 +115,7 @@ CREATE TABLE books (
   id serial NOT NULL PRIMARY KEY,
   sem_app_id integer REFERENCES sem_apps NOT NULL,
   creator_id integer REFERENCES users NULL,
-  placeholder_id integer REFERENCES sem_apps NULL,
+  placeholder_id integer REFERENCES sem_apps ON DELETE SET NULL,
   ils_id character varying,
   signature character varying,
   title character varying,
@@ -166,7 +166,8 @@ CREATE TABLE entries (
 CREATE INDEX index_entries_on_miless_entry_id ON entries(miless_entry_id);
 
 CREATE TABLE headline_entries (
-  headline character varying
+  headline character varying,
+  "style" integer default 0
 ) INHERITS (entries);
 
 CREATE TABLE text_entries (
