@@ -168,7 +168,7 @@ class SemAppsController < ApplicationController
       else
         @sem_app = SemApp.find_by_id!(id)
       end
-    rescue Exception => e
+    rescue
       flash[:error] = "Der Seminarapparat den Sie versucht haben aufzurufen existiert nicht."
       redirect_to sem_apps_path
       return false
