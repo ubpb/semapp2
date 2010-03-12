@@ -18,6 +18,10 @@
       <br/>
       <%= render 'shared_partials/sem_app_states', :sem_app => @sem_app %>
     <% end %>
+    <% if can?(:edit, @sem_app) %>
+      <br/>
+      Lesekennung für Ihre Studierenden: <strong><%= @sem_app.shared_secret %></strong>
+    <% end %>
   </div>
 
   <div class="grid_6 omega align-right">
