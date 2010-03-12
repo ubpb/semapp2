@@ -40,7 +40,7 @@ class UbdokImporter
         i += 1
       end
     
-      sleep(0.1)
+      #sleep(0.1)
     end
     puts "\n\n ==> #{i} imported successfully."
     puts "There were #{@errors.size} errors during import."
