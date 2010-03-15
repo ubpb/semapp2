@@ -76,16 +76,22 @@ class Admin::SemAppsController < Admin::ApplicationController
   def set_creator
     @sem_app = SemApp.find(params[:id])
     
-    login = params[:login]
+    login = params[:login].upcase
     user  = User.find_by_login(login)
+    
     if user
       if @sem_app.update_attribute(:creator, user)
-        flash[:success] = "Besitzer erfolgreich gesetzt. #{user.name} kann den Seminarapparat <i>#{@sem_app.title}</i> nun bearbeiten."
+        flash[:success] = "Besitzer erfolgreich gesetzt. #{login} kann den Seminarapparat <i>#{@sem_app.title}</i> nun bearbeiten."
       else
         flash[:error] = "Fehler: Der Benutzer konnte nicht als Besitzer eingetragen werden."
       end
     else
-      flash[:error] = "Es konnte kein Benutzer mit der Kennung '#{login}' gefunden werden. Hat sich der Benutzer schon einmal angemeldet?"
+      u = User.new(:login => login)
+      if u.save(false) and @sem_app.update_attribute(:creator, u)
+        flash[:success] = "Der Benutzer '#{login}' existierte nicht, wurde aber angelegt. Name und E-Mail sind erst verfügbar wenn der Nutzer sich das erste mal anmeldet. #{login} kann den Seminarapparat <i>#{@sem_app.title}</i> nun bearbeiten."
+      else
+        flash[:error] = "Es konnte kein Benutzer mit der Kennung '#{login}' gefunden werden. Hat sich der Benutzer schon einmal angemeldet?"
+      end
     end
 
     redirect_to admin_sem_app_path(@sem_app, :anchor => 'users')

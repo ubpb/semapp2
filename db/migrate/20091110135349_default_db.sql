@@ -4,7 +4,7 @@
 CREATE TABLE users (
   id serial NOT NULL PRIMARY KEY,
   login character varying NOT NULL,
-  "name" character varying NOT NULL,
+  "name" character varying NULL,
   email character varying NULL
 );
 

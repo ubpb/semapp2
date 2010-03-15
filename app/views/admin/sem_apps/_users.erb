@@ -47,8 +47,8 @@
 
   <div class="pui-panel">
     <%= icon 'asterisk.png' %>
-    Um den Besitzer festlegen zu können muss dieser dem System bekannt sein.
-    D.h. der Nutzer muss sich min. einmal mit seiner Bibliothekskennung angemeldet haben.
+    Wenn der Nutzer dem System nicht bekannt ist wird er automatisch angelegt. Name und E-Mail
+    sind dann solange leer bis der Nutzer sich das erste mal anmeldet.
   </div>
 
   <% form_tag(set_creator_admin_sem_app_path(@sem_app), :class => 'formtastic', :method => :put) do %>
