@@ -94,8 +94,8 @@ class SemAppsController < ApplicationController
       import_entries = params[:import_entries].present?
       @sem_app.transit(Semester.current, import_entries)
       flash[:success] = 'Der Seminarapparat wurde ins aktuelle Semester übernommen.'
-    rescue
-      flash[:error] = 'Es ist leider ein Fehler aufgetrten. Der Vorgang konnte nicht erfolgreich abgeschlossen werden.'
+    #rescue
+    #  flash[:error] = 'Es ist leider ein Fehler aufgetrten. Der Vorgang konnte nicht erfolgreich abgeschlossen werden.'
     end
     redirect_to sem_apps_path
   end
