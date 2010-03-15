@@ -20,8 +20,8 @@
     <% end %>
     <% if can?(:edit, @sem_app) %>
       <br/>
-      <%= icon 'lock.png' %>
       <% if @sem_app.shared_secret != 'ubpad466' %>
+        <%= icon 'lock.png' %>
         Lesekennung für Ihre Studierenden: <code><%= @sem_app.shared_secret %></code>
         (<%= link_to 'ändern', edit_sem_app_path(@sem_app) %>)
       <% end %>

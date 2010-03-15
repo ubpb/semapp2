@@ -98,7 +98,7 @@ class SemApp < ActiveRecord::Base
   def import_entries(source_sem_app)
     if source_sem_app.present? and source_sem_app.is_a?(SemApp)
       source_sem_app.entries.each do |entry|
-        clone = entry.clone(:exclude => [:file_attachments])
+        clone = entry.clone(:exclude => [:file_attachments, :scanjob])
 
         entry.file_attachments.each do |a|
           path = a.file.path
@@ -121,6 +121,13 @@ class SemApp < ActiveRecord::Base
       SemApp.transaction do
         clone = self.clone
         clone.semester = semester
+
+        # Pick the first miless password if present
+        mp = self.miless_passwords.first
+        if mp.present?
+          clone.shared_secret = mp.password
+        end
+
         clone.save!
 
         if import_entries
