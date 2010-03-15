@@ -11,41 +11,44 @@
 </h3>
 
 <div class="pui-view clearfix section" style="margin-bottom: 30px">
-  <div class="grid_6 alpha">
-    im <%= h(@sem_app.semester.title) %><br/>
-    Dozent(en): <strong><%= h(@sem_app.tutors) %></strong>
-    <% unless @sem_app.approved? %>
-      <br/>
-      <%= render 'shared_partials/sem_app_states', :sem_app => @sem_app %>
-    <% end %>
-    <% if can?(:edit, @sem_app) %>
-      <br/>
-      <% if @sem_app.shared_secret != 'ubpad466' %>
-        <%= icon 'lock.png' %>
-        Lesekennung für Ihre Studierenden: <code><%= @sem_app.shared_secret %></code>
-        (<%= link_to 'ändern', edit_sem_app_path(@sem_app) %>)
-      <% end %>
-      <% if @sem_app.miless_passwords.present? %>
-        <%= icon 'lock.png' %>
-        weitere Lesekennung(en) (aus dem alten System): <code><%= @sem_app.miless_passwords.map {|mp| mp.password}.join(", ") -%></code>
-      <% end %>
-    <% end %>
-  </div>
+  <div class="clearfix">
+    <div class="grid_6 alpha">
+      im <%= h(@sem_app.semester.title) %><br/>
+      Dozent(en): <strong><%= h(@sem_app.tutors) %></strong>
+    </div>
 
-  <div class="grid_6 omega align-right">
-    <% if can?(:edit, @sem_app) %>
-      <% link_to edit_sem_app_path(@sem_app), :class => 'pui-button' do %>
-        <%= icon 'wrench.png' %>
-        Einstellungen
-      <% end %>
-      <% if can?(:manage, @sem_app) %>
-        <% link_to admin_sem_app_path(@sem_app), :class => 'pui-button' do %>
-          <%= icon 'user-black.png' %>
-          Administrieren
+    <div class="grid_6 omega align-right">
+      <% if can?(:edit, @sem_app) %>
+        <% link_to edit_sem_app_path(@sem_app), :class => 'pui-button' do %>
+          <%= icon 'wrench.png' %>
+          Einstellungen
+        <% end %>
+        <% if can?(:manage, @sem_app) %>
+          <% link_to admin_sem_app_path(@sem_app), :class => 'pui-button' do %>
+            <%= icon 'user-black.png' %>
+            Administrieren
+          <% end %>
         <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
+
+  <% unless @sem_app.approved? %>
+    <br/>
+    <%= render 'shared_partials/sem_app_states', :sem_app => @sem_app %>
+  <% end %>
+  <% if can?(:edit, @sem_app) %>
+    <br/>
+    <% if @sem_app.shared_secret != 'ubpad466' %>
+      <%= icon 'lock.png' %>
+      Lesekennung für Ihre Studierenden: <code><%= @sem_app.shared_secret %></code>
+      (<%= link_to 'ändern', edit_sem_app_path(@sem_app) %>)
+    <% end %>
+    <% if @sem_app.miless_passwords.present? %>
+      <%= icon 'lock.png' %>
+      Lesekennung(en) (aus dem alten System): <code><%= @sem_app.miless_passwords.map {|mp| mp.password}.join(", ") -%></code>
+    <% end %>
+  <% end %>
 </div>
 
 <div class="sem-app">

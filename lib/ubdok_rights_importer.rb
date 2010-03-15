@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 #
-#  mysql --default-character-set=utf8 -u miless -pmiless miless -B -e "select DOC_LE_ID, RIGHTX, NAME, PASSWD  from RIGHTS as r, USERORGROUP as u where r.DOC_LE_ID like 'Document-%' AND u.USERID=r.USERID;" | sed 's/\t/","/g;s/^/"/;s/$/"/;s/\n//g' > miless_rights.csv
+#  mysql --default-character-set=utf8 -u miless -pmiless miless -B -e "select DOC_LE_ID, RIGHTX, NAME, PASSWD  from RIGHTS as r, USERORGROUP as u where r.DOC_LE_ID like 'Document-%' AND u.USERID=r.USERID;" | sed 's/\t/";"/g;s/^/"/;s/$/"/;s/\n//g' > miless_rights.csv
 #
 #
 
