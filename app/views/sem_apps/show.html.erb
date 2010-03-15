@@ -20,7 +20,15 @@
     <% end %>
     <% if can?(:edit, @sem_app) %>
       <br/>
-      Lesekennung für Ihre Studierenden: <strong><%= @sem_app.shared_secret %></strong>
+      <%= icon 'lock.png' %>
+      <% if @sem_app.shared_secret != 'ubpad466' %>
+        Lesekennung für Ihre Studierenden: <code><%= @sem_app.shared_secret %></code>
+        (<%= link_to 'ändern', edit_sem_app_path(@sem_app) %>)
+      <% end %>
+      <% if @sem_app.miless_passwords.present? %>
+        <%= icon 'lock.png' %>
+        weitere Lesekennung(en) (aus dem alten System): <code><%= @sem_app.miless_passwords.map {|mp| mp.password}.join(", ") -%></code>
+      <% end %>
     <% end %>
   </div>
 

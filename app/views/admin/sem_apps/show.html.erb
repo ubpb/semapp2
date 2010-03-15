@@ -69,6 +69,9 @@
             <%= labeled_item :label => 'Semester',    :content => h(@sem_app.semester.title) %>
             <%= labeled_item :label => 'Standort',    :content => h(@sem_app.location.title) %>
             <%= labeled_item :label => 'Lesekennung', :content => "<code>#{@sem_app.shared_secret}</code>" %>
+            <% if @sem_app.miless_passwords.present? %>
+              <%= labeled_item :label => 'Lesekennung(en) (aus dem alten System)', :content => "<code>#{@sem_app.miless_passwords.map {|mp| mp.password}.join(", ")}</code>" %>
+            <% end %>
           </div>
         </div>
 
