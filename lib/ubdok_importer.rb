@@ -299,6 +299,7 @@ class UbdokImporter
 
     url = content_from_node(node, 'article/text/url')
     if url.present?
+      options[:comment] = "" unless options[:comment].present?
       options[:comment] << "\n\n \"#{url}\":#{url}"
     end
 
@@ -349,6 +350,7 @@ class UbdokImporter
 
     url = content_from_node(node, 'chapter/text/url')
     if url.present?
+      options[:comment] = "" unless options[:comment].present?
       options[:comment] << "\n\n \"#{url}\":#{url}"
     end
 
