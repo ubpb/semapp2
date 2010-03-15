@@ -34,19 +34,23 @@
   </div>
 
   <% unless @sem_app.approved? %>
-    <br/>
-    <%= render 'shared_partials/sem_app_states', :sem_app => @sem_app %>
+    <div>
+      <%= render 'shared_partials/sem_app_states', :sem_app => @sem_app %>
+    </div>
   <% end %>
   <% if can?(:edit, @sem_app) %>
-    <br/>
     <% if @sem_app.shared_secret != 'ubpad466' %>
-      <%= icon 'lock.png' %>
-      Lesekennung für Ihre Studierenden: <code><%= @sem_app.shared_secret %></code>
-      (<%= link_to 'ändern', edit_sem_app_path(@sem_app) %>)
+      <div>
+        <%= icon 'lock.png' %>
+        Lesekennung für Ihre Studierenden: <code><%= @sem_app.shared_secret %></code>
+        (<%= link_to 'ändern', edit_sem_app_path(@sem_app) %>)
+      </div>
     <% end %>
     <% if @sem_app.miless_passwords.present? %>
-      <%= icon 'lock.png' %>
-      Lesekennung(en) (aus dem alten System): <code><%= @sem_app.miless_passwords.map {|mp| mp.password}.join(", ") -%></code>
+      <div>
+        <%= icon 'lock.png' %>
+        Lesekennung(en) (aus dem alten System): <code><%= @sem_app.miless_passwords.map {|mp| mp.password}.join(", ") -%></code>
+      </div>
     <% end %>
   <% end %>
 </div>

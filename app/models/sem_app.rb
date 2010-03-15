@@ -119,7 +119,7 @@ class SemApp < ActiveRecord::Base
   def transit(semester, import_entries = false)
     if semester.present? and semester.is_a?(Semester)
       SemApp.transaction do
-        clone = self.clone
+        clone = self.clone(:exclude => :miless_passwords)
         clone.semester = semester
 
         # Pick the first miless password if present
