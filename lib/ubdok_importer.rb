@@ -110,7 +110,7 @@ class UbdokImporter
           puts "WARN: Unsupported or empty entry found."
         end
       rescue Exception => e
-        #puts e.backtrace
+        puts e.backtrace
         @errors += 1
         if entry_id.present?
           puts "ERROR: #{entry_id}: #{e.message}"
@@ -296,6 +296,11 @@ class UbdokImporter
       options[:pages_to]   = attribute_from_node(pages_node, 'to')
     end
 
+    url = content_from_node(node, 'article/text/url')
+    if url.present?
+      options[:comment] << "\n\n \"#{url}\":#{url}"
+    end
+
     # Create the entry
     entry = ArticleEntry.new(options)
     if entry.save(false)
@@ -341,6 +346,11 @@ class UbdokImporter
       options[:pages_to]   = attribute_from_node(pages_node, 'to')
     end
 
+    url = content_from_node(node, 'chapter/text/url')
+    if url.present?
+      options[:comment] << "\n\n \"#{url}\":#{url}"
+    end
+
     # Create the entry
     entry = CollectedArticleEntry.new(options)
     if entry.save(false)
@@ -360,7 +370,10 @@ class UbdokImporter
   # ------------------------------------------------------------------------------
 
   def create_scanjob(entry, pages_from, pages_to, signature, created_at)
-    Scanjob.create!(:entry => entry, :pages_from => pages_from, :pages_to => pages_to, :signature => signature, :created_at => created_at)
+    sj = Scanjob.new(:entry => entry, :pages_from => pages_from, :pages_to => pages_to, :signature => signature, :created_at => created_at)
+    unless sj.save(false)
+      raise "Scanjob could not have been created!"
+    end
   end
 
   def attach_file(entry, derivate_id, entry_id, file_name, scanjob = false)
@@ -373,7 +386,6 @@ class UbdokImporter
         unless attachment.save(false)
           raise "Attachment #{entry_id} was not valid."
         end
-        #entry.file_attachments << attachment
       else
         raise "No such file #{file_name}"
       end

@@ -10,7 +10,7 @@ class Scanjob < ActiveRecord::Base
   }.freeze
 
   # Realations
-  belongs_to :entry, :touch => true
+  belongs_to :entry #, :touch => true
   belongs_to :creator, :class_name => 'User'
 
   # Validation
@@ -56,6 +56,25 @@ class Scanjob < ActiveRecord::Base
     if self.state.blank?
       self.state = Scanjob::States[:ordered]
     end
+  end
+  
+  def after_save
+    if self.entry
+      touch_object(self.entry)
+    end
+  end
+
+  def touch_object(object)
+    current_time = current_time_from_proper_timezone
+
+    object.write_attribute('updated_at', current_time) if object.respond_to?(:updated_at)
+    object.write_attribute('updated_on', current_time) if object.respond_to?(:updated_on)
+
+    object.save(false)
+  end
+
+  def current_time_from_proper_timezone
+    self.class.default_timezone == :utc ? Time.now.utc : Time.now
   end
 
 end

@@ -1,0 +1,5 @@
+<% if entry.comment.present? %>
+  <p style="font-style: italic">
+    <%= textilize_without_paragraph(entry.comment) %>
+  </p>
+<% end %>
