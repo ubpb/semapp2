@@ -66,6 +66,7 @@ class UbdokImporter
       sem_app = SemApp.create!(
         :miless_document_id => document_id,
         :miless_derivate_id => derivate_id,
+        :archived           => true,
         :creator            => user,
         :semester           => semester,
         :location           => location,

@@ -68,8 +68,14 @@
             <%= labeled_item :label => 'Tutor(en)',   :content => h(@sem_app.tutors) %>
             <%= labeled_item :label => 'Semester',    :content => h(@sem_app.semester.title) %>
             <%= labeled_item :label => 'Standort',    :content => h(@sem_app.location.title) %>
-            <% if @sem_app.shared_secret != 'ubpad466' %>
-              <%= labeled_item :label => 'Lesekennung', :content => "<code>#{@sem_app.shared_secret}</code>" %>
+            <%  labeled_item :label => 'Lesekennung' do %>
+              <code><%= @sem_app.shared_secret -%></code>
+              <% if @sem_app.shared_secret == 'ubpad466' %>
+                <div>
+                  <%= icon "asterisk.png" %>
+                  <strong>!!! Diese Kennung NIEMALS Personen außerhalb der UB verraten !!!</strong>
+                </div>
+              <% end %>
             <% end %>
             <% if @sem_app.miless_passwords.present? %>
               <%= labeled_item :label => 'Lesekennung(en) (aus dem alten System)', :content => "<code>#{@sem_app.miless_passwords.map {|mp| mp.password}.join(", ")}</code>" %>

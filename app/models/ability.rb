@@ -19,7 +19,7 @@ class Ability
       end
 
       can :edit, SemApp do |sem_app|
-        user.present? and user.owns_sem_app?(sem_app)
+        user.present? and user.owns_sem_app?(sem_app) and not sem_app.archived
       end
     end
   end

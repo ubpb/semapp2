@@ -10,6 +10,15 @@
   <%= link_to h(@sem_app.title), sem_app_path(@sem_app) %>
 </h3>
 
+<% if current_user.owns_sem_app?(@sem_app) and @sem_app.archived %>
+  <div class="pui-panel align-center">
+    <%= icon "asterisk.png" %>
+    Dieser Seminarapparat wurde <strong>archiviert</strong>. Er kann nicht weiter bearbeitet werden.
+    Bitte wenden Sie sich an die <a href="#" class="pui-overlay-trigger" rel="#common-help">Bibliothek</a>
+    um den Seminarapparat wieder freischalten zu lassen.
+  </div>
+<% end %>
+
 <div class="pui-view clearfix section" style="margin-bottom: 30px">
   <div class="clearfix">
     <div class="grid_6 alpha">
