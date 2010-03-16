@@ -48,9 +48,9 @@ class Admin::ScanjobsController < Admin::ApplicationController
   
   def barcode
     scanjob = Scanjob.find(params[:id])
-    code = "scanjob-#{scanjob.entry.id}"
+    code = scanjob.code
     barcode = Barby::Code128B.new(code)
-    send_data barcode.to_png, :filename => "#{code}.png", :disposition => 'inline'
+    send_data barcode.to_png(:height => 120, :xdim => 2), :filename => "#{code}.png", :disposition => 'inline'
   end
 
   def defer

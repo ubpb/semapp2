@@ -7,17 +7,17 @@
 
   <h4 class="section">Auftrag</h4>
   <div class="pui-collection-view labeled">
-    <%= labeled_item :label => 'Auftrag #',       :content => h(scanjob.id) %>
-    <%= labeled_item :label => 'Auftrag vom',     :content => h(scanjob.created_at.to_formatted_s(:short)) %>
-    <%= labeled_item :label => 'Quelle',          :content => h(scanjob.entry.to_s) %>
-    <%= labeled_item :label => 'Seminarapparat',  :content => h(scanjob.entry.sem_app.full_title) %>
+    <%= labeled_item :label => 'Auftrag #',      :content => h(scanjob.id) %>
+    <%= labeled_item :label => 'Auftrag vom',    :content => h(scanjob.created_at.to_formatted_s(:short)) %>
+    <%= labeled_item :label => 'Quelle',         :content => h(scanjob.entry.to_s) %>
+    <%= labeled_item :label => 'Seminarapparat', :content => h(scanjob.entry.sem_app.full_title) %>
     <div class="no-print">
-      <%= labeled_item :label => 'Auftrag von',     :content => scanjob.creator.present? ? scanjob.creator.to_s : '-' %>
+      <%= labeled_item :label => 'Auftrag von',  :content => scanjob.creator.present? ? scanjob.creator.to_s : '-' %>
     </div>
   </div>
 
   <div class="pui-view align-center">
     <%= image_tag admin_scanjob_barcode_path(scanjob) %>
-    <div><code><%= "scanjob-#{scanjob.entry.id}" %></code></div>
+    <div><code><%= scanjob.code %></code></div>
   </div>
 </div>

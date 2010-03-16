@@ -45,7 +45,11 @@ class Scanjob < ActiveRecord::Base
       self.update_attribute(:state, States[value.to_sym])
     end
   end
-  
+
+  def code
+    "scanjob-#{entry.id}.pdf"
+  end
+
   ###########################################################################################
   #
   # AR Callbacks
