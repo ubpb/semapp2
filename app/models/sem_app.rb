@@ -121,6 +121,7 @@ class SemApp < ActiveRecord::Base
       SemApp.transaction do
         clone = self.clone(:exclude => :miless_passwords)
         clone.semester = semester
+        clone.archived = false
 
         # Pick the first miless password if present
         mp = self.miless_passwords.first
