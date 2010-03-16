@@ -10,6 +10,10 @@
       <%= icon 'document-copy.png' %>
       Alte Daten Klonen
     <% end %>
+    <% link_to clear_sem_app_path(@sem_app), :class => 'pui-button', :method => :delete, :confirm => 'Wollen Sie wirklich ALLE Einträge unwiederruflich löschen? Dieser Vorgang kann nicht Rückgängig gemacht werden!' do %>
+      <%= icon 'cross.png' %>
+      Alle Einträge löschen
+    <% end %>
   </div>
 <% end %>
 

@@ -5,7 +5,7 @@ class SemAppsController < ApplicationController
   SEM_APP_FILTER_NAME        = 'sem_app_filter_name'.freeze
   SEM_APP_CLONES_FILTER_NAME = 'sem_app_clones_filter_name'.freeze
 
-  before_filter :load_sem_app, :only => [:show, :edit, :update, :unlock, :transit, :clones, :filter_clones, :clone]
+  before_filter :load_sem_app, :only => [:show, :edit, :update, :unlock, :transit, :clones, :filter_clones, :clone, :clear]
   
   def index
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
@@ -150,6 +150,18 @@ class SemAppsController < ApplicationController
       puts e.backtrace
       flash[:error] = 'Beim kopieren ist leider ein Fehler aufgetrten. Der Vorgang konnte nicht erfolgreich abgeschlossen werden.'
     end
+    redirect_to sem_app_path(@sem_app, :anchor => 'media')
+  end
+
+  def clear
+    unauthorized! if cannot? :edit, @sem_app
+
+    if @sem_app.entries.destroy_all
+      flash[:success] = 'Alle Einträge wurden gelöscht.'
+    else
+      flash[:error] = 'Einträge konnten nicht gelöscht werden. Es ist ein Fehler aufgetreten.'
+    end
+
     redirect_to sem_app_path(@sem_app, :anchor => 'media')
   end
 
