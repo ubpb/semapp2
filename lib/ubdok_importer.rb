@@ -63,22 +63,29 @@ class UbdokImporter
       semester = Semester.find_by_id(calc_semester_id(get_document_modified_at(document)))
       location = Location.find_by_id(get_msa_id(derivate).first.to_i)
 
-      sem_app = SemApp.create!(
-        :miless_document_id => document_id,
-        :miless_derivate_id => derivate_id,
-        :archived           => true,
-        :creator            => user,
-        :semester           => semester,
-        :location           => location,
-        :approved           => true,
-        :title              => get_title(document),
-        :tutors             => get_author(document),
-        :shared_secret      => 'ubpad466'
-      )
+      sem_app = SemApp.find_by_miless_document_id(document_id)
+#      unless sem_app
+#        sem_app = SemApp.create!(
+#          :miless_document_id => document_id,
+#          :miless_derivate_id => derivate_id,
+#          :archived           => true,
+#          :creator            => user,
+#          :semester           => semester,
+#          :location           => location,
+#          :approved           => true,
+#          :title              => get_title(document),
+#          :tutors             => get_author(document),
+#          :shared_secret      => 'ubpad466'
+#        )
+#      end
 
-      puts "\nImporting Miless Document/Derivate: #{document_id}/#{derivate_id} => #{sem_app.id}"
+      if sem_app.present?
+        puts "\nImporting Miless Document/Derivate: #{document_id}/#{derivate_id} => #{sem_app.id}"
 
-      import_entries!(sem_app, document, derivate)
+        import_entries!(sem_app, document, derivate)
+      else
+        puts "\nNo such SemApp with Miless Document ID: #{document_id}"
+      end
     rescue Exception => e
       @errors += 1
       puts "ERROR: #{e.message}"
@@ -86,6 +93,8 @@ class UbdokImporter
   end
 
   def import_entries!(sem_app, document, derivate)
+    sem_app.entries.destroy_all
+
     derivate.find('/semesterapparat/entry').each_with_index do |entry, i|
       begin
         entry_id = attribute_from_node(entry, 'ID')
@@ -126,6 +135,10 @@ class UbdokImporter
   # Entry Utils
   # ------------------------------------------------------------------------------
 
+  # ------------------------------------------------------------------------------
+  # Headline
+  # ------------------------------------------------------------------------------
+
   def headline_entry?(node)
     content_from_node(node, 'headline').present?
   end
@@ -134,6 +147,10 @@ class UbdokImporter
     headline = content_from_node(node, 'headline')
     HeadlineEntry.create!(:sem_app => sem_app, :headline => headline, :position => position, :created_at => get_entry_created_at(node), :updated_at => get_entry_modified_at(node))
   end
+
+  # ------------------------------------------------------------------------------
+  # Text
+  # ------------------------------------------------------------------------------
 
   def text_entry?(node)
     content_from_node(node, 'freeText').present?
@@ -144,6 +161,10 @@ class UbdokImporter
     TextEntry.create!(:sem_app => sem_app, :text => text, :position => position, :created_at => get_entry_created_at(node), :updated_at => get_entry_modified_at(node))
   end
 
+  # ------------------------------------------------------------------------------
+  # HTML
+  # ------------------------------------------------------------------------------
+
   def html_entry?(node)
     content_from_node(node, 'html').present?
   end
@@ -152,6 +173,10 @@ class UbdokImporter
     text = content_from_node(node, 'html')
     TextEntry.create!(:sem_app => sem_app, :text => text, :position => position, :created_at => get_entry_created_at(node), :updated_at => get_entry_modified_at(node))
   end
+
+  # ------------------------------------------------------------------------------
+  # Link
+  # ------------------------------------------------------------------------------
 
   def link_entry?(node)
     content_from_node(node, 'webLink').present?
@@ -168,6 +193,10 @@ class UbdokImporter
 
     TextEntry.create!(:sem_app => sem_app, :text => content, :position => position, :created_at => get_entry_created_at(node), :updated_at => get_entry_modified_at(node))
   end
+
+  # ------------------------------------------------------------------------------
+  # Book
+  # ------------------------------------------------------------------------------
 
   def book_entry?(node)
     content_from_node(node, 'book').present?
@@ -194,6 +223,10 @@ class UbdokImporter
     end
   end
 
+  # ------------------------------------------------------------------------------
+  # File
+  # ------------------------------------------------------------------------------
+
   def file_entry?(node)
     content_from_node(node, 'file').present?
   end
@@ -202,70 +235,46 @@ class UbdokImporter
     derivate_id = get_derivate_id(document)
     entry_id    = attribute_from_node(node, 'ID')
 
-    title            = content_from_node(node, 'file/chapter/title')
-    author           = content_from_node(node, 'file/chapter/author')
-    comment          = content_from_node(node, 'file/chapter/comment')
+    options = {}
+    options[:miless_entry_id] = entry_id
+    options[:sem_app]         = sem_app
+    options[:position]        = position
+    options[:created_at]      = get_entry_created_at(node)
+    options[:updated_at]      = get_entry_modified_at(node)
 
-    source_title     = content_from_node(node, 'file/book/title')
-    source_editor    = content_from_node(node, 'file/book/editor')
-    source_edition   = content_from_node(node, 'file/book/edition')
-    source_year      = content_from_node(node, 'file/book/year')
-    source_publisher = content_from_node(node, 'file/book/publisher')
-    source_place     = content_from_node(node, 'file/book/place')
-    source_signature = content_from_node(node, 'file/book/signature')
-    source_isbn      = content_from_node(node, 'file/book/isbn')
-    pages_node = node.find_first('book/pages')
-    if (pages_node)
-      source_pages = "S. " << attribute_from_node(pages_node, 'from') << "-" << attribute_from_node(pages_node, 'to')
+    options[:title]            = content_from_node(node, 'file/chapter/title')
+    options[:author]           = content_from_node(node, 'file/chapter/author')
+    options[:comment]          = content_from_node(node, 'file/chapter/comment')
+    options[:source_title]     = content_from_node(node, 'file/book/title')
+    options[:source_editor]    = content_from_node(node, 'file/book/editor')
+    options[:source_edition]   = content_from_node(node, 'file/book/edition')
+    options[:source_year]      = content_from_node(node, 'file/book/year')
+    options[:source_publisher] = content_from_node(node, 'file/book/publisher')
+    options[:source_place]     = content_from_node(node, 'file/book/place')
+    options[:source_ref]       = content_from_node(node, 'file/book/isbn')
+    options[:source_signature] = content_from_node(node, 'file/book/signature')
+
+    pages_node = node.find_first('file/book/pages')
+    if (pages_node.present?)
+      options[:pages_from] = attribute_from_node(pages_node, 'from')
+      options[:pages_to]   = attribute_from_node(pages_node, 'to')
     end
-
-    if title.present? and source_year.present?
-      title << " (#{source_year})"
-    end
-
-    if source_edition.present?
-      source_edition = ((source_edition.to_i.to_s == source_edition) ? " Auflage #{source_edition}" : " #{source_edition}")
-    end
-
-    source_publisher_and_place = [source_place, source_publisher].compact.join(": ")
-
-    source_text = [source_editor, source_title, source_publisher_and_place, source_edition, source_pages].compact.join(". ")
-
-    text = [title, author].compact.join(" / ")
-
-    text << "." if text.present?
-
-    if source_text.present?
-      text << " In: " << source_text << "."
-    end
-
-    if source_isbn.present?
-      text << "<br/>ISBN: " << source_isbn
-    end
-
-    if source_signature.present?
-      text << "<br/>Signatur in der Bibliothek: " << source_signature
-    end
-
-    if comment.present?
-      text << '<p style="font-style:italic">'+comment+'</p>'
-    end
-
-    # File Attachemnt?
-    file_name = content_from_node(node, 'file/path')
-
-    # Try to find a label
-    label = content_from_node(node, 'file/label')
-    text = label if text.blank? and label.present?
-    text = file_name if file_name.present?
-    text = "-" if text.blank?
 
     # Create the entry
-    entry = TextEntry.create!(:sem_app => sem_app, :position => position, :text => text, :miless_entry_id => entry_id, :created_at => get_entry_created_at(node), :updated_at => get_entry_modified_at(node))
-
-    # Attach the file
-    attach_file(entry, derivate_id, entry_id, file_name)
+    entry = MilessFileEntry.new(options)
+    if entry.save(false)
+      file_name = content_from_node(node, 'file/path')
+      if file_name.present?
+        attach_file(entry, derivate_id, entry_id, file_name, true)
+      end
+    else
+      raise "Failed to save an MilessTextEntry"
+    end
   end
+
+  # ------------------------------------------------------------------------------
+  # Scanjob: Artikel
+  # ------------------------------------------------------------------------------
 
   def article_scanjob_entry?(node)
     content_from_node(node, 'article').present?
@@ -316,6 +325,10 @@ class UbdokImporter
       raise "Failed to save an ArticleEntry"
     end
   end
+
+  # ------------------------------------------------------------------------------
+  # Scanjob: Buch / Sammelwerk
+  # ------------------------------------------------------------------------------
 
   def collected_article_scanjob_entry?(node)
     content_from_node(node, 'chapter').present?
@@ -398,12 +411,12 @@ class UbdokImporter
   end
 
   def load_document(id)
-    url = "http://ubdok.uni-paderborn.de/servlets/DocumentServlet?id=#{id}&XSL.Style=xml"
+    url = "http://ubdok2.uni-paderborn.de/servlets/DocumentServlet?id=#{id}&XSL.Style=xml"
     load_url(url).root
   end
 
   def load_derivate(id)
-    url = "http://ubdok.uni-paderborn.de/servlets/DerivateServlet/Derivate-#{id}/index.msa?XSL.Style=xml"
+    url = "http://ubdok2.uni-paderborn.de/servlets/DerivateServlet/Derivate-#{id}/index.msa?XSL.Style=xml"
     load_url(url).root
   end
 
@@ -462,7 +475,7 @@ class UbdokImporter
   end
 
   def load_file(derivate_id, entry_id, file_name)
-    host          = 'ubdok.uni-paderborn.de'
+    host          = 'ubdok2.uni-paderborn.de'
     login_path    = '/servlets/LoginServlet'
     derivate_path = '/servlets/DerivateServlet/Derivate-'
 

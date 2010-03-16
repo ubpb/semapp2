@@ -48,6 +48,9 @@ ActionController::Routing::Routes.draw do |map|
       entry.resources :file_attachments, :as => 'attachments', :only => [:new, :create]
       entry.resources :scanjobs, :as => 'scans', :only => [:new, :create]
     end
+    sem_app.resources :miless_file_entries,  :as => 'miless-files', :shallow => true do |entry|
+      entry.resources :file_attachments, :as => 'attachments', :only => [:new, :create]
+    end
 
     sem_app.resources :books
   end
