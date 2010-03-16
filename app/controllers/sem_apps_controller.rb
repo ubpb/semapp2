@@ -136,7 +136,7 @@ class SemAppsController < ApplicationController
         return false
       end
 
-      unless @sem_app.miless_passwords.map{|p| p.password}.include?(password)
+      unless source_sem_app.miless_passwords.map{|p| p.password}.include?(password)
         flash[:error] = "Das Passwort ist falsch. Der Seminarapparat konnte nicht geklont werden."
         redirect_to :action => :clones
         return false
