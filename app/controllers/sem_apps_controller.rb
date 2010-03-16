@@ -168,7 +168,7 @@ class SemAppsController < ApplicationController
           elektronische Seminarapparate weitergeleitet. Bitte aktualisieren die Ihre Links und
           Lesezeichen auf diese neue URL.
         """
-        redirect_to sem_app_path(@sem_app)
+        redirect_to sem_app_path(@sem_app, :anchor => 'media')
         return false
       else
         @sem_app = SemApp.find_by_id!(id)
