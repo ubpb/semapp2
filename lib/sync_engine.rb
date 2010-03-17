@@ -107,6 +107,7 @@ class SyncEngine
       :sem_app     => sem_app,
       :ils_id      => ils_id,
       :placeholder => nil,
+      :state       => Book::States[:in_shelf],
       :signature   => ils_entry[:signature] || 'n.n',
       :title       => ils_entry[:title] || 'n.n',
       :author      => ils_entry[:author] || 'n.n',
