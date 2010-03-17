@@ -51,10 +51,10 @@ class SyncEngine
           # iterate over all card entries
           ils_entries.each do |s, e|
             unless db_entries.include?(s)
-              # found a book that is in the ILS AND NOT in the db
+              # found a book that is in the ILS AND NOT in the db: Create
               create_or_update_entry(sem_app, s, e)
             else
-              # found a book that is in the ILS AND in the db
+              # found a book that is in the ILS AND in the db: Update
               create_or_update_entry(sem_app, s, e)
             end
           end
@@ -107,7 +107,7 @@ class SyncEngine
       :sem_app     => sem_app,
       :ils_id      => ils_id,
       :placeholder => nil,
-      :state       => Book::States[:in_shelf],
+      :state       => :in_shelf,
       :signature   => ils_entry[:signature] || 'n.n',
       :title       => ils_entry[:title] || 'n.n',
       :author      => ils_entry[:author] || 'n.n',
@@ -123,7 +123,6 @@ class SyncEngine
   end
 
   def create_entry(options)
-    options.merge!(:state => :in_shelf)
     book = Book.new(options)
     unless book.save(false)
       raise book.errors.full_messages.to_sentence
