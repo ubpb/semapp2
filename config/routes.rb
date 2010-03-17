@@ -56,7 +56,7 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   # Download (secured download of attachments)
-  map.download 'download/:id/:style/:basename.:extension', :controller => 'download', :action => 'download'
+  map.download 'download/:id/:style/*other', :controller => 'download', :action => 'download'
 
   # Root Page
   map.root :controller => "home"
