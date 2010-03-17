@@ -57,7 +57,7 @@ class BooksController < ApplicationController
       @book.isbn       = record.isbn
       @book.edition    = record.edition
     
-      if @book.save
+      if @book.save(false)
         flash[:notice] = "Buchauftrag erfolgreich erstellt"
         redirect_to sem_app_books_path(@sem_app)
       else
