@@ -8,9 +8,6 @@ class Entry < ActiveRecord::Base
   has_many :file_attachments, :dependent => :destroy
   has_one :scanjob, :dependent => :destroy
 
-  # Behavior
-  acts_as_inheritance_root
-
   # Validation
   validates_presence_of :sem_app
 

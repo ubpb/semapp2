@@ -27,7 +27,16 @@ class SemAppsController < ApplicationController
     unauthorized! if cannot? :read, @sem_app
 
     @books = Book.for_sem_app(@sem_app).in_shelf.ordered_by
-    @media = Entry.for_sem_app(@sem_app).ordered_by
+
+    headline_entries = HeadlineEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
+    text_entries = TextEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
+    monograph_entries = MonographEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
+    article_entries = ArticleEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
+    collected_article_entries = CollectedArticleEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
+    miless_file_entries = MilessFileEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
+
+    @media = [headline_entries, text_entries, monograph_entries, article_entries, collected_article_entries, miless_file_entries].flatten.compact
+    @media = @media.sort {|x,y| x.position <=> y.position}
   end
 
   def new
