@@ -1,5 +1,5 @@
 <div id="entry-<%=entry.id-%>" class="item">
-  <% cache("#{entry.cache_key}_toolbar") do %>
+  <%# cache("#{entry.cache_key}_toolbar") do %>
     <div class="toolbar-wrapper" style="display: none">
       <div class="toolbar" style="display: none">
         <% link_to '#', :class => "toolbar-item pui-overlay-trigger", :rel => "#entry-type-panel-#{entry.id}" do %>
@@ -31,7 +31,7 @@
         <% end %>
       </div>
     </div>
-  <% end %>
+  <%# end %>
 
   <div class="entry">
     <%# cache("#{entry.cache_key}_entry") do %>
@@ -40,6 +40,6 @@
   </div>
 </div>
 
-<% cache("#{entry.cache_key}_new_entry_panel") do %>
+<%# cache("#{entry.cache_key}_new_entry_panel") do %>
   <%= render 'new_entry_panel', :entry_id => entry.id, :sem_app => @sem_app %>
-<% end %>
+<%# end %>
