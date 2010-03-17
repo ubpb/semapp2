@@ -90,7 +90,7 @@ class Admin::SemAppsController < Admin::ApplicationController
       if u.save(false) and @sem_app.update_attribute(:creator, u)
         flash[:success] = "Der Benutzer '#{login}' existierte nicht, wurde aber angelegt. Name und E-Mail sind erst verfügbar wenn der Nutzer sich das erste mal anmeldet. #{login} kann den Seminarapparat <i>#{@sem_app.title}</i> nun bearbeiten."
       else
-        flash[:error] = "Es konnte kein Benutzer mit der Kennung '#{login}' gefunden werden. Hat sich der Benutzer schon einmal angemeldet?"
+        flash[:error] = "Es ist ein unbekannter Fehler aufgetreten!"
       end
     end
 
