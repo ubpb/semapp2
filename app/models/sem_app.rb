@@ -97,24 +97,18 @@ class SemApp < ActiveRecord::Base
 
   def import_entries(source_sem_app)
     if source_sem_app.present? and source_sem_app.is_a?(SemApp)
-      source_sem_app.entries.each do |entry|
-        clone = entry.clone(:exclude => [:file_attachments, :scanjob])
+      import_entries!(HeadlineEntry, source_sem_app)
+      import_entries!(TextEntry, source_sem_app)
+      import_entries!(MonographEntry, source_sem_app)
+      import_entries!(ArticleEntry, source_sem_app)
+      import_entries!(CollectedArticleEntry, source_sem_app)
+      import_entries!(MilessFileEntry, source_sem_app)
 
-        entry.file_attachments.each do |a|
-          path = a.file.path
-          if File.exists?(path)
-            attachment = FileAttachment.new(:file => File.new(path), :description => a.description, :scanjob => a.scanjob)
-            attachment.file.instance_write(:file_name, a.file_file_name)
-            clone.file_attachments << attachment
-          end
-        end
-          
-        clone.sem_app = self
-        clone.save(false)
-      end
       self.resync_positions
     end
   end
+
+
 
   def transit(semester, import_entries = false)
     if semester.present? and semester.is_a?(Semester)
@@ -181,5 +175,24 @@ class SemApp < ActiveRecord::Base
     write_attribute :course_id, (value.blank? ? nil : value)
   end
 
+  private
+  
+  def import_entries!(clazz, source_sem_app)
+    clazz.find(:all, :conditions => {:sem_app_id => source_sem_app.id}).each do |entry|
+      clone = entry.clone(:exclude => [:file_attachments, :scanjob])
+      
+      entry.file_attachments.each do |a|
+        path = a.file.path
+        if File.exists?(path)
+          attachment = FileAttachment.new(:file => File.new(path), :description => a.description, :scanjob => a.scanjob)
+          attachment.file.instance_write(:file_name, a.file_file_name)
+          clone.file_attachments << attachment
+        end
+      end
+          
+      clone.sem_app = self
+      clone.save(false)
+    end
+  end
 
 end
