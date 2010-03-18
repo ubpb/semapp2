@@ -64,20 +64,20 @@ class UbdokImporter
       location = Location.find_by_id(get_msa_id(derivate).first.to_i)
 
       sem_app = SemApp.find_by_miless_document_id(document_id)
-#      unless sem_app
-#        sem_app = SemApp.create!(
-#          :miless_document_id => document_id,
-#          :miless_derivate_id => derivate_id,
-#          :archived           => true,
-#          :creator            => user,
-#          :semester           => semester,
-#          :location           => location,
-#          :approved           => true,
-#          :title              => get_title(document),
-#          :tutors             => get_author(document),
-#          :shared_secret      => 'ubpad466'
-#        )
-#      end
+      unless sem_app
+        sem_app = SemApp.create!(
+          :miless_document_id => document_id,
+          :miless_derivate_id => derivate_id,
+          :archived           => true,
+          :creator            => user,
+          :semester           => semester,
+          :location           => location,
+          :approved           => true,
+          :title              => get_title(document),
+          :tutors             => get_author(document),
+          :shared_secret      => 'ubpad466'
+        )
+      end
 
       if sem_app.present?
         puts "\nImporting Miless Document/Derivate: #{document_id}/#{derivate_id} => #{sem_app.id}"

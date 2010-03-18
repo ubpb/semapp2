@@ -34,7 +34,6 @@ namespace :app do
   #
   desc "Miless Import Step 1 (Import all Sem App data)"
   task(:import_sem_apps => :environment) do
-    SemApp.destroy_all
     UbdokImporter.new.import_sem_apps
   end
 
