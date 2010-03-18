@@ -8,6 +8,6 @@ de:
       timeout: 'Ihre Session ist abgelaufen. Bitte melden Sie sich erneut an um weiterzumachen.'
       user:
         aleph_account_locked: 'Ihr Konto wurde gesperrt. Bitte wenden Sie sich an die Bibliothek.'
-        aleph_unsupported: 'Anmeldung nicht möglich. Nur Ausweise der Typen PA und PS können sich hier anmelden.'
+        aleph_unsupported: 'Anmeldung nicht möglich. Dei Anmeldung setzt einen A-Ausweis vorraus.'
 
 
