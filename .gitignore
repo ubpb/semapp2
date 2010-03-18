@@ -18,3 +18,4 @@ data
 public/stylesheets/generated-*.css
 public/javascripts/generated-*.js
 import
+config/_*_message.erb

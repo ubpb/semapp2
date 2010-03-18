@@ -31,6 +31,11 @@
   <body>
     <%= render 'shared_partials/ie6_notice' %>
 
+    <% global_message_file = "#{RAILS_ROOT}/config/_global_message.erb" %>
+    <% if File.exists?(global_message_file) %>
+      <%= render :file => global_message_file %>
+    <% end %>
+
     <div id="meta-wrapper">
       <div id="meta" class="container_16 clearfix">
         <div class="grid_16">
