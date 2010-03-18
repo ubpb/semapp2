@@ -77,14 +77,9 @@ class UbdokImporter
           :tutors             => get_author(document),
           :shared_secret      => 'ubpad466'
         )
-      end
 
-      if sem_app.present?
-        puts "\nImporting Miless Document/Derivate: #{document_id}/#{derivate_id} => #{sem_app.id}"
-
+        puts "\nImporting Missing Miless Document/Derivate: #{document_id}/#{derivate_id} => #{sem_app.id}"
         import_entries!(sem_app, document, derivate)
-      else
-        puts "\nNo such SemApp with Miless Document ID: #{document_id}"
       end
     rescue Exception => e
       @errors += 1
