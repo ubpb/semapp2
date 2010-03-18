@@ -8,15 +8,36 @@
       <%= icon 'arrow-curve-180-left.png' %>
       Zur&uuml;ck zum Seminarapparat
     <% end %>
-      
+
+    <!--
     <% link_to new_sem_app_book_path(@sem_app), :class => 'pui-button' do %>
       <%= icon 'overlay/book--plus.png' %>
       Neues Buch
     <% end %>
+    -->
   </div>
 </h3>
 
-<div class="pui-tabs-wrapper">
+<div class="pui-panel">
+  <p>
+    <%= icon "asterisk.png" %>
+    Bücher die Sie bestellt haben, sind erst öffentlich sichtbar, wenn diese
+    im Regal aufgestellt wurden. Dieser Vorgang sich kann bei Vormerkungen
+    entsprechend verzögern.
+  </p>
+  <p>Einmal abgeschickte Bestellungen werden auf jeden Fall bearbeitet.</p>
+  <p><strong>An dieser Stelle erhalten Sie in Zukunft einen genauen Überblick über den Status
+      der offenen Bestellungen. Wir arbeiten daran.</strong></p>
+</div>
+
+<div class="pui-view align-center">
+  <% link_to new_sem_app_book_path(@sem_app), :class => 'pui-button' do %>
+    <%= icon 'overlay/book--plus.png' %>
+    Neues Buch
+  <% end %>
+</div>
+
+<!--div class="pui-tabs-wrapper">
 
   <ul class="pui-tabs">
     <li><a href="#additions"><%= icon 'overlay/book--plus.png' %> B&uuml;cher neu</a></li>
@@ -26,14 +47,14 @@
 
   <div class="pui-tab-panes">
     <div>
-      <%= render 'listing', :entries => @ordered_books %>
+<%= render 'listing', :entries => @ordered_books %>
     </div>
     <div>
-      <%= render 'listing', :entries => @deferred_books %>
+<%= render 'listing', :entries => @deferred_books %>
     </div>
     <div>
-      <%= render 'listing', :entries => @removed_books %>
+<%= render 'listing', :entries => @removed_books %>
     </div>
   </div>
 
-</div>
+</div-->
