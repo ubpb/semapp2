@@ -64,7 +64,7 @@ class SyncEngine
               # found a book that is in the db AND NOT in the ILS
               # skip placeholder and books that are in ordered state
               unless e.placeholder?
-                delete_entry(e) if e.state != Book::States[:ordered]
+                delete_entry(e) if e.state == Book::States[:in_shelf]
               end
             else
               # found a book that is in the db AND in the ILS
