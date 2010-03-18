@@ -1,0 +1,14 @@
+<%
+  isbn = entry.isbn if entry.respond_to?(:isbn)
+  isbn = isbn.split(',') if isbn.present?
+  isbn = isbn[0] if isbn.present? and isbn[0].present?
+  isbn = isbn.gsub('-', '').strip if isbn.present?
+%>
+
+<% if isbn.present? %>
+  <div>
+    Dieses Buch bei:
+    <%= link_to 'Amazon.de', "http://www.amazon.de/dp/#{isbn}" %>,
+    <%= link_to 'Google Books', "http://books.google.com/books?as_isbn=#{isbn}" %>
+  </div>
+<% end %>
