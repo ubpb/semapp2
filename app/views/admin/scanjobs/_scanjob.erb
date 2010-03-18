@@ -1,19 +1,60 @@
+<% entry = scanjob.entry.instance %>
+
 <div class="scanjob-detail">
   <h4 class="section">Scan-Info</h4>
   <div class="pui-collection-view labeled">
-    <%= labeled_item :label => 'Signatur',       :content => h(scanjob.signature) %>
-    <%= labeled_item :label => 'Seiten von-bis', :content => "#{scanjob.pages_from}-#{scanjob.pages_to}" %>
+    <%= labeled_item :label => 'Signatur', :content => scanjob.signature %>
+
+    <% if entry.respond_to?(:title) %>
+      <%= labeled_item :label => 'Titel', :content => entry.title %>
+    <% end %>
+
+    <% if entry.respond_to?(:source_title) %>
+      <%= labeled_item :label => 'Titel der Quelle', :content => entry.source_title %>
+    <% end %>
+
+    <% if entry.respond_to?(:author) %>
+      <%= labeled_item :label => 'Autor', :content => entry.author %>
+    <% end %>
+
+    <% if entry.respond_to?(:source_editor) %>
+      <%= labeled_item :label => 'Herausgeber', :content => entry.source_editor %>
+    <% end %>
+
+    <% if entry.respond_to?(:year) %>
+      <%= labeled_item :label => 'Erscheinungsjahr', :content => entry.year %>
+    <% end %>
+
+    <% if entry.respond_to?(:source_year) %>
+      <%= labeled_item :label => 'Erscheinungsjahr der Quelle', :content => entry.source_year %>
+    <% end %>
+
+    <% if entry.respond_to?(:volume) %>
+      <%= labeled_item :label => 'Band', :content => entry.volume %>
+    <% end %>
+
+    <% if entry.respond_to?(:issue) %>
+      <%= labeled_item :label => 'Heft', :content => entry.issue %>
+    <% end %>
+
+    <% if entry.respond_to?(:year) %>
+      <%= labeled_item :label => 'Erscheinungsjahr', :content => entry.year %>
+    <% end %>
+
+    <%= labeled_item :label => 'Seiten von-bis',   :content => "#{scanjob.pages_from}-#{scanjob.pages_to}" %>
+    <%= labeled_item :label => 'Nachricht',        :content => scanjob.message %>
   </div>
 
   <h4 class="section">Auftrag</h4>
   <div class="pui-collection-view labeled">
-    <%= labeled_item :label => 'Auftrag #',      :content => h(scanjob.id) %>
-    <%= labeled_item :label => 'Auftrag vom',    :content => h(scanjob.created_at.to_formatted_s(:short)) %>
-    <%= labeled_item :label => 'Quelle',         :content => h(scanjob.entry.instance.to_s) %>
-    <%= labeled_item :label => 'Seminarapparat', :content => link_to(h(scanjob.entry.sem_app.full_title), sem_app_path(scanjob.entry.sem_app, :anchor => 'media')) %>
+    <%= labeled_item :label => 'Auftrag #',      :content => scanjob.id %>
+    <%= labeled_item :label => 'Auftrag vom',    :content => scanjob.created_at.to_formatted_s(:long) %>
+    <%= labeled_item :label => 'Quelle',         :content => entry.to_s %>
+    <%= labeled_item :label => 'Seminarapparat', :content => link_to(entry.sem_app.full_title, sem_app_path(entry.sem_app, :anchor => 'media')) %>
     <div class="no-print">
       <%= labeled_item :label => 'Auftrag von',  :content => scanjob.creator.present? ? scanjob.creator.to_s : '-' %>
     </div>
+    <%= labeled_item :label => 'Kommentar',      :content => entry.comment %>
   </div>
 
   <div class="pui-view align-center">
