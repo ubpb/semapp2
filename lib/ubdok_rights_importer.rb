@@ -27,7 +27,7 @@ class UbdokRightsImporter
         password    = rights[3].slice(/"(.+)"/, 1)
 
         if right.present? and username.present? and password.present?
-          if right == "r" and username.downcase != "ubdozent" and username.downcase != "semapp"
+          if right == "r" and username.downcase != "ubdozent" and username.downcase != "semapp466"
             add_password(document_id, password)
           end
         else
