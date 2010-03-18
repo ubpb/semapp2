@@ -82,7 +82,7 @@ class UbdokImporter
         import_entries!(sem_app, document, derivate)
       else
         puts "\nReimporting Miless Document/Derivate: #{document_id}/#{derivate_id} => #{sem_app.id}"
-        if semapp.semester != Semester.current
+        if sem_app.semester != Semester.current
           import_entries!(sem_app, document, derivate)
         else
           puts "SemApp #{sem_app.id} is in current semester. Skipping."
