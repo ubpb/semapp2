@@ -65,7 +65,7 @@
         <div class="grid_8 alpha">
           <div class="pui-collection-view labeled">
             <%= labeled_item :label => 'Titel',       :content => link_to(h(@sem_app.title), sem_app_path(@sem_app)) %>
-            <%= labeled_item :label => 'Tutor(en)',   :content => h(@sem_app.tutors) %>
+            <%= labeled_item :label => 'Dozent(en)',  :content => h(@sem_app.tutors) %>
             <%= labeled_item :label => 'Semester',    :content => h(@sem_app.semester.title) %>
             <%= labeled_item :label => 'Standort',    :content => h(@sem_app.location.title) %>
             <%  labeled_item :label => 'Lesekennung' do %>

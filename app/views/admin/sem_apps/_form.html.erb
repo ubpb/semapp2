@@ -29,7 +29,7 @@
       <%= f.input :title,     :label => 'Titel' %>
       <%= f.input :course_id, :label => 'Kurs-ID', :required => false %>
     <% end %>
-    <%= f.input :tutors, :label => 'Tutor(en)', :as => :string, :hint => 'Die Namen der beteiligten Dozenten (Format: Nachname, Vorname). Trennen Sie mehrere Namen durch ein Semikolon.' %>
+    <%= f.input :tutors, :label => 'Dozent(en)', :as => :string, :hint => 'Die Namen der beteiligten Dozenten (Format: Nachname, Vorname). Trennen Sie mehrere Namen durch ein Semikolon.' %>
   <% end %>
 
   <% f.inputs :name => 'Bibliotheksdaten' do %>
