@@ -27,7 +27,7 @@ class Admin::BooksController < Admin::ApplicationController
 
   def dedefer
     @book = Book.find(params[:id])
-    unless @book.set_state(:new)
+    unless @book.set_state(:ordered)
       flash[:error] = "Es ist ein Fehler aufgetreten."
     end
 
@@ -50,6 +50,15 @@ class Admin::BooksController < Admin::ApplicationController
     end
 
     redirect_to admin_sem_app_path(@book.sem_app, :anchor => 'removed-books')
+  end
+
+  def destroy
+    @book = Book.find(params[:id])
+    unless @book.destroy
+      flash[:error] = "Es ist ein Fehler aufgetreten."
+    end
+
+    redirect_to admin_sem_app_path(@book.sem_app, :anchor => 'new-books')
   end
 
 end

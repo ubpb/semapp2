@@ -12,10 +12,11 @@
 
   <div class="pui-view align-right no-print">
     <% if book.state == Book::States[:deferred] %>
-      <%= link_to 'Als Neu markieren', dedefer_admin_book_path(book), :method => :put %>
+      <%= link_to 'Als Neu markieren', dedefer_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
     <% end %>
     <% if book.state == Book::States[:ordered] or book.state == Book::States[:deferred] %>
       <%= link_to 'Wurde im Regal aufgestellt', placed_in_shelf_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
+      <%= link_to 'Auftrag löschen', admin_book_path(book), :method => :delete, :class => 'pui-button small', :confirm => 'Auftrag wirklich löschen?' %>
     <% end %>
     <% if book.state == Book::States[:ordered] %>
       <%= link_to 'Wurde vorgemerkt', defer_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
