@@ -80,6 +80,9 @@ class UbdokImporter
 
         puts "\nImporting Missing Miless Document/Derivate: #{document_id}/#{derivate_id} => #{sem_app.id}"
         import_entries!(sem_app, document, derivate)
+      else
+        puts "\nReimporting Miless Document/Derivate: #{document_id}/#{derivate_id} => #{sem_app.id}"
+        import_entries!(sem_app, document, derivate)
       end
     rescue Exception => e
       @errors += 1
@@ -381,10 +384,10 @@ class UbdokImporter
   # ------------------------------------------------------------------------------
 
   def create_scanjob(entry, pages_from, pages_to, signature, created_at)
-    sj = Scanjob.new(:entry => entry, :pages_from => pages_from, :pages_to => pages_to, :signature => signature, :created_at => created_at)
-    unless sj.save(false)
-      raise "Scanjob could not have been created!"
-    end
+    #sj = Scanjob.new(:entry => entry, :pages_from => pages_from, :pages_to => pages_to, :signature => signature, :created_at => created_at)
+    #unless sj.save(false)
+    #  raise "Scanjob could not have been created!"
+    #end
   end
 
   def attach_file(entry, derivate_id, entry_id, file_name, scanjob = false)
