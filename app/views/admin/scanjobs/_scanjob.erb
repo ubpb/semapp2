@@ -4,6 +4,7 @@
   <h4 class="section">Scan-Info</h4>
   <div class="pui-collection-view labeled">
     <%= labeled_item :label => 'Signatur', :content => scanjob.signature %>
+    <%= labeled_item :label => 'Seiten von-bis', :content => "#{scanjob.pages_from}-#{scanjob.pages_to}" %>
 
     <% if entry.respond_to?(:title) %>
       <%= labeled_item :label => 'Titel', :content => entry.title %>
@@ -37,12 +38,9 @@
       <%= labeled_item :label => 'Heft', :content => entry.issue %>
     <% end %>
 
-    <% if entry.respond_to?(:year) %>
-      <%= labeled_item :label => 'Erscheinungsjahr', :content => entry.year %>
+    <% if scanjob.message.present? %>
+      <%= labeled_item :label => 'Nachricht', :content => 'Nachricht vorhanden' %>
     <% end %>
-
-    <%= labeled_item :label => 'Seiten von-bis',   :content => "#{scanjob.pages_from}-#{scanjob.pages_to}" %>
-    <%= labeled_item :label => 'Nachricht',        :content => scanjob.message %>
   </div>
 
   <h4 class="section">Auftrag</h4>

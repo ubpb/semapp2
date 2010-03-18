@@ -42,22 +42,22 @@ class BooksController < ApplicationController
   def create
     aleph  = get_aleph
     record = aleph.get_record(params[:doc_number])
-    base_signature = aleph.get_base_signature(params[:doc_number])
+    signature = aleph.get_signature(params[:doc_number])
 
-    if record.present? and base_signature.present?
+    if record.present? and signature.present?
       @book = Book.new(:sem_app => @sem_app)
       @book.creator    = current_user
       @book.ils_id     = record.doc_number
-      @book.signature  = base_signature
-      @book.title      = record.title
-      @book.author     = record.author
+      @book.signature  = signature     || 'n.n'
+      @book.title      = record.title  || 'n.n'
+      @book.author     = record.author || 'n.n'
       @book.year       = record.year
       @book.place      = record.place
       @book.publisher  = record.publisher
       @book.isbn       = record.isbn
       @book.edition    = record.edition
     
-      if @book.save(false)
+      if @book.save
         flash[:notice] = "Buchauftrag erfolgreich erstellt"
         redirect_to sem_app_books_path(@sem_app)
       else
