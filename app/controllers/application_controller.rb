@@ -16,15 +16,15 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password, :password_confirmation
 
   protected
-
-  rescue_from CanCan::AccessDenied do |exception|
-    flash[:error] = exception.message
-    redirect_to root_url
-  end
-
+  
   rescue_from Exception do |exception|
-    logger.fatal("\n\n#{exception.class} (#{exception.message}):\n    " + exception.backtrace.join("\n    ") + "\n\n")
-    render 'shared_partials/unhandled_error', :locals => {:exception => exception}
+    if exception.class == CanCan::AccessDenied
+      flash[:error] = "Zugriff verweigert!"
+      redirect_to root_url
+    else
+      logger.fatal("\n\n#{exception.class} (#{exception.message}):\n    " + exception.backtrace.join("\n    ") + "\n\n")
+      render 'shared_partials/unhandled_error', :locals => {:exception => exception}
+    end
   end
   
 end
