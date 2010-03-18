@@ -1,5 +1,9 @@
 <%= entry.to_s %>
 
+<%= render 'entries/signature', :entry => entry %>
+
+<%= render 'entries/amazon', :entry => entry %>
+
 <%= render 'entries/comment', :entry => entry %>
 
 <%= render 'entries/scan', :entry => entry %>

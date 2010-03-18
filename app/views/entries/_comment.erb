@@ -1,5 +1,7 @@
-<% if entry.comment.present? %>
+<% comment = entry.comment if entry.respond_to?(:comment) %>
+
+<% if comment.present? %>
   <p style="font-style: italic">
-    <%= textilize_without_paragraph(entry.comment) %>
+    <%= textilize_without_paragraph(comment) %>
   </p>
 <% end %>

@@ -26,27 +26,10 @@
       </p>
     <% end %>
 
-    <% if book.signature.present? %>
-      <div>
-        Signatur: <%= book.signature -%>
-        <% link_to "https://ubaleph.uni-paderborn.de/F/?func=find-b&find_code=PSG&request=#{book.base_signature}?" do %>
-          &raquo; Im Bibliothekskatalog anzeigen
-        <% end %>
-      </div>
-    <% end %>
+    <%= render 'entries/signature', :entry => book %>
+    
+    <%= render 'entries/amazon', :entry => book %>
 
-    <% if book.isbn.present? %>
-      <div>
-        Dieses Buch bei:
-        <%= link_to 'Amazon.de', "http://www.amazon.de/dp/#{book.isbn.gsub('-', '')}" %>,
-        <%= link_to 'Google Books', "http://books.google.com/books?as_isbn=#{book.isbn.gsub('-', '')}" %>
-      </div>
-    <% end %>
-
-    <% if book.comment.present? %>
-      <div class="comment">
-        <%= book.comment %>
-      </div>
-    <% end %>
+    <%= render 'entries/comment', :entry => book %>
   </div>
 </div>

@@ -1,3 +1,6 @@
+<% signature = entry.signature if entry.respond_to?(:signature) %>
+<% signature = entry.source_signature if entry.respond_to?(:source_signature) %>
+
 <% if signature.present? %>
   <div>
     Signatur: <%= signature -%>

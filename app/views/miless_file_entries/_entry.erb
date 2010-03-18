@@ -1,6 +1,8 @@
 <%= entry.to_s %>
 
-<%= render 'entries/signature', :signature => entry.source_signature %>
+<%= render 'entries/signature', :entry => entry %>
+
+<%= render 'entries/amazon', :entry => entry %>
 
 <%= render 'entries/comment', :entry => entry %>
 
