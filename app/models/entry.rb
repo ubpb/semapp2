@@ -25,4 +25,30 @@ class Entry < ActiveRecord::Base
     self.publish_on.present? and self.publish_on >= Time.new
   end
 
+  def instance
+    nil unless self.id.present? or self.new_record?
+
+    unless @instance.present?
+      if instance_type.present?
+        @instance = instance_type.find(self.id)
+      end
+    else
+      @instance
+    end
+  end
+
+  def instance_type
+    nil unless self.id.present? or self.new_record?
+
+    unless @instance_type
+      sql = "select p.relname from #{self.class.name.tableize} s, pg_class p where s.id = #{self.id} and s.tableoid = p.oid"
+      res = connection.execute(sql)
+      if res[0]['relname'].present?
+        @instance_type = res[0]['relname'].classify.constantize
+      end
+    else
+      @instance_type
+    end
+  end
+
 end

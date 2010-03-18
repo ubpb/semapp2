@@ -1,6 +1,6 @@
 <p>
   <strong>Quelle:</strong>
-  <%= @scanjob.entry.to_s %>
+  <%= @scanjob.entry.instance.to_s %>
 </p>
 
 <% semantic_form_for [@entry, @scanjob] do |f| %>
