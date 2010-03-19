@@ -26,8 +26,8 @@ class SemAppsController < ApplicationController
   def show
     unauthorized! if cannot? :read, @sem_app
 
-    load_books
-    load_media
+    #load_books
+    #load_media
   end
 
   def show_books
