@@ -10,7 +10,7 @@
           <%= image_tag 'icons/wrench.png', :plugin => 'pui', :title => 'Diesen Eintrag bearbeiten' %>
         <% end %>
 
-        <% link_to polymorphic_path([entry]), :class => "toolbar-item", :method => :delete, :confirm => 'Diesen Eintrag wirklich löschen?' do %>
+        <% link_to polymorphic_path([entry]), :class => "toolbar-item delete-entry-action" do %>
           <%= image_tag 'icons/cross-circle-frame.png', :plugin => 'pui', :title => 'Diesen Eintrag entfernen' %>
         <% end %>
 

@@ -14,7 +14,8 @@ class EntriesController < ApplicationController
       end
     end
 
-    redirect_to sem_app_path(@sem_app, :anchor => 'media')
+    #redirect_to sem_app_path(@sem_app, :anchor => 'media')
+    render :nothing => true
   end
   
 end

@@ -63,7 +63,8 @@ class AbstractEntriesController < ApplicationController
 
     if @entry.destroy
       @entry.sem_app.resync_positions
-      redirect_to sem_app_path(@entry.sem_app, :anchor => 'media')
+      #redirect_to sem_app_path(@entry.sem_app, :anchor => 'media')
+      render :nothing => true
     else
       flash[:error] = "Der Eintrag konnte nicht gelöscht werden. Es ist ein Fehler aufgetreten."
       redirect_to sem_app_path(@entry.sem_app, :anchor => 'media')

@@ -16,9 +16,33 @@
       });
     }
 
+    function deleteEntry(item, url) {
+      $.ajax({
+        type: "delete",
+        data: "_method=delete",
+        async: true,
+        url: url,
+        success: function() {
+          item.slideUp(500);
+        }
+      });
+    }
+
     /***********************************************************************************
      * Event hooks
      **********************************************************************************/
+
+     /** If the user clicks the link to delete an entry */
+    $(".delete-entry-action").live('click', function(event) {
+      event.preventDefault();
+      var item = $(this).closest(".item");
+      var url  = $(this).attr("href");
+
+      var ret = confirm("Eintrag wirklich löschen?");
+      if (ret == true) {
+        deleteEntry(item, url);
+      }
+    });
 
     /** Make media entries sortable with the mouse */
     $(".reorder-entry-action").live('click', function(event) {
