@@ -6,14 +6,13 @@
      * Deletes a book from the listing.
      */
     function deleteBook(item, url) {
-      jQuery.ajax({
+      item.slideUp(500);
+      
+      $.ajax({
         type: "delete",
         data: "_method=delete",
         async: true,
         url: url,
-        success: function() {
-          item.slideUp(500);
-        },
         error: function() {
           alert("Beim Versuch den Eintrag zu löschen ist ein Fehler aufgetreten. Laden Sie die Seite neu und versuchen Sie es erneut. Sollte es wiederholt zu einem Fehler kommen, kontaktieren Sie bitte den Support.");
         }
@@ -25,7 +24,7 @@
      **********************************************************************************/
 
     /** If the user clicks the link to delete a book */
-    jQuery(".delete-book-action").live('click', function(event) {
+    $(".delete-book-action").live('click', function(event) {
       event.preventDefault();
       var item = $(this).closest(".item");
       var url  = $(this).attr("href");

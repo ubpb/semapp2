@@ -17,14 +17,13 @@
     }
 
     function deleteEntry(item, url) {
+      item.slideUp(500);
+      
       $.ajax({
         type: "delete",
         data: "_method=delete",
         async: true,
-        url: url,
-        success: function() {
-          item.slideUp(500);
-        }
+        url: url
       });
     }
 

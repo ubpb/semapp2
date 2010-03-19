@@ -18,7 +18,7 @@
       var tab = $(tab_id)
       var url = tab.attr("rel");
 
-      tab.html('Lade Daten ...');
+      tab.html('<div class="pui-panel align-center">Lade Daten ...</div>');
       $.get(url, function(data) {
         tab.html(data);
       });
