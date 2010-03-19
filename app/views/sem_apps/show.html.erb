@@ -6,6 +6,10 @@
   <% end %>
 <% end %>
 
+<% content_for :head do %>
+  <%= javascript_include_tag 'sem_apps/show.js' %>
+<% end %>
+
 <h3 class="section">
   <%= link_to h(@sem_app.title), sem_app_path(@sem_app) %>
 </h3>
@@ -66,17 +70,15 @@
 
 <div class="sem-app">
   <div class="pui-tabs-wrapper">
-    <ul class="pui-tabs">
+    <ul id="sem-app-tabs" class="pui-tabs sem-app">
       <li><a href="#books"><%= icon 'books.png' %> B&uuml;cher</a></li>
       <li><a href="#media"><%= icon 'block.png' %> Texte und Medien</a></li>
     </ul>
 
     <div class="pui-tab-panes">
-      <div id="books-tab">
-        <%= render 'books_tab' %>
+      <div id="books-tab" rel="<%= show_books_sem_app_path(@sem_app, :format => 'js') -%>">
       </div>
-      <div id="media-tab">
-        <%= render 'media_tab' %>
+      <div id="media-tab" rel="<%= show_media_sem_app_path(@sem_app, :format => 'js') -%>">
       </div>
     </div>
   </div>

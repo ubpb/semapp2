@@ -5,7 +5,7 @@ class SemAppsController < ApplicationController
   SEM_APP_FILTER_NAME        = 'sem_app_filter_name'.freeze
   SEM_APP_CLONES_FILTER_NAME = 'sem_app_clones_filter_name'.freeze
 
-  before_filter :load_sem_app, :only => [:show, :edit, :update, :unlock, :transit, :clones, :filter_clones, :clone, :clear]
+  before_filter :load_sem_app, :only => [:show, :edit, :update, :unlock, :transit, :clones, :filter_clones, :clone, :clear, :show_books, :show_media]
   
   def index
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
@@ -26,17 +26,28 @@ class SemAppsController < ApplicationController
   def show
     unauthorized! if cannot? :read, @sem_app
 
-    @books = Book.for_sem_app(@sem_app).in_shelf.ordered_by
+    load_books
+    load_media
+  end
 
-    headline_entries = HeadlineEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
-    text_entries = TextEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
-    monograph_entries = MonographEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
-    article_entries = ArticleEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
-    collected_article_entries = CollectedArticleEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
-    miless_file_entries = MilessFileEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
+  def show_books
+    unauthorized! if cannot? :read, @sem_app
 
-    @media = [headline_entries, text_entries, monograph_entries, article_entries, collected_article_entries, miless_file_entries].flatten.compact
-    @media = @media.sort {|x,y| x.position <=> y.position}
+    load_books
+
+    respond_to do |format|
+      format.js { render :partial => 'books_tab', :layout => false }
+    end
+  end
+
+  def show_media
+    unauthorized! if cannot? :read, @sem_app
+
+    load_media
+
+    respond_to do |format|
+      format.js { render :partial => 'media_tab', :layout => false }
+    end
   end
 
   def new
@@ -199,6 +210,22 @@ class SemAppsController < ApplicationController
       redirect_to sem_apps_path
       return false
     end
+  end
+
+  def load_books
+    @books = Book.for_sem_app(@sem_app).in_shelf.ordered_by
+  end
+
+  def load_media
+    headline_entries = HeadlineEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
+    text_entries = TextEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
+    monograph_entries = MonographEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
+    article_entries = ArticleEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
+    collected_article_entries = CollectedArticleEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
+    miless_file_entries = MilessFileEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
+
+    @media = [headline_entries, text_entries, monograph_entries, article_entries, collected_article_entries, miless_file_entries].flatten.compact
+    @media = @media.sort {|x,y| x.position <=> y.position}
   end
 
 end
