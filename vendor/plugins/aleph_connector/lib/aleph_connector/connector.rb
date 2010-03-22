@@ -113,7 +113,7 @@ module Aleph #:nodoc:
 
       # Check for error
       error = content_from_node(data, '//bor-info/error')
-      raise error if error.present?
+      raise "#{ils_account_no}: #{error}" if error.present?
 
       lendings = []
       data.find('//bor-info/item-l').each do |l|
