@@ -8,7 +8,11 @@ class Admin::BooksController < Admin::ApplicationController
 
   def update
     @book = Book.find(params[:id])
-    if @book.update_attributes(params[:book].merge(:state => :in_shelf))
+
+    @book.placeholder_id = params[:book][:placeholder_id]
+    @book.state = :in_shelf
+
+    if @book.save(false)
       flash[:success] = "Erfolgreich gespeichert"
       redirect_to admin_sem_app_path(@book.sem_app, :anchor => 'new-books')
     else
