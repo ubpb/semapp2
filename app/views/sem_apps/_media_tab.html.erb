@@ -34,7 +34,7 @@
 
     <% if can?(:edit, @sem_app) %>
       <div class="pui-view align-center">
-        <% link_to '#', :class => 'pui-button pui-overlay-trigger', :rel => '#entry-type-panel-0' do %>
+        <% link_to new_sem_app_entry_path(@sem_app, :format => 'js'), :class => 'pui-button new-entry-action' do %>
           <%= icon 'plus.png' %>
           Einen neuen Eintrag erstellen
         <% end %>
