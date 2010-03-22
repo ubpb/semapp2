@@ -22,17 +22,21 @@
     /***********************************************************************************
      * Event hooks
      **********************************************************************************/
+    
+    $('body').bind('books-tab-loaded', function() {
 
-    /** If the user clicks the link to delete a book */
-    $(".delete-book-action").live('click', function(event) {
-      event.preventDefault();
-      var item = $(this).closest(".item");
-      var url  = $(this).attr("href");
+      /** If the user clicks the link to delete a book */
+      $(".delete-book-action").live('click', function(event) {
+        event.preventDefault();
+        var item = $(this).closest(".item");
+        var url  = $(this).attr("href");
 
-      var ret = confirm("Soll das Buch wirklich aus der Liste gelöscht werden? Wenn Sie diese Aktion bestätigen wird das Buch ebenfalls aus dem Regal in der Bibliothek entfernt und in den normalen Bestand aufgenommen.");
-      if (ret == true) {
-        deleteBook(item, url);
-      }
+        var ret = confirm("Soll das Buch wirklich aus der Liste gelöscht werden? Wenn Sie diese Aktion bestätigen wird das Buch ebenfalls aus dem Regal in der Bibliothek entfernt und in den normalen Bestand aufgenommen.");
+        if (ret == true) {
+          deleteBook(item, url);
+        }
+      });
+
     });
 
   });

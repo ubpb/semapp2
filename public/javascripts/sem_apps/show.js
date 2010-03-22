@@ -2,25 +2,29 @@
 
   $(function() {
     // Load Sem App tabs via ajax
-    $("#sem-app-tabs").tabs().getConf().effect = 'fade';
     loadBooksTab();
     loadMediaTab();
 
     function loadMediaTab() {
-      load_tab('#media-tab');
+      loadSemAppTab('#media-tab', function() {
+        $('body').trigger('media-tab-loaded');
+      });
     }
 
     function loadBooksTab() {
-      load_tab('#books-tab');
+      loadSemAppTab('#books-tab', function() {
+        $('body').trigger('books-tab-loaded');
+      });
     }
 
-    function load_tab(tab_id) {
+    function loadSemAppTab(tab_id, callback) {
       var tab = $(tab_id)
       var url = tab.attr("rel");
 
       tab.html('<div class="pui-panel align-center"><img src="/images/common/loader.gif" style="line-height:16px; vertical-align:text-top"/> Lade Daten ...</div>');
       $.get(url, function(data) {
         tab.html(data);
+        callback();
       });
     }
 
