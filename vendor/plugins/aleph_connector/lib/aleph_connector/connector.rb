@@ -111,6 +111,10 @@ module Aleph #:nodoc:
       url  = "#{@base_url}?op=bor-info&bor_id=#{ils_account_no}&library=#{@library}"
       data = load_url(url)
 
+      # Check for error
+      error = content_from_node(data, '//bor-info/error')
+      raise error if error.present?
+
       lendings = []
       data.find('//bor-info/item-l').each do |l|
         lendings << {
