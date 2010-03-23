@@ -73,6 +73,16 @@ class Admin::ScanjobsController < Admin::ApplicationController
     redirect_to admin_scanjobs_path(:anchor => old_state)
   end
 
+  def destroy
+    scanjob = Scanjob.find(params[:id])
+    old_state = scanjob.state
+    unless scanjob.destroy
+      flash[:error] = 'Es ist ein Fehler aufgetreten. Der Scanuftrag konnte nicht gelöscht werden.'
+    end
+
+    redirect_to admin_scanjobs_path(:anchor => old_state)
+  end
+
   private
 
   def update_scanjobs_state(scanjobs)
