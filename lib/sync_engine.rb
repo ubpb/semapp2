@@ -62,10 +62,13 @@ class SyncEngine
           db_entries.each do |s, e|
             unless ils_entries.include?(s)
               # found a book that is in the db AND NOT in the ILS
-              # skip placeholder and books that are in ordered state
-              unless e.placeholder?
-                delete_entry(e) if e.state == Book::States[:in_shelf]
-              end
+              # skip placeholder, reference copies and states !=
+              # in shelf
+              next if e.placeholder?
+              next if e.reference_copy.present?
+              next if e.state != Book::States[:in_shelf]
+              
+              delete_entry(e) 
             else
               # found a book that is in the db AND in the ILS
               # do nothing: handled in the other case

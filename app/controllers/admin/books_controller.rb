@@ -56,6 +56,17 @@ class Admin::BooksController < Admin::ApplicationController
     redirect_to admin_sem_app_path(@book.sem_app, :anchor => 'removed-books')
   end
 
+  def reference
+    @book = Book.find(params[:id])
+    ref_type = params[:ref_type]
+
+    unless @book.set_state(:in_shelf) and @book.update_attribute(:reference_copy, ref_type)
+      flash[:error] = "Es ist ein Fehler aufgetreten."
+    end
+
+    redirect_to admin_sem_app_path(@book.sem_app, :anchor => 'new-books')
+  end
+
   def destroy
     @book = Book.find(params[:id])
     unless @book.destroy

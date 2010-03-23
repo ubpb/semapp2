@@ -26,6 +26,20 @@
       </p>
     <% end %>
 
+    <% if book.reference_copy == 1 %>
+      <p>
+        <%= icon 'asterisk.png' %>
+        <i>Dieses Exemplar finden Sie im regulären Bestand.</i>
+      </p>
+    <% end %>
+
+    <% if book.reference_copy == 2 %>
+      <p>
+        <%= icon 'asterisk.png' %>
+        <i>Dieses Exemplar liegt zur Ansicht in der Leihstelle bereit.</i>
+      </p>
+    <% end %>
+
     <%= render 'entries/signature', :entry => book %>
     
     <%= render 'entries/amazon', :entry => book %>

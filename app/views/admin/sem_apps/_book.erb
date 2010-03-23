@@ -15,12 +15,13 @@
       <%= link_to 'Als Neu markieren', dedefer_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
     <% end %>
     <% if book.state == Book::States[:ordered] or book.state == Book::States[:deferred] %>
-      <%= link_to 'Wurde im Regal aufgestellt', placed_in_shelf_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
       <%= link_to 'Auftrag löschen', admin_book_path(book), :method => :delete, :class => 'pui-button small', :confirm => 'Auftrag wirklich löschen?' %>
+      <%= link_to 'Wurde verbucht', placed_in_shelf_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
     <% end %>
     <% if book.state == Book::States[:ordered] %>
       <%= link_to 'Wurde vorgemerkt', defer_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
       <%= link_to 'Als Stellvertreter', edit_admin_book_path(book), :class => 'pui-button small' %>
+      <%= link_to 'Als Päsenzexemplar', '#', :class => 'pui-button small pui-overlay-trigger', :rel => "#reference-copy-panel-#{book.id}" %>
     <% end %>
     <% if book.state == Book::States[:rejected] %>
       <%= link_to 'Wurde aus dem Regal entfernt', removed_from_shelf_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
@@ -28,4 +29,12 @@
   </div>
 
   <div class="only-print" style="margin-bottom: 30px">&nbsp;<!-- Notizen --></div>
+</div>
+
+<div id="reference-copy-panel-<%= book.id -%>" class="pui-overlay">
+  <h3 class="section">Art des Präsenzexemplares</h3>
+  <div class="align-center">
+    <%= link_to 'Im Bestand', reference_admin_book_path(book, :ref_type => 1), :method => :put, :class => 'pui-button' %>
+    <%= link_to 'In der Leihstelle', reference_admin_book_path(book, :ref_type => 2), :method => :put, :class => 'pui-button' %>
+  </div>
 </div>
