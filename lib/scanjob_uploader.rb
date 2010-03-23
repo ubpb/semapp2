@@ -3,27 +3,34 @@
 class ScanjobUploader
 
   def upload_scanjobs
-    upload_scanjobs!
+    begin
+      upload_scanjobs!
+    rescue Exception => e
+      puts "Error: #{e.message}"
+      return false
+    end
+
+    return true
+  end
+
+  def upload_scanjobs!
+    scanjob_files = File.join(RAILS_ROOT, 'data', 'scanjobs', 'scanjob-*.pdf')
+    Dir.glob(scanjob_files).each do |filename|
+      upload_scanjob(filename)
+    end
   end
 
   private
 
-  def upload_scanjobs!
-    scanjob_files = File.join(RAILS_ROOT, 'data', 'scanjobs', '*')
-    Dir.glob(scanjob_files).each do |filename|
-      begin
-        upload_scanjob(filename)
-      rescue Exception => e
-        puts "Error: #{e.message}"
-      end
-    end
-  end
-
   def upload_scanjob(filename)
     entry_id = filename[/scanjob-(\d+)/, 1]
     raise "Error: no Entry-ID found in filename." if entry_id.blank?
+
     entry = Entry.find(entry_id)
     file  = File.new(filename)
+
+    processed_files = File.join(RAILS_ROOT, 'data', 'scanjobs', 'processed')
+    FileUtils.mkdir(processed_files) unless File.exists?(processed_files)
 
     Entry.transaction do
       attachment = FileAttachment.new(:file => file, :scanjob => true)
@@ -32,7 +39,7 @@ class ScanjobUploader
 
       entry.scanjob.destroy
 
-      File.delete(filename)
+      FileUtils.mv(filename, processed_files, :force => true)
     end
   end
 

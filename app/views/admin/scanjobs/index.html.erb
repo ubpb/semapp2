@@ -1,5 +1,12 @@
 <h3 class="section">Scanauftr&auml;ge verwalten</h3>
 
+<div class="pui-panel align-right">
+  <% link_to upload_admin_scanjobs_path, :class => "pui-button", :method => :put do %>
+    <%= icon 'drive-upload.png' %>
+    Fertige Scans hochladen
+  <% end %>
+</div>
+
 <div class="pui-tabs-wrapper">
   <ul class="pui-tabs">
     <li>

@@ -83,6 +83,16 @@ class Admin::ScanjobsController < Admin::ApplicationController
     redirect_to admin_scanjobs_path(:anchor => old_state)
   end
 
+  def upload
+    unless ::ScanjobUploader.new.upload_scanjobs
+      flash[:error] = 'Es ist ein Fehler aufgetreten. Die Scans konnten nicht hochgeladen werden.'
+    else
+      flash[:success] = 'Fertige Scans wurden hochgeladen.'
+    end
+    
+    redirect_to admin_scanjobs_path()
+  end
+
   private
 
   def update_scanjobs_state(scanjobs)
