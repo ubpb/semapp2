@@ -82,7 +82,13 @@ class BooksController < ApplicationController
 
   def destroy
     book = Book.find(params[:id])
-    book.set_state(:rejected)
+    
+    if book.state != Book::States[:in_shelf] or book.placeholder? or book.reference_copy.present?
+      book.destroy
+    else
+      book.set_state(:rejected)
+    end
+    
     render :nothing => true
   end
 
