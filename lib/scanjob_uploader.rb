@@ -37,12 +37,11 @@ class ScanjobUploader
         attachment = FileAttachment.new(:file => file, :scanjob => true)
         attachment.file.instance_write(:file_name, File.basename(filename))
         entry.file_attachments << attachment
-
         entry.scanjob.destroy
       end
-
-      FileUtils.mv(filename, processed_files)
     end
+
+    FileUtils.mv(filename, processed_files)
   end
 
 end
