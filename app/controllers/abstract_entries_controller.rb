@@ -55,7 +55,7 @@ class AbstractEntriesController < ApplicationController
     @entry = self.controller_class.find(params[:id])
     unauthorized! if cannot? :edit, @entry.sem_app
 
-    if @entry.respond_to?(:scanjob) and @entry.scanjob.present?
+    if not current_user.is_admin? and @entry.respond_to?(:scanjob) and @entry.scanjob.present?
       flash[:error] = "Für diesen Eintrag wurde ein Scan beauftragt, der noch nicht abgeschlossen ist. Solange der Scanauftrag durch die Bibliothek bearbeitet wird, kann der Eintrag nicht gelöscht werden."
       redirect_to sem_app_path(@entry.sem_app, :anchor => 'media')
       return false
