@@ -33,13 +33,15 @@ class ScanjobUploader
     FileUtils.mkdir(processed_files) unless File.exists?(processed_files)
 
     Entry.transaction do
-      attachment = FileAttachment.new(:file => file, :scanjob => true)
-      attachment.file.instance_write(:file_name, File.basename(filename))
-      entry.file_attachments << attachment
+      if entry.scanjob.present?
+        attachment = FileAttachment.new(:file => file, :scanjob => true)
+        attachment.file.instance_write(:file_name, File.basename(filename))
+        entry.file_attachments << attachment
 
-      entry.scanjob.destroy
+        entry.scanjob.destroy
+      end
 
-      FileUtils.mv(filename, processed_files, :force => true)
+      FileUtils.mv(filename, processed_files)
     end
   end
 
