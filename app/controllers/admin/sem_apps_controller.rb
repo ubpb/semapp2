@@ -63,8 +63,8 @@ class Admin::SemAppsController < Admin::ApplicationController
     was_approved = @sem_app.approved
 
     if @sem_app.update_attributes(params[:sem_app])
-      if (@sem_app.approved and not was_approved)
-        Notifications.deliver_sem_app_activated_notification(@sem_app.creator, @sem_app)
+      if (@sem_app.approved and not was_approved and @sem_app.creator.present? and @sem_app.creator.email.present?)
+        Notifications.deliver_sem_app_activated_notification(@sem_app)
       end
       flash[:success] = "Die Daten wurden erfolgreich gespeichert"
       redirect_to :action => :show
