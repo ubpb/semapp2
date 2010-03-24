@@ -203,7 +203,7 @@ module Aleph #:nodoc:
     # a LibXML::XML::Document.
     #
     def load_url(url)
-      XML::Parser.string(Net::HTTP.get_response(URI.parse(url)).body).parse
+      XML::Parser.string(Net::HTTP.get_response(URI.parse(URI.escape(url))).body).parse
     end
 
   end
