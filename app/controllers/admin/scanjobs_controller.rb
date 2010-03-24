@@ -84,10 +84,11 @@ class Admin::ScanjobsController < Admin::ApplicationController
   end
 
   def upload
-    unless ::ScanjobUploader.new.upload_scanjobs
-      flash[:error] = 'Es ist ein Fehler aufgetreten. Die Scans konnten nicht hochgeladen werden.'
-    else
+    begin
+      ::ScanjobUploader.new.upload_scanjobs!
       flash[:success] = 'Fertige Scans wurden hochgeladen.'
+    rescue Exception => e
+      flash[:error] = "Es ist ein Fehler aufgetreten. Die Scans konnten nicht hochgeladen werden. #{e.message}"
     end
     
     redirect_to admin_scanjobs_path()
