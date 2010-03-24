@@ -2,7 +2,7 @@ Sehr geehrte Dozentin, sehr geehrter Dozent,
 
 Ihr Seminarapparat
 
-  <%= "#{@sem_app.title} (#{@sem_app.semester.title})" %>
+  <%= @sem_app.full_title %>
 
 wurde soeben aktiviert. Er steht ab sofort Ihren Studierenden
 (Lesekennung: <%= @sem_app.shared_secret %>) zur Verfügung.
