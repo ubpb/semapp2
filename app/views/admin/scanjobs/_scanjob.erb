@@ -39,7 +39,11 @@
     <% end %>
 
     <% if scanjob.message.present? %>
-      <%= labeled_item :label => 'Nachricht', :content => 'Nachricht vorhanden' %>
+      <% if action_name == 'show' %>
+        <%= labeled_item :label => 'Nachricht', :content => scanjob.message %>
+      <% else %>
+        <%= labeled_item :label => 'Nachricht', :content => 'Nachricht vorhanden' %>
+      <% end %>
     <% end %>
   </div>
 
@@ -48,11 +52,11 @@
     <%= labeled_item :label => 'Auftrag #',      :content => scanjob.id %>
     <%= labeled_item :label => 'Auftrag vom',    :content => scanjob.created_at.to_formatted_s(:long) %>
     <%= labeled_item :label => 'Quelle',         :content => entry.to_s %>
-    <%= labeled_item :label => 'Seminarapparat', :content => link_to(entry.sem_app.full_title, sem_app_path(entry.sem_app, :anchor => 'media')) %>
+    <%= labeled_item :label => 'Seminarapparat', :content => "(#{entry.sem_app.id}) #{link_to(entry.sem_app.full_title, sem_app_path(entry.sem_app, :anchor => 'media'))}" %>
     <div class="no-print">
       <%= labeled_item :label => 'Auftrag von',  :content => scanjob.creator.present? ? scanjob.creator.to_s : '-' %>
     </div>
-    <%= labeled_item :label => 'Kommentar',      :content => entry.comment %>
+    <%= labeled_item :label => 'Kommentar',      :content => scanjob.comment %>
   </div>
 
   <div class="pui-view align-center">

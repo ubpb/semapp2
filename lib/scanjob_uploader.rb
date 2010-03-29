@@ -34,7 +34,7 @@ class ScanjobUploader
 
     Entry.transaction do
       if entry.scanjob.present?
-        attachment = FileAttachment.new(:file => file, :scanjob => true)
+        attachment = FileAttachment.new(:file => file, :description => entry.scanjob.comment, :scanjob => true)
         attachment.file.instance_write(:file_name, File.basename(filename))
         entry.file_attachments << attachment
         entry.scanjob.destroy

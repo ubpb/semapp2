@@ -9,7 +9,11 @@
     <%= f.input :signature,  :label => 'Signatur in der Bibliothek', :required => true, :hint => '<b>Bitte beachten Sie:</b> Wir scannen ausschlie&szlig;lich B&uuml;cher und Zeitschriften aus unserem Bestand. Geben Sie bitte dazu die Signatur der o.g. Quelle an. Bitte recherchieren Sie die Signatur mit unserem <a href="https://ubaleph.uni-paderborn.de/F" target="blank">Katalog</a>' %>
     <%= f.input :pages_from, :label => 'Seiten von', :required => true %>
     <%= f.input :pages_to,   :label => 'Seiten bis', :required => true %>
-    <%= f.input :message,    :label => 'Ihre Nachricht an uns', :required => false, :input_html => {:rows => 2} %>
+    <%= f.input :comment,    :label => 'Kommentar', :required => true, :input_html => {:rows => 2}, :hint => 'Öffentlicher Kommentar: Der Text wird Ihren Studierenden neben der gescannten Datei angezeigt. Sie können hier z.B. Bearbeitungshinweise angeben. Beispiele: "Bitte sorgfältig lesen", "Kapitel 1-3", etc.' %>
+  <% end %>
+
+  <% f.inputs :name => 'Interne Bearbeitunshinweise' do %>
+    <%= f.input :message, :label => 'Ihre Nachricht an uns', :required => false, :input_html => {:rows => 2}, :hint => 'Ihre Nachricht/Hinweise an die Bibliothek. Wird nicht öffentlich angezeigt.' %>
   <% end %>
 
   <% f.buttons do %>

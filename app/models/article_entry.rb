@@ -9,12 +9,8 @@ class ArticleEntry < Entry
   set_table_name :article_entries
   
   # Validation
-  validates_presence_of :author
-  validates_presence_of :title
   validates_presence_of :journal
-  validates_presence_of :volume
   validates_presence_of :year
-  validates_presence_of :issue
   validates_presence_of :pages_from
   validates_presence_of :pages_to
   validates_numericality_of :pages_from, :only_integer => true

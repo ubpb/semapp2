@@ -1,8 +1,11 @@
 <h3 class="section">Einen neuen Scanauftrag beauftragen</h3>
 
-<div class="pui-panel notice">
+<p>
   Hiermit beauftragen Sie die Bibliothek, f&uuml;r Sie den folgenden Artikel bzw. den folgenden Buchauszug,
-  f&uuml;r Ihren Seminarapparat <strong><%= h(@scanjob.entry.sem_app.title) %></strong> einzuscannen.<br/>
+  f&uuml;r Ihren Seminarapparat <strong><%= h(@scanjob.entry.sem_app.full_title) %></strong> einzuscannen.
+</p>
+
+<div class="pui-panel notice">
   <%= icon 'asterisk.png' %>
   Bitte beachten Sie: Nachdem Sie den Auftrag abgeschickt haben, wird der Eintrag für die Zeit der Bearbeitung
   durch die Bibliothek gesperrt.

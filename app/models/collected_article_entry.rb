@@ -9,11 +9,7 @@ class CollectedArticleEntry < Entry
   set_table_name :collected_article_entries
   
   # Validation
-  validates_presence_of :source_editor
-  validates_presence_of :source_title
   validates_presence_of :source_year
-  validates_presence_of :author
-  validates_presence_of :title
   validates_presence_of :pages_from
   validates_presence_of :pages_to
   validates_numericality_of :pages_from, :only_integer => true

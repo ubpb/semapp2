@@ -2,24 +2,20 @@
   <%= hidden_field_tag :origin_id, @origin_id %>
 
   <% f.inputs :name => "Angaben zum Sammelwerk" do %>
-    <%= f.input :source_editor,        :label => 'Herausgeber' %>
-    <%= f.input :source_title,         :label => 'Titel', :input_html => {:rows => 1} %>
+    <%= f.input :source_editor,        :label => 'Herausgeber', :required => false %>
+    <%= f.input :source_title,         :label => 'Titel', :input_html => {:rows => 1}, :required => false %>
     <%= f.input :source_subtitle,      :label => 'Untertitel', :input_html => {:rows => 1}, :required => false %>
     <%= f.input :source_year,          :label => 'Jahr', :required => true %>
     <%= f.input :source_place,         :label => 'Verlagsort', :required => false %>
     <%= f.input :source_publisher,     :label => 'Verlag', :required => false %>
     <%= f.input :source_edition,       :label => 'Auflage', :required => false %>
-    <%= f.input :source_series_title,  :label => 'Reihentitel', :input_html => {:rows => 1}, :required => false %>
-    <%= f.input :source_series_volume, :label => 'Band', :required => false %>
     <%= f.input :source_isbn,          :label => 'ISBN', :required => false %>
-    <%= f.input :source_signature,     :label => 'Signatur in der Bibliothek', :required => false %>
+    <%= f.input :source_signature,     :label => 'Signatur in der Bibliothek', :required => false, :hint => 'Wenn Sie hier die Signatur der Bibliothek angeben (sofern vorhanden), verlinken wir diesen Eintrag automatisch mit unserem Katalog. Bitte recherchieren Sie die Signatur mit unserem <a href="https://ubaleph.uni-paderborn.de/F" target="blank">Katalog</a>' %>
   <% end %>
 
   <% f.inputs :name => "Angaben zum Beitrag" do %>
-    <%= f.input :author,     :label => 'Author(en)' %>
-    <%= f.input :title,      :label => 'Titel', :input_html => {:rows => 1} %>
-    <%= f.input :subtitle,   :label => 'Untertitel', :input_html => {:rows => 1}, :required => false %>
-    <%= f.input :volume,     :label => 'Band', :required => false %>
+    <%= f.input :author,     :label => 'Autor(en)', :required => false %>
+    <%= f.input :title,      :label => 'Titel', :input_html => {:rows => 1}, :required => false %>
     <%= f.input :pages_from, :label => 'Seiten von', :required => true %>
     <%= f.input :pages_to,   :label => 'Seiten bis', :required => true %>
   <% end %>
