@@ -22,10 +22,10 @@ class Scanjob < ActiveRecord::Base
   validates_numericality_of :pages_to, :only_integer => true
 
   # Scopes
-  named_scope :ordered,    lambda { { :conditions => { :state => Scanjob::States[:ordered]  } } }
-  named_scope :accepted,   lambda { { :conditions => { :state => Scanjob::States[:accepted] } } }
-  named_scope :rejected,   lambda { { :conditions => { :state => Scanjob::States[:rejected] } } }
-  named_scope :deferred,   lambda { { :conditions => { :state => Scanjob::States[:deferred] } } }
+  named_scope :ordered,    lambda { { :conditions => { :state => Scanjob::States[:ordered]  }, :include => {:entry => :sem_app} } }
+  named_scope :accepted,   lambda { { :conditions => { :state => Scanjob::States[:accepted] }, :include => {:entry => :sem_app} } }
+  named_scope :rejected,   lambda { { :conditions => { :state => Scanjob::States[:rejected] }, :include => {:entry => :sem_app} } }
+  named_scope :deferred,   lambda { { :conditions => { :state => Scanjob::States[:deferred] }, :include => {:entry => :sem_app} } }
   named_scope :ordered_by, lambda { |*order| { :order => order.flatten.first || 'created_at'  } }
 
   #################################################################################

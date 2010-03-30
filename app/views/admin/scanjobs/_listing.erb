@@ -13,7 +13,6 @@
         Signatur: <strong><%= sj.signature %></strong> //
         Seite von-bis: <strong><%= sj.pages_from %>-<%= sj.pages_to %></strong>
         <p>
-          <strong>Quelle:</strong> <%= sj.entry.instance.to_s %><br/>
           <strong>Seminarapparat:</strong> (<%= sj.entry.sem_app.id %>) <%= link_to(sj.entry.sem_app.full_title, sem_app_path(sj.entry.sem_app, :anchor => 'media')) %>
         </p>
 
