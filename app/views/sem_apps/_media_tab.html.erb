@@ -21,9 +21,17 @@
   <% if @media.present? %>
     <% if @sem_app.is_unlocked_in_session?(session) or can?(:edit, @sem_app) %>
       <% @media.each do |entry| %>
-        <% cache("#{entry.cache_key}") do %>
-          <%= render 'entry', :entry => entry %>
+
+        <% if entry.to_be_published %>
+          <% if can?(:edit, @sem_app) %>
+            <%= render 'entry', :entry => entry %>
+          <% end %>
+        <% else %>
+          <% cache("#{entry.cache_key}") do %>
+            <%= render 'entry', :entry => entry %>
+          <% end %>
         <% end %>
+
       <% end %>
     <% else %>
       <%= render 'unlock_panel' %>
