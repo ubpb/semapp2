@@ -18,9 +18,11 @@
 
   <div id="books-listing" class="listing">
     <% @books.each do |book| %>
-      <%# cache(book.cache_key) do %>
+
+      <% cache(book.cache_key) do %>
         <%= render 'book', :book => book, :sem_app => @sem_app %>
-      <%# end %>
+      <% end %>
+
     <% end %>
   </div>
 <% else %>
