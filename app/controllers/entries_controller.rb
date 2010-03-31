@@ -12,18 +12,25 @@ class EntriesController < ApplicationController
   end
 
   def reorder
-    @sem_app = SemApp.find(params[:sem_app_id])
+    @sem_app = SemApp.find(params[:sem_app_id], :include => [:entries])
     unauthorized! if cannot? :edit, @sem_app
 
-    entries = params[:entry]
-    if entries.present?
-      entries.each_index do |i|
-        id = params[:entry][i]
-        Entry.find_by_id_and_sem_app_id!(id, @sem_app.id).update_attribute(:position, i+1) if id.present?
+    Entry.transaction do
+      entries    = params[:entry]
+      db_entries = @sem_app.entries
+
+      if db_entries.present?
+        db_entries.each do |e|
+          current_pos = e.position
+
+          index   = entries.index(e.id.to_s).try(:to_i)
+          new_pos = index.try(:+, 1)
+
+          e.update_attribute(:position, new_pos) if new_pos.present? and new_pos != current_pos
+        end
       end
     end
 
-    #redirect_to sem_app_path(@sem_app, :anchor => 'media')
     render :nothing => true
   end
   

@@ -103,12 +103,8 @@ class SemApp < ActiveRecord::Base
       import_entries!(ArticleEntry, source_sem_app)
       import_entries!(CollectedArticleEntry, source_sem_app)
       import_entries!(MilessFileEntry, source_sem_app)
-
-      self.resync_positions
     end
   end
-
-
 
   def transit(semester, import_entries = false)
     if semester.present? and semester.is_a?(Semester)
@@ -138,7 +134,7 @@ class SemApp < ActiveRecord::Base
   end
 
   def next_position(origin_id)
-    position = 0
+    position = 1
 
     begin
       if origin_id.present?
@@ -150,15 +146,6 @@ class SemApp < ActiveRecord::Base
     end
 
     return position
-  end
-
-  def resync_positions
-    Entry.transaction do
-      entries = Entry.for_sem_app(self).ordered_by('position asc')
-      if entries.present?
-        entries.each_with_index { |entry, i| entry.update_attribute(:position, i+1) }
-      end
-    end
   end
 
   ###########################################################################################

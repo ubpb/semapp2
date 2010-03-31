@@ -222,7 +222,11 @@ class SemAppsController < ApplicationController
     miless_file_entries = MilessFileEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
 
     @media = [headline_entries, text_entries, monograph_entries, article_entries, collected_article_entries, miless_file_entries].flatten.compact
-    @media = @media.sort {|x,y| x.position <=> y.position}
+    @media = @media.sort do |x,y|
+      return -1 if x.position.blank?
+      return -1 if y.position.blank?
+      x.position <=> y.position
+    end
   end
 
 end
