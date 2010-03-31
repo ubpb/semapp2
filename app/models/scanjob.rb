@@ -68,6 +68,12 @@ class Scanjob < ActiveRecord::Base
     end
   end
 
+  def before_destroy
+    if self.entry
+      touch_object(self.entry)
+    end
+  end
+
   def touch_object(object)
     current_time = current_time_from_proper_timezone
 
