@@ -15,21 +15,9 @@ class EntriesController < ApplicationController
     @sem_app = SemApp.find(params[:sem_app_id], :include => [:entries])
     unauthorized! if cannot? :edit, @sem_app
 
-    Entry.transaction do
-      entries    = params[:entry]
-      db_entries = @sem_app.entries
-
-      if db_entries.present?
-        db_entries.each do |e|
-          current_pos = e.position
-
-          index   = entries.index(e.id.to_s).try(:to_i)
-          new_pos = index.try(:+, 1)
-
-          e.update_attribute(:position, new_pos) if new_pos.present? and new_pos != current_pos
-        end
-      end
-    end
+    entries = params[:entry]
+    sql     = "select reorder(#{@sem_app.id}, ARRAY[#{entries.join(',')}]);"
+    Entry.connection.execute(sql)
 
     render :nothing => true
   end
