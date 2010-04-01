@@ -4,6 +4,8 @@ class AbstractEntriesController < ApplicationController
 
   before_filter :authenticate_user!
 
+  cache_sweeper :entry_sweeper
+
   def new
     @sem_app = SemApp.find(params[:sem_app_id])
     unauthorized! if cannot? :edit, @sem_app

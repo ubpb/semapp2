@@ -4,6 +4,8 @@ class BooksController < ApplicationController
 
   before_filter :load_sem_app
 
+  cache_sweeper :book_sweeper
+
   def index
     @ordered_books  = Book.for_sem_app(@sem_app).ordered.ordered_by('created_at')
     @removed_books  = Book.for_sem_app(@sem_app).removed.ordered_by('created_at')
