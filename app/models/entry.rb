@@ -51,4 +51,20 @@ class Entry < ActiveRecord::Base
     end
   end
 
+  protected
+
+  #################################################################################
+  #
+  # AR Callbacks
+  #
+  #################################################################################
+
+  def before_save
+    expire_fragment(self.cache_key) if self.present? and self.cache_key.present?
+  end
+
+    def method_name
+
+    end
+
 end
