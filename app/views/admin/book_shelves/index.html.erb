@@ -1,0 +1,39 @@
+<h3 class="section">Regalübersicht</h3>
+
+<div class="pui-view align-right">
+  <% form_tag admin_book_shelves_path, :method => :get do %>
+    <label>Fachbibliothek:</label>
+    <%= collection_select(:filter, :location, Location.all, :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
+    <%= submit_tag 'Filtern' %>
+  <% end %>
+</div>
+
+<% if @shelves.present?  %>
+  <h5><%= @shelves.first.sem_app.location.title %></h5>
+
+  <table class="pui-tableview">
+    <thead>
+      <tr>
+        <th style="width: 70px">Regal Nr.</th>
+        <th>Seminarapparat</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @shelves.each_with_index do |s, n| %>
+        <tr class="<%= (n % 2 == 0) ? 'even' : 'odd' -%>">
+          <td style="text-align:center">
+            <%= s.slot_number %>
+          </td>
+          <td>
+            <strong><%= link_to h(s.sem_app.title), admin_sem_app_path(s.sem_app) %></strong><br/>
+            Dozent(en): <%= h(s.sem_app.tutors) %><br/>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="pui-panel notice align-center">
+    Keine Regale gefunden gefunden. Wählen Sie eine gültige Fachbibliothek.
+  </div>
+<% end %>

@@ -46,6 +46,8 @@ html[xmlns] .clearfix {
 
 .only-print { display: none; }
 
+table.pui-tableview td { width: auto }
+
 /* Page structure
 ----------------------------------------------------------------------------------------------------*/
 

@@ -11,6 +11,7 @@ ActionController::Routing::Routes.draw do |map|
     end
 
     admin.resources :books, :only => [:edit, :update, :destroy, :defer, :dedefer, :placed_in_shelf, :removed_from_shelf, :reference], :member => {:defer => :put, :dedefer => :put, :placed_in_shelf => :put, :removed_from_shelf => :put, :reference => :put}
+    admin.resources :book_shelves, :as => 'shelves', :only => [:index]
 
     admin.resources :scanjobs, :member => {:defer => :put, :dedefer => :put}, :collection => {:upload => :put}
     admin.scanjob_print_job   'scanjobs/:id/print-job',         :controller => 'scanjobs', :action => 'print_job'
