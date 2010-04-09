@@ -54,7 +54,7 @@
     <%= labeled_item :label => 'Quelle',         :content => entry.to_s %>
     <%= labeled_item :label => 'Seminarapparat', :content => "(#{entry.sem_app.id}) #{link_to(entry.sem_app.full_title, sem_app_path(entry.sem_app, :anchor => 'media'))}" %>
     <div class="no-print">
-      <%= labeled_item :label => 'Auftrag von',  :content => scanjob.creator.present? ? scanjob.creator.to_s : '-' %>
+      <%= labeled_item :label => 'Auftrag von',  :content => scanjob.creator.present? ? "#{scanjob.creator.name} (#{scanjob.creator.login}), #{mail_to(scanjob.creator.email)}" : '-' %>
     </div>
     <%= labeled_item :label => 'Kommentar',      :content => scanjob.comment %>
   </div>
