@@ -40,6 +40,13 @@
       </p>
     <% end %>
 
+    <% if book.reference_copy == 3 %>
+      <p>
+        <%= icon 'asterisk.png' %>
+        <i>Dieses Exemplar steht in der Mediathek des ZfS (H2.211)</i>
+      </p>
+    <% end %>
+
     <%= render 'entries/signature', :entry => book %>
     
     <%= render 'entries/amazon', :entry => book %>
