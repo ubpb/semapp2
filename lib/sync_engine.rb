@@ -117,7 +117,7 @@ class SyncEngine
       :edition     => ils_entry[:edition],
       :place       => ils_entry[:place],
       :publisher   => ils_entry[:publisher],
-      :isbn        => ils_entry[:isbn],
+      :isbn        => ils_entry[:isbn]
     }
 
     db_entry = sem_app.book_by_ils_id(ils_id)
@@ -126,7 +126,7 @@ class SyncEngine
 
   def create_entry(options)
     book = Book.new(options)
-    book.state = "in_shelf",
+    book.state = "in_shelf"
     unless book.save(false)
       raise book.errors.full_messages.to_sentence
     end
