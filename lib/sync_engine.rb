@@ -29,14 +29,6 @@ class SyncEngine
     puts "#"
   end
 
-  private
-
-  def load_sem_apps
-    current_semester = Semester.current
-    raise "No current semester" unless current_semester
-    return SemApp.find_all_by_semester_id(current_semester.id)
-  end
-
   def sync_sem_app(sem_app)
     print "Syncing #{sem_app.id}... "
     
@@ -89,6 +81,14 @@ class SyncEngine
     end
   end
 
+  private
+
+  def load_sem_apps
+    current_semester = Semester.current
+    raise "No current semester" unless current_semester
+    return SemApp.find_all_by_semester_id(current_semester.id)
+  end
+
   def mergable_hash_from_db_entries(db_entries)
     m = {}
     db_entries.each {|e| m[e.ils_id] = e }
@@ -110,7 +110,6 @@ class SyncEngine
       :sem_app     => sem_app,
       :ils_id      => ils_id,
       :placeholder => nil,
-      :state       => :in_shelf,
       :signature   => ils_entry[:signature] || 'n.n',
       :title       => ils_entry[:title] || 'n.n',
       :author      => ils_entry[:author] || 'n.n',
@@ -127,6 +126,7 @@ class SyncEngine
 
   def create_entry(options)
     book = Book.new(options)
+    book.state = :in_shelf,
     unless book.save(false)
       raise book.errors.full_messages.to_sentence
     end
