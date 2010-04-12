@@ -126,7 +126,7 @@ class SyncEngine
 
   def create_entry(options)
     book = Book.new(options)
-    book.state = :in_shelf,
+    book.state = "in_shelf",
     unless book.save(false)
       raise book.errors.full_messages.to_sentence
     end
