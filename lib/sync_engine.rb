@@ -43,10 +43,10 @@ class SyncEngine
           # iterate over all card entries
           ils_entries.each do |s, e|
             unless db_entries.include?(s)
-              # found a book that is in the ILS AND NOT in the db: Create
+              # found a book that is in the ILS AND NOT in the db => Create
               create_or_update_entry(sem_app, s, e)
             else
-              # found a book that is in the ILS AND in the db: Update
+              # found a book that is in the ILS AND in the db => Update
               create_or_update_entry(sem_app, s, e)
             end
           end
@@ -71,6 +71,7 @@ class SyncEngine
         # finished we are
         print "Ok."
       rescue Exception => e
+        puts e.backtrace
         @errors += 1
         print "Error! #{e}"
       ensure
@@ -133,8 +134,12 @@ class SyncEngine
   end
 
   def update_entry(db_entry, options)
-    db_entry.update_attributes(options)
-    unless db_entry.save(false)
+    # ignore books that are rejected
+    if db_entry.state != Book::States[:rejected]
+      options[:state] = :in_shelf
+    end
+
+    unless db_entry.update_attributes(options)
       raise "Failed for signature #{options[:signature]} while updating an exsisting entry."
     end
   end
