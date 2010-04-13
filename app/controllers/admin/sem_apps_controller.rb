@@ -25,9 +25,9 @@ class Admin::SemAppsController < Admin::ApplicationController
     @sem_app        = SemApp.find_by_id(params[:id])
     (flash[:error] = "Dieser Apparat existiert nicht"; redirect_to admin_sem_apps_path) unless @sem_app.present?
 
-    @ordered_books  = Book.for_sem_app(@sem_app).ordered.ordered_by('created_at')
-    @removed_books  = Book.for_sem_app(@sem_app).removed.ordered_by('created_at')
-    @deferred_books = Book.for_sem_app(@sem_app).deferred.ordered_by('created_at')
+    @ordered_books  = Book.for_sem_app(@sem_app).ordered.ordered_by('signature asc')
+    @removed_books  = Book.for_sem_app(@sem_app).removed.ordered_by('signature asc')
+    @deferred_books = Book.for_sem_app(@sem_app).deferred.ordered_by('signature asc')
 
     respond_to do |format|
       format.html { render 'show',  :format => 'html' }
