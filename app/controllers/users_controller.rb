@@ -6,7 +6,14 @@ class UsersController < ApplicationController
 
   def show
     @user = current_user
-    @my_sem_apps = SemApp.find(:all, :conditions => {:creator_id => @user.id}, :order => 'title')
+
+    @my_sem_apps = SemApp.paginate(
+      :all,
+      :per_page => 10,
+      :page => params[:page],
+      :conditions => {:creator_id => @user.id},
+      :order => "sem_apps.semester_id asc, sem_apps.title asc")
+
     @ownerships  = @user.ownerships.map {|o| o.sem_app}
   end
 

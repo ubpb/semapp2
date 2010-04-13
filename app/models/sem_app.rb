@@ -31,6 +31,7 @@ class SemApp < ActiveRecord::Base
 
   # Scopes
   named_scope :from_current_semester, lambda { { :conditions => { :semester_id => Semester.current.id } } }
+  named_scope :ordered_by,  lambda { |*order| { :order => order.flatten.first || 'title DESC' } }
   named_scope :unapproved, lambda { { :conditions => { :approved => false } } }
   named_scope :approved, lambda { { :conditions => { :approved => true } } }
   named_scope :with_book_jobs, lambda { { :include => [:books], :conditions => "books.state = '#{Book::States[:ordered]}' OR books.state = '#{Book::States[:rejected]}'" } }

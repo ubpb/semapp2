@@ -25,6 +25,10 @@
       <% end %>
     </tbody>
   </table>
+
+  <% if sem_apps.respond_to?(:total_pages) %>
+    <%= will_paginate sem_apps %>
+  <% end %>
 <% else %>
   <div class="pui-panel align-center">
     Keine Seminarapparate verfügbar
