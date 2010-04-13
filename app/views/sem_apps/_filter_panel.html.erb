@@ -1,24 +1,37 @@
+<% filtered = @filter.filtered?(filter_for) %>
+
 <div id="filter-panel" class="pui-overlay">
   <h3 class="section">Seminarapparate Suchen</h3>
   <% form_tag(filter_path, :class => 'formtastic') do %>
     <fieldset class="inputs">
       <ol>
-        <li class="string">
-          <label>Semester</label>
-          <%= collection_select(:filter, :semester, Semester.all, :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
-        </li>
-        <li class="string">
-          <label>Fachbibliothek</label>
-          <%= collection_select(:filter, :location, Location.all, :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
-        </li>
-        <li class="string">
-          <label>Titel</label>
-          <%= text_field_tag "filter[title]", @filter.title, {:style => 'width: 190px'} %>
-        </li>
-        <li class="string">
-          <label>Dozent</label>
-          <%= text_field_tag "filter[tutors]", @filter.tutors, {:style => 'width: 190px'}  %>
-        </li>
+        <% if filter_for.include?(:semester) %>
+          <li class="string">
+            <label>Semester</label>
+            <%= collection_select(:filter, :semester, Semester.all, :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
+          </li>
+        <% end %>
+
+        <% if filter_for.include?(:location) %>
+          <li class="string">
+            <label>Fachbibliothek</label>
+            <%= collection_select(:filter, :location, Location.all, :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
+          </li>
+        <% end %>
+
+        <% if filter_for.include?(:title) %>
+          <li class="string">
+            <label>Titel</label>
+            <%= text_field_tag "filter[title]", @filter.title, {:style => 'width: 190px'} %>
+          </li>
+        <% end %>
+
+        <% if filter_for.include?(:tutors) %>
+          <li class="string">
+            <label>Dozent</label>
+            <%= text_field_tag "filter[tutors]", @filter.tutors, {:style => 'width: 190px'}  %>
+          </li>
+        <% end %>
       </ol>
     </fieldset>
     <fieldset class="buttons">
@@ -34,20 +47,33 @@
 <div id="filter-info-panel" class="pui-panel align-right">
   <p>
     Anzahl der Seminarapparate: <%= @filter.scope.count %>
-    <% if @filter.filtered? %>
+    <% if filtered %>
       <strong>(Gefiltert)</strong>
       <% filter_strings = [] %>
-      <% filter_strings << "Semester = '#{Semester.find(@filter.semester).title}'" if @filter.semester.present? %>
-      <% filter_strings << "Fachbibliothek = '#{Location.find(@filter.location).title}'" if @filter.location.present? %>
-      <% filter_strings << "Titel = '#{@filter.title}'" if @filter.title.present? %>
-      <% filter_strings << "Dozent(en) = '#{@filter.tutors}'" if @filter.tutors.present? %>
+      
+      <% if filter_for.include?(:semester) %>
+        <% filter_strings << "Semester = '#{Semester.find(@filter.semester).title}'" if @filter.semester.present? %>
+      <% end %>
+
+      <% if filter_for.include?(:location) %>
+        <% filter_strings << "Fachbibliothek = '#{Location.find(@filter.location).title}'" if @filter.location.present? %>
+      <% end %>
+
+      <% if filter_for.include?(:title) %>
+        <% filter_strings << "Titel = '#{@filter.title}'" if @filter.title.present? %>
+      <% end %>
+
+      <% if filter_for.include?(:tutors) %>
+        <% filter_strings << "Dozent(en) = '#{@filter.tutors}'" if @filter.tutors.present? %>
+      <% end %>
+      
       <%= filter_strings.join(", ") %>
     <% else %>
       <strong>(Gesamt)</strong>
     <% end %>
   </p>
   <div>
-    <% if @filter.filtered? %>
+    <% if filtered %>
       <a href="#" rel="#filter-panel" class="pui-overlay-trigger pui-button">
         <%= icon 'ui-search-field.png' %>
         Suche &auml;ndern

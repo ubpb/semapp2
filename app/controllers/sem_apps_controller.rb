@@ -2,16 +2,17 @@
 
 class SemAppsController < ApplicationController
 
-  SEM_APP_FILTER_NAME        = 'sem_app_filter_name'.freeze
-  SEM_APP_CLONES_FILTER_NAME = 'sem_app_clones_filter_name'.freeze
+  SEM_APP_FILTER_NAME                 = 'sem_app_filter_name'.freeze
+  SEM_APP_SEMESTER_INDEX_FILTER_NAME  = 'sem_app_semester_index_filter_name'.freeze
+  SEM_APP_CLONES_FILTER_NAME          = 'sem_app_clones_filter_name'.freeze
 
   before_filter :load_sem_app, :only => [:show, :edit, :update, :unlock, :transit, :clones, :filter_clones, :clone, :clear, :show_books, :show_media]
   
   def index
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
+    @filter.approved = true
     @sem_apps = @filter.scope.paginate(
       :all,
-      :conditions => {:approved => true},
       :per_page => 10,
       :page => params[:page],
       :order => "sem_apps.semester_id asc, sem_apps.title asc")
@@ -21,6 +22,23 @@ class SemAppsController < ApplicationController
     filter = params[:filter].present? ? SemAppsFilter.new(params[:filter]) : SemAppsFilter.new()
     session[SEM_APP_FILTER_NAME] = filter
     redirect_to :action => :index
+  end
+
+  def semester_index
+    @filter = session[SEM_APP_SEMESTER_INDEX_FILTER_NAME] || SemAppsFilter.new
+    @filter.approved = true
+    @filter.semester =  Semester.current.id
+    @sem_apps = @filter.scope.paginate(
+      :all,
+      :per_page => 10,
+      :page => params[:page],
+      :order => "sem_apps.semester_id asc, sem_apps.title asc")
+  end
+
+  def filter_semester_index
+    filter = params[:filter].present? ? SemAppsFilter.new(params[:filter]) : SemAppsFilter.new()
+    session[SEM_APP_SEMESTER_INDEX_FILTER_NAME] = filter
+    redirect_to :action => :semester_index
   end
 
   def show

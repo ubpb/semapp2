@@ -26,6 +26,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :user, :only => [:show]
 
   # Sem Apps
+  map.semester_index        'semester',        :controller => 'sem_apps', :action => 'semester_index'
+  map.filter_semester_index 'semester/filter', :controller => 'sem_apps', :action => 'filter_semester_index'
+
   map.resources :sem_apps, :as => 'apps', :controller => 'sem_apps', :member => {:unlock => :post, :transit => :post, :clones => :get, :clone => :post, :filter_clones => :post, :clear => :delete, :show_books => :get, :show_media => :get}, :collection => {:filter => :post} do |sem_app|
     sem_app.resources :entries, :only => [:reorder, :new], :collection => {:reorder => :put}, :shallow => true do |entry|
       entry.resources :file_attachments, :as => 'attachments', :only => [:edit, :update, :destroy]

@@ -3,7 +3,7 @@
 class HomeController < ApplicationController
 
   def index
-    redirect_to sem_apps_path
+    redirect_to semester_index_path
   end
 
 end

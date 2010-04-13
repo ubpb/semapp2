@@ -1,6 +1,6 @@
 <h3 class="section">Gesamtliste</h3>
 
-<%= render 'filter_panel', :filter_path => filter_sem_apps_path %>
+<%= render 'filter_panel', :filter_path => filter_sem_apps_path, :filter_for => [:semester, :location, :title, :tutors] %>
 
 <%= render 'listing', :sem_apps => @sem_apps, :actions => [:show, :transit] %>
 

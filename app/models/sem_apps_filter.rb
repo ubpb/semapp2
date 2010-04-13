@@ -2,7 +2,7 @@
 
 class SemAppsFilter
 
-  attr_accessor :title, :tutors, :creator, :location, :semester, :ils_account, :slot_number, :unapproved_only, :bookjobs_only
+  attr_accessor :title, :tutors, :creator, :location, :semester, :ils_account, :slot_number, :unapproved_only, :bookjobs_only, :approved
 
   def initialize(filter = {})
     filter = {} unless filter
@@ -16,6 +16,7 @@ class SemAppsFilter
     @slot_number     = filter[:slot_number]   if filter[:slot_number].present?
     @unapproved_only = filter[:only] == "unapproved"
     @bookjobs_only   = filter[:only] == "bookjobs"
+    @approved        = filter[:approved]
   end
 
   def scope
@@ -28,12 +29,16 @@ class SemAppsFilter
     scope = scope.conditions "lower(book_shelves.ils_account) like ?", "#{@ils_account.downcase}%" unless @ils_account.blank?
     scope = scope.conditions "lower(book_shelves.slot_number) = ?", "#{@slot_number.downcase}" unless @slot_number.blank?
     scope = scope.conditions "approved = ?", false if @unapproved_only
+    scope = scope.conditions "approved = ?", @approved if @approved.present?
     scope = scope.conditions "books.state = ? OR books.state = ?", Book::States[:ordered], Book::States[:rejected] if @bookjobs_only
     scope
   end
 
-  def filtered?
-    [@title, @tutors, @creator, @location, @semester, @ils_account, @slot_number, @unapproved_only, @bookjobs_only].any? {|f| f.present?}
+  def filtered?(filters)
+    filters.each do |f|
+      return true if self.instance_variable_get("@#{f}").present?
+    end
+    false
   end
 
 end
