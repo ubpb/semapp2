@@ -19,7 +19,6 @@ Rails::Initializer.run do |config|
   # Specify gems that this application depends on and have them installed with rake gems:install
   config.gem 'RedCloth',      :version => '4.2.3',   :lib => 'RedCloth'
   config.gem 'devise',        :version => '1.0.4',   :lib => 'devise'
-  config.gem 'libxml-ruby',   :version => '1.1.3',   :lib => 'libxml'
   config.gem 'paperclip',     :version => '2.3.1.1', :lib => 'paperclip'
   config.gem 'will_paginate', :version => '2.3.12',  :lib => 'will_paginate'
   config.gem 'acts_as_list',  :version => '0.1.2',   :lib => 'acts_as_list'
@@ -27,6 +26,7 @@ Rails::Initializer.run do |config|
   config.gem 'png',           :version => '1.1.0',   :lib => 'png'
   config.gem 'cancan',        :version => '1.0.2',   :lib => 'cancan'
   config.gem 'provideal-ui',  :version => '0.2.0',   :lib => 'pui'
+  config.gem 'nokogiri',      :version => '1.4.1',   :lib => 'nokogiri'
   config.gem 'newrelic_rpm'
 
   # Only load the plugins named here, in the order given (default is alphabetical).

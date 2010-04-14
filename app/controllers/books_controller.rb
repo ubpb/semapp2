@@ -36,7 +36,7 @@ class BooksController < ApplicationController
 
       # Use pagination with will_paginate
       @results = WillPaginate::Collection.create(@page, @per_page, @total_results) do |pager|
-        pager.replace aleph.get_records(t, @page, @per_page)
+        pager.replace(aleph.get_records(t, @page, @per_page))
       end
     end
   end

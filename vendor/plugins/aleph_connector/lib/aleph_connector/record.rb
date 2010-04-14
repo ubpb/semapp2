@@ -1,22 +1,18 @@
 # encoding: utf-8
 
-require 'xml'
-
 module Aleph
   class Record
 
     include Aleph::XmlUtils
 
     def initialize(doc_number, node)
-      raise "Doc Number required"                    unless doc_number.present?
-      raise "Data is required"                       unless node.present?
-      raise "Data must be of type LibXML::XML::Node" unless node.class == LibXML::XML::Node
+      raise "Doc Number required" unless doc_number.present?
+      raise "Data is required"    unless node.present?
 
       @doc_number = doc_number.to_i.to_s
-
-      data      = LibXML::XML::Document.new()
-      data.root = node.copy(true)
-      @data     = data
+      d      = Nokogiri::XML::Document.new
+      d.root = node.dup
+      @data  = d
     end
 
     def doc_number
@@ -38,7 +34,7 @@ module Aleph
     end
 
     def varfield(id)
-      varfield = @data.find_first("//varfield[@id=\"#{id}\"]")
+      varfield = @data.xpath("//varfield[@id=\"#{id}\"]")[0]
       return nil unless varfield.present?
 
       result = {:id => nil, :i1 => nil, :i2 => nil, :subfields => {}}
@@ -47,7 +43,7 @@ module Aleph
       result[:i1] = attribute_from_node(varfield, 'i1')
       result[:i2] = attribute_from_node(varfield, 'i2')
 
-      varfield.find('subfield').each do |s|
+      varfield.xpath('subfield').each do |s|
         label   = attribute_from_node(s, 'label')
         content = content_from_node(s)
         if (label and content)
@@ -59,11 +55,11 @@ module Aleph
     end
 
     def has_fixfield?(id)
-      @data.find_first("//fixfield[@id=\"#{id}\"]").present?
+      @data.xpath("//fixfield[@id=\"#{id}\"]")[0].present?
     end
 
     def has_varfield?(id)
-      @data.find_first("//varfield[@id=\"#{id}\"]").present?
+      @data.xpath("//varfield[@id=\"#{id}\"]")[0].present?
     end
 
     #########################################################################################

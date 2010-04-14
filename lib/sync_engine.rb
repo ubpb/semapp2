@@ -111,9 +111,9 @@ class SyncEngine
       :sem_app     => sem_app,
       :ils_id      => ils_id,
       :placeholder => nil,
-      :signature   => ils_entry[:signature] || 'n.n',
-      :title       => ils_entry[:title] || 'n.n',
-      :author      => ils_entry[:author] || 'n.n',
+      :signature   => ils_entry[:signature],
+      :title       => ils_entry[:title],
+      :author      => ils_entry[:author],
       :year        => ils_entry[:year],
       :edition     => ils_entry[:edition],
       :place       => ils_entry[:place],
@@ -139,7 +139,8 @@ class SyncEngine
       options[:state] = :in_shelf
     end
 
-    unless db_entry.update_attributes(options)
+    db_entry.attributes = options
+    unless db_entry.save(false)
       raise "Failed for signature #{options[:signature]} while updating an exsisting entry."
     end
   end

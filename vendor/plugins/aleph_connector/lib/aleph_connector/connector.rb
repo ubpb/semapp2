@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 require 'net/http'
-require 'xml'
 
 module Aleph #:nodoc:
 
@@ -85,10 +84,10 @@ module Aleph #:nodoc:
       url  = "#{@base_url}?op=bor-auth&bor_id=#{ils_account_no}&verification=#{verification}&library=#{@library}"
       data = load_url(url)
 
-      if data.find_first('/bor-auth/error')
+      if data.xpath('/bor-auth/error')[0]
         raise Aleph::AuthenticationError, "Authentication failed"
       else
-        user = Aleph::User.new(ils_account_no, data.find_first('/bor-auth'))
+        user = Aleph::User.new(ils_account_no, data.xpath('/bor-auth')[0])
 
         unless @allowed_user_types.allows?(user.status)
           raise Aleph::UnsupportedAccountTypeError, "Authentication not allowed. Wrong user type."
@@ -116,10 +115,18 @@ module Aleph #:nodoc:
       raise "#{ils_account_no}: #{error}" if error.present?
 
       lendings = []
-      data.find('//bor-info/item-l').each do |l|
+      data.xpath('//bor-info/item-l').each do |l|
         lendings << {
+          :barcode    => content_from_node(l, 'z30/z30-barcode'),
           :doc_number => content_from_node(l, 'z13/z13-doc-number'),
-          :barcode    => content_from_node(l, 'z30/z30-barcode')
+          :signature  => content_from_node(l, 'z13/z13-call-no'),
+          :title      => content_from_node(l, 'z13/z13-title'),
+          :author     => content_from_node(l, 'z13/z13-author'),
+          :year       => content_from_node(l, 'z13/z13-year'),
+          :edition    => content_from_node(l, 'z13/z13-user-defined-1'),
+          :place      => content_from_node(l, 'z13/z13-imprint'),
+          :publisher  => content_from_node(l, 'z13/z13-user-defined-4'),
+          :isbn       => content_from_node(l, 'z13/z13-isbn-issn')
         }
       end
 
@@ -132,7 +139,7 @@ module Aleph #:nodoc:
     def load_record(doc_number)
       url  = "#{@base_url}?op=find-doc&doc_num=#{doc_number}&base=#{@search_base}"
       data = load_url(url)
-      node = data.find_first('//find-doc/record')
+      node = data.xpath('//find-doc/record')[0]
       return Aleph::Record.new(doc_number, node) if node.present?
     end
 
@@ -140,7 +147,7 @@ module Aleph #:nodoc:
       url  = "#{@base_url}?op=item-data&doc_num=#{doc_number}&base=#{@search_base}"
       data = load_url(url)
       items = []
-      data.find('//item-data/item').each do |item|
+      data.xpath('//item-data/item').each do |item|
         items << Aleph::Item.new(doc_number, item)
       end
 
@@ -191,7 +198,7 @@ module Aleph #:nodoc:
       data = load_url(url)
 
       records = []
-      data.find('//present/record').each do |r|
+      data.xpath('//present/record').each do |r|
         records << Aleph::Record.new(content_from_node(r, 'doc_number'), r)
       end
 
@@ -199,11 +206,10 @@ module Aleph #:nodoc:
     end
 
     ##
-    # Loads the given Aleph url and parses the XML result into
-    # a LibXML::XML::Document.
+    # Loads the given Aleph url and parses the XML using Nokogiri
     #
     def load_url(url)
-      XML::Parser.string(Net::HTTP.get_response(URI.parse(URI.escape(url))).body).parse
+      Nokogiri::XML(Net::HTTP.get_response(URI.parse(URI.escape(url))).body)
     end
 
   end

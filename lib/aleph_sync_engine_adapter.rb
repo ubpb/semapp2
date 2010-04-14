@@ -12,34 +12,25 @@ class AlephSyncEngineAdapter < SyncEngineAdapter
 
   def get_books(ils_account)
     lendings = @aleph.get_lendings(ils_account)
-    if lendings.present?
-      books = {}
+    books = {}
+
+    if lendings.present?  
       lendings.each do |l|
         sleep(1/100)
-        record = @aleph.get_record(l[:doc_number])
-        item   = @aleph.get_item(l[:doc_number], l[:barcode])
-
-        if record.present? and item.present?
-          books[record.doc_number] = {
-            :signature  => item.call_no_1,
-            :title      => record.title,
-            :author     => record.author,
-            :year       => record.year,
-            :edition    => record.edition,
-            :place      => record.place,
-            :publisher  => record.publisher,
-            :isbn       => record.isbn,
-          }
-        end
+        books[l[:doc_number]] = {
+          :signature  => l[:signature],
+          :title      => l[:title],
+          :author     => l[:author],
+          :year       => l[:year],
+          :edition    => l[:edition],
+          :place      => l[:place],
+          :publisher  => l[:publisher],
+          :isbn       => l[:isbn]
+        }
       end
-      return books
-    else
-      return {}
     end
+
+    return books
   end
-
-  private
-
-  
 
 end
