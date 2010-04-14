@@ -100,12 +100,13 @@ class SemApp < ActiveRecord::Base
 
   def import_entries(source_sem_app)
     if source_sem_app.present? and source_sem_app.is_a?(SemApp)
-      import_entries!(HeadlineEntry, source_sem_app)
-      import_entries!(TextEntry, source_sem_app)
-      import_entries!(MonographEntry, source_sem_app)
-      import_entries!(ArticleEntry, source_sem_app)
-      import_entries!(CollectedArticleEntry, source_sem_app)
-      import_entries!(MilessFileEntry, source_sem_app)
+      import_entries!(source_sem_app)
+      #import_entries!(HeadlineEntry, source_sem_app)
+      #import_entries!(TextEntry, source_sem_app)
+      #import_entries!(MonographEntry, source_sem_app)
+      #import_entries!(ArticleEntry, source_sem_app)
+      #import_entries!(CollectedArticleEntry, source_sem_app)
+      #import_entries!(MilessFileEntry, source_sem_app)
     end
   end
 
@@ -167,11 +168,12 @@ class SemApp < ActiveRecord::Base
 
   private
   
-  def import_entries!(clazz, source_sem_app)
-    clazz.find(:all, :conditions => {:sem_app_id => source_sem_app.id}).each do |entry|
-      clone = entry.clone(:exclude => [:file_attachments, :scanjob])
+  def import_entries!(source_sem_app)
+    source_sem_app.entries.each do |entry|
+      instance = entry.instance
+      clone = instance.clone(:exclude => [:file_attachments, :scanjob])
       
-      entry.file_attachments.each do |a|
+      instance.file_attachments.each do |a|
         path = a.file.path
         if File.exists?(path)
           attachment = FileAttachment.new(:file => File.new(path), :description => a.description, :scanjob => a.scanjob)
@@ -179,7 +181,7 @@ class SemApp < ActiveRecord::Base
           clone.file_attachments << attachment
         end
       end
-          
+
       clone.sem_app = self
       clone.save(false)
     end
