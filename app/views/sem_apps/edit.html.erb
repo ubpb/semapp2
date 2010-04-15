@@ -1,2 +1,33 @@
-<h3 class="section">Seminarapparat bearbeiten</h3>
-<%= render 'form' %>
+<div class="sem-app">
+  <div class="pui-tabs-wrapper">
+    <ul id="sem-app-tabs" class="pui-tabs sem-app">
+      <li><a href="#semapp">Seminarapparat bearbeiten</a></li>
+      <li><a href="#token">Access-Token</a></li>
+    </ul>
+
+    <div class="pui-tab-panes">
+      <div>
+        <%= render 'form' %>
+      </div>
+      <div>
+        <div class="pui-view align-right">
+          <% form_for @sem_app, :url => generate_access_token_sem_app_path, :method => :put do |f| %>
+            <%= f.submit 'Neuen Access-Token erzeugen', :confirm => 'Neuen Access-Token erzeugen? Alten Token sind danach nicht mehr gültig!' %>
+          <% end %>
+        </div>
+        
+        <p>
+          Der aktuelle Access-Token für diesen Seminarapparat lautet
+        </p>
+
+        <div class="pui-panel align-center">
+          <%= @sem_app.access_token || '-' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

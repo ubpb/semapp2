@@ -6,7 +6,7 @@ class SemAppsController < ApplicationController
   SEM_APP_SEMESTER_INDEX_FILTER_NAME  = 'sem_app_semester_index_filter_name'.freeze
   SEM_APP_CLONES_FILTER_NAME          = 'sem_app_clones_filter_name'.freeze
 
-  before_filter :load_sem_app, :only => [:show, :edit, :update, :unlock, :transit, :clones, :filter_clones, :clone, :clear, :show_books, :show_media]
+  before_filter :load_sem_app, :only => [:show, :edit, :update, :unlock, :transit, :clones, :filter_clones, :clone, :clear, :show_books, :show_media, :generate_access_token]
   
   def index
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
@@ -43,6 +43,13 @@ class SemAppsController < ApplicationController
 
   def show
     unauthorized! if cannot? :read, @sem_app
+
+    # check for access token
+    token = params[:token]
+    if token.present? and @sem_app.access_token == token
+      @sem_app.unlock_in_session(session)
+      redirect_to :action => :show
+    end
   end
 
   def show_books
@@ -94,6 +101,9 @@ class SemAppsController < ApplicationController
 
   def edit
     unauthorized! if cannot? :edit, @sem_app
+
+    # Generate access token if no access token exists
+    @sem_app.generate_access_token! if @sem_app.access_token.blank?
   end
 
   def update
@@ -198,6 +208,18 @@ class SemAppsController < ApplicationController
     end
 
     redirect_to sem_app_path(@sem_app, :anchor => 'media')
+  end
+
+  def generate_access_token
+    unauthorized! if cannot? :edit, @sem_app
+
+    if @sem_app.generate_access_token!
+      flash[:success] = 'Es wurde ein neuer Access Token erstellt. Alte Token sind jetzt nicht mehr gültig.'
+    else
+      flash[:error] = 'Ein neuer Token konnte nicht erstellt werden. Es ist ein Fehler aufgetreten.'
+    end
+
+    redirect_to edit_sem_app_path(@sem_app, :anchor => 'token')
   end
 
   private

@@ -78,6 +78,15 @@ class SemApp < ActiveRecord::Base
     return false
   end
 
+  def generate_access_token
+    self.access_token = ActiveSupport::SecureRandom.hex(16)
+  end
+
+  def generate_access_token!
+    generate_access_token
+    self.save!
+  end
+
   def is_unlocked_in_session?(session)
     unlocks = session[:unlocked]
     unlocks.present? and unlocks[self.id.to_s] == true
@@ -101,12 +110,6 @@ class SemApp < ActiveRecord::Base
   def import_entries(source_sem_app)
     if source_sem_app.present? and source_sem_app.is_a?(SemApp)
       import_entries!(source_sem_app)
-      #import_entries!(HeadlineEntry, source_sem_app)
-      #import_entries!(TextEntry, source_sem_app)
-      #import_entries!(MonographEntry, source_sem_app)
-      #import_entries!(ArticleEntry, source_sem_app)
-      #import_entries!(CollectedArticleEntry, source_sem_app)
-      #import_entries!(MilessFileEntry, source_sem_app)
     end
   end
 
