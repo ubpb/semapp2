@@ -99,6 +99,11 @@ class SemApp < ActiveRecord::Base
     session[:unlocked] = unlocks
   end
 
+  def lock_in_session(session)
+    unlocks = session[:unlocked]
+    unlocks.delete(self.id.to_s) if unlocks.present?
+  end
+
   def is_from_current_semester?
     self.semester == Semester.current
   end

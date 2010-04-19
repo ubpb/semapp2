@@ -1,3 +1,10 @@
+<div class="pui-panel align-right">
+  <% link_to sem_app_path(@sem_app), :class => 'pui-button' do %>
+    <%= icon 'arrow-curve-180-left.png' %>
+    Zur&uuml;ck zum Seminarapparat
+  <% end %>
+</div>
+
 <div class="sem-app">
   <div class="pui-tabs-wrapper">
     <ul id="sem-app-tabs" class="pui-tabs sem-app">
@@ -21,7 +28,15 @@
         </p>
 
         <div class="pui-panel align-center">
-          <%= @sem_app.access_token || '-' %>
+          <code><%= @sem_app.access_token || '-' %></code>
+        </div>
+
+        <p>
+          Die ID für diesen Seminarapparat lautet
+        </p>
+
+        <div class="pui-panel align-center">
+          <code><%= @sem_app.id %></code>
         </div>
       </div>
     </div>

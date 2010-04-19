@@ -46,8 +46,12 @@ class SemAppsController < ApplicationController
 
     # check for access token
     token = params[:token]
-    if token.present? and @sem_app.access_token == token
-      @sem_app.unlock_in_session(session)
+    if token.present?
+      if @sem_app.access_token == token
+        @sem_app.unlock_in_session(session)
+      else
+        @sem_app.lock_in_session(session)
+      end
       redirect_to :action => :show
     end
   end
