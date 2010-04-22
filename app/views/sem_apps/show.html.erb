@@ -27,7 +27,8 @@
   <div class="clearfix">
     <div class="grid_6 alpha">
       im <%= h(@sem_app.semester.title) %><br/>
-      Dozent(en): <strong><%= h(@sem_app.tutors) %></strong>
+      Dozent(en): <strong><%= h(@sem_app.tutors) %></strong><br/>
+      Letzte Änderung: <strong><%= l(@sem_app.updated_at, :format => :short) %></strong>
     </div>
 
     <div class="grid_6 omega align-right">

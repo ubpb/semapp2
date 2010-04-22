@@ -2,6 +2,8 @@
 
 class SemApp < ActiveRecord::Base
 
+  include SafeTouchable
+
   # Relations
   belongs_to :creator, :class_name => 'User'
   belongs_to :semester
@@ -44,6 +46,11 @@ class SemApp < ActiveRecord::Base
 
   def full_title
     "#{self.title} (#{self.semester.title})"
+  end
+
+  def title
+    title = self.read_attribute(:title)
+    self.course_id.present? ? "#{title} (#{self.course_id})" : "#{title}"
   end
 
   def has_book_jobs?
