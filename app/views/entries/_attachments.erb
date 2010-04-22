@@ -11,6 +11,9 @@
           <span class="download-link">
             <%#= a.file_file_name %>
             <%= number_to_human_size(a.file_file_size) %>
+            <% if a.updated_at.present? %>
+              / letzte Änderung: <%= l(a.updated_at, :format => :short) %>
+            <% end %>
             <%= link_to '[Download]', a.file.url %>
           </span>
 
