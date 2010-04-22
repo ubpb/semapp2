@@ -16,18 +16,18 @@ SELECT
     ELSE make_plpgsql() END;
 
 
-CREATE OR REPLACE FUNCTION update_positions() RETURNS TRIGGER
-AS $$ BEGIN
-  CASE TG_OP
-    WHEN 'INSERT' THEN
-      update entries set position=position+1 where
-        sem_app_id=NEW.sem_app_id and position >= NEW.position;
-      RETURN NEW;
-    WHEN 'DELETE' THEN
-      update entries set position=position-1 where
-        sem_app_id=OLD.sem_app_id and position > OLD.position;
-      return OLD;
-  END CASE;
+CREATE OR REPLACE FUNCTION update_positions() RETURNS TRIGGER AS $$
+BEGIN
+  IF (TG_OP = 'INSERT') THEN
+    update entries set position=position+1 where
+      sem_app_id=NEW.sem_app_id and position >= NEW.position;
+    RETURN NEW;
+  ELSIF (TG_OP = 'DELETE') THEN
+    update entries set position=position-1 where
+      sem_app_id=OLD.sem_app_id and position > OLD.position;
+    RETURN OLD;
+  END IF;
+  RETURN NULL;
 END $$ LANGUAGE 'plpgsql';
 
 
