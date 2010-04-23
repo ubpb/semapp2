@@ -66,6 +66,10 @@
         Lesekennung(en) (aus dem alten System): <code><%= @sem_app.miless_passwords.map {|mp| mp.password}.join(", ") -%></code>
       </div>
     <% end %>
+    <div>
+      <%= icon 'asterisk.png' %>
+      Bitte beachten Sie die <%= link_to('Hinweise zum Urheberrecht', '#', :class => 'pui-overlay-trigger', :rel => '#legal-info') %>
+    </div>
   <% end %>
 </div>
 
