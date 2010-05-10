@@ -55,6 +55,7 @@ class Admin::SemAppsController < Admin::ApplicationController
   def edit
     @sem_app = SemApp.find(params[:id])
     @sem_app.build_book_shelf unless @sem_app.book_shelf.present?
+    @sem_app.build_book_shelf_ref unless @sem_app.book_shelf_ref.present?
   end
 
   def update

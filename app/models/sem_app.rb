@@ -10,6 +10,7 @@ class SemApp < ActiveRecord::Base
   belongs_to :location
 
   has_one    :book_shelf, :dependent => :destroy
+  has_one    :book_shelf_ref, :dependent => :destroy
   has_many   :ownerships, :dependent => :destroy
   has_many   :owners, :through => :ownerships, :source => :user
   has_many   :books, :order => "title desc", :dependent => :destroy
@@ -19,6 +20,10 @@ class SemApp < ActiveRecord::Base
   # Behavior
   accepts_nested_attributes_for :book_shelf, :allow_destroy => true, :reject_if => lambda { 
     |attrs| attrs.all? { |k, v| v.blank? } 
+  }
+
+  accepts_nested_attributes_for :book_shelf_ref, :allow_destroy => true, :reject_if => lambda {
+    |attrs| attrs.all? { |k, v| v.blank? }
   }
 
   # Validation
@@ -116,7 +121,11 @@ class SemApp < ActiveRecord::Base
   end
 
   def has_book_shelf?
-    self.book_shelf != nil
+    self.book_shelf.present?
+  end
+
+  def has_book_shelf_ref?
+    self.book_shelf_ref.present?
   end
 
   def import_entries(source_sem_app)
