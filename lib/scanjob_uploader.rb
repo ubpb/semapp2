@@ -23,22 +23,21 @@ class ScanjobUploader
   private
 
   def upload_scanjob(filename)
-    entry_id = filename[/scanjob-(\d+)/, 1]
-    raise "Error: no Entry-ID found in filename." if entry_id.blank?
+    scanjob_id = filename[/scanjob-(\d+)/, 1]
+    raise "Error: No Scanjob-ID found in filename." if scanjob_id.blank?
 
-    entry = Entry.find(entry_id)
+    scanjob = Scanjob.find(scanjob_id)
+    entry = scanjob.entry
     file  = File.new(filename)
 
     processed_files = File.join(RAILS_ROOT, 'data', 'scanjobs', 'processed')
     FileUtils.mkdir(processed_files) unless File.exists?(processed_files)
 
     Entry.transaction do
-      if entry.scanjob.present?
-        attachment = FileAttachment.new(:file => file, :description => entry.scanjob.comment, :scanjob => true)
-        attachment.file.instance_write(:file_name, File.basename(filename))
-        entry.file_attachments << attachment
-        entry.scanjob.destroy
-      end
+      attachment = FileAttachment.new(:file => file, :description => scanjob.comment, :scanjob => true)
+      attachment.file.instance_write(:file_name, File.basename(filename))
+      entry.file_attachments << attachment
+      scanjob.destroy
     end
 
     FileUtils.mv(filename, processed_files)

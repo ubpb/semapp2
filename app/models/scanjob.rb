@@ -47,7 +47,7 @@ class Scanjob < ActiveRecord::Base
   end
 
   def code
-    "scanjob-#{entry.id}.pdf"
+    "scanjob-#{self.id}.pdf"
   end
 
   ###########################################################################################
