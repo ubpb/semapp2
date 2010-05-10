@@ -18,7 +18,7 @@
           </span>
 
           <span class="toolbar" style="display: none">
-            <% link_to file_attachment_path(a), :class => "toolbar-item", :method => :delete, :confirm => "Angang wirklich löschen" do %>
+            <% link_to file_attachment_path(a), :class => "toolbar-item", :method => :delete, :confirm => "Angang wirklich löschen?" do %>
               <%= icon 'cross.png' %>
             <% end %>
             <% link_to edit_file_attachment_path(a), :class => "toolbar-item" do %>
