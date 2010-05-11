@@ -7,19 +7,6 @@
   </div>
 <% end %>
 
-<% if @sem_app.has_book_shelf? %>
-  <div class="pui-panel align-center">
-    <%= icon 'asterisk.png' %>
-    Wenn nicht anderes vermerkt finden Sie die folgenden B&uuml;cher in der <strong><%= h(@sem_app.location.title) %></strong> im
-    Seminarapparat <strong>Nr. <%= h(@sem_app.book_shelf.slot_number) %></strong>
-  </div>
-<% else %>
-  <div class="pui-panel align-center">
-    <%= icon 'asterisk.png' %>
-     Wenn nicht anderes vermerkt finden Sie die folgenden B&uuml;cher im regulären Bestand.
-  </div>
-<% end %>
-
 <% if @sem_app.has_book_shelf_ref? %>
   <div class="pui-panel align-center">
     <% sem_app = @sem_app.book_shelf_ref.sem_app_ref %>
@@ -29,6 +16,19 @@
 <% end %>
 
 <% if @books.present? %>
+  <% if @sem_app.has_book_shelf? %>
+    <div class="pui-panel align-center">
+      <%= icon 'asterisk.png' %>
+      Wenn nicht anderes vermerkt finden Sie die folgenden B&uuml;cher in der <strong><%= h(@sem_app.location.title) %></strong> im
+      Seminarapparat <strong>Nr. <%= h(@sem_app.book_shelf.slot_number) %></strong>
+    </div>
+  <% else %>
+    <div class="pui-panel align-center">
+      <%= icon 'asterisk.png' %>
+      Wenn nicht anderes vermerkt finden Sie die folgenden B&uuml;cher im regulären Bestand.
+    </div>
+  <% end %>
+
   <div id="books-listing" class="listing">
     <% @books.each do |book| %>
 
