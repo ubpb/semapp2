@@ -71,6 +71,13 @@ class Book < ActiveRecord::Base
     end
   end
 
+  def self.get_base_signature2(signature)
+    if signature.present?
+      base_signature = signature[/([a-z]+\d+)([\D].*)?/i, 1]
+      return base_signature.present? ? base_signature : signature
+    end
+  end
+
   ###########################################################################################
   #
   # AR Callbacks

@@ -4,7 +4,7 @@
 <% if signature.present? %>
   <div>
     Signatur: <%= signature -%>
-    <% link_to "https://ubaleph.uni-paderborn.de/F/?func=find-b&find_code=PSG&request=#{Book.get_base_signature(signature)}?" do %>
+    <% link_to "https://ubaleph.uni-paderborn.de/F/?func=find-b&find_code=PSG&request=#{Book.get_base_signature2(signature)}?" do %>
       &raquo; Im Bibliothekskatalog anzeigen
     <% end %>
   </div>
