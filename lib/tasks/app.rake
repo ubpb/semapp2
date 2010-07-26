@@ -52,4 +52,22 @@ namespace :app do
     UbdokRightsImporter.new.import_rights
   end
 
+  #
+  # Owner Info
+  #
+  desc "Print out a list of current owners"
+  task(:owner_info => :environment) do
+    apps = SemApp.find(:all, :conditions => {:semester_id => Semester.current})
+    puts "=== Aktuelle Apparate ==="
+    apps.map do |a|
+      user = User.find(a.creator_id)
+      puts "#{a.id}; #{a.title}; #{user}" if user.email
+    end
+
+    puts "\n=== Apparate OHNE Kontakt E-Mail==="
+    apps.map do |a|
+      user = User.find(a.creator_id)
+      puts "#{a.id}; #{a.title}; #{user}" unless user.email
+    end
+  end
 end
