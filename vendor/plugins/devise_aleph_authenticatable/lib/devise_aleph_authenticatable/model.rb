@@ -23,7 +23,7 @@ module Devise #:nodoc:
 
         def authenticate(attributes={})
           aleph = Aleph::Connector.new
-          aleph_user = aleph.authenticate(attributes[:login].upcase, attributes[:password])
+          aleph_user = aleph.authenticate(attributes[:login], attributes[:password])
           user = create_or_update_aleph_user!(aleph_user)
           user.try(:on_successfull_authentication, aleph_user)
           return user
@@ -37,11 +37,11 @@ module Devise #:nodoc:
         end
 
         def create_user!(aleph_user)
-          User.create!({:login => aleph_user.user_id, :name => aleph_user.name, :email => aleph_user.email})
+          User.create!(:login => aleph_user.user_id, :name => aleph_user.name, :email => aleph_user.email)
         end
 
         def update_user!(user, aleph_user)
-          user.update_attributes!({:name => aleph_user.name, :email => aleph_user.email})
+          user.update_attributes!(:name => aleph_user.name, :email => aleph_user.email)
           return user
         end
         
