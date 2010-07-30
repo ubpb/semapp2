@@ -141,8 +141,7 @@ class SemApp < ActiveRecord::Base
   end
 
   def transit
-    # assume the NEXT is the FIRST semester by position
-    next_semester = Semester.find(:first, :order => 'position asc')
+    next_semester = Semester.find(TRANSIT_TARGET_SEMESTER_ID)
     return if Semester.current == next_semester
 
     if next_semester.present?

@@ -138,7 +138,8 @@ class SemAppsController < ApplicationController
   end
 
   def transit
-    unauthorized! if cannot?(:manage, @sem_app)
+    unauthorized! if cannot?(:edit, @sem_app)
+    unauthorized! if @sem_app.semester.id != TRANSIT_SOURCE_SEMESTER_ID
 
     clone = nil
     begin
