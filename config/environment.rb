@@ -26,7 +26,7 @@ Rails::Initializer.run do |config|
   config.gem 'png',           :version => '1.1.0',   :lib => 'png'
   config.gem 'cancan',        :version => '1.0.2',   :lib => 'cancan'
   config.gem 'provideal-ui',  :version => '0.2.0',   :lib => 'pui'
-  config.gem 'nokogiri',      :version => '1.4.1',   :lib => 'nokogiri'
+  config.gem 'nokogiri',      :version => '1.4.2',   :lib => 'nokogiri'
   config.gem 'newrelic_rpm'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
