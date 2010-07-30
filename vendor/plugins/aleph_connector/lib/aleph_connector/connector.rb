@@ -89,6 +89,10 @@ module Aleph #:nodoc:
       else
         user = Aleph::User.new(ils_account_no, data.xpath('/bor-auth')[0])
 
+        unless user.email.present?
+          raise Aleph::AuthenticationError, "No E-Mail address available."
+        end
+
         unless @allowed_user_types.allows?(user.status)
           raise Aleph::UnsupportedAccountTypeError, "Authentication not allowed. Wrong user type."
         end
