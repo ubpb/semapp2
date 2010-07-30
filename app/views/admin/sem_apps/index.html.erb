@@ -21,7 +21,7 @@
       </p>
       <p>
         <label>Semester</label><br/>
-        <%= collection_select(:filter, :semester, Semester.all, :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
+        <%= collection_select(:filter, :semester, Semester.find(:all, :order => 'position asc'), :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
       </p>
       <p>
         <label>Fachbibliothek</label><br/>
