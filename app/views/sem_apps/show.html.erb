@@ -73,7 +73,7 @@
   <% end %>
 </div>
 
-<% if @sem_app.semester != Semester.find(:first, :order => 'position') and current_user and current_user.owns_sem_app?(@sem_app) %>
+<% if @sem_app.semester != Semester.find(:first, :order => 'position') and can?(:manage, @sem_app) %>
   <div class="pui-view align-right">
     <% link_to transit_sem_app_path(@sem_app), :class => 'pui-button', :method => :post, :confirm => 'Soll der aktuelle Seminarapparat in das neue Semester übernommen werden? Dieser Vorgang kann länger dauern, brechen Sie ihn nicht ab!' do %>
       In das neue Semester &uuml;bernehmen
