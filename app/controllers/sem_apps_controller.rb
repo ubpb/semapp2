@@ -138,15 +138,24 @@ class SemAppsController < ApplicationController
   end
 
   def transit
-    unauthorized! if cannot? :manage, @sem_app
+    unauthorized! if cannot?(:manage, @sem_app)
+
+    clone = nil
     begin
-      import_entries = params[:import_entries].present?
-      @sem_app.transit(Semester.current, import_entries)
-      flash[:success] = 'Der Seminarapparat wurde ins aktuelle Semester übernommen.'
-    #rescue
-    #  flash[:error] = 'Es ist leider ein Fehler aufgetrten. Der Vorgang konnte nicht erfolgreich abgeschlossen werden.'
+      clone = @sem_app.transit
+      if clone
+        flash[:success] = """
+          <p>Ihr Seminarapparat wurde erfolgreich in neue Semester übernommen. Wir prüfen die Angaben und schalten
+          den Seminarapparat nach erfolgter Prüfung für Sie frei. Sie sehen den Status unter
+          <strong>Meine Seminarapparate</strong>. Bis zur Freischaltung können nur Sie den Seminarapparat
+          sehen und bearbeiten.</p>
+        """
+      else
+        flash[:error] = 'Bei dem Vorgang ist ein Fehler aufgetreten. Bitte wenden Sie sich an den Support.'
+      end
     end
-    redirect_to sem_apps_path
+
+    redirect_to (clone.present?) ? sem_app_path(clone) : sem_apps_path
   end
 
   def clones

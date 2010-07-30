@@ -26,12 +26,6 @@
             Dozent(en): <strong><%= h(sem_app.tutors) %></strong>
           </td>
           <th>
-            <% if actions.include?(:transit) and can?(:manage, sem_app) and not sem_app.is_from_current_semester? %>
-              <% link_to '#', :class => 'pui-button small pui-overlay-trigger', :rel => "#transit-panel-#{sem_app.id}" do %>
-                In das aktuelle Semester &uuml;bernehmen
-              <% end %>
-            <% end %>
-
             <% if actions.include?(:clone) and @sem_app != sem_app %>
               <% form_tag clone_sem_app_path do %>
                 <%= hidden_field_tag 'source', sem_app.id %>

@@ -134,29 +134,33 @@ class SemApp < ActiveRecord::Base
     end
   end
 
-  def transit(semester, import_entries = false)
-    if semester.present? and semester.is_a?(Semester)
+  def import_books(source_sem_app)
+    if source_sem_app.present? and source_sem_app.is_a?(SemApp)
+      import_books!(source_sem_app)
+    end
+  end
+
+  def transit
+    # assume the NEXT is the FIRST semester by position
+    next_semester = Semester.find(:first, :order => 'position asc')
+    return if Semester.current == next_semester
+
+    if next_semester.present?
       SemApp.transaction do
-        clone = self.clone(:exclude => :miless_passwords)
-        clone.semester = semester
+        clone = self.clone()
+        clone.semester = next_semester
         clone.archived = false
-        clone.approved = true
+        clone.approved = false
         clone.miless_derivate_id = nil
         clone.miless_document_id = nil
         clone.created_at = Time.now
         clone.updated_at = Time.now
-
-        # Pick the first miless password if present
-        mp = self.miless_passwords.first
-        if mp.present?
-          clone.shared_secret = mp.password
-        end
-
         clone.save!
 
-        if import_entries
-          clone.import_entries(self)
-        end
+        clone.import_entries(self)
+        clone.import_books(self)
+
+        return clone
       end
     end
   end
@@ -206,6 +210,14 @@ class SemApp < ActiveRecord::Base
         end
       end
 
+      clone.sem_app = self
+      clone.save(false)
+    end
+  end
+
+  def import_books!(source_sem_app)
+    source_sem_app.books.each do |book|
+      clone = book.clone
       clone.sem_app = self
       clone.save(false)
     end

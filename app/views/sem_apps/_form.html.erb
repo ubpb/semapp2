@@ -1,7 +1,7 @@
 <% semantic_form_for @sem_app do |f| %>
   <% f.inputs :name => 'Basisdaten' do %>
     <% if @sem_app.new_record? %>
-      <%= f.input :semester,  :label => 'Semester', :hint => 'In welchem Semester findet Ihre Veranstaltung statt?' %>
+      <%= f.input :semester,  :label => 'Semester', :hint => 'In welchem Semester findet Ihre Veranstaltung statt?', :collection => Semester.find(:all, :order => 'position ASC') %>
       <%= f.input :title,     :label => 'Titel',    :hint => 'Titel der Veranstaltung' %>
       <%= f.input :course_id, :label => 'Kurs-ID',  :hint => 'Wenn bekannt geben Sie bitte die eindeutige Kurs-ID an (z.B. aus Paul).', :required => false %>
     <% else %>
