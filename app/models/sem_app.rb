@@ -147,7 +147,7 @@ class SemApp < ActiveRecord::Base
 
     if next_semester.present?
       SemApp.transaction do
-        clone = self.clone()
+        clone = self.clone(:include => :book_shelf)
         clone.semester = next_semester
         clone.archived = false
         clone.approved = false
