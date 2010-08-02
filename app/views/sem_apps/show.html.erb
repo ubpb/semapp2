@@ -73,7 +73,7 @@
   <% end %>
 </div>
 
-<% if @sem_app.semester.id == TRANSIT_SOURCE_SEMESTER_ID and can?(:edit, @sem_app) %>
+<% if @sem_app.semester.id == TRANSIT_SOURCE_SEMESTER_ID and Semester.find_by_id(TRANSIT_TARGET_SEMESTER_ID).present? and can?(:edit, @sem_app) %>
   <div class="pui-view align-right">
     <% link_to transit_sem_app_path(@sem_app), :class => 'pui-button', :method => :post, 
       :confirm => 'Soll der aktuelle Seminarapparat in das neue Semester übernommen werden? Die können den Apparat übernehmen, wenn Sie die Veranstaltung im kommenden Semester weiterführen. Dieser Vorgang kann länger dauern, brechen Sie ihn nicht ab!' do %>
