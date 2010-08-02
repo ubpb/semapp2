@@ -53,10 +53,10 @@ namespace :app do
   end
 
   #
-  # Owner Info
+  # Info-Mail am Semesterende
   #
-  desc "Print out a list of current owners"
-  task(:owner_info => :environment) do
+  desc "Sends an info mail to sem app owners"
+  task(:info_mail => :environment) do
     apps = SemApp.find(:all, :conditions => {:semester_id => Semester.current})
     @owner_info = {}
     apps.each do |a|
@@ -72,7 +72,10 @@ namespace :app do
     @owner_info.keys.each do |u|
       if u.email.present?
         apps = @owner_info[u]
+
         puts "#{u.login} - #{u.email}"
+        Notifications.deliver_sem_app_transit_notification(u, apps)
+
         apps.each do |a|
           apps_with_at_least_one_email_contact << a
           puts "\t[#{a.id}] #{a.title}"
@@ -86,16 +89,12 @@ namespace :app do
         apps = @owner_info[u]
         puts "#{u.login}"
         apps.each do |a|
-          puts "\t[#{a.id}] #{a.title} #{(apps_with_at_least_one_email_contact.include?(a) ? 'X' : '')}"
+          unless apps_with_at_least_one_email_contact.include?(a)
+            puts "\t[#{a.id}] #{a.title}"
+          end
         end
       end
     end
-
-    #puts "\n=== Apparate OHNE Kontakt E-Mail==="
-    #apps.map do |a|
-    #  user = User.find(a.creator_id)
-    #  puts "#{a.id}; #{a.title}; #{user}" unless user.email
-    #end
   end
 
   def owner_info_for_user(user, app)

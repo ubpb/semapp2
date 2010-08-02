@@ -9,4 +9,11 @@ class Notifications < ActionMailer::Base
     body        :sem_app => sem_app
   end
 
+  def sem_app_transit_notification(user, sem_apps)
+    recipients user.email
+    from       "information@ub.uni-paderborn.de"
+    subject    "[Seminarapparate] Ihre Seminarapparate"
+    body        :user => user, :sem_apps => sem_apps
+  end
+
 end
