@@ -141,13 +141,13 @@ class SemApp < ActiveRecord::Base
   end
 
   def transit
-    next_semester = Semester.find(TRANSIT_TARGET_SEMESTER_ID)
-    return if Semester.current == next_semester
+    target_semester = Semester.find(TRANSIT_TARGET_SEMESTER_ID)
+    #return if Semester.current == next_semester
 
-    if next_semester.present?
+    if target_semester.present?
       SemApp.transaction do
         clone = self.clone(:include => :book_shelf)
-        clone.semester = next_semester
+        clone.semester = target_semester
         clone.archived = false
         clone.approved = false
         clone.miless_derivate_id = nil
