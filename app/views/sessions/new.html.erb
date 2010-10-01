@@ -1,22 +1,28 @@
 <h3 class="section">Anmeldung f&uuml;r Lehrende</h3>
 
+<div class="pui-panel align-center">
+  <%= icon 'asterisk.png' %>
+  Eine Anmeldung für Lehrende ist aktuell nicht möglich. Bitte beachten Sie die o.g. Mitteilung.
+</div>
+
+<!--
 <div class="pui-panel">
   <%= icon 'asterisk.png' %>
   <strong>Bitte beachten Sie:</strong> Diese Anmeldung ist f&uuml;r Lehrende die einen Seminarapparat erstellen oder
   bearbeiten wollen. Studierende melden sich mittels der bekanntgegebenen Lesekennung am jeweiligen Apparat an*.
 </div>
 
-<% semantic_form_for resource_name, resource, :url => session_path(resource_name) do |f| %>
-  <%= f.error_messages %>
-  <% f.inputs :name => "Anmeldung (mit Bibliothekslogin**)" do %>
-    <%= f.input :login,    :label => 'Login', :required => false %>
-    <%= f.input :password, :label => 'Passwort', :required => false %>
-  <% end %>
+<%# semantic_form_for resource_name, resource, :url => session_path(resource_name) do |f| %>
+  <%#= f.error_messages %>
+  <%# f.inputs :name => "Anmeldung (mit Bibliothekslogin**)" do %>
+    <%#= f.input :login,    :label => 'Login', :required => false %>
+    <%#= f.input :password, :label => 'Passwort', :required => false %>
+  <%# end %>
 
-  <% f.buttons do %>
-    <%= f.commit_button 'Anmelden' %>
-  <% end %>
-<% end %>
+  <%# f.buttons do %>
+    <%#= f.commit_button 'Anmelden' %>
+  <%# end %>
+<%# end %>
 
 <p>
   * Die Lesekennung wird vom Dozierenden festgelegt und wird in der Regel in der Veranstaltung bekannt gegeben.
@@ -31,4 +37,4 @@
   Bibliotheksausweis. Die Anmeldung setzt einen A-Ausweis voraus. Bei Fragen
   wenden Sie sich bitte an das <a href="#" class="pui-overlay-trigger" rel="#common-help">Informationszentrum der Bibliothek</a>.
 </p>
-
+-->
