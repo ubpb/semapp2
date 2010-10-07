@@ -1,8 +1,16 @@
 <%
-  isbn = entry.isbn if entry.respond_to?(:isbn)
-  isbn = isbn.split(',') if isbn.present?
-  isbn = isbn[0] if isbn.present? and isbn[0].present?
-  isbn = isbn.gsub('-', '').strip if isbn.present?
+  #isbn = entry.isbn if entry.respond_to?(:isbn)
+  #isbn = isbn.split(',') if isbn.present?
+  #isbn = isbn[0] if isbn.present? and isbn[0].present?
+  #isbn = isbn.gsub('-', '').strip if isbn.present?
+
+  isbn = nil
+  if (entry.respond_to?(:isbn)) 
+    isbn_string = entry.isbn || ""
+    isbn_array = isbn_string.split(',')
+    isbn_array.reject!{|e| e.blank?}
+    isbn = isbn_array.first
+  end 
 %>
 
 <% if isbn.present? %>
