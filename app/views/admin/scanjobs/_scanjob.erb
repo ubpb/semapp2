@@ -61,11 +61,10 @@
   </div>
 
 
-  <% if scanjob.message.present? and action_name == 'print_job' %>
-    <div class="align-center" style="margin-top: 30px">
-      <%= icon 'asterisk.png' %>
-      NACHRICHT VORHANDEN
-      <%= icon 'asterisk.png' %>
+  <% if scanjob.message.present? and (action_name == 'print_job' or action_name == 'print_list') %>
+    <div style="margin-top: 30px; page-break-before: always">
+      <h1>Nachricht zu Auftrag # <%= scanjob.id %></h1>
+      <%= scanjob.message %>
     </div>
   <% end %>
 </div>

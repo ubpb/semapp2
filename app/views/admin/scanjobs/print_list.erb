@@ -1,9 +1,9 @@
 <% if @scanjobs.present? %>
   <% @scanjobs.each do |sj| %>
-    <% if sj == @scanjobs.last %>
+    <% if sj == @scanjobs.first %>
       <%= render 'scanjob', :scanjob => sj %>
     <% else %>
-      <div style="page-break-after:always">
+      <div style="page-break-before:always">
         <%= render 'scanjob', :scanjob => sj %>
       </div>
     <% end %>
