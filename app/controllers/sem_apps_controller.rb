@@ -15,7 +15,8 @@ class SemAppsController < ApplicationController
       :all,
       :per_page => 10,
       :page => params[:page],
-      :order => "sem_apps.semester_id asc, sem_apps.title asc")
+      :include => :semester,
+      :order => "semesters.position asc, sem_apps.title asc")
   end
 
   def filter
