@@ -3,6 +3,7 @@
 class BooksController < ApplicationController
 
   before_filter :load_sem_app
+  before_filter :check_current_semester, :only => [:index, :new, :create, :destroy]
 
   cache_sweeper :book_sweeper
 
@@ -100,6 +101,13 @@ class BooksController < ApplicationController
     authenticate_user!
     @sem_app = SemApp.find(params[:sem_app_id])
     unauthorized! if cannot? :edit, @sem_app
+  end
+
+  def check_current_semester
+    unless @sem_app.is_from_current_semester?
+      flash[:error] = "Der Seminarapparat ist nicht aus dem aktuellen Semester. Sie können Buchaufträge nur für aktuelle Seminarapparate beauftragen bzw. bearbeiten oder löschen."
+      redirect_to sem_app_path(@sem_app, :anchor => 'books')
+    end
   end
 
   def get_aleph
