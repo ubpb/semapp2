@@ -2,55 +2,58 @@
   
   <div class="toolbar-wrapper" style="display: none">
     <div class="toolbar" style="display: none">
-      <% link_to sem_app_book_path(book.sem_app, book), :class => "toolbar-item delete-book-action" do %>
-        <%= image_tag 'icons/cross-circle-frame.png', :plugin => 'pui', :title => 'Dieses Buch aus dem Seminarapparat entfernen' %>
+      <% if book.sem_app.is_from_current_semester? %>
+        <% link_to sem_app_book_path(book.sem_app, book), :class => "toolbar-item delete-book-action" do %>
+          <%= image_tag 'icons/cross-circle-frame.png', :plugin => 'pui', :title => 'Dieses Buch aus dem Seminarapparat entfernen' %>
+        <% end %>
       <% end %>
       <% link_to edit_sem_app_book_path(book.sem_app, book), :class => "toolbar-item edit-book-action" do %>
         <%= image_tag 'icons/wrench.png', :plugin => 'pui', :title => 'Bearbeiten / Kommentieren' %>
       <% end %>
     </div>
   </div>
-
+  
   <div class="book">
-    <%= render 'shared_partials/book_ref', :book => book %>
+    <% if book.sem_app.is_from_current_semester? %>
+      <% if book.placeholder? %>
+        <p>
+          <%= icon 'asterisk.png' %>
+          <% if book.placeholder.book_shelf.present? %>
+            <i>Dieses Exemplar finden Sie in der <strong><%= h(book.placeholder.location.title) %></strong> im
+              Seminarapparat <strong>Nr. <%= h(book.placeholder.book_shelf.slot_number) %></strong></i>
+          <% else %>
+            <i>Dieses Exemplar finden Sie in einem anderen Seminarapparat.</i>
+          <% end %>
+        </p>
+      <% end %>
 
-    <% if book.placeholder? %>
-      <p>
-        <%= icon 'asterisk.png' %>
-        <% if book.placeholder.book_shelf.present? %>
-          <i>Dieses Exemplar finden Sie in der <strong><%= h(book.placeholder.location.title) %></strong> im
-            Seminarapparat <strong>Nr. <%= h(book.placeholder.book_shelf.slot_number) %></strong></i>
-        <% else %>
-          <i>Dieses Exemplar finden Sie in einem anderen Seminarapparat.</i>
-        <% end %>
-      </p>
+      <% if book.reference_copy == 1 %>
+        <p>
+          <%= icon 'asterisk.png' %>
+          <i>Dieses Exemplar finden Sie im regulären Bestand.</i>
+        </p>
+      <% end %>
+
+      <% if book.reference_copy == 2 %>
+        <p>
+          <%= icon 'asterisk.png' %>
+          <i>Dieses Exemplar liegt zur Ansicht in der Ortsleihe bereit.</i>
+        </p>
+      <% end %>
+
+      <% if book.reference_copy == 3 %>
+        <p>
+          <%= icon 'asterisk.png' %>
+          <i>Dieses Exemplar steht in der Mediathek des ZfS (H2.211)</i>
+        </p>
+      <% end %>
     <% end %>
 
-    <% if book.reference_copy == 1 %>
-      <p>
-        <%= icon 'asterisk.png' %>
-        <i>Dieses Exemplar finden Sie im regulären Bestand.</i>
-      </p>
+    <% cache(book.cache_key) do %>
+      <%= render 'shared_partials/book_ref', :book => book %>
+      <%= render 'entries/signature', :entry => book %>
+      <%= render 'entries/amazon', :entry => book %>
+      <%= render 'entries/comment', :entry => book %>
     <% end %>
-
-    <% if book.reference_copy == 2 %>
-      <p>
-        <%= icon 'asterisk.png' %>
-        <i>Dieses Exemplar liegt zur Ansicht in der Ortsleihe bereit.</i>
-      </p>
-    <% end %>
-
-    <% if book.reference_copy == 3 %>
-      <p>
-        <%= icon 'asterisk.png' %>
-        <i>Dieses Exemplar steht in der Mediathek des ZfS (H2.211)</i>
-      </p>
-    <% end %>
-
-    <%= render 'entries/signature', :entry => book %>
-    
-    <%= render 'entries/amazon', :entry => book %>
-
-    <%= render 'entries/comment', :entry => book %>
   </div>
 </div>

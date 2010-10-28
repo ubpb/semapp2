@@ -1,8 +1,8 @@
 <% if can?(:edit, @sem_app) %>
   <% content_for :head do %>
     <%= javascript_include_tag 'sem_apps/common.js' %>
-    <%= javascript_include_tag 'sem_apps/books.js' %>
     <%= javascript_include_tag 'sem_apps/media.js' %>
+    <%= javascript_include_tag 'sem_apps/books.js' %>
   <% end %>
 <% end %>
 
@@ -23,10 +23,17 @@
   </div>
 <% end %>
 
+<% if !@sem_app.is_from_current_semester? %>
+  <div class="pui-panel align-center">
+    <%= icon "asterisk.png" %>
+    <strong>Achtung: Dieser Seminarapparat ist nicht aus dem aktuellen Semester.</strong>
+  </div>
+<% end %>
+
 <div class="pui-view clearfix section" style="margin-bottom: 30px">
   <div class="clearfix">
     <div class="grid_6 alpha">
-      im <%= h(@sem_app.semester.title) %><br/>
+      <h3>im <%= h(@sem_app.semester.title) %></h3>
       Dozent(en): <strong><%= h(@sem_app.tutors) %></strong><br/>
       Letzte Änderung: <strong><%= l(@sem_app.updated_at, :format => :short) %></strong>
     </div>

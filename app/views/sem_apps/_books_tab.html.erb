@@ -1,4 +1,4 @@
-<% if can?(:edit, @sem_app) %>
+<% if can?(:edit, @sem_app) and @sem_app.is_from_current_semester? %>
   <div class="pui-view align-right">
     <% link_to sem_app_books_path(@sem_app), :class => 'pui-button' do %>
       <%= icon 'books-stack.png' %>
@@ -16,25 +16,27 @@
 <% end %>
 
 <% if @books.present? %>
-  <% if @sem_app.has_book_shelf? %>
-    <div class="pui-panel align-center">
-      <%= icon 'asterisk.png' %>
-      Wenn nicht anderes vermerkt finden Sie die folgenden B&uuml;cher in der <strong><%= h(@sem_app.location.title) %></strong> im
-      Seminarapparat <strong>Nr. <%= h(@sem_app.book_shelf.slot_number) %></strong>
-    </div>
-  <% else %>
-    <div class="pui-panel align-center">
-      <%= icon 'asterisk.png' %>
-      Wenn nicht anderes vermerkt finden Sie die folgenden B&uuml;cher im regulären Bestand.
-    </div>
+  <% if @sem_app.is_from_current_semester? %>
+    <% if @sem_app.has_book_shelf? %>
+      <div class="pui-panel align-center">
+        <%= icon 'asterisk.png' %>
+        Wenn nicht anderes vermerkt finden Sie die folgenden B&uuml;cher in der <strong><%= h(@sem_app.location.title) %></strong> im
+        Seminarapparat <strong>Nr. <%= h(@sem_app.book_shelf.slot_number) %></strong>
+      </div>
+    <% else %>
+      <div class="pui-panel align-center">
+        <%= icon 'asterisk.png' %>
+        Wenn nicht anderes vermerkt finden Sie die folgenden B&uuml;cher im regulären Bestand.
+      </div>
+    <% end %>
   <% end %>
 
   <div id="books-listing" class="listing">
     <% @books.each do |book| %>
 
-      <% cache(book.cache_key) do %>
+      <%# cache(book.cache_key) do %>
         <%= render 'book', :book => book, :sem_app => @sem_app %>
-      <% end %>
+      <%# end %>
 
     <% end %>
   </div>
