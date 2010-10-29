@@ -10,6 +10,7 @@
     isbn_array = isbn_string.split(',')
     isbn_array.reject!{|e| e.blank?}
     isbn = isbn_array.first
+    isbn = isbn.gsub('-', '') if isbn.present?
   end 
 %>
 
