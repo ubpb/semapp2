@@ -14,6 +14,13 @@
   </div>
   
   <div class="book">
+    <% cache(book.cache_key) do %>
+      <%= render 'shared_partials/book_ref', :book => book %>
+      <%= render 'entries/signature', :entry => book %>
+      <%= render 'entries/amazon', :entry => book %>
+      <%= render 'entries/comment', :entry => book %>
+    <% end %>
+    
     <% if book.sem_app.is_from_current_semester? %>
       <% if book.placeholder? %>
         <p>
@@ -47,13 +54,6 @@
           <i>Dieses Exemplar steht in der Mediathek des ZfS (H2.211)</i>
         </p>
       <% end %>
-    <% end %>
-
-    <% cache(book.cache_key) do %>
-      <%= render 'shared_partials/book_ref', :book => book %>
-      <%= render 'entries/signature', :entry => book %>
-      <%= render 'entries/amazon', :entry => book %>
-      <%= render 'entries/comment', :entry => book %>
     <% end %>
   </div>
 </div>
