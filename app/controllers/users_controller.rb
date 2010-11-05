@@ -12,7 +12,8 @@ class UsersController < ApplicationController
       :per_page => 10,
       :page => params[:page],
       :conditions => {:creator_id => @user.id},
-      :order => "sem_apps.semester_id asc, sem_apps.title asc")
+      :include => :semester,
+      :order => "semesters.position asc, sem_apps.title asc")
 
     @ownerships  = @user.ownerships.map {|o| o.sem_app}
   end

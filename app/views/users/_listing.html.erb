@@ -11,7 +11,11 @@
         <tr class="<%= (n % 2 == 0) ? 'even' : 'odd' -%>">
           <td>
             <strong><%= link_to h(sem_app.title), sem_app_path(sem_app) %></strong><br/>
-            im <%= h(sem_app.semester.title) %><br/>
+            <% unless sem_app.is_from_current_semester? %>
+              <%= icon 'exclamation-diamond-frame.png' %>
+            <% end %>
+            <strong>im <%= h(sem_app.semester.title) %></strong>
+            <br/>
             Dozent(en): <strong><%= h(sem_app.tutors) %></strong><br/>
             <%= render 'shared_partials/sem_app_states', :sem_app => sem_app %>
           </td>
