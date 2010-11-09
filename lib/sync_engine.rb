@@ -30,13 +30,15 @@ class SyncEngine
   end
 
   def sync_sem_app(sem_app)
-    print "Syncing #{sem_app.id}... "
+    print "Syncing #{sem_app.id}. "
     
     if sem_app.has_book_shelf?
       begin
         # load the books for this sem_app
         ils_entries = @adapter.get_books(sem_app.book_shelf.ils_account)
         db_entries  = mergable_hash_from_db_entries(sem_app.books)
+
+        print "Found #{ils_entries.count} ILS entries. "
 
         # sync the books
         SemApp.transaction do
