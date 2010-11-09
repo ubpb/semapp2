@@ -12,13 +12,17 @@ class FileAttachment < ActiveRecord::Base
   # Validation
   validates_presence_of :entry
   validates_attachment_presence :file
+  validates_acceptance_of :accepts_copyright
+
+  # virtuell attributes
+  attr_accessor :accepts_copyright
 
   ################################################################################################
   #
   # Public API
   #
   ################################################################################################
-  
+
   #
   # We will not allow delete on file attachments
   #

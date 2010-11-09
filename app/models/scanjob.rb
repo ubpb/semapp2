@@ -20,6 +20,7 @@ class Scanjob < ActiveRecord::Base
   validates_presence_of :pages_to
   validates_numericality_of :pages_from, :only_integer => true
   validates_numericality_of :pages_to, :only_integer => true
+  validates_acceptance_of :accepts_copyright
 
   # Scopes
   named_scope :ordered,    lambda { { :conditions => { :state => Scanjob::States[:ordered]  }, :include => {:entry => :sem_app} } }
@@ -27,6 +28,9 @@ class Scanjob < ActiveRecord::Base
   named_scope :rejected,   lambda { { :conditions => { :state => Scanjob::States[:rejected] }, :include => {:entry => :sem_app} } }
   named_scope :deferred,   lambda { { :conditions => { :state => Scanjob::States[:deferred] }, :include => {:entry => :sem_app} } }
   named_scope :ordered_by, lambda { |*order| { :order => order.flatten.first || 'created_at'  } }
+
+  # virtuell attributes
+  attr_accessor :accepts_copyright
 
   #################################################################################
   #

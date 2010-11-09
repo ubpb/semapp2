@@ -33,6 +33,7 @@ class SemApp < ActiveRecord::Base
   validates_presence_of   :title
   validates_presence_of   :tutors
   validates_presence_of   :shared_secret
+  validates_acceptance_of :accepts_copyright
   
   validates_uniqueness_of :course_id, :scope => :semester_id, :allow_nil => true, :allow_blank => false
 
@@ -42,6 +43,9 @@ class SemApp < ActiveRecord::Base
   named_scope :unapproved, lambda { { :conditions => { :approved => false } } }
   named_scope :approved, lambda { { :conditions => { :approved => true } } }
   named_scope :with_book_jobs, lambda { { :include => [:books], :conditions => "books.state = '#{Book::States[:ordered]}' OR books.state = '#{Book::States[:rejected]}'" } }
+
+  # virtuell attributes
+  attr_accessor :accepts_copyright
 
   ###########################################################################################
   #
