@@ -48,6 +48,8 @@ html[xmlns] .clearfix {
 
 table.pui-tableview td { width: auto }
 
+form.formtastic fieldset ol li p.inline-errors {clear:left}
+
 /* Page structure
 ----------------------------------------------------------------------------------------------------*/
 
