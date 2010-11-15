@@ -7,7 +7,7 @@
       <%= f.input :file, :label => 'Datei', :required => false, :hint => 'Wenn Sie die vorhandene Datei ersetzen möchten, w&auml;hlen Sie eine neue Datei aus. Ansonsten lassen Sie dieses Feld einfach leer.' %>
     <% end %>
     <%= f.input :description, :label => 'Beschreibung', :required => false, :input_html => {:rows => 1} %>
-    <%= f.input :accepts_copyright, :as => :boolean, :required => false, :label => "Ich bestätige, dass die Datei nicht gegen geltendes Urheberrecht verstößt<br/>#{link_to('Hinweise zum Urheberrecht', '#', :class => 'pui-overlay-trigger', :rel => '#legal-info')}" %>
+    <%= f.input :accepts_copyright, :as => :boolean, :required => false, :label => "Ich bestätige, dass ich mit der Bereitstellung dieser Datei nicht gegen geltendes Urheberrecht verstoße<br/>#{link_to('Hinweise zum Urheberrecht', '#', :class => 'pui-overlay-trigger', :rel => '#legal-info')}" %>
   <% end %>
 
   <% f.buttons do %>
