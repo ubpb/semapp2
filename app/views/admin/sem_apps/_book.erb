@@ -21,7 +21,7 @@
     <% if book.state == Book::States[:ordered] %>
       <%= link_to 'Wurde vorgemerkt', defer_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
       <%= link_to 'Als Stellvertreter', edit_admin_book_path(book), :class => 'pui-button small' %>
-      <%= link_to 'Als Päsenzexemplar', '#', :class => 'pui-button small pui-overlay-trigger', :rel => "#reference-copy-panel-#{book.id}" %>
+      <%= link_to 'Als Präsenzexemplar', '#', :class => 'pui-button small pui-overlay-trigger', :rel => "#reference-copy-panel-#{book.id}" %>
     <% end %>
     <% if book.state == Book::States[:rejected] %>
       <%= link_to 'Wurde aus dem Regal entfernt', removed_from_shelf_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
