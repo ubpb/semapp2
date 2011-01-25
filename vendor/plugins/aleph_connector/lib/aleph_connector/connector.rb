@@ -81,8 +81,7 @@ module Aleph #:nodoc:
       ils_account_no.gsub!(/\s/, '')
       ils_account_no.upcase!
 
-      url  = "#{@base_url}?op=bor-auth&bor_id=#{ils_account_no}&verification=#{verification}&library=#{@library}"
-      data = load_url(url)
+      data = post_url(@base_url, 'op' => 'bor-auth', 'bor_id' => ils_account_no, 'verification' => verification, 'library' => @library)
 
       if data.xpath('/bor-auth/error')[0]
         raise Aleph::AuthenticationError, "Authentication failed"
@@ -214,6 +213,10 @@ module Aleph #:nodoc:
     #
     def load_url(url)
       Nokogiri::XML(Net::HTTP.get_response(URI.parse(URI.escape(url))).body)
+    end
+
+    def post_url(url, data = {})
+      Nokogiri::XML(Net::HTTP.post_form(URI.parse(URI.escape(url)), data).body)
     end
 
   end
