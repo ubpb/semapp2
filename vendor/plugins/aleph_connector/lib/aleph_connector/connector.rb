@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require 'net/http'
+require 'net/https'
 
 module Aleph #:nodoc:
 
@@ -212,11 +213,30 @@ module Aleph #:nodoc:
     # Loads the given Aleph url and parses the XML using Nokogiri
     #
     def load_url(url)
-      Nokogiri::XML(Net::HTTP.get_response(URI.parse(URI.escape(url))).body)
+      uri = URI.parse(URI.escape(url))
+
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = (uri.scheme == 'https')
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+      request = Net::HTTP::Get.new(uri.request_uri)
+      response = http.request(request)
+
+      Nokogiri::XML(response.body)
     end
 
     def post_url(url, data = {})
-      Nokogiri::XML(Net::HTTP.post_form(URI.parse(URI.escape(url)), data).body)
+      uri = URI.parse(URI.escape(url))
+
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = (uri.scheme == 'https')
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+      request = Net::HTTP::Post.new(uri.request_uri)
+      request.set_form_data(data)
+      response = http.request(request)
+
+      Nokogiri::XML(response.body)
     end
 
   end
