@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Language" content="de"/>
     <meta http-equiv="expires" content="0"/>
 
-    <%= include_pui(:jquery => "1.4.2") %>
+    <%= include_pui %>
     <script type="text/javascript">
       jQuery(function() {
         jQuery.alwaysSendAuthToken(<%=form_authenticity_token.inspect-%>);
