@@ -30,7 +30,7 @@
 
   <% if @sem_app.new_record? %>
     <% f.inputs :name => 'Urheberrecht' do %>
-      <%= f.input :accepts_copyright, :as => :boolean, :required => false, :label => "Ich bestätige, dass ich beim Bereitstellen von Inhalten für den Seminarapparat nicht gegen geltendes Urheberrecht verstoßen werde.<br/>#{link_to('Hinweise zum Urheberrecht', '#', :class => 'pui-overlay-trigger', :rel => '#legal-info')}" %>
+      <%= f.input :accepts_copyright, :as => :boolean, :required => false, :label => "Ich bestätige, dass ich beim Bereitstellen von Inhalten für den Seminarapparat nicht gegen geltendes Urheberrecht verstoßen werde.<br/>#{link_to('Hinweise zum Urheberrecht', '#', :class => 'pui-overlay-trigger', :rel => '#legal-info')}".html_safe %>
     <% end %>
   <% end %>
 
