@@ -7,7 +7,7 @@ class SemAppsController < ApplicationController
   SEM_APP_CLONES_FILTER_NAME          = 'sem_app_clones_filter_name'.freeze
 
   before_filter :load_sem_app, :only => [:show, :edit, :update, :unlock, :transit, :clones, :filter_clones, :clone, :clear, :show_books, :show_media, :generate_access_token]
-  
+
   def index
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
     @filter.approved = true
@@ -98,6 +98,9 @@ class SemAppsController < ApplicationController
           <strong>Meine Seminarapparate</strong>. Bis zur Freischaltung können nur Sie den Seminarapparat
           sehen und bearbeiten.</p>
       """
+
+      Notifications.deliver_sem_app_created_notification(@sem_app)
+
       redirect_to user_path(:anchor => 'apps')
     else
       render :action => :new
@@ -118,7 +121,7 @@ class SemAppsController < ApplicationController
     options = {}
     options[:tutors]        = params[:sem_app][:tutors]
     options[:shared_secret] = params[:sem_app][:shared_secret]
-    
+
     if @sem_app.update_attributes(options)
       flash[:success] = "Änderungen erfolgreich gespeichert."
       redirect_to sem_app_path(@sem_app)
