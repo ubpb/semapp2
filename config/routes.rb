@@ -57,8 +57,9 @@ ActionController::Routing::Routes.draw do |map|
     end
 
     sem_app.resources :books
+    sem_app.resources :ownerships, :shallow => true
   end
-  
+
   # Download (secured download of attachments)
   map.download 'download/:id/:style/*other', :controller => 'download', :action => 'download'
 

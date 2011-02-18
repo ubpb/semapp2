@@ -9,6 +9,7 @@
   <div class="pui-tabs-wrapper">
     <ul id="sem-app-tabs" class="pui-tabs sem-app">
       <li><a href="#semapp">Seminarapparat bearbeiten</a></li>
+      <li><a href="#users">Bearbeitungsrechte</a></li>
       <li><a href="#token">Access-Token</a></li>
     </ul>
 
@@ -16,13 +17,51 @@
       <div>
         <%= render 'form' %>
       </div>
+
+      <div>
+        <div class="pui-panel align-right">
+          <%= link_to 'Nutzer hinzufügen', '#', :class => 'pui-button small pui-overlay-trigger', :rel => '#add-ownership-panel' %>
+        </div>
+
+        <div class="pui-panel align-center">
+          <%= icon 'asterisk.png' %>
+          <% if @sem_app.ownerships.present? %>
+            Die folgenden Nutzer haben Bearbeitungsrechte für diesen Seminarapparat. Benutzername
+            und E-Mail wird nur angezeigt, wenn der Nutzer sich bereits an dem System angemeldet
+            hatte.
+          <% else %>
+            Keine weiteren Nutzer haben Bearbeitungsrechte.
+          <% end %>
+        </div>
+
+
+        <% if @sem_app.ownerships.present? %>
+          <% @sem_app.ownerships.each do |os| %>
+            <div class="pui-view clearfix">
+              <div class="grid_8 alpha">
+                <div class="pui-collection-view labeled">
+                  <%= labeled_item :label => 'Benutzer',    :content => h(os.user.name) %>
+                  <%= labeled_item :label => 'E-Mail',      :content => mail_to(os.user.email) %>
+                  <%= labeled_item :label => 'Ausweis Nr.', :content => h(os.user.login) %>
+                </div>
+              </div>
+              <div class="grid_4 omega align-right">
+                <% link_to ownership_path(os), :class => 'pui-button small', :method => :delete, :confirm => 'Bearbeitungsrechte wirklich löschen?' do %>
+                  Löschen
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+
       <div>
         <div class="pui-view align-right">
           <% form_for @sem_app, :url => generate_access_token_sem_app_path, :method => :put do |f| %>
             <%= f.submit 'Neuen Access-Token erzeugen', :confirm => 'Neuen Access-Token erzeugen? Alten Token sind danach nicht mehr gültig!' %>
           <% end %>
         </div>
-        
+
         <p>
           Der aktuelle Access-Token für diesen Seminarapparat lautet
         </p>
@@ -43,6 +82,37 @@
   </div>
 </div>
 
+
+<div id="add-ownership-panel" class="pui-overlay">
+  <h3 class="section">Nutzer festlegen</h3>
+
+  <div class="pui-panel">
+    <%= icon 'asterisk.png' %>
+    Um einem Nutzer Bearbeitungsrechte für Ihren Seminarapparat zu geben,
+    tragen Sie bitte die UB-Ausweisnummer (PA...) in das Feld ein und klicken
+    Sie auf Speichern. Die Anmeldung setzt einen A-Ausweis (Ausweis für
+    Mitarbeitende der Hochschule) voraus. Studierende mit S-Ausweisen können
+    keine Bearbeitungsrechte bekommen.
+  </div>
+
+  <% form_tag(sem_app_ownerships_path(@sem_app), :class => 'formtastic', :method => :post) do %>
+    <fieldset class="inputs">
+      <ol>
+        <li class="string">
+          <label for="login">Ausweis Nr.</label>
+          <input type="text" style="width: 190px;" name="login"/>
+        </li>
+      </ol>
+    </fieldset>
+    <fieldset class="buttons">
+      <ol>
+        <li class="commit">
+          <%= submit_tag 'Speichern' %>
+        </li>
+      </ol>
+    </fieldset>
+  <% end %>
+</div>
 
 
 
