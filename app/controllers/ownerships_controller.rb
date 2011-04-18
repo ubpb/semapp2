@@ -3,9 +3,9 @@
 class OwnershipsController < ApplicationController
 
   def create
-    unauthorized! if cannot? :edit, @sem_app
-
     sem_app = SemApp.find(params[:sem_app_id])
+    unauthorized! if cannot? :edit, sem_app
+
     login   = params[:login]
     user    = User.find_by_login(login)
 
