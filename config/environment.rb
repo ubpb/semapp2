@@ -55,7 +55,7 @@ Rails::Initializer.run do |config|
   config.action_mailer.delivery_method = :sendmail
 
   # Definements (TODO: Implement this a better way)
-  TRANSIT_SOURCE_SEMESTER_ID = 13 #
-  TRANSIT_TARGET_SEMESTER_ID = 14 #
+  TRANSIT_SOURCE_SEMESTER_ID = 0 #
+  TRANSIT_TARGET_SEMESTER_ID = 0 #
 
 end
