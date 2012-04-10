@@ -35,7 +35,7 @@ class SemApp < ActiveRecord::Base
   validates_presence_of   :shared_secret
   validates_acceptance_of :accepts_copyright
   
-  validates_uniqueness_of :course_id, :scope => :semester_id, :allow_nil => true, :allow_blank => false
+  #validates_uniqueness_of :course_id, :scope => :semester_id, :allow_nil => true, :allow_blank => false
 
   # Scopes
   named_scope :from_current_semester, lambda { { :conditions => { :semester_id => Semester.current.id } } }
