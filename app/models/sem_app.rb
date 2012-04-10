@@ -193,9 +193,9 @@ class SemApp < ActiveRecord::Base
   # Make sure we convert empty values to nil, to make the database
   # unique constrain work properly.
   #
-  def course_id=(value)
-    write_attribute :course_id, (value.blank? ? nil : value)
-  end
+  #def course_id=(value)
+  #  write_attribute :course_id, (value.blank? ? nil : value)
+  #end
 
   private
   
