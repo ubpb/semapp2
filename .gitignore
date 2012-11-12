@@ -5,6 +5,7 @@ tmp/*
 config/database.yml
 db/schema.rb
 .svn
+.idea/
 log/*
 tmp/*
 config/database.yml
