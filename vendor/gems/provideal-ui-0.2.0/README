@@ -1,0 +1,24 @@
+Provideal UI
+============
+
+A collection of UI helper for Rails apps.
+
+The official homepgae is: http://github.com/provideal/provideal-ui
+
+
+Installation
+------------
+
+sudo gem install provideal-ui -s http://gemcutter.org
+
+
+Usage
+-----
+
+TODO
+
+
+Copyright
+---------
+
+Copyright (c) 2009 Provideal Systems GmbH, released under the MIT license.
