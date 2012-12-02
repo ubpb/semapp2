@@ -11,8 +11,8 @@ class SemAppsController < ApplicationController
   def index
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
     @filter.approved = true
-    @sem_apps = @filter.scope.paginate(
-      :all,
+    @sem_apps = @filter.filtered.paginate(
+      # :all,
       :per_page => 10,
       :page => params[:page],
       :include => :semester,
@@ -29,8 +29,8 @@ class SemAppsController < ApplicationController
     @filter = session[SEM_APP_SEMESTER_INDEX_FILTER_NAME] || SemAppsFilter.new
     @filter.approved = true
     @filter.semester =  Semester.current.id
-    @sem_apps = @filter.scope.paginate(
-      :all,
+    @sem_apps = @filter.filtered.paginate(
+      # :all,
       :per_page => 10,
       :page => params[:page],
       :order => "sem_apps.semester_id asc, sem_apps.title asc")
@@ -77,12 +77,19 @@ class SemAppsController < ApplicationController
     end
   end
 
+# TODO: TMP-DEVISE-DEACTIVATION - use the original below
+  def new
+    @sem_app = SemApp.new
+    @sem_app.tutors = current_user.name
+  end
+=begin
   def new
     authenticate_user! unless current_user
     @sem_app = SemApp.new
     unauthorized! if cannot? :create, @sem_app
     @sem_app.tutors = current_user.name
   end
+=end
 
   def create
     @sem_app = SemApp.new(params[:sem_app])
@@ -143,7 +150,7 @@ class SemAppsController < ApplicationController
 
   def transit
     unauthorized! if cannot?(:edit, @sem_app)
-    unauthorized! if @sem_app.semester.id != TRANSIT_SOURCE_SEMESTER_ID
+    unauthorized! if @sem_app.semester.id != SemApp2::TRANSIT_SOURCE_SEMESTER_ID
 
     clone = nil
     begin
@@ -167,8 +174,8 @@ class SemAppsController < ApplicationController
     unauthorized! if cannot? :edit, @sem_app
 
     @filter = session[SEM_APP_CLONES_FILTER_NAME] || SemAppsFilter.new
-    @sem_apps = @filter.scope.paginate(
-      :all,
+    @sem_apps = @filter.filtered.paginate(
+      # :all,
       :conditions => {:approved => true},
       :per_page => 10,
       :page => params[:page],
@@ -272,15 +279,29 @@ class SemAppsController < ApplicationController
   end
 
   def load_media
+=begin
     headline_entries = HeadlineEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
     text_entries = TextEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
     monograph_entries = MonographEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
     article_entries = ArticleEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
     collected_article_entries = CollectedArticleEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
     miless_file_entries = MilessFileEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
-
     @media = [headline_entries, text_entries, monograph_entries, article_entries, collected_article_entries, miless_file_entries].flatten.compact
     @media = @media.sort do |x,y|
+      return -1 if x.position.blank?
+      return -1 if y.position.blank?
+      x.position <=> y.position
+    end
+=end
+    @media = [HeadlineEntry, TextEntry, MonographEntry, ArticleEntry, 
+                CollectedArticleEntry, MilessFileEntry].map do |entry|
+      entry.where(sem_app_id: @sem_app.id)
+           .includes(:file_attachments, :scanjob)
+           .order('position ASC')
+           .all
+    end
+
+    @media = @media.flatten.compact.sort do |x,y|
       return -1 if x.position.blank?
       return -1 if y.position.blank?
       x.position <=> y.position

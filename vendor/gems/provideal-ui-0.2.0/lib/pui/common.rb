@@ -100,14 +100,17 @@ module PUI
 
       def labeled_item(args, &block)
         label   = args[:label] || ''
-        content = block_given? ? capture(&block) : args[:content] || ''
+        content = block_given? ? with_output_buffer(&block) : args[:content] || ''
         content = content.present? ? content : '-'
-
+        # content = h( content ) # TODO: do we need this
+        
         content = content_tag(:div, :class => 'item clearfix') do
           content_tag(:span, label, :class => 'label') << content_tag(:div, content, :class => 'content')
         end
-
-        block_given? ? concat(content) : content
+        
+        # block_given? ? with_output_buffer(content) : content
+        # block_given? ? concat(content) : content
+        # ( block_given? ? concat(content) : content ).html_safe
       end
 
     end

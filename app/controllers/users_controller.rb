@@ -2,13 +2,14 @@
 
 class UsersController < ApplicationController
 
-  before_filter :authenticate_user!
+  # TODO: TMP-DEVISE-DEACTIVATION - reactivate this
+  # before_filter :authenticate_user!
 
   def show
     @user = current_user
 
     @my_sem_apps = SemApp.paginate(
-      :all,
+      # :all,
       :per_page => 10,
       :page => params[:page],
       :conditions => {:creator_id => @user.id},

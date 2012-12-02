@@ -12,8 +12,8 @@
         <% users.each do |u| %>
           <tr>
             <td nowrap="true">
-              <strong><%= h(u.full_name) %></strong><br/>
-              <%= h(u) %>
+              <strong><%= u.full_name %></strong><br/>
+              <%= u %>
               <% if u == current_user %>
                 <span style="font-style:italic; font-size:90%">(das sind Sie)</span>
               <% end %>

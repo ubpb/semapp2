@@ -4,7 +4,7 @@
   </div>
 
   <div class="align-right" style="margin-bottom: 5px">
-    <% link_to sem_app_books_path(@sem_app), :class => 'pui-button' do %>
+    <%= link_to sem_app_books_path(@sem_app), :class => 'pui-button' do %>
       <%= icon 'arrow-curve-180-left.png' %>
       Zur&uuml;ck
     <% end %>
@@ -40,7 +40,7 @@
             <%= render 'shared_partials/book_ref', :book => r %>
           </td>
           <th>
-            <% form_tag(sem_app_books_path(@sem_app)) do %>
+            <%= form_tag(sem_app_books_path(@sem_app)) do %>
               <%= hidden_field_tag 'doc_number', r.doc_number %>
               <%= submit_tag 'Ausw&auml;hlen', :class => 'pui-button small' %>
             <% end %>

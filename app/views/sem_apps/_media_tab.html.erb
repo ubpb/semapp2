@@ -6,11 +6,11 @@
     </div>
   <% end %>
   <div class="pui-view align-right">
-    <% link_to clones_sem_app_path(@sem_app), :class => 'pui-button' do %>
+    <%= link_to clones_sem_app_path(@sem_app), :class => 'pui-button' do %>
       <%= icon 'document-copy.png' %>
       Alte Daten Klonen
     <% end %>
-    <% link_to clear_sem_app_path(@sem_app), :class => 'pui-button', :method => :delete, :confirm => 'Wollen Sie wirklich ALLE Einträge unwiederruflich löschen? Dieser Vorgang kann nicht Rückgängig gemacht werden!' do %>
+    <%= link_to clear_sem_app_path(@sem_app), :class => 'pui-button', :method => :delete, :confirm => 'Wollen Sie wirklich ALLE Einträge unwiederruflich löschen? Dieser Vorgang kann nicht Rückgängig gemacht werden!' do %>
       <%= icon 'cross.png' %>
       Alle Einträge löschen
     <% end %>
@@ -44,7 +44,7 @@
 
     <% if can?(:edit, @sem_app) %>
       <div class="pui-view align-center">
-        <% link_to new_sem_app_entry_path(@sem_app, :format => 'js'), :class => 'pui-button new-entry-action' do %>
+        <%= link_to new_sem_app_entry_path(@sem_app, :format => 'js'), :class => 'pui-button new-entry-action' do %>
           <%= icon 'plus.png' %>
           Einen neuen Eintrag erstellen
         <% end %>

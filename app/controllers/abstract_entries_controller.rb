@@ -2,7 +2,8 @@
 
 class AbstractEntriesController < ApplicationController
 
-  before_filter :authenticate_user!
+  # TODO: TMP-DEVISE-DEACTIVATION - reactivate this
+  # before_filter :authenticate_user!
 
   cache_sweeper :entry_sweeper
 

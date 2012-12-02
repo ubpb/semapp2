@@ -2,7 +2,8 @@
 
 class Admin::ApplicationController < ApplicationController
 
-  before_filter :secure_controller
+  # TODO: TMP-DEVISE-DEACTIVATION - reactivate this
+  # before_filter :secure_controller
 
   layout 'admin'
 

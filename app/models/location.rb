@@ -11,7 +11,7 @@ class Location < ActiveRecord::Base
   end
 
   def count
-    SemApp.count(:conditions => "location_id = #{self.id}")
+    SemApp.where("location_id = #{self.id}").count
   end
 
 end

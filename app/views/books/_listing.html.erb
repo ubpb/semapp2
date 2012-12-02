@@ -3,9 +3,9 @@
     <% entries.each do |entry| %>
       <div class="item book-order">
         <div class="date"><%= entry.created_at.to_s(:long) %></div>
-        <div class="signature"><%= h(entry.signature) %></div>
+        <div class="signature"><%= entry.signature %></div>
         <div class="source">
-          <%= h(entry.title) %><%= ', ' + h(entry.author) if entry.author.present? %><%= ', ' + h(entry.year) if entry.year.present? %>
+          <%= entry.title %><%= ', ' + entry.author if entry.author.present? %><%= ', ' + entry.year if entry.year.present? %>
         </div>
       </div>
     <% end %>

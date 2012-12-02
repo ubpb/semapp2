@@ -1,2 +1,3 @@
 # encoding: utf-8
-require 'devise_aleph_authenticatable'
+# TODO: TMP-DEVISE-DEACTIVATION
+# require 'devise_aleph_authenticatable'

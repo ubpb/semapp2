@@ -1,24 +1,24 @@
 <h3 class="section">Seminarapparate verwalten &raquo; Details</h3>
 
 <div class="pui-panel align-right">
-  <% link_to admin_sem_apps_path, :class => 'pui-button' do %>
+  <%= link_to admin_sem_apps_path, :class => 'pui-button' do %>
     <%= icon 'arrow-curve-180-left.png' %>
     Zur&uuml;ck zur &Uuml;bersicht
   <% end %>
 
   <% if @ordered_books.present? or @removed_books.present? %>
-    <% link_to admin_sem_app_path(@sem_app, :format => :print), :class => "print pui-button" do %>
+    <%= link_to admin_sem_app_path(@sem_app, :format => :print), :class => "print pui-button" do %>
       <%= icon 'printer.png' %>
       Auftr&auml;ge Drucken
     <% end %>
   <% end %>
 
-  <% link_to edit_admin_sem_app_path(@sem_app), :class => "pui-button" do %>
+  <%= link_to edit_admin_sem_app_path(@sem_app), :class => "pui-button" do %>
     <%= icon 'wrench-screwdriver.png' %>
     Bearbeiten
   <% end %>
 
-  <% link_to admin_sem_app_path(@sem_app), :class => "pui-button", :method => :delete, :confirm => 'Den Seminarapparat mit allen Dokumenten löschen? Dieser Vorgang kann nicht Rückgängig gemacht werden!' do %>
+  <%= link_to admin_sem_app_path(@sem_app), :class => "pui-button", :method => :delete, :confirm => 'Den Seminarapparat mit allen Dokumenten löschen? Dieser Vorgang kann nicht Rückgängig gemacht werden!' do %>
     <%= icon 'cross.png' %>
     Löschen
   <% end %>
@@ -64,12 +64,12 @@
       <div class="pui-view clearfix">
         <div class="grid_8 alpha">
           <div class="pui-collection-view labeled">
-            <%= labeled_item :label => 'Titel',       :content => link_to(h(@sem_app.title), sem_app_path(@sem_app)) %>
-            <%= labeled_item :label => 'Dozent(en)',  :content => h(@sem_app.tutors) %>
-            <%= labeled_item :label => 'Semester',    :content => h(@sem_app.semester.title) %>
-            <%= labeled_item :label => 'Standort',    :content => h(@sem_app.location.title) %>
-            <%  labeled_item :label => 'Lesekennung' do %>
-              <code><%= @sem_app.shared_secret -%></code>
+            <%= labeled_item :label => 'Titel',       :content => link_to(@sem_app.title, sem_app_path(@sem_app)) %>
+            <%= labeled_item :label => 'Dozent(en)',  :content => @sem_app.tutors %>
+            <%= labeled_item :label => 'Semester',    :content => @sem_app.semester.title %>
+            <%= labeled_item :label => 'Standort',    :content => @sem_app.location.title %>
+            <%= labeled_item :label => 'Lesekennung' do %>
+              <code><%= @sem_app.shared_secret %></code>
               <% if @sem_app.shared_secret == 'ubpad466' %>
                 <div>
                   <%= icon "asterisk.png" %>

@@ -23,12 +23,12 @@ class Book < ActiveRecord::Base
   validates_presence_of   :author
 
   # Scopes
-  named_scope :for_sem_app, lambda { |sem_app| { :conditions => { :sem_app_id => sem_app.id } } }
-  named_scope :ordered,     lambda { { :conditions => { :state => Book::States[:ordered] } } }
-  named_scope :in_shelf,    lambda { { :conditions => { :state => Book::States[:in_shelf] } } }
-  named_scope :removed,     lambda { { :conditions => { :state => Book::States[:rejected] } } }
-  named_scope :deferred,    lambda { { :conditions => { :state => Book::States[:deferred] } } }
-  named_scope :ordered_by,  lambda { |*order| { :order => order.flatten.first || 'title DESC' } }
+  scope :for_sem_app, lambda { |sem_app| where( :sem_app_id => sem_app.id ) }
+  scope :ordered,     lambda { where( :state => Book::States[:ordered]  ) }
+  scope :in_shelf,    lambda { where( :state => Book::States[:in_shelf] ) }
+  scope :removed,     lambda { where( :state => Book::States[:rejected] ) }
+  scope :deferred,    lambda { where( :state => Book::States[:deferred] ) }
+  scope :ordered_by,  lambda { |*order| order( order.flatten.first || 'title DESC' ) }
   
   ###########################################################################################
   #
@@ -84,7 +84,9 @@ class Book < ActiveRecord::Base
   #
   ###########################################################################################
 
-  def before_create
+  before_create :ensure_state
+
+  def ensure_state
     if self.state.blank?
       self.state = Book::States[:ordered]
     end

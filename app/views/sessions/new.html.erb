@@ -6,14 +6,14 @@
   bearbeiten wollen. Studierende melden sich mittels der bekannt gegebenen Lesekennung am jeweiligen Apparat an*.
 </div>
 
-<% semantic_form_for resource_name, resource, :url => session_path(resource_name) do |f| %>
+<%= semantic_form_for resource_name, resource, :url => session_path(resource_name) do |f| %>
   <%= f.error_messages %>
-  <% f.inputs :name => "Anmeldung (mit Bibliothekslogin**)" do %>
+  <%= f.inputs :name => "Anmeldung (mit Bibliothekslogin**)" do %>
     <%= f.input :login,    :label => 'Login', :required => false %>
     <%= f.input :password, :label => 'Passwort', :required => false %>
   <% end %>
 
-  <% f.buttons do %>
+  <%= f.buttons do %>
     <%= f.commit_button 'Anmelden' %>
   <% end %>
 <% end %>

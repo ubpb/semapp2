@@ -97,11 +97,17 @@ class BooksController < ApplicationController
 
   private
 
+# TODO: TMP-DEVISE-DEACTIVATION - use the original below
+  def load_sem_app
+    @sem_app = SemApp.find(params[:sem_app_id])
+  end
+=begin
   def load_sem_app
     authenticate_user!
     @sem_app = SemApp.find(params[:sem_app_id])
     unauthorized! if cannot? :edit, @sem_app
   end
+=end
 
   def check_current_semester
     unless @sem_app.is_from_current_semester?

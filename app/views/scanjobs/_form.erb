@@ -3,9 +3,9 @@
   <%= @scanjob.entry.instance.to_s %>
 </p>
 
-<% semantic_form_for [@entry, @scanjob] do |f| %>
+<%= semantic_form_for [@entry, @scanjob] do |f| %>
 
-  <% f.inputs do %>
+  <%= f.inputs do %>
     <%= f.input :signature,  :label => 'Signatur in der Bibliothek', :required => true, :hint => '<b>Bitte beachten Sie:</b> Wir scannen ausschlie&szlig;lich B&uuml;cher und Zeitschriften aus unserem Bestand. Geben Sie bitte dazu die Signatur der o.g. Quelle an. Bitte recherchieren Sie die Signatur mit unserem <a href="https://ubaleph.uni-paderborn.de/F" target="blank">Katalog</a>' %>
     <%= f.input :pages_from, :label => 'Seiten von', :required => true %>
     <%= f.input :pages_to,   :label => 'Seiten bis', :required => true %>
@@ -13,11 +13,11 @@
     <%= f.input :accepts_copyright, :as => :boolean, :required => false, :label => "Ich bestätige, dass ich mit dem Scanauftrag und der Bereitstellung der Datei nicht gegen geltendes Urheberrecht verstoße<br/>#{link_to('Hinweise zum Urheberrecht', '#', :class => 'pui-overlay-trigger', :rel => '#legal-info')}" %>
   <% end %>
 
-  <% f.inputs :name => 'Interne Bearbeitungshinweise' do %>
+  <%= f.inputs :name => 'Interne Bearbeitungshinweise' do %>
     <%= f.input :message, :label => 'Ihre Nachricht an uns', :required => false, :input_html => {:rows => 2}, :hint => 'Ihre Nachricht/Hinweise an die Bibliothek. Wird nicht öffentlich angezeigt.' %>
   <% end %>
 
-  <% f.buttons do %>
+  <%= f.buttons do %>
     <%= f.commit_button 'Scan beauftragen' %>
     <li class="commit">
       <%= link_to 'Abbrechen', sem_app_path(@scanjob.entry.sem_app, :anchor => 'media') %>

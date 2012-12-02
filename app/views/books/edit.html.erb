@@ -4,12 +4,12 @@
   <%= render 'shared_partials/book_ref', :book => @book %>
 </div>
 
-<% semantic_form_for [@sem_app, @book] do |f| %>
-  <% f.inputs do %>
+<%= semantic_form_for [@sem_app, @book] do |f| %>
+  <%= f.inputs do %>
     <%= f.input :comment, :label => 'Kommentar', :required => false %>
   <% end %>
 
-  <% f.buttons do %>
+  <%= f.buttons do %>
     <%= f.commit_button 'Speichern' %>
     <li class="commit">
       <%= link_to 'Abbrechen', sem_app_path(@sem_app, :anchor => 'books') %>

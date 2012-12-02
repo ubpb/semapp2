@@ -4,12 +4,12 @@
   </div>
 
   <div class="align-right" style="margin-bottom: 5px">
-    <% link_to sem_app_path(@sem_app, :anchor => :books), :class => 'pui-button' do %>
+    <%= link_to sem_app_path(@sem_app, :anchor => :books), :class => 'pui-button' do %>
       <%= icon 'arrow-curve-180-left.png' %>
       Zur&uuml;ck zum Seminarapparat
     <% end %>
 
-    <% link_to new_sem_app_book_path(@sem_app), :class => 'pui-button' do %>
+    <%= link_to new_sem_app_book_path(@sem_app), :class => 'pui-button' do %>
       <%= icon 'overlay/book--plus.png' %>
       Neues Buch bestellen
     <% end %>

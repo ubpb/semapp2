@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class EntrySweeper < ActionController::Caching::Sweeper
 
   observe Entry

@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
   has_many                :ownerships, :dependent => :destroy
   has_many                :sem_apps, :through => :ownerships
 
-  devise :aleph_authenticatable
+  # TODO: TMP-DEVISE-DEACTIVATION - reactivate this
+  # devise :aleph_authenticatable
 
   # Validations
   validates_presence_of :login

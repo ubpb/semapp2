@@ -21,13 +21,13 @@
       <% sem_apps.each_with_index do |sem_app, n| %>
         <tr class="<%= (n % 2 == 0) ? 'even' : 'odd' -%>">
           <td>
-            <strong><%= link_to h(sem_app.title), sem_app_path(sem_app) %></strong><br/>
-            im <%= h(sem_app.semester.title) %><br/>
-            Dozent(en): <strong><%= h(sem_app.tutors) %></strong>
+            <strong><%= link_to sem_app.title, sem_app_path(sem_app) %></strong><br/>
+            im <%= sem_app.semester.title %><br/>
+            Dozent(en): <strong><%= sem_app.tutors %></strong>
           </td>
           <th>
             <% if actions.include?(:clone) and @sem_app != sem_app %>
-              <% form_tag clone_sem_app_path do %>
+              <%= form_tag clone_sem_app_path do %>
                 <%= hidden_field_tag 'source', sem_app.id %>
                 <% if cannot?(:edit, sem_app) %>
                   Passwort:
@@ -38,7 +38,7 @@
             <% end %>
 
             <% if actions.include?(:show) %>
-              <% link_to sem_app_path(sem_app), :class => 'pui-button small' do %>
+              <%= link_to sem_app_path(sem_app), :class => 'pui-button small' do %>
                 <%= icon 'eye.png' %>
                 Anzeigen
               <% end %>
@@ -58,7 +58,7 @@
   <div id="transit-panel-<%=sem_app.id-%>" class="pui-overlay align-left">
     <h3 class="section">Seminarapparat kopieren</h3>
 
-    <% form_tag(transit_sem_app_path(sem_app), :class => 'formtastic') do %>
+    <%= form_tag(transit_sem_app_path(sem_app), :class => 'formtastic') do %>
       <fieldset class="inputs">
         <ol>
           <li class="string">

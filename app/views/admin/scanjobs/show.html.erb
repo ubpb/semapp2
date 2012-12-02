@@ -4,17 +4,17 @@
   </div>
 
   <div class="align-right" style="margin-bottom: 5px">
-    <% link_to admin_scanjobs_path(:anchor => @scanjob.state), :class => 'pui-button' do %>
+    <%= link_to admin_scanjobs_path(:anchor => @scanjob.state), :class => 'pui-button' do %>
       <%= icon 'arrow-curve-180-left.png' %>
       Zur&uuml;ck zur &Uuml;bersicht
     <% end %>
 
-    <% link_to polymorphic_path(['edit', @scanjob.entry.instance]), :class => "pui-button" do %>
+    <%= link_to polymorphic_path(['edit', @scanjob.entry.instance]), :class => "pui-button" do %>
       <%= icon 'wrench.png' %>
       Eintrag Bearbeiten
     <% end %>
 
-    <% link_to admin_scanjob_print_job_path(@scanjob), :class => "pui-button print" do %>
+    <%= link_to admin_scanjob_print_job_path(@scanjob), :class => "pui-button print" do %>
       <%= icon 'printer.png' %>
       Auftrag drucken
     <% end %>

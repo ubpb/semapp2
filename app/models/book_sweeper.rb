@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class BookSweeper < ActionController::Caching::Sweeper
 
   observe Book

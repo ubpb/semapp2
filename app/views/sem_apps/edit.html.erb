@@ -1,5 +1,5 @@
 <div class="pui-panel align-right">
-  <% link_to sem_app_path(@sem_app), :class => 'pui-button' do %>
+  <%= link_to sem_app_path(@sem_app), :class => 'pui-button' do %>
     <%= icon 'arrow-curve-180-left.png' %>
     Zur&uuml;ck zum Seminarapparat
   <% end %>
@@ -40,13 +40,13 @@
             <div class="pui-view clearfix">
               <div class="grid_8 alpha">
                 <div class="pui-collection-view labeled">
-                  <%= labeled_item :label => 'Benutzer',    :content => h(os.user.name) %>
+                  <%= labeled_item :label => 'Benutzer',    :content => os.user.name %>
                   <%= labeled_item :label => 'E-Mail',      :content => mail_to(os.user.email) %>
-                  <%= labeled_item :label => 'Ausweis Nr.', :content => h(os.user.login) %>
+                  <%= labeled_item :label => 'Ausweis Nr.', :content => os.user.login %>
                 </div>
               </div>
               <div class="grid_4 omega align-right">
-                <% link_to ownership_path(os), :class => 'pui-button small', :method => :delete, :confirm => 'Bearbeitungsrechte wirklich löschen?' do %>
+                <%= link_to ownership_path(os), :class => 'pui-button small', :method => :delete, :confirm => 'Bearbeitungsrechte wirklich löschen?' do %>
                   Löschen
                 <% end %>
               </div>
@@ -57,7 +57,7 @@
 
       <div>
         <div class="pui-view align-right">
-          <% form_for @sem_app, :url => generate_access_token_sem_app_path, :method => :put do |f| %>
+          <%= form_for @sem_app, :url => generate_access_token_sem_app_path, :method => :put do |f| %>
             <%= f.submit 'Neuen Access-Token erzeugen', :confirm => 'Neuen Access-Token erzeugen? Alten Token sind danach nicht mehr gültig!' %>
           <% end %>
         </div>
@@ -95,7 +95,7 @@
     keine Bearbeitungsrechte bekommen.
   </div>
 
-  <% form_tag(sem_app_ownerships_path(@sem_app), :class => 'formtastic', :method => :post) do %>
+  <%= form_tag(sem_app_ownerships_path(@sem_app), :class => 'formtastic', :method => :post) do %>
     <fieldset class="inputs">
       <ol>
         <li class="string">

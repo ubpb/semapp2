@@ -57,7 +57,7 @@ namespace :app do
   #
   desc "Sends an info mail to sem app owners"
   task(:info_mail => :environment) do
-    apps = SemApp.find(:all, :conditions => {:semester_id => Semester.current})
+    apps = SemApp.where(semester_id: Semester.current).all
     @owner_info = {}
     apps.each do |a|
       creator = a.creator

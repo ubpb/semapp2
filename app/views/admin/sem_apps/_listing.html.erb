@@ -21,10 +21,10 @@
               <%= icon 'overlay/book--minus.png' %>
             <% end %>
 
-            <strong><%= link_to h(sem_app.title), admin_sem_app_path(sem_app) %></strong><br/>
-            im <%= h(sem_app.semester.title) %><br/>
-            Dozent(en): <%= h(sem_app.tutors) %><br/>
-            Fachbibliothek: <%= h(sem_app.location.title) %>
+            <strong><%= link_to sem_app.title, admin_sem_app_path(sem_app) %></strong><br/>
+            im <%= sem_app.semester.title %><br/>
+            Dozent(en): <%= sem_app.tutors %><br/>
+            Fachbibliothek: <%= sem_app.location.title %>
           </td>
         </tr>
       <% end %>

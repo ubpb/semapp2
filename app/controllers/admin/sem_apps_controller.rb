@@ -7,10 +7,18 @@ class Admin::SemAppsController < Admin::ApplicationController
   def index
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
     if @filter
-      @sem_apps = @filter.scope.paginate(:all, :include => [:creator, :books, :semester],  :per_page => 10, :page => params[:page],
+      @sem_apps = @filter.filtered.paginate(
+        # :all, 
+        :per_page => 10, 
+        :page => params[:page],
+        :include => [:creator, :books, :semester],  
         :order => "semesters.position asc, sem_apps.title asc")
     else
-      @sem_apps = SemApp.paginate(:all, :include => [:creator, :books, :semester], :per_page => 10, :page => params[:page],
+      @sem_apps = SemApp.paginate(
+        # :all, 
+        :per_page => 10, 
+        :page => params[:page],
+        :include => [:creator, :books, :semester], 
         :order => "semesters.position asc, sem_apps.title asc")
     end
   end
@@ -29,10 +37,12 @@ class Admin::SemAppsController < Admin::ApplicationController
     @removed_books  = Book.for_sem_app(@sem_app).removed.ordered_by('signature asc')
     @deferred_books = Book.for_sem_app(@sem_app).deferred.ordered_by('signature asc')
 
+
     respond_to do |format|
       format.html { render 'show',  :format => 'html' }
       format.print { render 'show', :format => 'print', :layout => 'print' }
     end
+
   end
 
   def new
