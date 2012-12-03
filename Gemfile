@@ -5,7 +5,7 @@ gem 'rails', '3.0.17'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-# gem 'rails-i18n' # TODO: currently will_paginate-translations are added
+gem 'rails-i18n' # TODO: currently will_paginate-translations are added
 
 gem 'pg'
 
