@@ -16,12 +16,12 @@
     Meine Seminarapparate
   <% end %>
 
-  <%= link_to destroy_user_session_path, :confirm => 'Wirklich abmelden?' do %>
+  <%= link_to logout_path, :confirm => 'Wirklich abmelden?' do %>
     <%= image_tag 'icons/door-open-out.png', :plugin => 'pui' %>
     Abmelden
   <% end %>
 <% else %>
-  <%= link_to new_user_session_path do %>
+  <%= link_to login_path do %>
     <%= image_tag 'icons/door-open-in.png', :plugin => 'pui' %>
     Login f&uuml;r Lehrende
   <% end %>

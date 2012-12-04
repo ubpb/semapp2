@@ -9,15 +9,6 @@ gem 'rails-i18n' # TODO: currently will_paginate-translations are added
 
 gem 'pg'
 
-# the Devise 1.0.x line isn't Rails 3 compatible
-# gem 'devise', '~> 1.0.4', require: 'devise'
-gem 'devise',        '~> 1.1.7',    require: 'devise'
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-
-
 gem 'cancan',        '1.0.2',    require: 'cancan'
 
 gem 'barby',         '0.3.2',    require: 'barby'
@@ -93,6 +84,9 @@ group :test do
   gem 'capybara' #, '1.1.2'
 end
 =end
+
+# To use ActiveModel has_secure_password
+# gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'

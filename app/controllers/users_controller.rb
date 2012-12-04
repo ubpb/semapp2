@@ -2,8 +2,7 @@
 
 class UsersController < ApplicationController
 
-  # TODO: TMP-DEVISE-DEACTIVATION - reactivate this
-  # before_filter :authenticate_user!
+  before_filter :require_authenticate
 
   def show
     @user = current_user

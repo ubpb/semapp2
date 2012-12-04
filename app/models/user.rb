@@ -7,20 +7,24 @@ class User < ActiveRecord::Base
   has_many                :ownerships, :dependent => :destroy
   has_many                :sem_apps, :through => :ownerships
 
-  # TODO: TMP-DEVISE-DEACTIVATION - reactivate this
-  # devise :aleph_authenticatable
-
   # Validations
   validates_presence_of :login
   validates_presence_of :name
 
 
-  #
-  # Devise (Aleph) callback
-  #
-  def on_successfull_authentication(aleph_user)
-    if aleph_user.status.match(/^PA.+/)
-      add_authority(Authority::LECTURER_ROLE)
+  class << self
+    def create_or_update_aleph_user!(aleph_user)
+      user = self.find_by_login(aleph_user.user_id)
+      user.present? ? update_user!(user, aleph_user) : create_user!(aleph_user)
+    end
+
+    def create_user!(aleph_user)
+      User.create!(:login => aleph_user.user_id, :name => aleph_user.name, :email => aleph_user.email)
+    end
+
+    def update_user!(user, aleph_user)
+      user.update_attributes!(:name => aleph_user.name, :email => aleph_user.email)
+      user
     end
   end
 

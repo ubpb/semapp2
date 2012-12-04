@@ -8,6 +8,8 @@ class SemAppsController < ApplicationController
 
   before_filter :load_sem_app, :only => [:show, :edit, :update, :unlock, :transit, :clones, :filter_clones, :clone, :clear, :show_books, :show_media, :generate_access_token]
 
+  before_filter :require_authenticate, only: [:new]
+
   def index
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
     @filter.approved = true
@@ -77,19 +79,11 @@ class SemAppsController < ApplicationController
     end
   end
 
-# TODO: TMP-DEVISE-DEACTIVATION - use the original below
   def new
-    @sem_app = SemApp.new
-    @sem_app.tutors = current_user.name
-  end
-=begin
-  def new
-    authenticate_user! unless current_user
     @sem_app = SemApp.new
     unauthorized! if cannot? :create, @sem_app
     @sem_app.tutors = current_user.name
   end
-=end
 
   def create
     @sem_app = SemApp.new(params[:sem_app])

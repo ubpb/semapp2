@@ -2,7 +2,7 @@
 
 class BooksController < ApplicationController
 
-  before_filter :load_sem_app
+  before_filter :require_authenticate, :load_sem_app
   before_filter :check_current_semester, :only => [:index, :new, :create, :destroy]
 
   cache_sweeper :book_sweeper
@@ -97,17 +97,10 @@ class BooksController < ApplicationController
 
   private
 
-# TODO: TMP-DEVISE-DEACTIVATION - use the original below
   def load_sem_app
-    @sem_app = SemApp.find(params[:sem_app_id])
-  end
-=begin
-  def load_sem_app
-    authenticate_user!
     @sem_app = SemApp.find(params[:sem_app_id])
     unauthorized! if cannot? :edit, @sem_app
   end
-=end
 
   def check_current_semester
     unless @sem_app.is_from_current_semester?
