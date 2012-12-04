@@ -54,6 +54,7 @@ GEM
     devise (1.1.9)
       bcrypt-ruby (~> 2.1.2)
       warden (~> 1.0.2)
+    dynamic_form (1.1.3)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     formtastic (1.2.3)
@@ -123,6 +124,7 @@ DEPENDENCIES
   barby (= 0.3.2)
   cancan (= 1.0.2)
   devise (~> 1.1.7)
+  dynamic_form
   formtastic (= 1.2.3)
   nokogiri (= 1.5.5)
   paperclip (= 2.3.1.1)

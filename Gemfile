@@ -38,6 +38,8 @@ gem 'RedCloth', '~> 4.2.3', require: 'RedCloth'
 gem 'prarupa' # provides old textilize helper methods
 # gem 'formatize' # the official gem for providing old textilize helper methods, but this also depends on BlueCloth
 
+gem 'dynamic_form' # provides the old f.error_messages method
+
 gem 'provideal-ui',  '0.2.0',   require: 'pui', path: "vendor/gems/provideal-ui-0.2.0"
 gem 'provideal-plugin-utils',  '0.1.3', path: "vendor/gems/provideal-plugin-utils-0.1.3"
 gem 'formtastic', '1.2.3'
