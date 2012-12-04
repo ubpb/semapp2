@@ -32,7 +32,7 @@
   <body>
     <%= render 'shared_partials/ie6_notice' %>
 
-    <% global_message_file = "#{RAILS_ROOT}/config/_global_message.erb" %>
+    <% global_message_file = "#{::Rails.root}/config/_global_message.erb" %>
     <% if File.exists?(global_message_file) %>
       <%= render :file => global_message_file %>
     <% end %>

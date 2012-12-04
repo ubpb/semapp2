@@ -26,7 +26,7 @@ module Provideal
         raise "Source path does't exists" unless File.exists?(source_path)
 
         # Target path
-        target_base_path = "#{RAILS_ROOT}/public/plugins"
+        target_base_path = "#{::Rails.root}/public/plugins"
         FileUtils.mkdir_p(target_base_path) unless File.exists?(target_base_path)
         target_path = "#{target_base_path}/#{plugin_name}"
 
