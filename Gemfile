@@ -9,36 +9,29 @@ gem 'rails-i18n' # TODO: currently will_paginate-translations are added
 
 gem 'pg'
 
-gem 'cancan',        '1.0.2',    require: 'cancan'
+gem 'cancan', '1.0.2'
 
-gem 'barby',         '0.3.2',    require: 'barby'
+gem 'barby', '0.4.4'
+gem 'rqrcode'
+gem 'chunky_png', '1.2.0'
 
-# gem 'RubyInline' # although png has this as a dependency, the gemspec of png 1.2.0 doesn't specify this anymore
-# gem 'png',           '~> 1.2.0',    require: 'png'
-# TODO: use this fork: https://github.com/bensomers/png
-# 			to solve this issue: https://github.com/seattlerb/png/pull/1
-# gem 'png', require: 'png', :github => "bensomers/png"
-gem 'png',           '~> 1.1.0',    require: 'png'
-
-gem 'paperclip',     '2.3.1.1',  require: 'paperclip'
+gem 'paperclip', '2.3.1.1'
 gem 'will_paginate', '3.0.3'
-# gem 'will_paginate', '2.3.12',   require: 'will_paginate'
-gem 'acts_as_list',  '0.1.2',    require: 'acts_as_list'
+gem 'acts_as_list', '0.1.2'
 
-gem 'RedCloth', '~> 4.2.3', require: 'RedCloth'
+gem 'RedCloth', '~> 4.2.3'
 gem 'prarupa' # provides old textilize helper methods
 # gem 'formatize' # the official gem for providing old textilize helper methods, but this also depends on BlueCloth
 
 gem 'dynamic_form' # provides the old f.error_messages method
 
-gem 'provideal-ui',  '0.2.0',   require: 'pui', path: "vendor/gems/provideal-ui-0.2.0"
-gem 'provideal-plugin-utils',  '0.1.3', path: "vendor/gems/provideal-plugin-utils-0.1.3"
+gem 'provideal-ui', '0.2.0', require: 'pui', path: "vendor/gems/provideal-ui-0.2.0"
+gem 'provideal-plugin-utils', '0.1.3', path: "vendor/gems/provideal-plugin-utils-0.1.3"
 gem 'formtastic', '1.2.3'
 
 
 # AlephConnector dependencies
-gem 'nokogiri', '1.5.5',   require: 'nokogiri'
-
+gem 'nokogiri', '1.5.5'
 
 
 # TODO: Can/shall we put this into this group?
@@ -85,6 +78,7 @@ group :test do
 end
 =end
 
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
@@ -100,5 +94,3 @@ end
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
 # gem 'ruby-debug'
 # gem 'ruby-debug19', :require => 'ruby-debug'
-
-

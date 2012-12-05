@@ -47,16 +47,6 @@ SemApp2::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-
   config.cache_store = :file_store, File.join(Rails.root.to_s, 'tmp', 'cache')
-
-  # Hack to make ruby_inline work with passenger
-  # on production systems
-  # @see http://www.viget.com/extend/rubyinline-in-shared-rails-environments/
-  temp = Tempfile.new('ruby_inline', '/tmp')
-  dir = temp.path
-  temp.delete
-  Dir.mkdir(dir, 0755)
-  ENV['INLINEDIR'] = dir
 
 end
