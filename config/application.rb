@@ -2,17 +2,6 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
-# TODO: remove this
-# for will_paginate to run on Rails 3
-=begin
-class Object
-  def returning(value)
-    yield(value)
-    value
-  end
-end
-=end
-
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env) if defined?(Bundler)
