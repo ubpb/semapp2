@@ -38,9 +38,9 @@ class Book < ActiveRecord::Base
 
   def state=(value)
     if value.present? and States[value.to_sym].present?
-      self.write_attribute(:state, States[value.to_sym])
+      write_attribute(:state, States[value.to_sym])
     else
-      self.write_attribute(:state, '')
+      write_attribute(:state, '')
     end
   end
 

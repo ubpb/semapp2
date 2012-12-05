@@ -5,8 +5,8 @@ module SafeTouchable
   def touch
     current_time = current_time_from_proper_timezone
 
-    self.write_attribute('updated_at', current_time) if self.respond_to?(:updated_at)
-    self.write_attribute('updated_on', current_time) if self.respond_to?(:updated_on)
+    write_attribute('updated_at', current_time) if self.respond_to?(:updated_at)
+    write_attribute('updated_on', current_time) if self.respond_to?(:updated_on)
 
     self.save(false)
   end

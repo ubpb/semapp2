@@ -40,13 +40,13 @@ class Scanjob < ActiveRecord::Base
 
   def state=(value)
     if value.present? and States[value.to_sym].present?
-      self.write_attribute(:state, States[value.to_sym])
+      write_attribute(:state, States[value.to_sym])
     end
   end
 
   def set_state(value)
     if value.present? and States[value.to_sym].present?
-      self.update_attribute(:state, States[value.to_sym])
+      update_attribute(:state, States[value.to_sym])
     end
   end
 
