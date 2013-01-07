@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.0.17'
+gem 'rails', '3.2.10'
+#gem 'rails', '3.0.17'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -15,7 +16,7 @@ gem 'barby', '0.4.4'
 gem 'rqrcode'
 gem 'chunky_png', '1.2.0'
 
-gem 'paperclip', '2.3.1.1'
+gem 'paperclip', '2.7.0'
 gem 'will_paginate', '3.0.3'
 gem 'acts_as_list', '0.1.2'
 
@@ -94,3 +95,4 @@ end
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
 # gem 'ruby-debug'
 # gem 'ruby-debug19', :require => 'ruby-debug'
+# gem 'debugger'
