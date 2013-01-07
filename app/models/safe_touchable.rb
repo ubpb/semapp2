@@ -8,7 +8,7 @@ module SafeTouchable
     write_attribute('updated_at', current_time) if self.respond_to?(:updated_at)
     write_attribute('updated_on', current_time) if self.respond_to?(:updated_on)
 
-    self.save(false)
+    self.save(validate: false)
   end
 
   private

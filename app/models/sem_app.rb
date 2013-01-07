@@ -209,7 +209,7 @@ class SemApp < ActiveRecord::Base
       end
 
       clone.sem_app = self
-      clone.save(false)
+      clone.save(validate: false)
     end
   end
 
@@ -217,7 +217,7 @@ class SemApp < ActiveRecord::Base
     source_sem_app.books.each do |book|
       clone = book.clone
       clone.sem_app = self
-      clone.save(false)
+      clone.save(validate: false)
     end
   end
 

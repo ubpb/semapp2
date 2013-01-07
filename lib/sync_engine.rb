@@ -130,7 +130,7 @@ class SyncEngine
   def create_entry(options)
     book = Book.new(options)
     book.state = "in_shelf"
-    unless book.save(false)
+    unless book.save(validate: false)
       raise book.errors.full_messages.to_sentence
     end
   end
@@ -142,7 +142,7 @@ class SyncEngine
     end
 
     db_entry.attributes = options
-    unless db_entry.save(false)
+    unless db_entry.save(validate: false)
       raise "Failed for signature #{options[:signature]} while updating an exsisting entry."
     end
   end

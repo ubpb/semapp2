@@ -12,7 +12,7 @@ class Admin::BooksController < Admin::ApplicationController
     @book.placeholder_id = params[:book][:placeholder_id]
     @book.state = :in_shelf
 
-    if @book.save(false)
+    if @book.save(validate: false)
       flash[:success] = "Erfolgreich gespeichert"
       redirect_to admin_sem_app_path(@book.sem_app, :anchor => 'new-books')
     else
