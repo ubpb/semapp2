@@ -100,7 +100,7 @@ class SemAppsController < ApplicationController
           sehen und bearbeiten.</p>
       """
 
-      Notifications.deliver_sem_app_created_notification(@sem_app)
+      Notifications.sem_app_created_notification(@sem_app).deliver
 
       redirect_to user_path(:anchor => 'apps')
     else

@@ -74,7 +74,7 @@ namespace :app do
         apps = @owner_info[u]
 
         puts "#{u.login} - #{u.email}"
-        Notifications.deliver_sem_app_transit_notification(u, apps)
+        Notifications.sem_app_transit_notification(u, apps).deliver
 
         apps.each do |a|
           apps_with_at_least_one_email_contact << a
