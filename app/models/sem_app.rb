@@ -90,7 +90,7 @@ class SemApp < ActiveRecord::Base
   end
 
   def generate_access_token
-    self.access_token = ActiveSupport::SecureRandom.hex(16)
+    self.access_token = SecureRandom.hex(16)
   end
 
   def generate_access_token!
