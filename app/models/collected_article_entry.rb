@@ -6,7 +6,7 @@ class CollectedArticleEntry < Entry
   belongs_to :sem_app
   
   # Behavior
-  set_table_name :collected_article_entries
+  self.table_name = :collected_article_entries
   
   # Validation
   validates_presence_of :source_year

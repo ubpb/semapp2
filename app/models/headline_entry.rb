@@ -6,7 +6,7 @@ class HeadlineEntry < Entry
   belongs_to :sem_app
 
   # Behavior
-  set_table_name :headline_entries
+  self.table_name = :headline_entries
 
   # Validation
   validates_presence_of :headline

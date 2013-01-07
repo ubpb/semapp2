@@ -6,7 +6,7 @@ class MilessFileEntry < Entry
   belongs_to :sem_app
   
   # Behavior
-  set_table_name :miless_file_entries
+  self.table_name = :miless_file_entries
   
   ######################################################################################################
   #

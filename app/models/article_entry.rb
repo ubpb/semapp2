@@ -6,7 +6,7 @@ class ArticleEntry < Entry
   belongs_to :sem_app
   
   # Behavior
-  set_table_name :article_entries
+  self.table_name = :article_entries
   
   # Validation
   validates_presence_of :journal
