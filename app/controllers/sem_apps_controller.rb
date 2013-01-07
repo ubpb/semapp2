@@ -98,7 +98,7 @@ class SemAppsController < ApplicationController
           den Seminarapparat nach erfolgter Prüfung für Sie frei. Sie sehen den Status unter
           <strong>Meine Seminarapparate</strong>. Bis zur Freischaltung können nur Sie den Seminarapparat
           sehen und bearbeiten.</p>
-      """
+      """.html_safe
 
       Notifications.sem_app_created_notification(@sem_app).deliver
 
@@ -155,7 +155,7 @@ class SemAppsController < ApplicationController
           den Seminarapparat nach erfolgter Prüfung für Sie frei. Sie sehen den Status unter
           <strong>Meine Seminarapparate</strong>. Bis zur Freischaltung können nur Sie den Seminarapparat
           sehen und bearbeiten.</p>
-        """
+        """.html_safe
       else
         flash[:error] = 'Bei dem Vorgang ist ein Fehler aufgetreten. Bitte wenden Sie sich an den Support.'
       end

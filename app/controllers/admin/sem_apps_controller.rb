@@ -92,14 +92,14 @@ class Admin::SemAppsController < Admin::ApplicationController
     
     if user
       if @sem_app.update_attribute(:creator, user)
-        flash[:success] = "Besitzer erfolgreich gesetzt. #{login} kann den Seminarapparat <i>#{@sem_app.title}</i> nun bearbeiten."
+        flash[:success] = ActionController::Base.helpers.sanitize "Besitzer erfolgreich gesetzt. #{login} kann den Seminarapparat <i>#{@sem_app.title}</i> nun bearbeiten."
       else
         flash[:error] = "Fehler: Der Benutzer konnte nicht als Besitzer eingetragen werden."
       end
     else
       u = User.new(:login => login)
       if u.save(false) and @sem_app.update_attribute(:creator, u)
-        flash[:success] = "Der Benutzer '#{login}' existierte nicht, wurde aber angelegt. Name und E-Mail sind erst verfügbar wenn der Nutzer sich das erste mal anmeldet. #{login} kann den Seminarapparat <i>#{@sem_app.title}</i> nun bearbeiten."
+        flash[:success] = ActionController::Base.helpers.sanitize "Der Benutzer '#{login}' existierte nicht, wurde aber angelegt. Name und E-Mail sind erst verfügbar wenn der Nutzer sich das erste mal anmeldet. #{login} kann den Seminarapparat <i>#{@sem_app.title}</i> nun bearbeiten."
       else
         flash[:error] = "Es ist ein unbekannter Fehler aufgetreten!"
       end
