@@ -8,6 +8,8 @@ gem 'rails', '3.2.10'
 
 gem 'rails-i18n' # TODO: currently will_paginate-translations are added
 
+gem 'deep_cloning', '~> 2.0.0'
+
 gem 'pg'
 
 gem 'cancan', '1.0.2'

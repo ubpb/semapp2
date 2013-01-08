@@ -49,6 +49,7 @@ GEM
     cancan (1.0.2)
     chunky_png (1.2.0)
     cocaine (0.4.2)
+    deep_cloning (2.0.0)
     dynamic_form (1.1.4)
     erubis (2.7.0)
     formtastic (1.2.3)
@@ -127,6 +128,7 @@ DEPENDENCIES
   barby (= 0.4.4)
   cancan (= 1.0.2)
   chunky_png (= 1.2.0)
+  deep_cloning (~> 2.0.0)
   dynamic_form
   formtastic (= 1.2.3)
   nokogiri (= 1.5.5)
