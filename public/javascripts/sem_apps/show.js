@@ -22,6 +22,15 @@
       var url = tab.attr("rel");
 
       tab.html('<div class="pui-panel align-center"><img src="/images/common/loader.gif" style="line-height:16px; vertical-align:text-top"/> Lade Daten ...</div>');
+
+//      $.ajax({
+//        url: url,
+//        success: function(data) {
+//          console.log(data);
+//          tab.html(data);
+//          callback();
+//        }
+//      });
       $.get(url, function(data) {
         tab.html(data);
         callback();
