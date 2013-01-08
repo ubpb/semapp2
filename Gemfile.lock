@@ -1,15 +1,3 @@
-PATH
-  remote: vendor/gems/provideal-plugin-utils-0.1.3
-  specs:
-    provideal-plugin-utils (0.1.3)
-
-PATH
-  remote: vendor/gems/provideal-ui-0.2.0
-  specs:
-    provideal-ui (0.2.0)
-      formtastic (>= 0.9.7)
-      provideal-plugin-utils (>= 0.1.3)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -135,8 +123,6 @@ DEPENDENCIES
   paperclip (= 2.7.0)
   pg
   prarupa
-  provideal-plugin-utils (= 0.1.3)!
-  provideal-ui (= 0.2.0)!
   rails (= 3.2.10)
   rails-i18n
   rqrcode

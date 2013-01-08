@@ -28,8 +28,8 @@ gem 'prarupa' # provides old textilize helper methods
 
 gem 'dynamic_form' # provides the old f.error_messages method
 
-gem 'provideal-ui', '0.2.0', require: 'pui', path: "vendor/gems/provideal-ui-0.2.0"
-gem 'provideal-plugin-utils', '0.1.3', path: "vendor/gems/provideal-plugin-utils-0.1.3"
+#gem 'provideal-ui', '0.2.0', require: 'pui', path: "vendor/gems/provideal-ui-0.2.0"
+#gem 'provideal-plugin-utils', '0.1.3', path: "vendor/gems/provideal-plugin-utils-0.1.3"
 gem 'formtastic', '1.2.3'
 
 
@@ -44,7 +44,7 @@ group :production do
 end
 =end
 
-# TODO: This should be used, instead of the self-made stuff
+
 # gem 'jquery-rails'
 
 =begin
