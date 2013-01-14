@@ -48,7 +48,7 @@
     <%= labeled_item :label => 'Auftrag #',      :content => scanjob.id %>
     <%= labeled_item :label => 'Auftrag vom',    :content => scanjob.created_at.to_formatted_s(:long) %>
     <%= labeled_item :label => 'Quelle',         :content => entry.to_s %>
-    <%= labeled_item :label => 'Seminarapparat', :content => "(#{entry.sem_app.id}) #{link_to(entry.sem_app.full_title, sem_app_path(entry.sem_app, :anchor => 'media'))}" %>
+    <%= labeled_item :label => 'Seminarapparat', :content => "(#{entry.sem_app.id}) #{link_to(sanitize(entry.sem_app.full_title), sem_app_path(entry.sem_app, :anchor => 'media'))}".html_safe %>
     <div class="no-print">
       <%= labeled_item :label => 'Auftrag von',  :content => scanjob.creator.present? ? "#{scanjob.creator.name} (#{scanjob.creator.login}), #{mail_to(scanjob.creator.email)}" : '-' %>
     </div>

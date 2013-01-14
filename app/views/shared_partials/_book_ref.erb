@@ -7,6 +7,7 @@
   content << " : "       << content_tag(:span, book.publisher) if book.place.present? and book.publisher.present?
   content << ", "        << content_tag(:span, book.year)      if book.year.present?
   content << ".- ISBN "  << content_tag(:span, book.isbn)      if book.isbn.present?
+  content = content.html_safe # TODO: Shouldn't we h-escape the content from the content tags?
 %>
 
 <div class="bib-ref">

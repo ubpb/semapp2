@@ -26,7 +26,7 @@ class Semester < ActiveRecord::Base
   end
 
   def self.current
-    Semester.find(:first, :conditions => {:current => true})
+    Semester.where(current: true).first
   end
 
 end

@@ -1,11 +1,11 @@
 <div class="pui-view">
   <h3 class="section">
-    <%= link_to h(sem_app.title), sem_app_path(sem_app) %>
+    <%= link_to sem_app.title, sem_app_path(sem_app) %>
   </h3>
   <div>
-    im <%= h(sem_app.semester.title) %>
+    im <%= sem_app.semester.title %>
   </div>
   <div>
-    Dozent(en): <strong><%= h(sem_app.tutors) %></strong>
+    Dozent(en): <strong><%= sem_app.tutors %></strong>
   </div>
 </div>

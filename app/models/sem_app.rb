@@ -38,13 +38,13 @@ class SemApp < ActiveRecord::Base
   #validates_uniqueness_of :course_id, :scope => :semester_id, :allow_nil => true, :allow_blank => false
 
   # Scopes
-  named_scope :from_current_semester, lambda { { :conditions => { :semester_id => Semester.current.id } } }
-  named_scope :ordered_by,  lambda { |*order| { :order => order.flatten.first || 'title DESC' } }
-  named_scope :unapproved, lambda { { :conditions => { :approved => false } } }
-  named_scope :approved, lambda { { :conditions => { :approved => true } } }
-  named_scope :with_book_jobs, lambda { { :include => [:books], :conditions => "books.state = '#{Book::States[:ordered]}' OR books.state = '#{Book::States[:rejected]}'" } }
+  scope :from_current_semester, lambda { where( semester_id: Semester.current.id ) }
+  scope :ordered_by,  lambda { |*order| order( order.flatten.first || 'title DESC' ) }
+  scope :unapproved, lambda { where( approved: false ) }
+  scope :approved, lambda { where( approved: true ) }
+  scope :with_book_jobs, lambda { includes( :books ).where( "books.state = '#{Book::States[:ordered]}' OR books.state = '#{Book::States[:rejected]}'" ) }
 
-  # virtuell attributes
+  # virtual attributes
   attr_accessor :accepts_copyright
 
   ###########################################################################################
@@ -67,12 +67,7 @@ class SemApp < ActiveRecord::Base
   end
 
   def book_by_ils_id(ils_id)
-    Book.find(
-      :first,
-      :conditions => {
-        :sem_app_id => self.id,
-        :ils_id     => ils_id
-      })
+    Book.where( sem_app_id: self.id, ils_id: ils_id ).first
   end
 
   def add_ownership(user)
@@ -95,7 +90,7 @@ class SemApp < ActiveRecord::Base
   end
 
   def generate_access_token
-    self.access_token = ActiveSupport::SecureRandom.hex(16)
+    self.access_token = SecureRandom.hex(16)
   end
 
   def generate_access_token!
@@ -145,7 +140,7 @@ class SemApp < ActiveRecord::Base
   end
 
   def transit
-    target_semester = Semester.find(TRANSIT_TARGET_SEMESTER_ID)
+    target_semester = Semester.find(SemApp2::TRANSIT_TARGET_SEMESTER_ID)
     #return if Semester.current == next_semester
 
     if target_semester.present?
@@ -214,7 +209,7 @@ class SemApp < ActiveRecord::Base
       end
 
       clone.sem_app = self
-      clone.save(false)
+      clone.save(validate: false)
     end
   end
 
@@ -222,7 +217,7 @@ class SemApp < ActiveRecord::Base
     source_sem_app.books.each do |book|
       clone = book.clone
       clone.sem_app = self
-      clone.save(false)
+      clone.save(validate: false)
     end
   end
 

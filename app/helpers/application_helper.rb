@@ -1,0 +1,35 @@
+# encoding: utf-8
+
+module ApplicationHelper
+
+  # PUI stuff
+
+  def icon(name)
+    image_tag 'icons/' + name
+    #image_tag('icons/' + name, :plugin => 'pui')
+  end
+
+  def navigation_item(options = {:label => 'Item', :url => root_path, :current => false} )
+    content_tag(:li, :class => options[:current] ? 'current' : 'none-current') do
+      link_to(options[:url]) do
+        (options[:icon].present? ? options[:icon] : '') << options[:label]
+      end
+    end
+  end
+
+  def labeled_item(args, &block)
+    label   = args[:label] || ''
+    content = block_given? ? with_output_buffer(&block) : args[:content] || ''
+    content = content.present? ? content : '-'
+    # content = h( content ) # TODO: do we need this
+
+    content = content_tag(:div, :class => 'item clearfix') do
+      content_tag(:span, label, :class => 'label') << content_tag(:div, content, :class => 'content')
+    end
+
+    # block_given? ? with_output_buffer(content) : content
+    # block_given? ? concat(content) : content
+    # ( block_given? ? concat(content) : content ).html_safe
+  end
+
+end

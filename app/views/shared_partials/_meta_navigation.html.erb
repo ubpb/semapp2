@@ -5,23 +5,23 @@
   </span>
 
   <% if current_user.is_admin? %>
-    <% link_to admin_root_path do %>
+    <%= link_to admin_root_path do %>
       <%= image_tag 'icons/user-black.png', :plugin => 'pui' %>
       Administration
     <% end %>
   <% end %>
 
-  <% link_to user_path do %>
+  <%= link_to user_path do %>
     <%= image_tag 'icons/user-orange.png', :plugin => 'pui' %>
     Meine Seminarapparate
   <% end %>
 
-  <% link_to destroy_user_session_path, :confirm => 'Wirklich abmelden?' do %>
+  <%= link_to logout_path, :confirm => 'Wirklich abmelden?' do %>
     <%= image_tag 'icons/door-open-out.png', :plugin => 'pui' %>
     Abmelden
   <% end %>
 <% else %>
-  <% link_to new_user_session_path do %>
+  <%= link_to login_path do %>
     <%= image_tag 'icons/door-open-in.png', :plugin => 'pui' %>
     Login f&uuml;r Lehrende
   <% end %>

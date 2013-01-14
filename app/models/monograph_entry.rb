@@ -6,7 +6,7 @@ class MonographEntry < Entry
   belongs_to :sem_app
 
   # Bahvior
-  set_table_name :monograph_entries
+  self.table_name = :monograph_entries
 
   # Validation
   validates_presence_of :author

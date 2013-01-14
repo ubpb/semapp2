@@ -2,6 +2,7 @@
 
 class Admin::ApplicationController < ApplicationController
 
+  before_filter :require_authenticate
   before_filter :secure_controller
 
   layout 'admin'
@@ -9,7 +10,6 @@ class Admin::ApplicationController < ApplicationController
   private
 
   def secure_controller
-    authenticate_user!
     unauthorized! unless current_user and current_user.is_admin?
   end
 

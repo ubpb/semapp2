@@ -1,0 +1,36 @@
+form, form.formtastic { margin-bottom: 15px; font-size: 13px; }
+form legend, form.formtastic legend { color:#333333; font-size:110%; font-weight:bolder; padding-top:10px; }
+
+form input,
+form textarea,
+form select,
+form.formtastic input,
+form.formtastic textarea,
+form.formtastic select { width: auto; padding: 5px; border: 1px solid #ccc; }
+form input[type="submit"], form.formtastic input[type="submit"] { padding: 6px 12px !important }
+
+form.formtastic fieldset ol,
+form.formtastic fieldset ul { margin:0 !important; }
+form.formtastic fieldset ol li { background-color: #efefef; margin: 0 0 2px 0 !important; padding: 8px 0; }
+form.formtastic fieldset ol li.commit { background-color: transparent !important; }
+form.formtastic fieldset ol li label { width: 150px; padding-left: 10px; padding-right: 10px; }
+form.formtastic fieldset ol li.string input { width: 400px; }
+form.formtastic fieldset ol li.password input { width: 400px; }
+form.formtastic fieldset ol li.numeric input { width: 150px; }
+form.formtastic fieldset ol li.text textarea { width: 400px; }
+form.formtastic fieldset ol li.boolean label { padding-left: 170px; }
+
+form.formtastic fieldset ol li p.inline-hints { margin: 0 0 0 170px !important; font-size: 90%; }
+form.formtastic fieldset ol li p.inline-errors { margin:0.5em 0 0 170px !important; font-size:90%; }
+
+form.formtastic fieldset.buttons { padding: 10px 10px 10px 170px; background-color: #efefef; }
+form.formtastic fieldset.buttons ol li { padding: 0; margin: 0 5px 0 0; }
+form.formtastic fieldset.buttons ol li a,
+form.formtastic fieldset.buttons ol li input,
+form.formtastic fieldset.buttons ol li span { display: block; padding: 6px; }
+
+form.formtastic fieldset ol li fieldset ol { padding: 0px 0px 0px 170px; width: auto }
+form.formtastic fieldset ol li fieldset legend { font-size: 100%; color: #000; width: 150px; font-weight: normal; padding-top: 0 }
+form.formtastic fieldset ol li fieldset ol li label { padding-left: 0; }
+
+form.formtastic fieldset ol li.check_boxes fieldset ol li { margin: 0.5em 0 0.5em !important; }

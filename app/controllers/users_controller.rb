@@ -2,13 +2,13 @@
 
 class UsersController < ApplicationController
 
-  before_filter :authenticate_user!
+  before_filter :require_authenticate
 
   def show
     @user = current_user
 
     @my_sem_apps = SemApp.paginate(
-      :all,
+      # :all,
       :per_page => 10,
       :page => params[:page],
       :conditions => {:creator_id => @user.id},

@@ -23,13 +23,13 @@ class Scanjob < ActiveRecord::Base
   validates_acceptance_of :accepts_copyright
 
   # Scopes
-  named_scope :ordered,    lambda { { :conditions => { :state => Scanjob::States[:ordered]  }, :include => {:entry => :sem_app} } }
-  named_scope :accepted,   lambda { { :conditions => { :state => Scanjob::States[:accepted] }, :include => {:entry => :sem_app} } }
-  named_scope :rejected,   lambda { { :conditions => { :state => Scanjob::States[:rejected] }, :include => {:entry => :sem_app} } }
-  named_scope :deferred,   lambda { { :conditions => { :state => Scanjob::States[:deferred] }, :include => {:entry => :sem_app} } }
-  named_scope :ordered_by, lambda { |*order| { :order => order.flatten.first || 'created_at'  } }
+  scope :ordered,    lambda { where( state: Scanjob::States[:ordered]  ).includes( :entry => :sem_app ) }
+  scope :accepted,   lambda { where( state: Scanjob::States[:accepted] ).includes( :entry => :sem_app ) }
+  scope :rejected,   lambda { where( state: Scanjob::States[:rejected] ).includes( :entry => :sem_app ) }
+  scope :deferred,   lambda { where( state: Scanjob::States[:deferred] ).includes( :entry => :sem_app ) }
+  scope :ordered_by, lambda { |*order| order( order.flatten.first || 'created_at' ) }
 
-  # virtuell attributes
+  # virtual attributes
   attr_accessor :accepts_copyright
 
   #################################################################################
@@ -40,13 +40,13 @@ class Scanjob < ActiveRecord::Base
 
   def state=(value)
     if value.present? and States[value.to_sym].present?
-      self.write_attribute(:state, States[value.to_sym])
+      write_attribute(:state, States[value.to_sym])
     end
   end
 
   def set_state(value)
     if value.present? and States[value.to_sym].present?
-      self.update_attribute(:state, States[value.to_sym])
+      update_attribute(:state, States[value.to_sym])
     end
   end
 
@@ -60,7 +60,9 @@ class Scanjob < ActiveRecord::Base
   #
   ###########################################################################################
 
-  def before_create
+  before_create :ensure_state
+
+  def ensure_state
     if self.state.blank?
       self.state = Scanjob::States[:ordered]
     end

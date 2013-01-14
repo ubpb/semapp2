@@ -2,7 +2,7 @@
 
 class BooksController < ApplicationController
 
-  before_filter :load_sem_app
+  before_filter :require_authenticate, :load_sem_app
   before_filter :check_current_semester, :only => [:index, :new, :create, :destroy]
 
   cache_sweeper :book_sweeper
@@ -98,7 +98,6 @@ class BooksController < ApplicationController
   private
 
   def load_sem_app
-    authenticate_user!
     @sem_app = SemApp.find(params[:sem_app_id])
     unauthorized! if cannot? :edit, @sem_app
   end

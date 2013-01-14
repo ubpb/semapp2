@@ -6,7 +6,7 @@
 
 <div class="grid_4 omega">
   <div class="pui-panel">
-    <% form_tag filter_admin_sem_apps_path do %>
+    <%= form_tag filter_admin_sem_apps_path do %>
       <p>
         <%= radio_button_tag "filter[only]", 'all',  !@filter.unapproved_only or !@filter.bookjobs_only %>
         <label>Alle Seminarapparate</label>
@@ -21,7 +21,7 @@
       </p>
       <p>
         <label>Semester</label><br/>
-        <%= collection_select(:filter, :semester, Semester.find(:all, :order => 'position asc'), :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
+        <%= collection_select(:filter, :semester, Semester.order('position ASC').all, :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
       </p>
       <p>
         <label>Fachbibliothek</label><br/>

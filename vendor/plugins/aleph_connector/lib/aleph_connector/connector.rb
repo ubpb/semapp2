@@ -84,7 +84,7 @@ module Aleph #:nodoc:
 
       data = post_url(@base_url, 'op' => 'bor-auth', 'bor_id' => ils_account_no, 'verification' => verification, 'library' => @library)
 
-      if data.xpath('/bor-auth/error')[0]
+      if data.xpath('/bor-auth/error')[0] || data.xpath('/bor-auth')[0].nil?
         raise Aleph::AuthenticationError, "Authentication failed"
       else
         user = Aleph::User.new(ils_account_no, data.xpath('/bor-auth')[0])

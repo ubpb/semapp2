@@ -1,68 +1,114 @@
-# encoding: utf-8
-
-ActionController::Routing::Routes.draw do |map|
+SemApp2::Application.routes.draw do
 
   # Admin routes
-  map.namespace :admin do |admin|
-    admin.root :controller => 'sem_apps', :action => 'index'
+  namespace :admin do |admin|
+    root to: 'sem_apps#index'
 
-    admin.resources :sem_apps, :as => 'apps', :collection => {:filter => :post}, :member => {:set_creator => :put} do |sem_app|
-      sem_app.resources :ownerships, :shallow => true
+    resources :sem_apps, path: 'apps' do 
+      collection do 
+        post :filter
+      end
+      member do
+        put :set_creator
+      end
+      resources :ownerships, shallow: true
     end
 
-    admin.resources :books, :only => [:edit, :update, :destroy, :defer, :dedefer, :placed_in_shelf, :removed_from_shelf, :reference], :member => {:defer => :put, :dedefer => :put, :placed_in_shelf => :put, :removed_from_shelf => :put, :reference => :put}
-    admin.resources :book_shelves, :as => 'shelves', :only => [:index]
+    resources :books, 
+          only: [:edit, :update, :destroy, :defer, :dedefer, :placed_in_shelf, 
+                  :removed_from_shelf, :reference] do
+      member do
+        put :defer
+        put :dedefer
+        put :placed_in_shelf
+        put :removed_from_shelf
+        put :reference
+      end
+    end
 
-    admin.resources :scanjobs, :member => {:defer => :put, :dedefer => :put}, :collection => {:upload => :put}
-    admin.scanjob_print_job   'scanjobs/:id/print-job',         :controller => 'scanjobs', :action => 'print_job'
-    admin.scanjobs_print_list 'scanjobs/print-list/:list_name', :controller => 'scanjobs', :action => 'print_list'
-    admin.scanjob_barcode     'scanjobs/:id/barcode',           :controller => 'scanjobs', :action => 'barcode'
+    resources :book_shelves, path: 'shelves', only: :index
+
+    resources :scanjobs do
+     member do 
+       put :defer
+       put :dedefer
+     end
+     collection do 
+       put :upload
+     end
+    end
+
+    match 'scanjobs/:id/print-job' => 'scanjobs#print_job', as: :scanjob_print_job
+    match 'scanjobs/print-list/:list_name' => 'scanjobs#print_list', as: :scanjobs_print_list
+    match 'scanjobs/:id/barcode' => 'scanjobs#barcode', as: :scanjob_barcode
   end
 
-  # Login / Logout
-  map.devise_for :user, :path_names => { :sign_in => 'login', :sign_out => 'logout' }
+  resources :sessions, only: [:new, :create, :destroy]
+  match 'login'  => 'sessions#new',     as: :login
+  match 'logout' => 'sessions#destroy', as: :logout #, via: :delete
 
   # User profile
-  map.resource :user, :only => [:show]
+  resource :user, only: [:show]
 
   # Sem Apps
-  map.semester_index        'semester',        :controller => 'sem_apps', :action => 'semester_index'
-  map.filter_semester_index 'semester/filter', :controller => 'sem_apps', :action => 'filter_semester_index'
+  match "semester"        => 'sem_apps#semester_index', as: :semester_index
+  match 'semester/filter' => 'sem_apps#filter_semester_index', as: :filter_semester_index
 
-  map.resources :sem_apps, :as => 'apps', :controller => 'sem_apps', :member => {:unlock => :post, :transit => :post, :clones => :get, :clone => :post, :filter_clones => :post, :clear => :delete, :show_books => :get, :show_media => :get, :generate_access_token => :put}, :collection => {:filter => :post} do |sem_app|
-    sem_app.resources :entries, :only => [:reorder, :new], :collection => {:reorder => :put}, :shallow => true do |entry|
-      entry.resources :file_attachments, :as => 'attachments', :only => [:edit, :update, :destroy]
-      entry.resources :scanjobs, :as => 'scans', :only => [:edit, :update, :destroy]
+  # resources :sem_apps, :path => 'apps', :controller => 'sem_apps', :member => {:unlock => :post, :transit => :post, :clones => :get, :clone => :post, :filter_clones => :post, :clear => :delete, :show_books => :get, :show_media => :get, :generate_access_token => :put}, :collection => {:filter => :post} do 
+  resources :sem_apps, :path => 'apps' do 
+    member do
+      post :unlock
+      post :transit
+      get :clones
+      post :clone
+      post :filter_clones
+      delete :clear
+      get :show_books
+      get :show_media
+      put :generate_access_token
     end
-    sem_app.resources :headline_entries, :as => 'headlines', :shallow => true do |entry|
+
+    collection do 
+      post :filter
+    end
+
+    resources :entries, only: [:reorder, :new], shallow: true do 
+      collection do 
+        put :reorder
+      end
+      resources :file_attachments, path: 'attachments', only: [:edit, :update, :destroy]
+      resources :scanjobs, path: 'scans', only: [:edit, :update, :destroy]
+    end
+    resources :headline_entries, path: 'headlines', shallow: true do 
       # nope
     end
-    sem_app.resources :text_entries, :as => 'texts', :shallow => true do |entry|
-      entry.resources :file_attachments, :as => 'attachments', :only => [:new, :create]
+    resources :text_entries, path: 'texts', shallow: true do 
+      resources :file_attachments, path: 'attachments', only: [:new, :create]
     end
-    sem_app.resources :monograph_entries, :as => 'monographs', :shallow => true do |entry|
-      entry.resources :file_attachments, :as => 'attachments', :only => [:new, :create]
-      entry.resources :scanjobs, :as => 'scans', :only => [:new, :create]
+    resources :monograph_entries, path: 'monographs', shallow: true do 
+      resources :file_attachments, path: 'attachments', only: [:new, :create]
+      resources :scanjobs, path: 'scans', only: [:new, :create]
     end
-    sem_app.resources :article_entries, :as => 'articles', :shallow => true do |entry|
-      entry.resources :file_attachments, :as => 'attachments', :only => [:new, :create]
-      entry.resources :scanjobs, :as => 'scans', :only => [:new, :create]
+    resources :article_entries, path: 'articles', shallow: true do 
+      resources :file_attachments, path: 'attachments', only: [:new, :create]
+      resources :scanjobs, path: 'scans', only: [:new, :create]
     end
-    sem_app.resources :collected_article_entries,  :as => 'collected-articles', :shallow => true do |entry|
-      entry.resources :file_attachments, :as => 'attachments', :only => [:new, :create]
-      entry.resources :scanjobs, :as => 'scans', :only => [:new, :create]
+    resources :collected_article_entries, path: 'collected-articles', shallow: true do 
+      resources :file_attachments, path: 'attachments', only: [:new, :create]
+      resources :scanjobs, path: 'scans', only: [:new, :create]
     end
-    sem_app.resources :miless_file_entries,  :as => 'miless-files', :shallow => true do |entry|
-      entry.resources :file_attachments, :as => 'attachments', :only => [:new, :create]
+    resources :miless_file_entries, path: 'miless-files', shallow: true do 
+      resources :file_attachments, path: 'attachments', only: [:new, :create]
     end
 
-    sem_app.resources :books
-    sem_app.resources :ownerships, :shallow => true
+    resources :books
+    resources :ownerships, :shallow => true
   end
 
   # Download (secured download of attachments)
-  map.download 'download/:id/:style/*other', :controller => 'download', :action => 'download'
+  match 'download/:id/:style/*other' => 'download#download', :as => :download
 
   # Root Page
-  map.root :controller => "home"
+  root to: "home#index"
+
 end

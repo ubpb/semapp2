@@ -10,12 +10,12 @@
       </thead>
       <tbody id="locations">
         <% @locations.each do |location| %>
-          <% content_tag_for(:tr, location) do %>
+          <%= content_tag_for(:tr, location) do %>
           <td class="drag_handle" nowrap="true">
             <span class="ui-icon ui-icon-grip-dotted-horizontal"></span>
           </td>
           <td width="100%">
-            <%= h(location.title) %>
+            <%= location.title %>
             (<%= location.count %>)
           </td>
           <td align="right" nowrap="true">

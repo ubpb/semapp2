@@ -11,7 +11,7 @@
 <% end %>
 
 <h3 class="section">
-  <%= link_to h(@sem_app.title), sem_app_path(@sem_app) %>
+  <%= link_to @sem_app.title, sem_app_path(@sem_app) %>
 </h3>
 
 <% if current_user and current_user.owns_sem_app?(@sem_app) and @sem_app.archived %>
@@ -33,19 +33,19 @@
 <div class="pui-view clearfix section" style="margin-bottom: 30px">
   <div class="clearfix">
     <div class="grid_6 alpha">
-      <h3>im <%= h(@sem_app.semester.title) %></h3>
-      Dozent(en): <strong><%= h(@sem_app.tutors) %></strong><br/>
+      <h3>im <%= @sem_app.semester.title %></h3>
+      Dozent(en): <strong><%= @sem_app.tutors %></strong><br/>
       Letzte Änderung: <strong><%= l(@sem_app.updated_at, :format => :short) %></strong>
     </div>
 
     <div class="grid_6 omega align-right">
       <% if can?(:edit, @sem_app) %>
-        <% link_to edit_sem_app_path(@sem_app), :class => 'pui-button' do %>
+        <%= link_to edit_sem_app_path(@sem_app), :class => 'pui-button' do %>
           <%= icon 'wrench.png' %>
           Einstellungen
         <% end %>
         <% if can?(:manage, @sem_app) %>
-          <% link_to admin_sem_app_path(@sem_app), :class => 'pui-button' do %>
+          <%= link_to admin_sem_app_path(@sem_app), :class => 'pui-button' do %>
             <%= icon 'user-black.png' %>
             Administrieren
           <% end %>
@@ -80,9 +80,9 @@
   <% end %>
 </div>
 
-<% if @sem_app.semester.id == TRANSIT_SOURCE_SEMESTER_ID and Semester.find_by_id(TRANSIT_TARGET_SEMESTER_ID).present? and can?(:edit, @sem_app) %>
+<% if @sem_app.semester.id == SemApp2::TRANSIT_SOURCE_SEMESTER_ID and Semester.find_by_id(SemApp2::TRANSIT_TARGET_SEMESTER_ID).present? and can?(:edit, @sem_app) %>
   <div class="pui-view align-right">
-    <% link_to transit_sem_app_path(@sem_app), :class => 'pui-button', :method => :post, 
+    <%= link_to transit_sem_app_path(@sem_app), :class => 'pui-button', :method => :post, 
       :confirm => 'Soll der aktuelle Seminarapparat in das neue Semester übernommen werden? Die können den Apparat übernehmen, wenn Sie die Veranstaltung im kommenden Semester weiterführen. Dieser Vorgang kann länger dauern, brechen Sie ihn nicht ab!' do %>
       <%= icon('arrow-turn-090.png') %>
       In das neue Semester &uuml;bernehmen

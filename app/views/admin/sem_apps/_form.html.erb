@@ -1,16 +1,16 @@
-<% semantic_form_for [:admin, @sem_app] do |f| %>
-  <% f.inputs :name => 'Administrative Daten' do %>
+<%= semantic_form_for [:admin, @sem_app] do |f| %>
+  <%= f.inputs :name => 'Administrative Daten' do %>
     <% if @sem_app.creator.email.present? %>
       <% approve_hint = "Nach der Aktivierung wird eine E-Mail mit Informationen an #{@sem_app.creator.email} verschickt." %>
     <% end %>
     <%= f.input :approved, :label => 'Von der UB gepr&uuml;ft und freigebegen?', :required => false, :hint => approve_hint || '' %>
   <% end %>
 
-  <% f.inputs :name => 'Ausweis / Regal' do %>
+  <%= f.inputs :name => 'Ausweis / Regal' do %>
     <div class="pui-panel">
       Um B&uuml;cher in diesen Apparat einstellen zu können bitte die folgenden Felder ausf&uuml;llen. Ansonsten die Felder leer lassen.
     </div>
-    <% f.semantic_fields_for :book_shelf do |shelf| %>
+    <%= f.semantic_fields_for :book_shelf do |shelf| %>
       <% unless shelf.object.new_record? %>
         <%= shelf.input '_destroy',  :label => 'Ausweis / Regal löschen?', :as => :boolean, :required => false %>
       <% end %>
@@ -19,11 +19,11 @@
     <% end %>
   <% end %>
 
-  <% f.inputs :name => 'Verweis auf einen anderes Regal' do %>
+  <%= f.inputs :name => 'Verweis auf einen anderes Regal' do %>
     <div class="pui-panel">
       Die Bücher dieses Apparates stehen in dem Regal eines anderen Seminarapparates.
     </div>
-    <% f.semantic_fields_for :book_shelf_ref do |shelf_ref| %>
+    <%= f.semantic_fields_for :book_shelf_ref do |shelf_ref| %>
       <% unless shelf_ref.object.new_record? %>
         <%= shelf_ref.input '_destroy',  :label => 'Verknüpfung löschen?', :as => :boolean, :required => false %>
       <% end %>
@@ -31,7 +31,7 @@
     <% end %>
   <% end %>
 
-  <% f.inputs :name => 'Basisdaten' do %>
+  <%= f.inputs :name => 'Basisdaten' do %>
     <% if @sem_app.new_record? %>
       <%= f.input :semester,  :label => 'Semester', :hint => 'In welchem Semester findet Ihre Veranstaltung statt?' %>
       <%= f.input :title,     :label => 'Titel',    :hint => 'Titel der Veranstaltung' %>
@@ -44,7 +44,7 @@
     <%= f.input :tutors, :label => 'Dozent(en)', :as => :string, :hint => 'Die Namen der beteiligten Dozenten (Format: Nachname, Vorname). Trennen Sie mehrere Namen durch ein Semikolon.' %>
   <% end %>
 
-  <% f.inputs :name => 'Bibliotheksdaten' do %>
+  <%= f.inputs :name => 'Bibliotheksdaten' do %>
     <% if @sem_app.new_record? %>
       <%= f.input :location, :label => 'Standort', :hint => 'Welcher Fachbibliothek soll der Seminarapparat zugeordnet werden?' %>
     <% else %>
@@ -52,11 +52,11 @@
     <% end %>
   <% end %>
 
-  <% f.inputs :name => 'Zugriffsschutz' do %>
+  <%= f.inputs :name => 'Zugriffsschutz' do %>
     <%= f.input :shared_secret, :label => 'Lesekennung' %>
   <% end %>
 
-  <% f.buttons do %>
+  <%= f.buttons do %>
     <%= f.commit_button 'Speichern' %>
     <li>
       <% if f.object.new_record?  %>

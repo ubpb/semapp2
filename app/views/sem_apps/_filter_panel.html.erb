@@ -2,13 +2,13 @@
 
 <div id="filter-panel" class="pui-overlay">
   <h3 class="section">Seminarapparate Suchen</h3>
-  <% form_tag(filter_path, :class => 'formtastic') do %>
+  <%= form_tag(filter_path, :class => 'formtastic') do %>
     <fieldset class="inputs">
       <ol>
         <% if filter_for.include?(:semester) %>
           <li class="string">
             <label>Semester</label>
-            <%= collection_select(:filter, :semester, Semester.find(:all, :order => 'position asc'), :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
+            <%= collection_select(:filter, :semester, Semester.order('position ASC').all, :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
           </li>
         <% end %>
 
@@ -46,7 +46,7 @@
 
 <div id="filter-info-panel" class="pui-panel align-right">
   <p>
-    Anzahl der Seminarapparate: <%= @filter.scope.count %>
+    Anzahl der Seminarapparate: <%= @filter.filtered.count %>
     <% if filtered %>
       <strong>(Gefiltert)</strong>
       <% filter_strings = [] %>

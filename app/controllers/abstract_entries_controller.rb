@@ -2,7 +2,7 @@
 
 class AbstractEntriesController < ApplicationController
 
-  before_filter :authenticate_user!
+  before_filter :require_authenticate
 
   cache_sweeper :entry_sweeper
 

@@ -7,10 +7,18 @@ class Admin::SemAppsController < Admin::ApplicationController
   def index
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
     if @filter
-      @sem_apps = @filter.scope.paginate(:all, :include => [:creator, :books, :semester],  :per_page => 10, :page => params[:page],
+      @sem_apps = @filter.filtered.paginate(
+        # :all, 
+        :per_page => 10, 
+        :page => params[:page],
+        :include => [:creator, :books, :semester],  
         :order => "semesters.position asc, sem_apps.title asc")
     else
-      @sem_apps = SemApp.paginate(:all, :include => [:creator, :books, :semester], :per_page => 10, :page => params[:page],
+      @sem_apps = SemApp.paginate(
+        # :all, 
+        :per_page => 10, 
+        :page => params[:page],
+        :include => [:creator, :books, :semester], 
         :order => "semesters.position asc, sem_apps.title asc")
     end
   end
@@ -29,10 +37,12 @@ class Admin::SemAppsController < Admin::ApplicationController
     @removed_books  = Book.for_sem_app(@sem_app).removed.ordered_by('signature asc')
     @deferred_books = Book.for_sem_app(@sem_app).deferred.ordered_by('signature asc')
 
+
     respond_to do |format|
       format.html { render 'show',  :format => 'html' }
       format.print { render 'show', :format => 'print', :layout => 'print' }
     end
+
   end
 
   def new
@@ -65,7 +75,7 @@ class Admin::SemAppsController < Admin::ApplicationController
 
     if @sem_app.update_attributes(params[:sem_app])
       if (@sem_app.approved and not was_approved and @sem_app.creator.present? and @sem_app.creator.email.present?)
-        Notifications.deliver_sem_app_activated_notification(@sem_app)
+        Notifications.sem_app_activated_notification(@sem_app).deliver
       end
       flash[:success] = "Die Daten wurden erfolgreich gespeichert"
       redirect_to :action => :show
@@ -82,14 +92,14 @@ class Admin::SemAppsController < Admin::ApplicationController
     
     if user
       if @sem_app.update_attribute(:creator, user)
-        flash[:success] = "Besitzer erfolgreich gesetzt. #{login} kann den Seminarapparat <i>#{@sem_app.title}</i> nun bearbeiten."
+        flash[:success] = ActionController::Base.helpers.sanitize "Besitzer erfolgreich gesetzt. #{login} kann den Seminarapparat <i>#{@sem_app.title}</i> nun bearbeiten."
       else
         flash[:error] = "Fehler: Der Benutzer konnte nicht als Besitzer eingetragen werden."
       end
     else
       u = User.new(:login => login)
-      if u.save(false) and @sem_app.update_attribute(:creator, u)
-        flash[:success] = "Der Benutzer '#{login}' existierte nicht, wurde aber angelegt. Name und E-Mail sind erst verfügbar wenn der Nutzer sich das erste mal anmeldet. #{login} kann den Seminarapparat <i>#{@sem_app.title}</i> nun bearbeiten."
+      if u.save(validate: false) and @sem_app.update_attribute(:creator, u)
+        flash[:success] = ActionController::Base.helpers.sanitize "Der Benutzer '#{login}' existierte nicht, wurde aber angelegt. Name und E-Mail sind erst verfügbar wenn der Nutzer sich das erste mal anmeldet. #{login} kann den Seminarapparat <i>#{@sem_app.title}</i> nun bearbeiten."
       else
         flash[:error] = "Es ist ein unbekannter Fehler aufgetreten!"
       end

@@ -2,9 +2,9 @@
 <div class="pui-view clearfix">
   <div class="grid_8 alpha">
     <div class="pui-collection-view labeled">
-      <%= labeled_item :label => 'Benutzer',    :content => h(@sem_app.creator.name) %>
+      <%= labeled_item :label => 'Benutzer',    :content => @sem_app.creator.name %>
       <%= labeled_item :label => 'E-Mail',      :content => mail_to(@sem_app.creator.email) %>
-      <%= labeled_item :label => 'Ausweis Nr.', :content => h(@sem_app.creator.login) %>
+      <%= labeled_item :label => 'Ausweis Nr.', :content => @sem_app.creator.login %>
     </div>
   </div>
   <div class="grid_4 omega align-right">
@@ -21,13 +21,13 @@
     <div class="pui-view clearfix">
       <div class="grid_8 alpha">
         <div class="pui-collection-view labeled">
-          <%= labeled_item :label => 'Benutzer',    :content => h(os.user.name) %>
+          <%= labeled_item :label => 'Benutzer',    :content => os.user.name %>
           <%= labeled_item :label => 'E-Mail',      :content => mail_to(os.user.email) %>
-          <%= labeled_item :label => 'Ausweis Nr.', :content => h(os.user.login) %>
+          <%= labeled_item :label => 'Ausweis Nr.', :content => os.user.login %>
         </div>
       </div>
       <div class="grid_4 omega align-right">
-        <% link_to admin_ownership_path(os), :class => 'pui-button small', :method => :delete, :confirm => 'Bearbeitungsrechte wirklich löschen?' do %>
+        <%= link_to admin_ownership_path(os), :class => 'pui-button small', :method => :delete, :confirm => 'Bearbeitungsrechte wirklich löschen?' do %>
           Löschen
         <% end %>
       </div>
@@ -51,7 +51,7 @@
     sind dann solange leer bis der Nutzer sich das erste mal anmeldet.
   </div>
 
-  <% form_tag(set_creator_admin_sem_app_path(@sem_app), :class => 'formtastic', :method => :put) do %>
+  <%= form_tag(set_creator_admin_sem_app_path(@sem_app), :class => 'formtastic', :method => :put) do %>
     <fieldset class="inputs">
       <ol>
         <li class="string">
@@ -80,7 +80,7 @@
     sind dann solange leer bis der Nutzer sich das erste mal anmeldet.
   </div>
 
-  <% form_tag(admin_sem_app_ownerships_path(@sem_app), :class => 'formtastic', :method => :post) do %>
+  <%= form_tag(admin_sem_app_ownerships_path(@sem_app), :class => 'formtastic', :method => :post) do %>
     <fieldset class="inputs">
       <ol>
         <li class="string">

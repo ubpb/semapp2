@@ -1,7 +1,7 @@
-<% semantic_form_for @sem_app do |f| %>
-  <% f.inputs :name => 'Basisdaten' do %>
+<%= semantic_form_for @sem_app do |f| %>
+  <%= f.inputs :name => 'Basisdaten' do %>
     <% if @sem_app.new_record? %>
-      <%= f.input :semester,  :label => 'Semester', :hint => 'In welchem Semester findet Ihre Veranstaltung statt?', :collection => Semester.find(:all, :order => 'position ASC') %>
+      <%= f.input :semester,  :label => 'Semester', :hint => 'In welchem Semester findet Ihre Veranstaltung statt?', :collection => Semester.order('position ASC').all %>
       <%= f.input :title,     :label => 'Titel',    :hint => 'Titel der Veranstaltung' %>
       <%= f.input :course_id, :label => 'Kurs-ID',  :hint => 'Wenn bekannt geben Sie bitte die eindeutige Kurs-ID an (z.B. aus Paul).', :required => false %>
     <% else %>
@@ -12,7 +12,7 @@
     <%= f.input :tutors, :label => 'Dozent(en)', :as => :string, :hint => 'Die Namen der beteiligten Dozenten (Format: Nachname, Vorname). Trennen Sie mehrere Namen durch ein Semikolon.' %>
   <% end %>
 
-  <% f.inputs :name => 'Bibliotheksdaten' do %>
+  <%= f.inputs :name => 'Bibliotheksdaten' do %>
     <% if @sem_app.new_record? %>
       <%= f.input :location, :label => 'Standort', :hint => 'Welcher Fachbibliothek soll der Seminarapparat zugeordnet werden?' %>
     <% else %>
@@ -20,7 +20,7 @@
     <% end %>
   <% end %>
 
-  <% f.inputs :name => 'Zugriffsschutz' do %>
+  <%= f.inputs :name => 'Zugriffsschutz' do %>
     <%= f.input :shared_secret, :label => 'Lesekennung',
       :hint => "Bitte vergeben Sie eine Lesekennung f&uuml;r die elektronischen Volltexte.
     Jeder, der diese Kennung kennt, bekommt damit Lesezugriff auf die
@@ -29,12 +29,12 @@
   <% end %>
 
   <% if @sem_app.new_record? %>
-    <% f.inputs :name => 'Urheberrecht' do %>
+    <%= f.inputs :name => 'Urheberrecht' do %>
       <%= f.input :accepts_copyright, :as => :boolean, :required => false, :label => "Ich bestätige, dass ich beim Bereitstellen von Inhalten für den Seminarapparat nicht gegen geltendes Urheberrecht verstoßen werde.<br/>#{link_to('Hinweise zum Urheberrecht', '#', :class => 'pui-overlay-trigger', :rel => '#legal-info')}".html_safe %>
     <% end %>
   <% end %>
 
-  <% f.buttons do %>
+  <%= f.buttons do %>
     <% if @sem_app.new_record? %>
       <%= f.commit_button 'Seminarapparat beantragen' %>
       <li>

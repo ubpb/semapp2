@@ -9,7 +9,7 @@
     Diese Kennung erhalten Sie von Dozierenden der Veranstaltung.
   </p>
 
-  <% form_tag unlock_sem_app_path do %>
+  <%= form_tag unlock_sem_app_path do %>
     <%= label_tag 'shared_secret', 'Lesekennung:' %>
     <%= password_field_tag 'shared_secret' %>
     <%= submit_tag "Freischalten" %>

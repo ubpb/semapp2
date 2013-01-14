@@ -15,8 +15,8 @@ class Admin::OwnershipsController < Admin::ApplicationController
       end
     else
       u = User.new(:login => login)
-      if u.save(false) and sem_app.add_ownership(u)
-        flash[:success] = "Der Benutzer '#{login}' existierte nicht, wurde aber angelegt. Name und E-Mail sind erst verfügbar wenn der Nutzer sich das erste mal anmeldet. #{login} kann den Seminarapparat <i>#{sem_app.title}</i> nun bearbeiten."
+      if u.save(validate: false) and sem_app.add_ownership(u)
+        flash[:success] = ActionController::Base.helpers.sanitize "Der Benutzer '#{login}' existierte nicht, wurde aber angelegt. Name und E-Mail sind erst verfügbar wenn der Nutzer sich das erste mal anmeldet. #{login} kann den Seminarapparat <i>#{sem_app.title}</i> nun bearbeiten."
       else
         flash[:error] = "Es ist ein unbekannter Fehler aufgetreten!"
       end

@@ -1,4 +1,4 @@
-<% semantic_form_for [@sem_app, @entry] do |f| %>
+<%= semantic_form_for [@sem_app, @entry] do |f| %>
   <%= hidden_field_tag :origin_id, @origin_id %>
 
   <% f.inputs :name => "Angaben zum Sammelwerk" do %>
@@ -13,18 +13,18 @@
     <%= f.input :source_signature,     :label => 'Signatur in der Bibliothek', :required => false, :hint => 'Wenn Sie hier die Signatur der Bibliothek angeben (sofern vorhanden), verlinken wir diesen Eintrag automatisch mit unserem Katalog. Bitte recherchieren Sie die Signatur mit unserem <a href="https://ubaleph.uni-paderborn.de/F" target="blank">Katalog</a>' %>
   <% end %>
 
-  <% f.inputs :name => "Angaben zum Beitrag" do %>
+  <%= f.inputs :name => "Angaben zum Beitrag" do %>
     <%= f.input :author,     :label => 'Autor(en)', :required => false %>
     <%= f.input :title,      :label => 'Titel', :input_html => {:rows => 1}, :required => false %>
     <%= f.input :pages_from, :label => 'Seiten von', :required => true %>
     <%= f.input :pages_to,   :label => 'Seiten bis', :required => true %>
   <% end %>
 
-  <% f.inputs :name => 'Kommentar' do %>
+  <%= f.inputs :name => 'Kommentar' do %>
     <%= f.input :comment, :label => 'Kommentar', :input_html => {:rows => 5}, :required => false %>
   <% end %>
 
-  <% f.buttons do %>
+  <%= f.buttons do %>
     <%= f.commit_button 'Speichern' %>
     <li class="commit">
       <%= link_to 'Abbrechen', sem_app_path(@entry.sem_app, :anchor => 'media') %>
