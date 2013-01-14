@@ -37,18 +37,29 @@
       $(".new-entry-action").live('click', function(event) {
         event.preventDefault();
         var url = $(this).attr("href");
-        $.get(url, function(data) {
-          $('#new-entry-panel').html(data).append('<div class="close"></div>');
-          $('#new-entry-panel').overlay({
-            expose: {
-              color: '#333',
-              loadSpeed: 150,
-              opacity: 0.6
-            },
-            closeOnClick: false,
-            api: true
-          }).load();
-        });
+
+        $.ajax({
+          url: url,
+          dataType: "html",
+          success: function(data) {
+                    $('#new-entry-panel').html(data).append('<div class="close"></div>');
+                    $('#new-entry-panel').overlay({
+                      expose: {
+                        color: '#333',
+                        loadSpeed: 150,
+                        opacity: 0.6
+                      },
+                      closeOnClick: false,
+                      api: true
+                    }).load();
+                  },
+          error:  function(request, settings, thrownError) {
+                    tab.append( "<li>Error requesting page " + settings.url + ": " +
+                        thrownError + " in " + thrownError.fileName + ":" +
+                        thrownError.lineNumber + ":" + thrownError.columnNumber + ") </li>" );
+                  }
+          }
+        );
       });
 
       $('#new-entry-panel .close').live('click', function() {

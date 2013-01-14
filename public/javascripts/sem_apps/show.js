@@ -23,18 +23,20 @@
 
       tab.html('<div class="pui-panel align-center"><img src="/images/common/loader.gif" style="line-height:16px; vertical-align:text-top"/> Lade Daten ...</div>');
 
-//      $.ajax({
-//        url: url,
-//        success: function(data) {
-//          console.log(data);
-//          tab.html(data);
-//          callback();
-//        }
-//      });
-      $.get(url, function(data) {
-        tab.html(data);
-        callback();
-      });
+      $.ajax({
+        url: url,
+        dataType: "html",
+        success: function(data) {
+          tab.html(data);
+          callback();
+        },
+        error: function(request, settings, thrownError) {
+                tab.append( "<li>Error requesting page " + settings.url + ": " +
+                    thrownError + " in " + thrownError.fileName + ":" +
+                    thrownError.lineNumber + ":" + thrownError.columnNumber + ") </li>" );
+              }
+        }
+      );
     }
 
   });
