@@ -13,8 +13,7 @@ class SemAppsController < ApplicationController
   def index
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
     @filter.approved = true
-    @sem_apps = @filter.filtered.paginate(
-      # :all,
+    @sem_apps = @filter.filtered.paginate( # FIXME: https://github.com/mislav/will_paginate/issues/322
       :per_page => 10,
       :page => params[:page],
       :include => :semester,
@@ -287,7 +286,7 @@ class SemAppsController < ApplicationController
       x.position <=> y.position
     end
 =end
-    @media = [HeadlineEntry, TextEntry, MonographEntry, ArticleEntry, 
+    @media = [HeadlineEntry, TextEntry, MonographEntry, ArticleEntry,
                 CollectedArticleEntry, MilessFileEntry].map do |entry|
       entry.where(sem_app_id: @sem_app.id)
            .includes(:file_attachments, :scanjob)
