@@ -20,7 +20,7 @@ class SemAppsFilter
   end
 
   def filtered
-    sem_apps = SemApp.scoped
+    sem_apps = SemApp.all
     sem_apps = sem_apps.includes( :books, :book_shelf )
     sem_apps = sem_apps.where "lower(sem_apps.title) LIKE ?", "%#{@title.downcase}%" unless @title.blank?
     sem_apps = sem_apps.where "lower(sem_apps.tutors) LIKE ?", "%#{@tutors.downcase}%" unless @tutors.blank?
