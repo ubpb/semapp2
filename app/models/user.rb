@@ -11,6 +11,9 @@ class User < ActiveRecord::Base
   validates_presence_of :login
   validates_presence_of :name
 
+  # Protected attributes. FIXME: Replace with strong parameters
+  attr_accessible :login, :name, :email
+
 
   class << self
     def authenticate(attributes)
@@ -72,7 +75,7 @@ class User < ActiveRecord::Base
   def owns_sem_app?(sem_app)
     if sem_app.present?
       return true if sem_app.creator == self
-      
+
       ownerships.each do |o|
         if o.sem_app.present?
           return true if sem_app.id == o.sem_app.id
