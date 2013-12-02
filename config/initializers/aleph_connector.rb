@@ -1,4 +1,4 @@
-# encoding: utf-8
+require 'aleph_connector'
 
 Aleph::Connector.base_url           = 'https://ubaleph.upb.de/X'
 Aleph::Connector.library            = 'pad50'
