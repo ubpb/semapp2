@@ -6,28 +6,28 @@
 
   <% if current_user.is_admin? %>
     <%= link_to admin_root_path do %>
-      <%= image_tag 'icons/user-black.png', :plugin => 'pui' %>
+      <%= icon 'user-black.png' %>
       Administration
     <% end %>
   <% end %>
 
   <%= link_to user_path do %>
-    <%= image_tag 'icons/user-orange.png', :plugin => 'pui' %>
+    <%= icon 'user-orange.png' %>
     Meine Seminarapparate
   <% end %>
 
   <%= link_to logout_path, :data => {:confirm => 'Wirklich abmelden?'} do %>
-    <%= image_tag 'icons/door-open-out.png', :plugin => 'pui' %>
+    <%= icon 'door-open-out.png' %>
     Abmelden
   <% end %>
 <% else %>
   <%= link_to login_path do %>
-    <%= image_tag 'icons/door-open-in.png', :plugin => 'pui' %>
+    <%= icon 'door-open-in.png' %>
     Login f&uuml;r Lehrende
   <% end %>
 <% end %>
 
 <a href="#" rel="#common-help" class="pui-overlay-trigger">
-  <%= image_tag 'icons/question-shield.png', :plugin => 'pui' %>
+  <%= icon 'question-shield.png' %>
   Hilfe
 </a>

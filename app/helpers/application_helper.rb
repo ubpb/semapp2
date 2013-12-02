@@ -4,8 +4,8 @@ module ApplicationHelper
 
   # PUI stuff
 
-  def icon(name)
-    image_tag 'icons/' + name
+  def icon(name, options = {})
+    image_tag 'pui/icons/' + name, options
     #image_tag('icons/' + name, :plugin => 'pui')
   end
 
