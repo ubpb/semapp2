@@ -1,0 +1,369 @@
+/* Basic HTML
+----------------------------------------------------------------------------------------------------*/
+
+/*
+  Colors
+    * dark-blue : #081c5a
+    * dark-grey : #cbcdd3 (header), #d6d6d6 (borders)
+    * light-grey: #eee (backgrounds, ...)
+*/
+
+/* Defauls provided by PUI. Overrides will follow... */
+
+body {
+  background: #b9b9b9 url(page/body-bg.jpg) no-repeat top center;
+}
+
+a, a:visited {
+  color: #081c5a;
+}
+
+img {
+  margin-bottom: -4px;
+}
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+
+.clearfix {
+	display: inline-block;
+}
+
+html[xmlns] .clearfix {
+	display: block;
+}
+
+* html .clearfix {
+	height: 1%;
+}
+
+.only-print { display: none; }
+
+table.pui-tableview td { width: auto }
+
+form.formtastic fieldset ol li p.inline-errors {clear:left}
+
+/* Page structure
+----------------------------------------------------------------------------------------------------*/
+
+#meta {
+  /*background: transparent url(page/meta-bg.png) repeat-x bottom left;*/
+  line-height: 35px;
+  overflow: hidden;
+}
+
+#header-wrapper {
+  background: url(page/header-bg.png) repeat-x;
+}
+
+#header {
+  height: 90px;
+  overflow: visible;
+}
+
+.grid_padded {
+  margin: 0;
+  padding: 0 10px;
+}
+
+#stage-wrapper {
+  background: url(page/stage-wrapper-bg.png) no-repeat bottom center;
+  height: 94px;
+  margin-top: -4px;
+}
+
+#sidebar-wrapper {
+  background: url(page/sidebar-wrapper-bg.png) repeat-y top center;
+}
+
+#sidebar {
+  padding: 20px 0 5px 0;
+  background: url(page/sidebar-bg.png) no-repeat bottom center;
+}
+
+#sidebar-bottom-cap {
+  height: 8px;
+  background: url(page/sidebar-bottom-cap-bg.png) no-repeat top center;
+  margin: 0 -10px;
+}
+
+#logo-upb {
+  width: 296px;
+  height: 90px;
+  background: url(page/logo-upb.png) no-repeat bottom left;
+}
+
+#logo-ub {
+  width: 220px;
+  height: 79px;
+  background: url(page/logo-ub.png) no-repeat center center;
+}
+
+#page-wrapper {
+  background-color: #fff;
+  min-height: 550px;
+}
+
+#page {
+
+}
+
+#content {
+  padding: 30px 0;
+}
+
+#footer {
+  /*background: transparent url(page/footer-bg.png) repeat-x top left;*/
+  padding-top: 1em;
+  padding-bottom: 5em;
+}
+
+/* Page elements
+----------------------------------------------------------------------------------------------------*/
+
+/* Content */
+
+#content h1, #content h2, #content h3, #content h4, #content h5, #content h6 {
+  color: #081c5a;
+}
+
+#content .section {
+  border-bottom: 1px solid #d6d6d6;
+  padding-bottom: 5px;
+}
+
+#content a {
+  text-decoration: none;
+}
+
+#content a:hover {
+  text-decoration: underline;
+}
+
+
+/* Meta Navigation */
+
+#meta-navigation {
+  text-align: right;
+  font-size: 90%;
+  color: #6e6e6e;
+}
+
+#meta-navigation a {
+  display: inline-block;
+  padding: 0 5px;
+  margin-left: 5px;
+  color: #6e6e6e;
+  text-decoration: none;
+}
+
+#meta-navigation a:hover {
+  text-decoration: none !important;
+  background-color: #333;
+  color: #eee;
+}
+
+#meta-navigation img {
+  margin: 0 0 -4px 0 !important;
+  padding: 0;
+  border: none;
+  width: 16px;
+  height: 16px;
+}
+
+/* Navigation */
+#navigation {
+  padding: 1.5em 0.8em 0;
+}
+
+#navigation h3 {
+  font-size: 110%;
+  color: #081c5a;
+  border-bottom: 1px solid #d6d6d6;
+  font-weight: bold;
+  padding: 0;
+  margin: 0 0 1em 0;
+}
+
+#navigation ul {
+  margin: 0 0 15px;
+  padding: 0;
+}
+
+#navigation li {
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#navigation li a {
+  color: #081c5a;
+  text-decoration: none;
+  display: block;
+  font-weight: normal;
+  line-height: 2em;
+  border-bottom: 1px solid #ddd;
+  padding: 0;
+  margin: 0 0 1em 12px;
+}
+
+#navigation li a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+#footer {
+  text-align: center;
+  font-size: 90%;
+  color: #6e6e6e;
+}
+
+#footer a {
+  color: #6e6e6e;
+  text-decoration: none;
+}
+
+#footer a:hover {
+  text-decoration: underline;
+}
+
+#entry-type-panel { }
+#entry-type-panel h5 { font-size: 110%; }
+#entry-type-panel ol { list-style: none; }
+#entry-type-panel li { margin-bottom: 10px; }
+#entry-type-panel li .info { color: #666; font-size: 90% }
+
+/* Page content elements
+----------------------------------------------------------------------------------------------------*/
+
+/* SemApp */
+.sem-app {
+
+}
+
+.sem-app .semester {
+  font-style: italic;
+  color: #333;
+}
+
+.sem-app h4.title {
+  font-size: 110%;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+
+
+.sem-app .listing {}
+.sem-app .listing .item { position: relative; margin: 0; padding: 0; }
+.sem-app .listing .item.highlight { background-color: #fff59e; }
+
+.sem-app .listing .item ol,
+.sem-app .listing .item ul,
+.sem-app .listing .item p,
+.sem-app .listing .item h1,
+.sem-app .listing .item h2,
+.sem-app .listing .item h3,
+.sem-app .listing .item h4,
+.sem-app .listing .item h5 { margin: 7px 0; }
+.sem-app .listing .item h1,
+.sem-app .listing .item h2,
+.sem-app .listing .item h3,
+.sem-app .listing .item h4,
+.sem-app .listing .item h5 { font-size: 100%; margin: 0; font-weight: bold }
+.sem-app .listing .item h1 { font-size: 150% }
+.sem-app .listing .item h2 { font-size: 130% }
+.sem-app .listing .item h3 { font-size: 110% }
+.sem-app .listing .item blockquote { font-style: italic; margin-left: 10px; margin-right: 10px }
+.sem-app .listing .item pre { margin-left: 10px; margin-right: 10px; overflow: auto }
+.sem-app .listing .item table { width: 100% }
+.sem-app .listing .item table th { background-color: #efefef; padding: 5px }
+.sem-app .listing .item table td { padding: 5px; border-bottom: 1px solid #efefef }
+
+.sem-app .listing .item .toolbar-wrapper { position: absolute; top: -29px; right: 0; background-color: #fff59e; padding: 5px 25px; z-index: 100; -moz-border-radius-topleft: 4px; -moz-border-radius-topright: 4px; -webkit-border-top-left-radius: 4px; -webkit-border-top-right-radius: 4px; }
+.sem-app .listing .item .toolbar { display: none; }
+.sem-app .listing .item .toolbar a { text-decoration: none !important; }
+.sem-app .listing .item .toolbar a:hover { text-decoration: none !important; }
+.sem-app .listing .item .toolbar .toolbar-item { margin: 0 4px; }
+
+.sem-app .listing .item .book { padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid #efefef }
+.sem-app .listing .item .book .comment { font-style: italic }
+
+.sem-app .listing .item .entry { margin-bottom: 10px; }
+.sem-app .listing .item .entry .headline { margin-bottom: 10px; border-bottom: 1px solid #efefef }
+.sem-app .listing .item .entry .text {}
+.sem-app .listing .item .entry .file {}
+.sem-app .listing .item .entry .bibref { margin: 7px 0 }
+
+.sem-app .listing .item .entry .attachments { list-style: none; margin: 0; padding: 0 }
+.sem-app .listing .item .entry .attachments .attachment { margin: 0 0 1px 0; padding: 5px; display: block; background-color: #eee }
+.sem-app .listing .item .entry .attachments .attachment .description { display: block; font-style: italic }
+.sem-app .listing .item .entry .attachments .attachment .download-link {  }
+
+
+.sem-app .listing .dropdown, .dropdown ul { list-style: none; display: inline-block; }
+.sem-app .listing .dropdown, .dropdown * { padding: 0; margin: 0; line-height: 1em; }
+.sem-app .listing .dropdown li.trigger { }
+.sem-app .listing .dropdown li.trigger a { display: block; }
+.sem-app .listing .dropdown li.trigger ul { display: none; text-align: left; position: absolute; padding: 10px 0; }
+.sem-app .listing .dropdown li.trigger:hover ul { display: block; }
+.sem-app .listing .dropdown li.trigger ul li a { padding: 5px 15px; }
+.sem-app .listing .dropdown li.trigger ul { background-color: #eee }
+
+/* Entry Editor */
+#entry-editor-panel { width: 650px; }
+#entry-editor-panel #attachment-listing .item { margin-bottom: 15px; }
+
+
+/* Book order */
+#book-order-listing .book-order {
+
+}
+
+#book-order-listing .book-order .date {
+  font-size: 90%;
+  font-style: italic;
+  color: #333;
+}
+
+#book-order-listing .book-order .signature {
+  font-weight: bolder;
+}
+
+#book-order-listing .book-order .source {
+
+}
+
+#book-order-listing .book-order .state {
+  font-style: italic;
+}
+
+/* Pagination links */
+div.pagination {
+  margin: 0.5em 0;
+  text-align: center;
+}
+
+div.pagination span {
+  padding: 2px;
+}
+
+div.pagination a {
+  padding: 2px;
+}
+
+div.pagination span.current {
+  background-color: #bedce7;
+}
+
+div.pagination span.disabled {
+  color: #888;
+}

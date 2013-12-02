@@ -1,0 +1,78 @@
+/* -------------------------------------------------------------------
+// markItUp! Universal MarkUp Engine, JQuery plugin
+// By Jay Salvat - http://markitup.jaysalvat.com/
+// ------------------------------------------------------------------*/
+.markItUp {
+  clear: both;
+  padding-top: 10px;
+}
+
+.markItUp * {
+  margin: 0px;
+  padding: 0px;
+  outline: none;
+}
+.markItUp a:link,
+.markItUp a:visited {
+  color:#000;
+  text-decoration:none;
+}
+.markItUp  {
+  width: 700px !important;
+}
+.markItUpContainer  {
+  border: 1px solid #efefef;
+  background: transparent url(images/bg-container.png) repeat-x top left;
+  padding: 5px 5px 0 5px !important;
+}
+.markItUpEditor {
+  font: 14px 'Courier New', Courier, monospace !important;
+  padding: 5px 5px 5px 35px !important;
+  border: 1px solid #efefef;
+  width: 646px !important;
+  height: 280px;
+  background-image:url(images/bg-editor-textile.png);
+  background-repeat:no-repeat;
+  clear:both;
+  display:block;
+  line-height:18px;
+  overflow:auto;
+}
+.markItUpPreviewFrame  {
+  overflow:auto;
+  background-color:#FFFFFF;
+  border:1px solid #3C769D;
+  width:99.9%;
+  height:300px;
+  margin:5px 0;
+}
+.markItUpFooter {
+  width:100%;
+  cursor:n-resize;
+}
+.markItUpResizeHandle {
+  overflow:hidden;
+  width:22px; height:5px;
+  margin-left:auto;
+  margin-right:auto;
+  background-image:url(images/handle.png);
+  cursor:n-resize;
+}
+
+/***************************************************************************************/
+/* first row of buttons */
+
+.markItUpHeader ul { margin: 0; padding: 0; }
+.markItUpHeader li { margin: 0; padding: 0; }
+.markItUpHeader ul li { list-style: none !important; float:left; position:relative; background-color: transparent !important; padding: 0; margin: 0; }
+.markItUpHeader ul li ul { display: none; }
+.markItUpHeader ul li:hover > ul { display: block; }
+.markItUpHeader ul li.markItUpButton { margin: 0; padding: 0; }
+.markItUpHeader ul li.markItUpSeparator { margin: 0 10px 0 5px !important; width:1px; height:0; overflow:hidden; background-color:#CCC !important; }
+
+/* next rows of buttons */
+.markItUpHeader ul ul ul { position:absolute; top:-1px; left:150px; }
+.markItUpHeader ul ul ul li { float:none; }
+.markItUpHeader ul a { display:block; width:16px; height:16px; text-indent:-10000px; background-repeat:no-repeat; padding:3px; margin:0px; }
+.markItUpHeader ul ul a { display:block; padding-left:0px; text-indent:0; width:120px; padding:5px 5px 5px 25px; background-position:2px 50%; }
+.markItUpHeader ul ul a:hover  { color:#FFF; background-color:#000; }

@@ -1,0 +1,13 @@
+/* overrides page.css */
+
+body {background: none}
+.no-print {display: none;}
+.only-print { display: block; }
+
+.scanjob-detail * {font-size: 20px !important}
+.scanjob-detail div.pui-collection-view.labeled div.item span.label { width: 25% }
+.scanjob-detail div.pui-collection-view.labeled div.item div.content { padding-left: 30% }
+
+.book-jobs-print * {font-size: 20px !important}
+.book-jobs-print div.pui-collection-view.labeled div.item span.label { width: 25% }
+.book-jobs-print div.pui-collection-view.labeled div.item div.content { padding-left: 30% }
