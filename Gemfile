@@ -16,8 +16,14 @@ gem 'prarupa',              '~> 0.1.2' # provides old textilize helper methods
 gem 'dynamic_form',         '~> 1.1.4' # provides the old f.error_messages method
 gem 'formtastic',           '~> 1.2.3'
 gem 'nokogiri',             '~> 1.6.0'
-gem 'uglifier',             '>= 2.3.2'
 gem 'protected_attributes', '~> 1.0.5' # Needed as long as we migrated to strong parameters
+
+# asset related gems
+gem 'coffee-rails',         '~> 4.0.0'
+gem 'sass-rails',           '~> 4.0.1'
+gem 'therubyracer',         '~> 0.12.0', platforms: :ruby
+gem 'therubyrhino',         '~> 2.0.2',  platforms: :jruby
+gem 'uglifier',             '>= 2.3.2'
 
 # development
 group :development, :test do
