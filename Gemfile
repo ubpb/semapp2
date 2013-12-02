@@ -26,6 +26,10 @@ gem 'therubyracer',         '~> 0.12.0', platforms: :ruby
 gem 'therubyrhino',         '~> 2.0.2',  platforms: :jruby
 gem 'uglifier',             '>= 2.3.2'
 
+# assets
+gem 'jquery-rails',         '~> 2.1.4' # we can only use jquery till 1.8, because jquery-tools relies on $.browser
+# gem 'jquery-ui-rails',      '~> 4.1.0'
+
 # development
 group :development, :test do
   gem 'pry',                     '0.9.12.2' # 0.9.12.3 has a coloring bug in its repl which shows annoying ansi colors codes
