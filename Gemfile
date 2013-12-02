@@ -18,3 +18,10 @@ gem 'formtastic',           '~> 1.2.3'
 gem 'nokogiri',             '~> 1.6.0'
 gem 'uglifier',             '>= 2.3.2'
 gem 'protected_attributes', '~> 1.0.5' # Needed as long as we migrated to strong parameters
+
+# development
+group :development, :test do
+  gem 'pry',                     '0.9.12.2' # 0.9.12.3 has a coloring bug in its repl which shows annoying ansi colors codes
+  gem 'pry-nav',                 '~> 0.2.3'
+  gem 'pry-syntax-hacks',        '~> 0.0.6' # some shortcuts for the pry console
+end
