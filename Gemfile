@@ -21,6 +21,7 @@ gem 'protected_attributes', '~> 1.0.5' # Needed as long as we migrated to strong
 # asset related gems
 gem 'coffee-rails',         '~> 4.0.0'
 gem 'sass-rails',           '~> 4.0.1'
+gem 'slim',                 '~> 2.0.2'
 gem 'therubyracer',         '~> 0.12.0', platforms: :ruby
 gem 'therubyrhino',         '~> 2.0.2',  platforms: :jruby
 gem 'uglifier',             '>= 2.3.2'
