@@ -33,9 +33,6 @@ module SemApp2
     # like if you have constraints or database-specific column types
     config.active_record.schema_format = :sql
 
-    # Disable the asset pipeline
-    config.assets.enabled = false
-
     # Set cache store location
     config.cache_store = :file_store, File.join(Rails.root, 'tmp', 'cache')
   end
