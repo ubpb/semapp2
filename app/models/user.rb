@@ -17,10 +17,6 @@ class User < ActiveRecord::Base
 
   class << self
     def authenticate(attributes)
-      # TODO: test Aleph-authentication
-      #return User.find( 156 ) # Lecturer "Max Mustermann"
-      #return User.find( 1 )   # Admin "Rene"
-      #return User.find( 2 )   # Admin "Seminarapparat"
       aleph = Aleph::Connector.new
       aleph_user = aleph.authenticate(attributes[:login], attributes[:password])
       raise "Aleph authentication failed" unless aleph_user and aleph_user.is_a? Aleph::User
