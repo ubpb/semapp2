@@ -5,7 +5,8 @@ class BooksController < ApplicationController
   before_filter :require_authenticate, :load_sem_app
   before_filter :check_current_semester, :only => [:index, :new, :create, :destroy]
 
-  cache_sweeper :book_sweeper
+  # TODO: RAILS_4: there is no suche method in rails 4 anymore
+  # cache_sweeper :book_sweeper
 
   def index
     @ordered_books  = Book.for_sem_app(@sem_app).ordered.ordered_by('created_at')
