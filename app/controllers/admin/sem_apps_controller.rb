@@ -7,19 +7,17 @@ class Admin::SemAppsController < Admin::ApplicationController
   def index
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
     if @filter
-      @sem_apps = @filter.filtered.paginate(
-        # :all, 
-        :per_page => 10, 
-        :page => params[:page],
-        :include => [:creator, :books, :semester],  
-        :order => "semesters.position asc, sem_apps.title asc")
+      @sem_apps = @filter.filtered
+        .page(params[:page])
+        .per_page(10)
+        .includes([:creator, :books, :semester])
+        .order("semesters.position asc, sem_apps.title asc")
     else
-      @sem_apps = SemApp.paginate(
-        # :all, 
-        :per_page => 10, 
-        :page => params[:page],
-        :include => [:creator, :books, :semester], 
-        :order => "semesters.position asc, sem_apps.title asc")
+      @sem_apps = SemApp
+        .page(params[:page])
+        .per_page(10)
+        .includes([:creator, :books, :semester])
+        .order("semesters.position asc, sem_apps.title asc")
     end
   end
 

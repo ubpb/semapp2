@@ -166,12 +166,11 @@ class SemAppsController < ApplicationController
     unauthorized! if cannot? :edit, @sem_app
 
     @filter = session[SEM_APP_CLONES_FILTER_NAME] || SemAppsFilter.new
-    @sem_apps = @filter.filtered.paginate(
-      # :all,
-      :conditions => {:approved => true},
-      :per_page => 10,
-      :page => params[:page],
-      :order => "sem_apps.semester_id asc, sem_apps.title asc")
+    @sem_apps = @filter.filtered
+      .page(params[:page])
+      .per_page(10)
+      .where(:approved => true)
+      .order("sem_apps.semester_id asc, sem_apps.title asc")
   end
 
   def filter_clones
