@@ -27,7 +27,7 @@
         </div>
       </div>
       <div class="grid_4 omega align-right">
-        <%= link_to admin_ownership_path(os), :class => 'pui-button small', :method => :delete, :confirm => 'Bearbeitungsrechte wirklich löschen?' do %>
+        <%= link_to admin_ownership_path(os), :class => 'pui-button small', :method => :delete, :data => {:confirm => 'Bearbeitungsrechte wirklich löschen?'} do %>
           Löschen
         <% end %>
       </div>

@@ -82,8 +82,7 @@
 
 <% if @sem_app.semester.id == SemApp2::TRANSIT_SOURCE_SEMESTER_ID and Semester.find_by_id(SemApp2::TRANSIT_TARGET_SEMESTER_ID).present? and can?(:edit, @sem_app) %>
   <div class="pui-view align-right">
-    <%= link_to transit_sem_app_path(@sem_app), :class => 'pui-button', :method => :post, 
-      :confirm => 'Soll der aktuelle Seminarapparat in das neue Semester übernommen werden? Die können den Apparat übernehmen, wenn Sie die Veranstaltung im kommenden Semester weiterführen. Dieser Vorgang kann länger dauern, brechen Sie ihn nicht ab!' do %>
+    <%= link_to transit_sem_app_path(@sem_app), :class => 'pui-button', :method => :post, :data => {:confirm => 'Soll der aktuelle Seminarapparat in das neue Semester übernommen werden? Die können den Apparat übernehmen, wenn Sie die Veranstaltung im kommenden Semester weiterführen. Dieser Vorgang kann länger dauern, brechen Sie ihn nicht ab!'} do %>
       <%= icon('arrow-turn-090.png') %>
       In das neue Semester &uuml;bernehmen
     <% end %>

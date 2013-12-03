@@ -2,7 +2,7 @@
   Signatur: <strong><%= book.signature %></strong>
   -
   Auftrag vom: <strong><%= book.created_at.to_formatted_s(:short) %></strong>
-  
+
   <% if book.placeholder? %>
     <%= icon 'asterisk.png' %>
     <strong>Stellvertreter</strong>
@@ -15,7 +15,7 @@
       <%= link_to 'Als Neu markieren', dedefer_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
     <% end %>
     <% if book.state == Book::States[:ordered] or book.state == Book::States[:deferred] %>
-      <%= link_to 'Auftrag löschen', admin_book_path(book), :method => :delete, :class => 'pui-button small', :confirm => 'Auftrag wirklich löschen?' %>
+      <%= link_to 'Auftrag löschen', admin_book_path(book), :method => :delete, :class => 'pui-button small', :data => {:confirm => 'Auftrag wirklich löschen?'} %>
       <%= link_to 'Wurde verbucht', placed_in_shelf_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
     <% end %>
     <% if book.state == Book::States[:ordered] %>
@@ -25,7 +25,7 @@
     <% end %>
     <% if book.state == Book::States[:rejected] %>
       <%= link_to 'Wurde aus dem Regal entfernt', removed_from_shelf_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
-    <% end %>    
+    <% end %>
   </div>
 
   <div class="only-print" style="margin-bottom: 30px">&nbsp;<!-- Notizen --></div>

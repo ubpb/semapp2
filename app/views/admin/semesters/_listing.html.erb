@@ -13,7 +13,7 @@
           </td>
           <td align="right">
             <%= link_to 'Bearbeiten', edit_admin_semester_path(s) %>
-            <%= link_to 'Löschen', admin_semester_path(s), :method => :delete, :confirm => "Soll das Semester #{s.title} wirklich gelöscht werden? Alle an dem Semester h&auml;ngenden Seminarapparate werden ebenfalls gelöscht. Das kann nicht R&uuml;ckg&auml;ngig gemacht werden." %>
+            <%= link_to 'Löschen', admin_semester_path(s), :method => :delete, :data => {:confirm => "Soll das Semester #{s.title} wirklich gelöscht werden? Alle an dem Semester h&auml;ngenden Seminarapparate werden ebenfalls gelöscht. Das kann nicht R&uuml;ckg&auml;ngig gemacht werden."} %>
           </td>
         </tr>
       <% end %>

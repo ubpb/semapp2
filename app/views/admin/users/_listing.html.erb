@@ -29,7 +29,7 @@
             <td align="right" nowrap="true">
               <%= link_to 'Bearbeiten', edit_admin_user_path(s) %>
               <% if current_user != s %>
-                <%= link_to 'Löschen', admin_user_path(s), :method => :delete, :confirm => "Soll der Benutzer #{s.login} wirklich gelöscht werden?" %>
+                <%= link_to 'Löschen', admin_user_path(s), :method => :delete, :data => {:confirm => "Soll der Benutzer #{s.login} wirklich gelöscht werden?"} %>
               <% end %>
             </td>
           </tr>

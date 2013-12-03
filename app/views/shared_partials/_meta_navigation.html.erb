@@ -16,7 +16,7 @@
     Meine Seminarapparate
   <% end %>
 
-  <%= link_to logout_path, :confirm => 'Wirklich abmelden?' do %>
+  <%= link_to logout_path, :data => {:confirm => 'Wirklich abmelden?'} do %>
     <%= image_tag 'icons/door-open-out.png', :plugin => 'pui' %>
     Abmelden
   <% end %>

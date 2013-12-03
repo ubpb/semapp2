@@ -17,7 +17,7 @@
         </p>
 
         <div class="pui-panel align-right">
-          <%= link_to admin_scanjob_path(sj), :class => "pui-button", :method => :delete, :confirm => 'Auftrag wirklich löschen?' do %>
+          <%= link_to admin_scanjob_path(sj), :class => "pui-button", :method => :delete, :data => {:confirm => 'Auftrag wirklich löschen?'} do %>
             <%= icon 'cross.png' %>
             Löschen
           <% end %>

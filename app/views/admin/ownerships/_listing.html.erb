@@ -16,7 +16,7 @@
             <%= '<br/>Telefon:' + o.user.phone if o.user.phone.present? %>
           </td>
           <td align="right">
-            <%= link_to 'Löschen', admin_sem_app_ownership_path(@sem_app, o), :method => :delete, :confirm => "Soll der Besitzer #{o.user.login} wirklich gelöscht werden?" %>
+            <%= link_to 'Löschen', admin_sem_app_ownership_path(@sem_app, o), :method => :delete, :data => {:confirm => "Soll der Besitzer #{o.user.login} wirklich gelöscht werden?"} %>
           </td>
         </tr>
       <% end %>

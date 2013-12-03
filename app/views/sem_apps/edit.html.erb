@@ -46,7 +46,7 @@
                 </div>
               </div>
               <div class="grid_4 omega align-right">
-                <%= link_to ownership_path(os), :class => 'pui-button small', :method => :delete, :confirm => 'Bearbeitungsrechte wirklich löschen?' do %>
+                <%= link_to ownership_path(os), :class => 'pui-button small', :method => :delete, :data => {:confirm => 'Bearbeitungsrechte wirklich löschen?'} do %>
                   Löschen
                 <% end %>
               </div>
@@ -58,7 +58,7 @@
       <div>
         <div class="pui-view align-right">
           <%= form_for @sem_app, :url => generate_access_token_sem_app_path, :method => :put do |f| %>
-            <%= f.submit 'Neuen Access-Token erzeugen', :confirm => 'Neuen Access-Token erzeugen? Alten Token sind danach nicht mehr gültig!' %>
+            <%= f.submit 'Neuen Access-Token erzeugen', :data => {:confirm => 'Neuen Access-Token erzeugen? Alten Token sind danach nicht mehr gültig!'} %>
           <% end %>
         </div>
 

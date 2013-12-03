@@ -18,7 +18,7 @@
     Bearbeiten
   <% end %>
 
-  <%= link_to admin_sem_app_path(@sem_app), :class => "pui-button", :method => :delete, :confirm => 'Den Seminarapparat mit allen Dokumenten löschen? Dieser Vorgang kann nicht Rückgängig gemacht werden!' do %>
+  <%= link_to admin_sem_app_path(@sem_app), :class => "pui-button", :method => :delete, :data => {:confirm => 'Den Seminarapparat mit allen Dokumenten löschen? Dieser Vorgang kann nicht Rückgängig gemacht werden!'} do %>
     <%= icon 'cross.png' %>
     Löschen
   <% end %>
