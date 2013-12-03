@@ -2,7 +2,7 @@
   <%= f.error_messages %>
 
   <%= f.inputs do %>
-    <%= f.input :placeholder, :label => 'Sem App ID', :input_html => {:style => 'width:200px'}, :label_method => Proc.new {|sem_app| "#{sem_app.title} - #{sem_app.tutors}"}, :collection => SemApp.where(semester_id: Semester.current.id).order('title').all %>
+    <%= f.input :placeholder, :label => 'Sem App ID', :input_html => {:style => 'width:200px'}, :label_method => Proc.new {|sem_app| "#{sem_app.title} - #{sem_app.tutors}"}, :collection => SemApp.where(semester_id: Semester.current.id).order('title') %>
   <% end %>
 
   <%= f.buttons do %>

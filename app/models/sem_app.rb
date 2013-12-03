@@ -13,13 +13,13 @@ class SemApp < ActiveRecord::Base
   has_one    :book_shelf_ref, :dependent => :destroy
   has_many   :ownerships, :dependent => :destroy
   has_many   :owners, :through => :ownerships, :source => :user
-  has_many   :books, :order => "title desc", :dependent => :destroy
-  has_many   :entries, :order => "position asc", :dependent => :destroy
+  has_many   :books, -> {order("title desc")}, :dependent => :destroy
+  has_many   :entries, -> {order("position asc")}, :dependent => :destroy
   has_many   :miless_passwords, :dependent => :destroy
 
   # Behavior
-  accepts_nested_attributes_for :book_shelf, :allow_destroy => true, :reject_if => lambda { 
-    |attrs| attrs.all? { |k, v| v.blank? } 
+  accepts_nested_attributes_for :book_shelf, :allow_destroy => true, :reject_if => lambda {
+    |attrs| attrs.all? { |k, v| v.blank? }
   }
 
   accepts_nested_attributes_for :book_shelf_ref, :allow_destroy => true, :reject_if => lambda {
@@ -34,7 +34,7 @@ class SemApp < ActiveRecord::Base
   validates_presence_of   :tutors
   validates_presence_of   :shared_secret
   validates_acceptance_of :accepts_copyright
-  
+
   #validates_uniqueness_of :course_id, :scope => :semester_id, :allow_nil => true, :allow_blank => false
 
   # Scopes
@@ -82,7 +82,7 @@ class SemApp < ActiveRecord::Base
 
   def has_ownership?(user)
     return true if self.creator == user
-    
+
     user.ownerships.each do |os|
       return true if os.sem_app == self
     end
@@ -193,12 +193,12 @@ class SemApp < ActiveRecord::Base
   #end
 
   private
-  
+
   def import_entries!(source_sem_app)
     source_sem_app.entries.each do |entry|
       instance = entry.instance
       clone = instance.clone(:exclude => [:file_attachments, :scanjob])
-      
+
       instance.file_attachments.each do |a|
         path = a.file.path
         if File.exists?(path)
