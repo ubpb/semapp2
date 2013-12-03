@@ -18,10 +18,10 @@
     }
 
     function loadSemAppTab(tab_id, callback) {
-      var tab = $(tab_id)
+      var tab = $(tab_id);
       var url = tab.attr("rel");
 
-      tab.html('<div class="pui-panel align-center"><img src="/images/common/loader.gif" style="line-height:16px; vertical-align:text-top"/> Lade Daten ...</div>');
+      tab.html('<div class="pui-panel align-center"><img src="/assets/pui/common/loader.gif" style="line-height:16px; vertical-align:text-top"/> Lade Daten ...</div>');
 
       $.ajax({
         url: url,
@@ -41,4 +41,4 @@
 
   });
 
-})(jQuery)
+})(jQuery);
