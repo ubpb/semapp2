@@ -1,66 +1,15 @@
+//= require entries/delete
+//= require entries/reorder
+
 (function($) {
 
   $(function() {
-
-    /***********************************************************************************
-     * API
-     **********************************************************************************/
-
-    function reorderEntries(url) {
-      var orderedList = $("#media-listing").sortable('serialize');
-      $.ajax({
-        type: "put",
-        data: "_method=put&" + orderedList,
-        async: true,
-        url: url
-      });
-    }
-
-    function deleteEntry(item, url) {
-      item.slideUp(500);
-      
-      $.ajax({
-        type: "delete",
-        data: "_method=delete",
-        async: true,
-        url: url
-      });
-    }
 
     /***********************************************************************************
      * Event hooks
      **********************************************************************************/
 
     $('body').bind('media-tab-loaded', function() {
-
-      /** The user clicks the link to create a new entry */
-      $(".new-entry-action").live('click', function(event) {
-        event.preventDefault();
-        var url = $(this).attr("href");
-
-        $.ajax({
-          url: url,
-          dataType: "html",
-          success: function(data) {
-                    $('#new-entry-panel').html(data).append('<div class="close"></div>');
-                    $('#new-entry-panel').overlay({
-                      expose: {
-                        color: '#333',
-                        loadSpeed: 150,
-                        opacity: 0.6
-                      },
-                      closeOnClick: false,
-                      api: true
-                    }).load();
-                  },
-          error:  function(request, settings, thrownError) {
-                    tab.append( "<li>Error requesting page " + settings.url + ": " +
-                        thrownError + " in " + thrownError.fileName + ":" +
-                        thrownError.lineNumber + ":" + thrownError.columnNumber + ") </li>" );
-                  }
-          }
-        );
-      });
 
       $('#new-entry-panel .close').live('click', function() {
         $('#new-entry-panel').overlay().close();
@@ -73,8 +22,8 @@
         var url  = $(this).attr("href");
 
         var ret = confirm("Eintrag wirklich löschen?");
-        if (ret == true) {
-          deleteEntry(item, url);
+        if (ret === true) {
+          app.entries['delete'](item, url);
         }
       });
 
@@ -96,7 +45,7 @@
         },
         update: function(event, ui) {
           var url = ui.item.find(".reorder-entry-action").attr("href");
-          reorderEntries(url);
+          app.entries.reorder(url);
         }
       });
 
@@ -104,4 +53,4 @@
     
   });
 
-})(jQuery)
+})(jQuery);

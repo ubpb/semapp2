@@ -1,13 +1,15 @@
 <% if can?(:edit, @sem_app) %>
   <% content_for :head do %>
-    <%= javascript_include_tag 'sem_apps/common.js' %>
+    <%= javascript_include_tag 'handle_item_mouseout.js'  %>
+    <%= javascript_include_tag 'handle_item_mouseover.js' %>
+    <%= javascript_include_tag 'handle_new_entry_action_click.js' %>
     <%= javascript_include_tag 'sem_apps/media.js' %>
     <%= javascript_include_tag 'handle_delete_book_action_click.js' %>
   <% end %>
 <% end %>
 
 <% content_for :head do %>
-  <%= javascript_include_tag 'sem_apps/show.js' %>
+  <%= javascript_include_tag 'views/sem_apps/show/manifest' %>
 <% end %>
 
 <h3 class="section">

@@ -10,6 +10,10 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+// !!! ATTENTION !!!
+//
+// Don't blindly require_tree/directory. There is javascript which is only included if the user has appropriate permissins.
+//
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
@@ -19,4 +23,3 @@
 //= require pui
 //= require_tree ./jquery
 //= require_tree ./views/application
-//= require_directory .

@@ -1,7 +1,7 @@
 #= require utils/singletonReadyOrPageChange
 #= require books/delete
 
-app.utils.singletonReadyOrPageChange 'app.views.application.handleDeleteBookActionClick', ->
+app.utils.singletonReadyOrPageChange 'app.books.handleDeleteBookActionClick', ->
   # If the user clicks the link to delete a book
   $('body').on 'click', '.delete-book-action', (event) ->
     event.preventDefault()
