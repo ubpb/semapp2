@@ -4,7 +4,8 @@ class AbstractEntriesController < ApplicationController
 
   before_filter :require_authenticate
 
-  cache_sweeper :entry_sweeper
+  # TODO: RAILS_4: there is no suche method in rails 4 anymore
+  # cache_sweeper :entry_sweeper
 
   def new
     @sem_app = SemApp.find(params[:sem_app_id])
