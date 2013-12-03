@@ -16,41 +16,7 @@
 //= require jquery-tools-1.1.2.min
 //= require jquery-form-2.33
 //= require markitup/jquery.markitup.pack
-//= require markitup/sets/textile/set
 //= require pui
-//= require_tree
-
-(function($) {
-
-  $.fn.item_highlight = function() {
-    if ($.frozen === true) return this;
-    this.addClass("highlight");
-    return this;
-  };
-
-  $.fn.item_unhighlight = function() {
-    if ($.frozen === true) return this;
-    this.removeClass("highlight");
-    return this;
-  };
-
-  $.fn.item_toolbar_show = function() {
-    if ($.frozen === true) return this;
-    this.find(".toolbar-wrapper").show();
-    this.find(".toolbar").show();
-    return this;
-  };
-
-  $.fn.item_toolbar_hide = function() {
-    if ($.frozen === true) return this;
-    this.find(".toolbar-wrapper").hide();
-    this.find(".toolbar").hide();
-    return this;
-  };
-
-  $(function() {
-    // enable markitup
-    $('.textile').markItUp(markItUpTextileSettings);
-  });
-
-})(jQuery);
+//= require_tree ./jquery
+//= require_tree ./views/application
+//= require_directory .
