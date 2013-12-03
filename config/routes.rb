@@ -45,7 +45,7 @@ SemApp2::Application.routes.draw do
 
   resources :sessions, only: [:new, :create, :destroy]
   match 'login'  => 'sessions#new',     as: :login, via: [:get, :post]
-  match 'logout' => 'sessions#destroy', as: :logout, via: :delete
+  match 'logout' => 'sessions#destroy', as: :logout, via: :get
 
   # User profile
   resource :user, only: [:show]
