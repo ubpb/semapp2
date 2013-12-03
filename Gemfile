@@ -14,7 +14,7 @@ gem 'acts_as_list',         '~> 0.1.2'
 gem 'RedCloth',             '~> 4.2.3'
 gem 'prarupa',              '~> 0.1.2' # provides old textilize helper methods
 gem 'dynamic_form',         '~> 1.1.4' # provides the old f.error_messages method
-gem 'formtastic',           '~> 1.2.3'
+gem 'formtastic',           github: 'ubpb/formtastic', branch: '1.2-stable'
 gem 'nokogiri',             '~> 1.6.0'
 gem 'protected_attributes', '~> 1.0.5' # Needed as long as we migrated to strong parameters
 

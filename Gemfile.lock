@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/ubpb/formtastic.git
+  revision: f4b0dab43366474ff2736f272ebc31908a7b1e52
+  branch: 1.2-stable
+  specs:
+    formtastic (1.2.5)
+      i18n (~> 0.6.4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -47,10 +55,6 @@ GEM
     dynamic_form (1.1.4)
     erubis (2.7.0)
     execjs (2.0.2)
-    formtastic (1.2.4)
-      actionpack (>= 2.3.7)
-      activesupport (>= 2.3.7)
-      i18n (~> 0.4)
     hike (1.2.3)
     i18n (0.6.5)
     jquery-rails (2.1.4)
@@ -168,8 +172,8 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   deep_cloning (~> 2.0.0)
   dynamic_form (~> 1.1.4)
-  formtastic (~> 1.2.3)
   jquery-rails (~> 2.1.4)
+  formtastic!
   nokogiri (~> 1.6.0)
   paperclip (~> 2.7.0)
   pg (~> 0.17.0)
