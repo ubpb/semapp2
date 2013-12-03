@@ -291,7 +291,7 @@ class SemAppsController < ApplicationController
       entry.where(sem_app_id: @sem_app.id)
            .includes(:file_attachments, :scanjob)
            .order('position ASC')
-           .all
+           .load
     end
 
     @media = @media.flatten.compact.sort do |x,y|
