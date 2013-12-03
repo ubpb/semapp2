@@ -12,7 +12,7 @@ class EntriesController < ApplicationController
   end
 
   def reorder
-    @sem_app = SemApp.find(params[:sem_app_id], :include => [:entries])
+    @sem_app = SemApp.includes(:entries).find(params[:sem_app_id])
     unauthorized! if cannot? :edit, @sem_app
 
     entries = params[:entry]
