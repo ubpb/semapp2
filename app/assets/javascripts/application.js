@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui-1.7.2.custom.min
+//= require jquery-ui
 //= require jquery-tools-1.1.2.min
 //= require jquery-form-2.33
 //= require markitup/jquery.markitup.pack
