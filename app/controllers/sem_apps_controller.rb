@@ -13,11 +13,11 @@ class SemAppsController < ApplicationController
   def index
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
     @filter.approved = true
-    @sem_apps = @filter.filtered.paginate( # FIXME: https://github.com/mislav/will_paginate/issues/322
-      :per_page => 10,
-      :page => params[:page],
-      :include => :semester,
-      :order => "semesters.position asc, sem_apps.title asc")
+    @sem_apps = @filter.filtered
+      .page(params[:page])
+      .per_page(10)
+      .includes(:semester)
+      .order("semesters.position asc, sem_apps.title asc")
   end
 
   def filter
@@ -30,11 +30,10 @@ class SemAppsController < ApplicationController
     @filter = session[SEM_APP_SEMESTER_INDEX_FILTER_NAME] || SemAppsFilter.new
     @filter.approved = true
     @filter.semester =  Semester.current.id
-    @sem_apps = @filter.filtered.paginate(
-      # :all,
-      :per_page => 10,
-      :page => params[:page],
-      :order => "sem_apps.semester_id asc, sem_apps.title asc")
+    @sem_apps = @filter.filtered
+      .page(params[:page])
+      .per_page(10)
+      .order("sem_apps.semester_id asc, sem_apps.title asc")
   end
 
   def filter_semester_index
