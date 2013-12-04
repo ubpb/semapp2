@@ -1,8 +1,12 @@
-/* overrides page.css */
+@import "pui.css";
 
 body {background: none}
 .no-print {display: none;}
 .only-print { display: block; }
+
+h4 {
+  border-bottom: 1px solid #d6d6d6;
+}
 
 .scanjob-detail * {font-size: 20px !important}
 .scanjob-detail div.pui-collection-view.labeled div.item span.label { width: 25% }
