@@ -1,6 +1,0 @@
-.mceItemFlash, .mceItemShockWave, .mceItemQuickTime, .mceItemWindowsMedia, .mceItemRealMedia {border:1px dotted #cc0000; background-position:center; background-repeat:no-repeat; background-color:#ffffcc;}
-.mceItemShockWave {background-image: image-url("tiny_mce/plugins/media/css/../img/shockwave.gif");}
-.mceItemFlash {background-image:image-url("tiny_mce/plugins/media/css/../img/flash.gif");}
-.mceItemQuickTime {background-image:image-url("tiny_mce/plugins/media/css/../img/quicktime.gif");}
-.mceItemWindowsMedia {background-image:image-url("tiny_mce/plugins/media/css/../img/windowsmedia.gif");}
-.mceItemRealMedia {background-image:image-url("tiny_mce/plugins/media/css/../img/realmedia.gif");}
