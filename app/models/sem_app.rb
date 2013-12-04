@@ -2,7 +2,7 @@
 
 class SemApp < ActiveRecord::Base
 
-  include SafeTouchable
+  #include SafeTouchable
 
   # Relations
   belongs_to :creator, :class_name => 'User'

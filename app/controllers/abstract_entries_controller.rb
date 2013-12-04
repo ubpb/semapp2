@@ -4,9 +4,6 @@ class AbstractEntriesController < ApplicationController
 
   before_filter :require_authenticate
 
-  # TODO: RAILS_4: there is no suche method in rails 4 anymore
-  # cache_sweeper :entry_sweeper
-
   def new
     @sem_app = SemApp.find(params[:sem_app_id])
     unauthorized! if cannot? :edit, @sem_app
@@ -45,7 +42,7 @@ class AbstractEntriesController < ApplicationController
   def update
     @entry = self.controller_class.find(params[:id])
     unauthorized! if cannot? :edit, @entry.sem_app
-    
+
     if @entry.update_attributes(params[self.controller_class.name.underscore.to_sym])
       redirect_to sem_app_path(@entry.sem_app, :anchor => 'media')
     else

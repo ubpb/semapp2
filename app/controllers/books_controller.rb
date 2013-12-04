@@ -5,9 +5,6 @@ class BooksController < ApplicationController
   before_filter :require_authenticate, :load_sem_app
   before_filter :check_current_semester, :only => [:index, :new, :create, :destroy]
 
-  # TODO: RAILS_4: there is no suche method in rails 4 anymore
-  # cache_sweeper :book_sweeper
-
   def index
     @ordered_books  = Book.for_sem_app(@sem_app).ordered.ordered_by('created_at')
     @removed_books  = Book.for_sem_app(@sem_app).removed.ordered_by('created_at')
@@ -60,7 +57,7 @@ class BooksController < ApplicationController
       @book.publisher  = record.publisher
       @book.isbn       = record.isbn
       @book.edition    = record.edition
-    
+
       if @book.save
         flash[:notice] = "Buchauftrag erfolgreich erstellt"
         redirect_to sem_app_books_path(@sem_app)
@@ -86,13 +83,13 @@ class BooksController < ApplicationController
 
   def destroy
     book = Book.find(params[:id])
-    
+
     if book.state != Book::States[:in_shelf] or book.placeholder? or book.reference_copy.present?
       book.destroy
     else
       book.set_state(:rejected)
     end
-    
+
     render :nothing => true
   end
 

@@ -27,7 +27,7 @@
             <%= render 'entry', :entry => entry %>
           <% end %>
         <% else %>
-          <% cache("#{entry.cache_key}") do %>
+          <% cache(entry) do %>
             <%= render 'entry', :entry => entry %>
           <% end %>
         <% end %>

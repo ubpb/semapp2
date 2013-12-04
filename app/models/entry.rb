@@ -2,7 +2,7 @@
 
 class Entry < ActiveRecord::Base
 
-  include SafeTouchable
+  #include SafeTouchable
 
   # Realations
   belongs_to :sem_app, :touch => true

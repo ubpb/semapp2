@@ -1,5 +1,5 @@
 <div id="book-<%=book.id-%>" class="item">
-  
+
   <div class="toolbar-wrapper" style="display: none">
     <div class="toolbar" style="display: none">
       <% if book.sem_app.is_from_current_semester? %>
@@ -12,15 +12,15 @@
       <% end %>
     </div>
   </div>
-  
+
   <div class="book">
-    <% cache(book.cache_key) do %>
+    <% cache(book) do %>
       <%= render 'shared_partials/book_ref', :book => book %>
       <%= render 'entries/signature', :entry => book %>
       <%= render 'entries/amazon', :entry => book %>
       <%= render 'entries/comment', :entry => book %>
     <% end %>
-    
+
     <% if book.sem_app.is_from_current_semester? %>
       <% if book.placeholder? %>
         <p>
