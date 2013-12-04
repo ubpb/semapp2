@@ -21,7 +21,7 @@
       var tab = $(tab_id);
       var url = tab.attr("rel");
 
-      tab.html('<div class="pui-panel align-center"><img src="/assets/pui/common/loader.gif" style="line-height:16px; vertical-align:text-top"/> Lade Daten ...</div>');
+      //tab.html('<div class="pui-panel align-center"><img src="/assets/pui/common/loader.gif" style="line-height:16px; vertical-align:text-top"/> Lade Daten ...</div>');
 
       $.ajax({
         url: url,
