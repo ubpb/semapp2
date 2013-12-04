@@ -16,6 +16,7 @@ gem 'dynamic_form',         '~> 1.1.4' # provides the old f.error_messages metho
 gem 'formtastic',           github: 'ubpb/formtastic', branch: '1.2-stable'
 gem 'nokogiri',             '~> 1.6.0'
 gem 'protected_attributes', '~> 1.0.5' # Needed as long as we migrated to strong parameters
+gem 'puma',                 '~> 2.7.0'
 
 # asset related gems
 gem 'coffee-rails',         '~> 4.0.0'
