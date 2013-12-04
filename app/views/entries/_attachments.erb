@@ -5,7 +5,7 @@
         <li class="attachment">
           <% if a.description.present? %>
             <span class="description">
-              <%= textilize_without_paragraph(a.description) %>
+              <%= textilize_without_paragraph(a.description).html_safe %>
             </span>
           <% end %>
           <span class="download-link">

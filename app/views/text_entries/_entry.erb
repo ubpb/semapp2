@@ -1,7 +1,7 @@
 <%= render 'entries/publish_notice', :entry => entry %>
 
 <% if entry.present? and entry.text.present? %>
-  <%= textilize(entry.text) %>
+  <%= textilize(entry.text).html_safe %>
 <% end %>
 
 <%= render 'entries/attachments', :entry => entry %>
