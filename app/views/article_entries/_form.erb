@@ -11,7 +11,7 @@
     <%= f.input :pages_from, :label => 'Seiten von', :required => true %>
     <%= f.input :pages_to,   :label => 'Seiten bis', :required => true %>
     <%= f.input :issn,       :label => 'ISSN', :required => false %>
-    <%= f.input :signature,  :label => 'Signatur in der Bibliothek', :required => false, :hint => 'Wenn Sie hier die Signatur der Bibliothek angeben (sofern vorhanden), verlinken wir diesen Eintrag automatisch mit unserem Katalog. Bitte recherchieren Sie die Signatur mit unserem <a href="https://katalog.ub.uni-paderborn.de" target="blank">Katalog</a>' %>
+    <%= f.input :signature,  :label => 'Signatur in der Bibliothek', :required => false, :hint => 'Wenn Sie hier die Signatur der Bibliothek angeben (sofern vorhanden), verlinken wir diesen Eintrag automatisch mit unserem Katalog. Bitte recherchieren Sie die Signatur mit unserem <a href="https://katalog.ub.uni-paderborn.de" target="blank">Katalog</a>'.html_safe %>
   <% end %>
 
   <%= f.inputs :name => 'Kommentar' do %>
