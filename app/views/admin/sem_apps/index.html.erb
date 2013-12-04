@@ -50,7 +50,7 @@
       <div class="align-center">
         <%= submit_tag 'Filtern' %>
         <% if @filter.filtered?([:unapproved_only, :bookjobs_only, :semester, :location, :title, :tutors, :creator, :ils_account, :slot_number] ) %>
-          <%= link_to 'Zur&uuml;cksetzen', filter_admin_sem_apps_path, :method => :post %>
+          <%= link_to 'Zurücksetzen', filter_admin_sem_apps_path, :method => :post %>
         <% end %>
       </div>
     <% end %>
