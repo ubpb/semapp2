@@ -1,13 +1,4 @@
-# encoding: utf-8
-
-begin
-  require 'highline/import'
-rescue LoadError
-  puts '######################################'
-  puts '# Please install the highline gem.   #'
-  puts '# $sudo gem install highline         #'
-  puts '######################################'
-end
+require 'highline/import'
 
 namespace :app do
 
