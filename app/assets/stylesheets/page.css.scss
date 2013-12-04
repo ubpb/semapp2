@@ -11,7 +11,7 @@
 /* Defauls provided by PUI. Overrides will follow... */
 
 body {
-  background: #b9b9b9 url(page/body-bg.jpg) no-repeat top center;
+  background: #b9b9b9 image-url("page/body-bg.jpg") no-repeat top center;
 }
 
 a, a:visited {
@@ -53,13 +53,13 @@ form.formtastic fieldset ol li p.inline-errors {clear:left}
 ----------------------------------------------------------------------------------------------------*/
 
 #meta {
-  /*background: transparent url(page/meta-bg.png) repeat-x bottom left;*/
+  /*background: transparent image-url(page/meta-bg.png) repeat-x bottom left;*/
   line-height: 35px;
   overflow: hidden;
 }
 
 #header-wrapper {
-  background: url(page/header-bg.png) repeat-x;
+  background: image-url("page/header-bg.png") repeat-x;
 }
 
 #header {
@@ -73,36 +73,36 @@ form.formtastic fieldset ol li p.inline-errors {clear:left}
 }
 
 #stage-wrapper {
-  background: url(page/stage-wrapper-bg.png) no-repeat bottom center;
+  background: image-url("page/stage-wrapper-bg.png") no-repeat bottom center;
   height: 94px;
   margin-top: -4px;
 }
 
 #sidebar-wrapper {
-  background: url(page/sidebar-wrapper-bg.png) repeat-y top center;
+  background: image-url("page/sidebar-wrapper-bg.png") repeat-y top center;
 }
 
 #sidebar {
   padding: 20px 0 5px 0;
-  background: url(page/sidebar-bg.png) no-repeat bottom center;
+  background: image-url("page/sidebar-bg.png") no-repeat bottom center;
 }
 
 #sidebar-bottom-cap {
   height: 8px;
-  background: url(page/sidebar-bottom-cap-bg.png) no-repeat top center;
+  background: image-url("page/sidebar-bottom-cap-bg.png") no-repeat top center;
   margin: 0 -10px;
 }
 
 #logo-upb {
   width: 296px;
   height: 90px;
-  background: url(page/logo-upb.png) no-repeat bottom left;
+  background: image-url("page/logo-upb.png") no-repeat bottom left;
 }
 
 #logo-ub {
   width: 220px;
   height: 79px;
-  background: url(page/logo-ub.png) no-repeat center center;
+  background: image-url("page/logo-ub.png") no-repeat center center;
 }
 
 #page-wrapper {
@@ -119,7 +119,7 @@ form.formtastic fieldset ol li p.inline-errors {clear:left}
 }
 
 #footer {
-  /*background: transparent url(page/footer-bg.png) repeat-x top left;*/
+  /*background: transparent image-url(page/footer-bg.png) repeat-x top left;*/
   padding-top: 1em;
   padding-bottom: 5em;
 }
