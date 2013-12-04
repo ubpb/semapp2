@@ -3,12 +3,12 @@
     <% if @sem_app.creator.email.present? %>
       <% approve_hint = "Nach der Aktivierung wird eine E-Mail mit Informationen an #{@sem_app.creator.email} verschickt." %>
     <% end %>
-    <%= f.input :approved, :label => 'Von der UB gepr&uuml;ft und freigebegen?', :required => false, :hint => approve_hint || '' %>
+    <%= f.input :approved, :label => 'Von der UB geprüft und freigebegen?', :required => false, :hint => approve_hint || '' %>
   <% end %>
 
   <%= f.inputs :name => 'Ausweis / Regal' do %>
     <div class="pui-panel">
-      Um B&uuml;cher in diesen Apparat einstellen zu können bitte die folgenden Felder ausf&uuml;llen. Ansonsten die Felder leer lassen.
+      Um Bücher in diesen Apparat einstellen zu können bitte die folgenden Felder ausfüllen. Ansonsten die Felder leer lassen.
     </div>
     <%= f.semantic_fields_for :book_shelf do |shelf| %>
       <% unless shelf.object.new_record? %>

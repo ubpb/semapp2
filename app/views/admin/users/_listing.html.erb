@@ -14,7 +14,7 @@
         <% @users.each do |s| %>
           <tr>
             <td nowrap="true" valign="middle">
-              <% if s.approved? %><%= image_tag('common/state_green.gif', :title => 'Gepr&uuml;ft') %><% else %><%= image_tag('common/state_red.gif', :title => 'NICHT Gepr&uuml;ft') %><% end %>
+              <% if s.approved? %><%= image_tag('common/state_green.gif', :title => 'Geprüft') %><% else %><%= image_tag('common/state_red.gif', :title => 'NICHT Geprüft') %><% end %>
               <% if s.active? %><%= image_tag('common/state_green.gif', :title => 'Aktiviert') %><% else %><%= image_tag('common/state_red.gif', :title => 'NICHT Aktiviert') %><% end %>
             </td>
             <td nowrap="true">

@@ -3,7 +3,7 @@
 
   <%= f.inputs do %>
     <%= f.input :style, :label => 'Typ', :as => :select, :collection => {"Überschrift 1 (h1)" => 0, "Überschrift 2 (h2)" => 1, "Überschrift 3 (h3)" => 2}, :selected => (@entry.style || 0), :required => false %>
-    <%= f.input :headline, :label => '&Uuml;berschrift' %>
+    <%= f.input :headline, :label => 'überschrift' %>
   <% end %>
 
   <%= f.buttons do %>

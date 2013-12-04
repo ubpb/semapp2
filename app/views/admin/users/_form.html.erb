@@ -6,7 +6,7 @@
       <li>
         <div class="container">
           <%= f.check_box :approved %>
-          <%= f.label     :approved, "Gepr&uuml;ft?" %>
+          <%= f.label     :approved, "Geprüft?" %>
           <%= f.check_box :active %>
           <%= f.label     :active, "Aktiv?" %>
         </div>
@@ -18,7 +18,7 @@
       <li>
         <% unless @user.new_record? %>
           <p style="font-size: 90%; font-style: italic; text-align: center">
-            Um das Passwort zu &auml;ndern geben Sie das neue Passwort (und die Best&auml;tigung)
+            Um das Passwort zu ändern geben Sie das neue Passwort (und die Bestätigung)
             bitte ein.<br/>
             Ansonsten lassen Sie die Felder einfach leer.
           </p>
@@ -27,7 +27,7 @@
         <%= f.password_field :password %>
       </li>
       <li>
-        <%= f.label          :password_confirmation, "Passwort best&auml;tigen" %>
+        <%= f.label          :password_confirmation, "Passwort bestätigen" %>
         <%= f.password_field :password_confirmation %>
       </li>
     </ol>
