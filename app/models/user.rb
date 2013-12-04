@@ -11,10 +11,6 @@ class User < ActiveRecord::Base
   validates_presence_of :login
   validates_presence_of :name
 
-  # Protected attributes. FIXME: Replace with strong parameters
-  attr_accessible :login, :name, :email
-
-
   class << self
     def authenticate(attributes)
       aleph = Aleph::Connector.new

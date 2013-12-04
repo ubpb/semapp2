@@ -26,8 +26,5 @@ SemApp2::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
-
-  # Be strict with mass assignments. TODO: Remove when migrating to strong parameters.
-  config.active_record.mass_assignment_sanitizer = :strict
 end
 

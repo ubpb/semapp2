@@ -35,6 +35,9 @@ module SemApp2
 
     # Set cache store location
     config.cache_store = :file_store, File.join(Rails.root, 'tmp', 'cache')
+
+    # Do not whitelist attributes. TODO: Remove when migrating to strong parameters.
+    config.active_record.whitelist_attributes = false
   end
 
   # Definements (TODO: Implement this a better way)
