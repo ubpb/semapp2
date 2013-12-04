@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class Admin::SemAppsController < Admin::ApplicationController
 
   SEM_APP_FILTER_NAME = 'admin_sem_app_filter_name'.freeze
@@ -68,7 +66,7 @@ class Admin::SemAppsController < Admin::ApplicationController
 
   def update
     @sem_app = SemApp.find(params[:id])
-    
+
     was_approved = @sem_app.approved
 
     if @sem_app.update_attributes(params[:sem_app])
@@ -84,10 +82,10 @@ class Admin::SemAppsController < Admin::ApplicationController
 
   def set_creator
     @sem_app = SemApp.find(params[:id])
-    
+
     login = params[:login].upcase
     user  = User.find_by_login(login)
-    
+
     if user
       if @sem_app.update_attribute(:creator, user)
         flash[:success] = ActionController::Base.helpers.sanitize "Besitzer erfolgreich gesetzt. #{login} kann den Seminarapparat <i>#{@sem_app.title}</i> nun bearbeiten."

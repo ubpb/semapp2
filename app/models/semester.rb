@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class Semester < ActiveRecord::Base
   # model relations
   has_many :sem_apps, :dependent => :destroy

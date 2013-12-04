@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class Admin::OwnershipsController < Admin::ApplicationController
 
   def create
@@ -34,7 +32,7 @@ class Admin::OwnershipsController < Admin::ApplicationController
     else
       flash[:error] = "Bearbeitungsrechte konnten nicht entzogen werden"
     end
-    
+
     redirect_to admin_sem_app_path(sem_app, :anchor => 'users')
   end
 

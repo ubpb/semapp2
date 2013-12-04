@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class Authority < ActiveRecord::Base
 
   ADMIN_ROLE    = 'ROLE_ADMIN'

@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class Book < ActiveRecord::Base
 
   States = {
@@ -29,7 +27,7 @@ class Book < ActiveRecord::Base
   scope :removed,     lambda { where( :state => Book::States[:rejected] ) }
   scope :deferred,    lambda { where( :state => Book::States[:deferred] ) }
   scope :ordered_by,  lambda { |*order| order( order.flatten.first || 'title DESC' ) }
-  
+
   ###########################################################################################
   #
   # Public API

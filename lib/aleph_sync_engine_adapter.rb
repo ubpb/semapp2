@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class AlephSyncEngineAdapter < SyncEngineAdapter
 
   def initialize(options = {})
@@ -14,7 +12,7 @@ class AlephSyncEngineAdapter < SyncEngineAdapter
     lendings = @aleph.get_lendings(ils_account)
     books = {}
 
-    if lendings.present?  
+    if lendings.present?
       lendings.each do |l|
         sleep(1/100)
         books[l[:doc_number]] = {

@@ -1,19 +1,17 @@
-# encoding: utf-8
-
 class MilessFileEntry < Entry
 
   # Relation
   belongs_to :sem_app
-  
+
   # Behavior
   self.table_name = :miless_file_entries
-  
+
   ######################################################################################################
   #
   # Public API
   #
   ######################################################################################################
-  
+
   def to_s
     to_source_ref
   end

@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class Ownership < ActiveRecord::Base
 
   belongs_to :user

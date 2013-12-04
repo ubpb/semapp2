@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class ScanjobsController < ApplicationController
 
   before_filter :load_entry

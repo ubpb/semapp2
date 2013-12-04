@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class Location < ActiveRecord::Base
 
   validates_presence_of :title

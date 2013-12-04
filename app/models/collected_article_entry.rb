@@ -1,13 +1,11 @@
-# encoding: utf-8
-
 class CollectedArticleEntry < Entry
 
   # Relation
   belongs_to :sem_app
-  
+
   # Behavior
   self.table_name = :collected_article_entries
-  
+
   # Validation
   validates_presence_of :source_year
   validates_presence_of :pages_from
@@ -102,7 +100,7 @@ class CollectedArticleEntry < Entry
   def volume_to_s
     volume.present? ? ", Bd. #{volume.strip}" : ""
   end
-  
+
   def pages_to_s
     pages_from.present? and pages_to.present? ? ", S. #{pages_from}-#{pages_to}" : ""
   end

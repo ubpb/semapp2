@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class EntriesController < ApplicationController
 
   def new
@@ -21,5 +19,5 @@ class EntriesController < ApplicationController
 
     render :nothing => true
   end
-  
+
 end

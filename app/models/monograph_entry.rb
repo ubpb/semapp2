@@ -1,6 +1,4 @@
-# encoding: utf-8
-
-class MonographEntry < Entry  
+class MonographEntry < Entry
 
   # Relations
   belongs_to :sem_app

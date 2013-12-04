@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class BookShelf < ActiveRecord::Base
 
   # Relations

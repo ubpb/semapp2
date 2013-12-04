@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class FileAttachmentsController < ApplicationController
 
   def new
@@ -42,7 +40,7 @@ class FileAttachmentsController < ApplicationController
   def destroy
     @file_attachment = FileAttachment.find(params[:id])
     unauthorized! if cannot? :edit, @file_attachment.entry.sem_app
-    
+
     unless @file_attachment.destroy
       flash[:error] = "Die Datei konnte nicht gelöscht werden. Es ist ein Fehler aufgetreten."
     end

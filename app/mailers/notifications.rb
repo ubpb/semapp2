@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class Notifications < ActionMailer::Base
   default from: "information@ub.uni-paderborn.de"
 

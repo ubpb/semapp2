@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class SyncEngine
 
   def initialize(adapter)
@@ -20,7 +18,7 @@ class SyncEngine
 
     @errors = 0
     sem_apps.each do |sem_app|
-      sync_sem_app(sem_app)      
+      sync_sem_app(sem_app)
     end
 
     puts "\n#"
@@ -31,7 +29,7 @@ class SyncEngine
 
   def sync_sem_app(sem_app)
     print "Syncing #{sem_app.id}. "
-    
+
     if sem_app.has_book_shelf?
       begin
         # load the books for this sem_app
@@ -61,15 +59,15 @@ class SyncEngine
               next if e.placeholder?
               next if e.reference_copy.present?
               next if e.state != Book::States[:in_shelf]
-              
-              delete_entry(e) 
+
+              delete_entry(e)
             else
               # found a book that is in the db AND in the ILS
               # do nothing: handled in the other case
             end
           end
         end
-        
+
         # finished we are
         print "Ok."
       rescue Exception => e

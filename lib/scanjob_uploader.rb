@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class ScanjobUploader
 
   def upload_scanjobs

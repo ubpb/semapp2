@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class Admin::BookShelvesController < Admin::ApplicationController
 
   def index

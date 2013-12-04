@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class Admin::BooksController < Admin::ApplicationController
 
   def edit

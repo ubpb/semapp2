@@ -1,13 +1,11 @@
-# encoding: utf-8
-
 class ArticleEntry < Entry
 
   # Relation
   belongs_to :sem_app
-  
+
   # Behavior
   self.table_name = :article_entries
-  
+
   # Validation
   validates_presence_of :journal
   validates_presence_of :year
@@ -21,7 +19,7 @@ class ArticleEntry < Entry
   # Public API
   #
   ######################################################################################################
-  
+
   def to_s
     out  = ""
     out << author_to_s

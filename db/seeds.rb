@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 SemApp.transaction do
 
   # This file should contain all the record creation needed to seed the database with its default values.
@@ -35,7 +33,7 @@ SemApp.transaction do
   Location.create!(:title => 'Fachbibliothek für Sprach- und Literaturwissenschaften',   :position => 3)
   Location.create!(:title => 'Fachbibliothek für Wirtschafts- und Sozialwissenschaften', :position => 4)
   Location.create!(:title => 'Fachbibliothek für Fürstenallee',                          :position => 5)
-  
+
   # Sem App
 #  20.times do |i|
 #    default_semapp = SemApp.create!(
@@ -57,5 +55,5 @@ SemApp.transaction do
 #    HeadlineEntry.create!(:sem_app => default_semapp, :headline => 'Headline', :position => 0)
 #    TextEntry.create!(:sem_app => default_semapp, :text => 'Lorem Ipsum ...', :position => 1)
 #  end
-  
+
 end # end transaction

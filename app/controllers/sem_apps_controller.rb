@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class SemAppsController < ApplicationController
 
   SEM_APP_FILTER_NAME                 = 'sem_app_filter_name'.freeze
