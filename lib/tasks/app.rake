@@ -40,19 +40,6 @@ namespace :app do
   end
 
   #
-  # Import from Miless
-  #
-  desc "Miless Import Step 1 (Import all Sem App data)"
-  task(:import_sem_apps => :environment) do
-    UbdokImporter.new.import_sem_apps
-  end
-
-  desc "Miless Import Step 2 (Import shared secrets)"
-  task(:import_rights => :environment) do
-    UbdokRightsImporter.new.import_rights
-  end
-
-  #
   # Info-Mail am Semesterende
   #
   desc "Sends an info mail to sem app owners"
