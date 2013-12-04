@@ -1,6 +1,6 @@
 #= require utils/singletonReadyOrPageChange
 
-app.utils.singletonReadyOrPageChange 'app.handleItemMouseover', ->
+app.utils.singletonReadyOrPageChange 'app.views.sem_apps.handleItemMouseover', ->
   $('body').on 'mouseover', '.item', (event) ->
     target = $(@)
 

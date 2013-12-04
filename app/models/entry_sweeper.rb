@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+=begin
 class EntrySweeper < ActionController::Caching::Sweeper
 
   observe Entry
@@ -21,3 +22,4 @@ class EntrySweeper < ActionController::Caching::Sweeper
   end
 
 end
+=end

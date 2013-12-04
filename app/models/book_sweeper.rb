@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+=begin
 class BookSweeper < ActionController::Caching::Sweeper
 
   observe Book
@@ -21,3 +22,4 @@ class BookSweeper < ActionController::Caching::Sweeper
   end
 
 end
+=end

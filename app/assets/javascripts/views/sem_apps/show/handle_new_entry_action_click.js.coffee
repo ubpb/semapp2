@@ -1,6 +1,6 @@
 #= require utils/singletonReadyOrPageChange
 
-app.utils.singletonReadyOrPageChange 'app.handleNewEntryActionClick.', ->
+app.utils.singletonReadyOrPageChange 'app.views.sem_apps.handleNewEntryActionClick.', ->
   $('body').on 'click', '.new-entry-action', (event) ->
     event.preventDefault()
     url = $(@).attr("href")
