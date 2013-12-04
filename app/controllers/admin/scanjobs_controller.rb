@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require 'barby'
+require 'barby/barcode/code_128'
 require 'barby/outputter/png_outputter'
 
 class Admin::ScanjobsController < Admin::ApplicationController
@@ -45,7 +46,7 @@ class Admin::ScanjobsController < Admin::ApplicationController
 
     render :template => 'admin/scanjobs/print_list', :layout => 'print'
   end
-  
+
   def barcode
     scanjob = Scanjob.find(params[:id])
     code = scanjob.code
@@ -90,7 +91,7 @@ class Admin::ScanjobsController < Admin::ApplicationController
     rescue Exception => e
       flash[:error] = "Es ist ein Fehler aufgetreten. Die Scans konnten nicht hochgeladen werden. #{e.message}"
     end
-    
+
     redirect_to admin_scanjobs_path()
   end
 
