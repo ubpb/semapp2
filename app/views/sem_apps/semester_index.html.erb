@@ -1,6 +1,6 @@
 <h3 class="section">Seminarapparate im <%= Semester.current.title %></h3>
 
-<%= render 'filter_panel', :filter_path => filter_semester_index_path, :filter_for => [:location, :title, :tutors] %>
+<%= render 'filter_panel', :filter_path => filter_semester_index_path, :filter_for => [:location, :title, :tutors, :slot_number] %>
 
 <%= render 'listing', :sem_apps => @sem_apps, :actions => [:show] %>
 
