@@ -7,10 +7,9 @@ class SemApp < ActiveRecord::Base
   belongs_to :location
 
   # pg_search scopes
-  pg_search_scope :search_by_title,            :against => :title,            :using => { :tsearch => { :prefix => true } }, order_within_rank: "sem_apps.title asc"
-  pg_search_scope :search_by_title_and_tutors, :against => [:title, :tutors], :using => { :tsearch => { :prefix => true } }, order_within_rank: "sem_apps.title asc"
-  pg_search_scope :search_by_tutors,           :against => :tutors,           :using => { :tsearch => { :prefix => true } }, order_within_rank: "sem_apps.title asc"
-
+  pg_search_scope :search_by_title,       :against => :title,                                     :using => { :tsearch => { :prefix => true } }
+  pg_search_scope :search_by_tutors,      :against => :tutors,                                    :using => { :tsearch => { :prefix => true } }
+  pg_search_scope :search_by_slot_number, :associated_against => { :book_shelf => :slot_number }, :using => { :tsearch => { :prefix => true } }
 
   has_one    :book_shelf, :dependent => :destroy
   has_one    :book_shelf_ref, :dependent => :destroy

@@ -18,22 +18,14 @@ class SemAppsFilter
   end
 
   def filtered
-    sem_apps = SemApp.all
+    sem_apps = @slot_number.blank? ? SemApp.all : SemApp.search_by_slot_number(@slot_number)
     sem_apps = sem_apps.includes( :books, :book_shelf )
-
-    sem_apps = if @title.present? && @tutors.present?
-      sem_apps.search_by_title_and_tutors [@title, @tutors].join(' ')
-    elsif @title.present? && @tutors.blank?
-      sem_apps.search_by_title @title
-    elsif @title.blank? && @tutors.present?
-      sem_apps.search_by_tutors @tutors
-    end || sem_apps
-
+    sem_apps = sem_apps.search_by_title @title unless @title.blank?
+    sem_apps = sem_apps.search_by_tutors @tutors unless @tutors.blank?
     sem_apps = sem_apps.where "lower(users.name) LIKE ? OR lower(users.login) LIKE ?", "#{@creator.downcase}%", "#{@creator.downcase}%" unless @creator.blank?
     sem_apps = sem_apps.where "location_id = ?", "#{@location}" unless @location.blank?
     sem_apps = sem_apps.where "semester_id = ?", "#{@semester}" unless @semester.blank?
     sem_apps = sem_apps.where "lower(book_shelves.ils_account) like ?", "#{@ils_account.downcase}%" unless @ils_account.blank?
-    sem_apps = sem_apps.where "lower(book_shelves.slot_number) = ?", "#{@slot_number.downcase}" unless @slot_number.blank?
     sem_apps = sem_apps.where "approved = ?", false if @unapproved_only
     sem_apps = sem_apps.where "approved = ?", @approved if @approved.present?
     sem_apps = sem_apps.where "books.state = ? OR books.state = ?", Book::States[:ordered], Book::States[:rejected] if @bookjobs_only
