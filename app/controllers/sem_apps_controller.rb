@@ -147,7 +147,7 @@ class SemAppsController < ApplicationController
       clone = @sem_app.transit
       if clone
         flash[:success] = """
-          <p>Ihr Seminarapparat wurde erfolgreich in neue Semester übernommen. Wir prüfen die Angaben und schalten
+          <p>Ihr Seminarapparat wurde erfolgreich in das neue Semester übernommen. Wir prüfen die Angaben und schalten
           den Seminarapparat nach erfolgter Prüfung für Sie frei. Sie sehen den Status unter
           <strong>Meine Seminarapparate</strong>. Bis zur Freischaltung können nur Sie den Seminarapparat
           sehen und bearbeiten.</p>
