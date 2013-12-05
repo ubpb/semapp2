@@ -34,6 +34,7 @@ vendor/bundler_gems/environment.rb
 public/plugins
 public/stylesheets/generated-*.css
 public/javascripts/generated-*.js
+public/assets
 
 data
 import

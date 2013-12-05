@@ -9,13 +9,13 @@ class Admin::SemAppsController < Admin::ApplicationController
         .page(params[:page])
         .per_page(10)
         .includes([:creator, :books, :semester])
-        .order("semesters.position asc, sem_apps.title asc")
+        .order("sem_apps.semester_id asc, sem_apps.title asc") #.order("semesters.position asc, sem_apps.title asc")
     else
       @sem_apps = SemApp
         .page(params[:page])
         .per_page(10)
         .includes([:creator, :books, :semester])
-        .order("semesters.position asc, sem_apps.title asc")
+        .order("sem_apps.semester_id asc, sem_apps.title asc") #.order("semesters.position asc, sem_apps.title asc")
     end
   end
 

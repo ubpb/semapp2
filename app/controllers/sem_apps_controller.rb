@@ -11,11 +11,11 @@ class SemAppsController < ApplicationController
   def index
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
     @filter.approved = true
+
     @sem_apps = @filter.filtered
       .page(params[:page])
       .per_page(10)
-      .includes(:semester)
-      .order("semesters.position asc, sem_apps.title asc")
+      .order("sem_apps.semester_id asc, sem_apps.title asc")
   end
 
   def filter

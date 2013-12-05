@@ -1,45 +1,9 @@
+<% content_for :head do %>
+  <%= javascript_include_tag 'views/admin/manifest', "data-turbolinks-track" => true %>
+<% end %>
+
 <% content_for :sidebar do %>
   <%= render 'admin/shared_partials/main_navigation' %>
 <% end %>
 
 <%= render 'layouts/application' %>
-
-<script type="text/javascript">
-  (function($) {
-    $(function() {
-
-      $(".print").live('click', function(e) {
-        e.preventDefault();
-
-        // remove old printframe
-        $("#printframe").remove();
-
-        // create new printframe
-        var iFrame = $('<iframe></iframe>');
-        iFrame
-        .attr("id", "printframe")
-        .attr("name", "printframe")
-        .attr("src", "about:blank")
-        .css("width", "0")
-        .css("height", "0")
-        .css("position", "absolute")
-        .css("left", "-9999px")
-        .appendTo($("body:first"));
-
-        // load printframe
-        var url = $(this).attr("href");
-        if (iFrame != null && url != null) {
-          iFrame.attr('src', url);
-          iFrame.load(function() {
-            // nasty hack to be able to print the frame
-            var tempFrame = $('#printframe')[0];
-            var tempFrameWindow = tempFrame.contentWindow? tempFrame.contentWindow : tempFrame.contentDocument.defaultView;
-            tempFrameWindow.focus();
-            tempFrameWindow.print();
-          });
-        }
-      });
-
-    });
-  })(jQuery);
-</script>

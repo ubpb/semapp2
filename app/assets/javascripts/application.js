@@ -12,11 +12,15 @@
 //
 // !!! ATTENTION !!!
 //
-// Don't blindly require_tree/directory. There is javascript which is only included if the user has appropriate permissins.
+// * don't blindly require_tree/directory. There is javascript which is only included if the user has appropriate permissins
+// * use the minified version of jquery-migrate for production, because this versions also doesn't shout out to the console
 //
 //= require jquery
+//= require jquery-migrate-1.2.1.min
 //= require jquery_ujs
-//= require jquery-ui
+//= require jquery.ui.draggable
+//= require jquery.ui.sortable
+//= require jquery.ui.effect.all
 //= require jquery-tools-1.1.2.min
 //= require jquery-form-2.33
 //= require markitup/jquery.markitup.pack

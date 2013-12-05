@@ -1,9 +1,14 @@
 class SemApp < ActiveRecord::Base
+  include PgSearch
 
   # Relations
   belongs_to :creator, :class_name => 'User'
   belongs_to :semester
   belongs_to :location
+
+  # pg_search scopes
+  pg_search_scope :search_by_title,  :against => :title,  :using => { :tsearch => { :prefix => true } }, order_within_rank: "sem_apps.title asc"
+  pg_search_scope :search_by_tutors, :against => :tutors, :using => { :tsearch => { :prefix => true } }, order_within_rank: "sem_apps.title asc"
 
   has_one    :book_shelf, :dependent => :destroy
   has_one    :book_shelf_ref, :dependent => :destroy
