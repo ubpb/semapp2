@@ -18,12 +18,14 @@ gem 'protected_attributes', '~> 1.0.5'  # Needed as long as we migrated to stron
 gem 'highline',             '~> 1.6.20' # Used by rake custom task
 gem 'formtastic',           github: 'ubpb/formtastic', branch: '1.2-stable'
 
-gem 'jquery-rails',         '~> 2.1.4'  # we can only use jquery till 1.8, because jquery-tools relies on $.browser
 gem 'coffee-rails',         '~> 4.0.0'
+gem 'jquery-rails',         '~> 3.0.4'
+gem 'jquery-ui-rails',      '~> 4.1.0'
 gem 'sass-rails',           '~> 4.0.1'
 gem 'slim',                 '~> 2.0.2'
 gem 'uglifier',             '>= 2.3.2'
 
+# development
 group :development, :test do
   gem 'pry',                '0.9.12.2'  # 0.9.12.3 has a coloring bug in its repl which shows annoying ansi colors codes
   gem 'pry-nav',            '~> 0.2.3'
