@@ -39,8 +39,4 @@ module SemApp2
     # Do not whitelist attributes. TODO: Remove when migrating to strong parameters.
     config.active_record.whitelist_attributes = false
   end
-
-  # Definements (TODO: Implement this a better way)
-  TRANSIT_SOURCE_SEMESTER_ID = 0 #
-  TRANSIT_TARGET_SEMESTER_ID = 0 #
 end

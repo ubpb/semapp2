@@ -136,8 +136,7 @@ class SemApp < ActiveRecord::Base
   end
 
   def transit
-    target_semester = Semester.find(SemApp2::TRANSIT_TARGET_SEMESTER_ID)
-    #return if Semester.current == next_semester
+    target_semester = ApplicationSettings.instance.transit_target_semester
 
     if target_semester.present?
       SemApp.transaction do

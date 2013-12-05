@@ -4,6 +4,9 @@ SemApp2::Application.routes.draw do
   namespace :admin do |admin|
     root to: 'sem_apps#index'
 
+    get   :application_settings, to: 'application_settings#index'
+    patch :application_settings, to: 'application_settings#update'
+
     resources :sem_apps, path: 'apps' do
       collection do
         post :filter
