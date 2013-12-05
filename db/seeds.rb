@@ -5,6 +5,7 @@ SemApp.transaction do
 
   Authority.create!(:name => Authority::ADMIN_ROLE)
   Authority.create!(:name => Authority::LECTURER_ROLE)
+  Authority.create!(:name => Authority::ASSISTANT_ROLE)
 
   # Default Admin user
   User.create!(

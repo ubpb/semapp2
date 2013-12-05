@@ -15,7 +15,11 @@ class User < ActiveRecord::Base
       aleph_user = aleph.authenticate(attributes[:login], attributes[:password])
       raise "Aleph authentication failed" unless aleph_user and aleph_user.is_a? Aleph::User
       user = create_or_update_aleph_user!(aleph_user)
-      user.add_authority(Authority::LECTURER_ROLE) if aleph_user.status.match(/\APA.+/)
+      if aleph_user.status.match(/\APA.+/)
+        user.add_authority(Authority::LECTURER_ROLE)
+      elsif aleph_user.status.match(/\APS.+/)
+        user.add_authority(Authority::ASSISTANT_ROLE)
+      end
       user
     end
 
