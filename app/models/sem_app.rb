@@ -141,7 +141,7 @@ class SemApp < ActiveRecord::Base
 
     if target_semester.present?
       SemApp.transaction do
-        clone = self.clone(:include => :book_shelf)
+        clone = self.dup(:include => :book_shelf, :validate => false)
         clone.semester = target_semester
         clone.archived = false
         clone.approved = false
@@ -179,7 +179,7 @@ class SemApp < ActiveRecord::Base
   def import_entries!(source_sem_app)
     source_sem_app.entries.each do |entry|
       instance = entry.instance
-      clone = instance.clone(:exclude => [:file_attachments, :scanjob])
+      clone = instance.dup(:validate => false)
 
       instance.file_attachments.each do |a|
         path = a.file.path
@@ -197,7 +197,7 @@ class SemApp < ActiveRecord::Base
 
   def import_books!(source_sem_app)
     source_sem_app.books.each do |book|
-      clone = book.clone
+      clone = book.dup
       clone.sem_app = self
       clone.save(validate: false)
     end

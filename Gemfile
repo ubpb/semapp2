@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails',                '~> 4.0.1'
 gem 'rails-i18n',           '~> 4.0.0'
-gem 'deep_cloning',         '~> 2.0.0'
+gem 'deep_cloneable',       '~> 1.6.0'
 gem 'pg',                   '~> 0.17.0'
 gem 'cancan',               '~> 1.6.10'
 gem 'barby',                '~> 0.5.1'
