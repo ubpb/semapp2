@@ -1,7 +1,5 @@
 class SemApp < ActiveRecord::Base
 
-  #include SafeTouchable
-
   # Relations
   belongs_to :creator, :class_name => 'User'
   belongs_to :semester
@@ -175,20 +173,6 @@ class SemApp < ActiveRecord::Base
 
     return position
   end
-
-  ###########################################################################################
-  #
-  # Override accessors
-  #
-  ###########################################################################################
-
-  #
-  # Make sure we convert empty values to nil, to make the database
-  # unique constrain work properly.
-  #
-  #def course_id=(value)
-  #  write_attribute :course_id, (value.blank? ? nil : value)
-  #end
 
   private
 

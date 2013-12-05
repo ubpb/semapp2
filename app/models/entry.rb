@@ -1,7 +1,5 @@
 class Entry < ActiveRecord::Base
 
-  #include SafeTouchable
-
   # Realations
   belongs_to :sem_app, :touch => true
   belongs_to :creator, :class_name => 'User'
