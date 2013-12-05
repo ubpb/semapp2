@@ -194,6 +194,5 @@ DEPENDENCIES
   sass-rails (~> 4.0.1)
   slim (~> 2.0.2)
   therubyracer (~> 0.12.0)
-  therubyrhino (~> 2.0.2)
   uglifier (>= 2.3.2)
   will_paginate (~> 3.0.5)
