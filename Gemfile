@@ -27,12 +27,18 @@ gem 'sass-rails',           '~> 4.0.1'
 gem 'slim',                 '~> 2.0.2'
 gem 'uglifier',             '>= 2.3.2'
 
-# development
 group :development, :test do
   gem 'pry',                '0.9.12.2'  # 0.9.12.3 has a coloring bug in its repl which shows annoying ansi colors codes
   gem 'pry-nav',            '~> 0.2.3'
   gem 'pry-syntax-hacks',   '~> 0.0.6'
   gem 'puma',               '~> 2.7.0'
+end
+
+group :development do
+  gem 'capistrano',         '~> 3.0.1', require: false
+  gem 'capistrano-rails',   '~> 1.1.0', require: false
+  gem 'capistrano-bundler', '~> 1.1.1', require: false
+  gem 'capistrano-rvm',     '~> 0.1.0', require: false
 end
 
 group :production do
