@@ -20,8 +20,8 @@ class SemAppsFilter
   def filtered
     sem_apps = SemApp.all
     sem_apps = sem_apps.includes( :books, :book_shelf )
-    sem_apps = sem_apps.where "lower(sem_apps.title) LIKE ?", "%#{@title.downcase}%" unless @title.blank?
-    sem_apps = sem_apps.where "lower(sem_apps.tutors) LIKE ?", "%#{@tutors.downcase}%" unless @tutors.blank?
+    sem_apps = sem_apps.search_by_title @title unless @title.blank?
+    sem_apps = sem_apps.search_by_tutors @tutors unless @tutors.blank?
     sem_apps = sem_apps.where "lower(users.name) LIKE ? OR lower(users.login) LIKE ?", "#{@creator.downcase}%", "#{@creator.downcase}%" unless @creator.blank?
     sem_apps = sem_apps.where "location_id = ?", "#{@location}" unless @location.blank?
     sem_apps = sem_apps.where "semester_id = ?", "#{@semester}" unless @semester.blank?

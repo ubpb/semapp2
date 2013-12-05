@@ -87,6 +87,10 @@ GEM
       mime-types
     pg (0.17.0)
     pg (0.17.0-x86-mingw32)
+    pg_search (0.7.2)
+      activerecord (>= 3.1)
+      activesupport (>= 3.1)
+      arel
     polyglot (0.3.3)
     prarupa (0.1.2)
       RedCloth (~> 4.2)
@@ -186,6 +190,7 @@ DEPENDENCIES
   nokogiri (~> 1.6.0)
   paperclip (~> 3.5.2)
   pg (~> 0.17.0)
+  pg_search (~> 0.7.2)
   prarupa (~> 0.1.2)
   protected_attributes (~> 1.0.5)
   pry (= 0.9.12.2)
