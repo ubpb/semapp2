@@ -1,5 +1,4 @@
 class SemApp < ActiveRecord::Base
-  #include SafeTouchable
   include PgSearch
 
   # Relations
@@ -144,12 +143,11 @@ class SemApp < ActiveRecord::Base
   end
 
   def transit
-    target_semester = Semester.find(SemApp2::TRANSIT_TARGET_SEMESTER_ID)
-    #return if Semester.current == next_semester
+    target_semester = ApplicationSettings.instance.transit_target_semester
 
     if target_semester.present?
       SemApp.transaction do
-        clone = self.clone(:include => :book_shelf)
+        clone = self.dup(:include => :book_shelf, :validate => false)
         clone.semester = target_semester
         clone.archived = false
         clone.approved = false
@@ -182,26 +180,12 @@ class SemApp < ActiveRecord::Base
     return position
   end
 
-  ###########################################################################################
-  #
-  # Override accessors
-  #
-  ###########################################################################################
-
-  #
-  # Make sure we convert empty values to nil, to make the database
-  # unique constrain work properly.
-  #
-  #def course_id=(value)
-  #  write_attribute :course_id, (value.blank? ? nil : value)
-  #end
-
   private
 
   def import_entries!(source_sem_app)
     source_sem_app.entries.each do |entry|
       instance = entry.instance
-      clone = instance.clone(:exclude => [:file_attachments, :scanjob])
+      clone = instance.dup(:validate => false)
 
       instance.file_attachments.each do |a|
         path = a.file.path
@@ -219,7 +203,7 @@ class SemApp < ActiveRecord::Base
 
   def import_books!(source_sem_app)
     source_sem_app.books.each do |book|
-      clone = book.clone
+      clone = book.dup
       clone.sem_app = self
       clone.save(validate: false)
     end

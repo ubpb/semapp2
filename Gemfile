@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails',                '~> 4.0.1'
 gem 'rails-i18n',           '~> 4.0.0'
-gem 'deep_cloning',         '~> 2.0.0'
+gem 'deep_cloneable',       '~> 1.6.0'
 gem 'pg',                   '~> 0.17.0'
 gem 'pg_search',            '~> 0.7.2'
 gem 'cancan',               '~> 1.6.10'
@@ -17,6 +17,7 @@ gem 'dynamic_form',         '~> 1.1.4'  # provides the old f.error_messages meth
 gem 'nokogiri',             '~> 1.6.0'
 gem 'protected_attributes', '~> 1.0.5'  # Needed as long as we migrated to strong parameters
 gem 'highline',             '~> 1.6.20' # Used by rake custom task
+gem 'acts_as_singleton',    '~> 0.0.8'
 gem 'formtastic',           github: 'ubpb/formtastic', branch: '1.2-stable'
 
 gem 'coffee-rails',         '~> 4.0.0'
