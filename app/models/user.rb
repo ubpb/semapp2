@@ -1,9 +1,8 @@
 class User < ActiveRecord::Base
 
   # Relations
-  has_and_belongs_to_many :authorities
-  has_many                :ownerships, :dependent => :destroy
-  has_many                :sem_apps, :through => :ownerships
+  has_many :ownerships, :dependent => :destroy
+  has_many :sem_apps,   :through   => :ownerships
 
   # Validations
   validates_presence_of :login
@@ -11,16 +10,9 @@ class User < ActiveRecord::Base
 
   class << self
     def authenticate(attributes)
-      aleph = Aleph::Connector.new
-      aleph_user = aleph.authenticate(attributes[:login], attributes[:password])
-      raise "Aleph authentication failed" unless aleph_user and aleph_user.is_a? Aleph::User
-      user = create_or_update_aleph_user!(aleph_user)
-      if aleph_user.status.match(/\APA.+/)
-        user.add_authority(Authority::LECTURER_ROLE)
-      elsif aleph_user.status.match(/\APS.+/)
-        user.add_authority(Authority::ASSISTANT_ROLE)
-      end
-      user
+      aleph_user = Aleph::Connector.new.authenticate(attributes[:login], attributes[:password])
+      raise "Aleph authentication failed" unless aleph_user && aleph_user.is_a?(Aleph::User)
+      create_or_update_aleph_user!(aleph_user)
     end
 
     private
@@ -39,28 +31,8 @@ class User < ActiveRecord::Base
       end
   end
 
-
-  #
-  # Checks for the ROLE_ADMIN authority
-  #
   def is_admin?
-    has_authority?(Authority::ADMIN_ROLE)
-  end
-
-  #
-  # Checks if the user has a certain authority
-  #
-  def has_authority?(name)
-    authorities.each do |a|
-      return true if a.name == name
-    end
-    return false
-  end
-
-  def add_authority(name)
-    unless has_authority?(name)
-      authorities << Authority.find_by_name(name)
-    end
+    is_admin
   end
 
   #
