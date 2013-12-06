@@ -3,7 +3,6 @@ begin
 rescue LoadError
 end
 
-
 class AddIsAdminToUser < ActiveRecord::Migration
   def admin_authority_name; 'ROLE_ADMIN'; end
 
