@@ -8,14 +8,12 @@ class Admin::SemAppsController < Admin::ApplicationController
       @sem_apps = @filter.filtered
         .page(params[:page])
         .per_page(10)
-        .includes([:creator, :books, :semester])
-        .order("sem_apps.semester_id asc, sem_apps.title asc") #.order("semesters.position asc, sem_apps.title asc")
+        .reorder("sem_apps.semester_id asc, sem_apps.title asc")
     else
       @sem_apps = SemApp
         .page(params[:page])
         .per_page(10)
-        .includes([:creator, :books, :semester])
-        .order("sem_apps.semester_id asc, sem_apps.title asc") #.order("semesters.position asc, sem_apps.title asc")
+        .reorder("sem_apps.semester_id asc, sem_apps.title asc")
     end
   end
 
