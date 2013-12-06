@@ -23,7 +23,11 @@
           <td>
             <strong><%= link_to sem_app.title, sem_app_path(sem_app) %></strong><br/>
             im <%= sem_app.semester.title %><br/>
-            Dozent(en): <strong><%= sem_app.tutors %></strong>
+            Dozent(en): <strong><%= sem_app.tutors %></strong><br/>
+            <% if sem_app.book_shelf.present? && sem_app.semester == Semester.current %>
+              Standort: <%= sem_app.location.title %>
+              (Regal Nr. <%= sem_app.book_shelf.slot_number %>)
+            <% end %>
           </td>
           <th>
             <% if actions.include?(:clone) and @sem_app != sem_app %>
