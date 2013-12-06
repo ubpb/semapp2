@@ -1,0 +1,15 @@
+common: &default_settings
+  adapter: postgresql
+  encoding: unicode
+  database: semapp2
+  pool: 5
+
+development:
+  <<: *default_settings
+
+production:
+  <<: *default_settings
+
+test:
+  <<: *default_settings
+  database: semapp2_test
