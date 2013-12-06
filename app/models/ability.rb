@@ -9,7 +9,7 @@ class Ability
       # Sem Apps
       #
       can :read, SemApp do |sem_app|
-        sem_app.approved? or (user.present? and user.owns_sem_app?(sem_app))
+        sem_app.approved? || (user.present? && sem_app.owned_by?(user))
       end
 
       can :create, SemApp do |sem_app|
@@ -17,7 +17,7 @@ class Ability
       end
 
       can :edit, SemApp do |sem_app|
-        user.present? and user.owns_sem_app?(sem_app) and not sem_app.archived
+        user.present? && sem_app.owned_by?(user) && !sem_app.archived
       end
     end
   end

@@ -9,7 +9,7 @@
   <%= link_to @sem_app.title, sem_app_path(@sem_app) %>
 </h3>
 
-<% if current_user and current_user.owns_sem_app?(@sem_app) and @sem_app.archived %>
+<% if current_user && @sem_app.owned_by?(current_user) && @sem_app.archived %>
   <div class="pui-panel align-center">
     <%= icon "asterisk.png" %>
     Dieser Seminarapparat wurde <strong>archiviert</strong>. Er kann nicht weiter bearbeitet werden.

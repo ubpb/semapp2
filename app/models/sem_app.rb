@@ -49,6 +49,17 @@ class SemApp < ActiveRecord::Base
   # virtual attributes
   attr_accessor :accepts_copyright
 
+  #
+  # revised public api
+  #
+  def add_ownership(user)
+    Ownership.create(user: user, sem_app: self) unless owned_by?(user) || new_record?
+  end
+
+  def owned_by?(user)
+    (user == self.creator) || owners.include?(user)
+  end
+  
   ###########################################################################################
   #
   # Public API
@@ -70,25 +81,6 @@ class SemApp < ActiveRecord::Base
 
   def book_by_ils_id(ils_id)
     Book.where( sem_app_id: self.id, ils_id: ils_id ).first
-  end
-
-  def add_ownership(user)
-    unless self.new_record?
-      unless has_ownership?(user)
-        return Ownership.new(:user => user, :sem_app => self).save
-      else
-        return true
-      end
-    end
-  end
-
-  def has_ownership?(user)
-    return true if self.creator == user
-
-    user.ownerships.each do |os|
-      return true if os.sem_app == self
-    end
-    return false
   end
 
   def generate_access_token
