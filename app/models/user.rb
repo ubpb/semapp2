@@ -34,10 +34,7 @@ class User < ActiveRecord::Base
   def is_admin?
     is_admin
   end
-
-  #
-  # checks if the user own the sem app
-  #
+  
   def owns_sem_app?(sem_app)
     if sem_app.present?
       return true if sem_app.creator == self
@@ -51,10 +48,7 @@ class User < ActiveRecord::Base
     return false
   end
 
-  #
-  # To string
-  #
-  def to_s()
+  def to_s
     s  = "#{self.name} (#{self.login})"
     s << ", #{self.email}" if self.email.present?
     return s
