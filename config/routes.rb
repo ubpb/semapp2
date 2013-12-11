@@ -57,7 +57,6 @@ SemApp2::Application.routes.draw do
   match "semester"        => 'sem_apps#semester_index', as: :semester_index, via: [:get, :post]
   match 'semester/filter' => 'sem_apps#filter_semester_index', as: :filter_semester_index, via: [:get, :post]
 
-  # resources :sem_apps, :path => 'apps', :controller => 'sem_apps', :member => {:unlock => :post, :transit => :post, :clones => :get, :clone => :post, :filter_clones => :post, :clear => :delete, :show_books => :get, :show_media => :get, :generate_access_token => :put}, :collection => {:filter => :post} do
   resources :sem_apps, :path => 'apps' do
     member do
       post :unlock
@@ -65,7 +64,6 @@ SemApp2::Application.routes.draw do
       get :clones
       post :clone
       post :filter_clones
-      delete :clear
       get :show_books
       get :show_media
       put :generate_access_token
@@ -75,37 +73,35 @@ SemApp2::Application.routes.draw do
       post :filter
     end
 
-    resources :entries, only: [:reorder, :new], shallow: true do
+    resources :books
+
+    resources :ownerships, :shallow => true
+
+    resources :media, only: [:reorder, :new], shallow: true do
       collection do
         put :reorder
       end
       resources :file_attachments, path: 'attachments', only: [:edit, :update, :destroy]
       resources :scanjobs, path: 'scans', only: [:edit, :update, :destroy]
     end
-    resources :headline_entries, path: 'headlines', shallow: true do
+    resources :media_headlines, path: 'headlines', shallow: true do
       # nope
     end
-    resources :text_entries, path: 'texts', shallow: true do
+    resources :media_texts, path: 'texts', shallow: true do
       resources :file_attachments, path: 'attachments', only: [:new, :create]
     end
-    resources :monograph_entries, path: 'monographs', shallow: true do
-      resources :file_attachments, path: 'attachments', only: [:new, :create]
-      resources :scanjobs, path: 'scans', only: [:new, :create]
-    end
-    resources :article_entries, path: 'articles', shallow: true do
+    resources :media_monographs, path: 'monographs', shallow: true do
       resources :file_attachments, path: 'attachments', only: [:new, :create]
       resources :scanjobs, path: 'scans', only: [:new, :create]
     end
-    resources :collected_article_entries, path: 'collected-articles', shallow: true do
+    resources :media_articles, path: 'articles', shallow: true do
       resources :file_attachments, path: 'attachments', only: [:new, :create]
       resources :scanjobs, path: 'scans', only: [:new, :create]
     end
-    resources :miless_file_entries, path: 'miless-files', shallow: true do
+    resources :media_collected_articles, path: 'collected-articles', shallow: true do
       resources :file_attachments, path: 'attachments', only: [:new, :create]
+      resources :scanjobs, path: 'scans', only: [:new, :create]
     end
-
-    resources :books
-    resources :ownerships, :shallow => true
   end
 
   # Download (secured download of attachments)

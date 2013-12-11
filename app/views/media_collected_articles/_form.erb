@@ -1,0 +1,24 @@
+<%= media_form do |f| %>
+  <%= f.inputs :name => "Angaben zum Sammelwerk" do %>
+    <%= f.input :source_editor,        :label => 'Herausgeber', as: :string, :required => false %>
+    <%= f.input :source_title,         :label => 'Titel',       as: :string, :required => false %>
+    <%= f.input :source_subtitle,      :label => 'Untertitel',  as: :string, :required => false %>
+    <%= f.input :source_year,          :label => 'Jahr',        as: :string, :required => true %>
+    <%= f.input :source_place,         :label => 'Verlagsort',  as: :string, :required => false %>
+    <%= f.input :source_publisher,     :label => 'Verlag',      as: :string, :required => false %>
+    <%= f.input :source_edition,       :label => 'Auflage',     as: :string, :required => false %>
+    <%= f.input :source_isbn,          :label => 'ISBN',        as: :string, :required => false %>
+    <%= f.input :source_signature,     :label => 'Signatur in der Bibliothek', as: :string, :required => false, :hint => 'Wenn Sie hier die Signatur der Bibliothek angeben (sofern vorhanden), verlinken wir diesen Eintrag automatisch mit unserem Katalog. Bitte recherchieren Sie die Signatur mit unserem <a href="https://katalog.ub.uni-paderborn.de" target="blank">Katalog</a>'.html_safe %>
+  <% end %>
+
+  <%= f.inputs :name => "Angaben zum Beitrag" do %>
+    <%= f.input :author,     :label => 'Autor(en)',  as: :string, :required => false %>
+    <%= f.input :title,      :label => 'Titel',      as: :string, :required => false %>
+    <%= f.input :pages_from, :label => 'Seiten von', as: :string, :required => true %>
+    <%= f.input :pages_to,   :label => 'Seiten bis', as: :string, :required => true %>
+  <% end %>
+
+  <%= f.inputs :name => 'Kommentar' do %>
+    <%= f.input :comment, :label => 'Kommentar', :input_html => {:rows => 5}, :required => false %>
+  <% end %>
+<% end %>

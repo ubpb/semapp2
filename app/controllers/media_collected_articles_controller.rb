@@ -1,0 +1,3 @@
+class MediaCollectedArticlesController < AbstractMediaController
+
+end

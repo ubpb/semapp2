@@ -53,26 +53,9 @@ class SemAppsController < ApplicationController
       end
       redirect_to :action => :show
     end
-  end
 
-  def show_books
-    unauthorized! if cannot? :read, @sem_app
-
-    load_books
-
-    respond_to do |format|
-      format.js { render :partial => 'books_tab', :layout => false }
-    end
-  end
-
-  def show_media
-    unauthorized! if cannot? :read, @sem_app
-
-    load_media
-
-    respond_to do |format|
-      format.js { render :partial => 'media_tab', :layout => false }
-    end
+    @books = Book.for_sem_app(@sem_app).in_shelf.ordered_by
+    @media = @sem_app.media
   end
 
   def new
@@ -203,24 +186,12 @@ class SemAppsController < ApplicationController
     end
 
     begin
-      @sem_app.import_entries(source_sem_app)
+      @sem_app.import_media(source_sem_app)
       flash[:success] = 'Einträge wurden erfolgreich kopiert.'
     rescue Exception => e
       puts e.backtrace
       flash[:error] = 'Beim kopieren ist leider ein Fehler aufgetrten. Der Vorgang konnte nicht erfolgreich abgeschlossen werden.'
     end
-    redirect_to sem_app_path(@sem_app, :anchor => 'media')
-  end
-
-  def clear
-    unauthorized! if cannot? :edit, @sem_app
-
-    if @sem_app.entries.destroy_all
-      flash[:success] = 'Alle Einträge wurden gelöscht.'
-    else
-      flash[:error] = 'Einträge konnten nicht gelöscht werden. Es ist ein Fehler aufgetreten.'
-    end
-
     redirect_to sem_app_path(@sem_app, :anchor => 'media')
   end
 
@@ -260,40 +231,6 @@ class SemAppsController < ApplicationController
       flash[:error] = "Der Seminarapparat den Sie versucht haben aufzurufen existiert nicht."
       redirect_to sem_apps_path
       return false
-    end
-  end
-
-  def load_books
-    @books = Book.for_sem_app(@sem_app).in_shelf.ordered_by
-  end
-
-  def load_media
-=begin
-    headline_entries = HeadlineEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
-    text_entries = TextEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
-    monograph_entries = MonographEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
-    article_entries = ArticleEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
-    collected_article_entries = CollectedArticleEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
-    miless_file_entries = MilessFileEntry.find(:all, :conditions => { :sem_app_id => @sem_app.id }, :include => [:file_attachments, :scanjob], :order => 'position asc')
-    @media = [headline_entries, text_entries, monograph_entries, article_entries, collected_article_entries, miless_file_entries].flatten.compact
-    @media = @media.sort do |x,y|
-      return -1 if x.position.blank?
-      return -1 if y.position.blank?
-      x.position <=> y.position
-    end
-=end
-    @media = [HeadlineEntry, TextEntry, MonographEntry, ArticleEntry,
-                CollectedArticleEntry, MilessFileEntry].map do |entry|
-      entry.where(sem_app_id: @sem_app.id)
-           .includes(:file_attachments, :scanjob)
-           .order('position ASC')
-           .load
-    end
-
-    @media = @media.flatten.compact.sort do |x,y|
-      return -1 if x.position.blank?
-      return -1 if y.position.blank?
-      x.position <=> y.position
     end
   end
 

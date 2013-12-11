@@ -1,0 +1,7 @@
+<% if media.style == 2 %>
+  <h3 class="headline"><%= media.headline %></h3>
+<% elsif media.style == 1 %>
+  <h2 class="headline"><%= media.headline %></h2>
+<% else %>
+  <h1 class="headline"><%= media.headline %></h1>
+<% end %>

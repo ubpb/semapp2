@@ -1,7 +1,0 @@
-<% comment = entry.comment if entry.respond_to?(:comment) %>
-
-<% if comment.present? %>
-  <p style="font-style: italic">
-    <%= sanitize textilize_without_paragraph(comment).html_safe %>
-  </p>
-<% end %>

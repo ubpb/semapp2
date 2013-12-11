@@ -235,11 +235,11 @@ form.formtastic fieldset ol li p.inline-errors {clear:left}
   text-decoration: underline;
 }
 
-#entry-type-panel { }
-#entry-type-panel h5 { font-size: 110%; }
-#entry-type-panel ol { list-style: none; }
-#entry-type-panel li { margin-bottom: 10px; }
-#entry-type-panel li .info { color: #666; font-size: 90% }
+#media-type-panel { }
+#media-type-panel h5 { font-size: 110%; }
+#media-type-panel ol { list-style: none; }
+#media-type-panel li { margin-bottom: 10px; }
+#media-type-panel li .info { color: #666; font-size: 90% }
 
 /* Page content elements
 ----------------------------------------------------------------------------------------------------*/
@@ -297,16 +297,16 @@ form.formtastic fieldset ol li p.inline-errors {clear:left}
 .sem-app .listing .item .book { padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid #efefef }
 .sem-app .listing .item .book .comment { font-style: italic }
 
-.sem-app .listing .item .entry { margin-bottom: 10px; }
-.sem-app .listing .item .entry .headline { margin-bottom: 10px; border-bottom: 1px solid #efefef }
-.sem-app .listing .item .entry .text {}
-.sem-app .listing .item .entry .file {}
-.sem-app .listing .item .entry .bibref { margin: 7px 0 }
+.sem-app .listing .item .media { margin-bottom: 10px; }
+.sem-app .listing .item .media .headline { margin-bottom: 10px; border-bottom: 1px solid #efefef }
+.sem-app .listing .item .media .text {}
+.sem-app .listing .item .media .file {}
+.sem-app .listing .item .media .bibref { margin: 7px 0 }
 
-.sem-app .listing .item .entry .attachments { list-style: none; margin: 0; padding: 0 }
-.sem-app .listing .item .entry .attachments .attachment { margin: 0 0 1px 0; padding: 5px; display: block; background-color: #eee }
-.sem-app .listing .item .entry .attachments .attachment .description { display: block; font-style: italic }
-.sem-app .listing .item .entry .attachments .attachment .download-link {  }
+.sem-app .listing .item .media .attachments { list-style: none; margin: 0; padding: 0 }
+.sem-app .listing .item .media .attachments .attachment { margin: 0 0 1px 0; padding: 5px; display: block; background-color: #eee }
+.sem-app .listing .item .media .attachments .attachment .description { display: block; font-style: italic }
+.sem-app .listing .item .media .attachments .attachment .download-link {  }
 
 
 .sem-app .listing .dropdown, .dropdown ul { list-style: none; display: inline-block; }
@@ -318,9 +318,9 @@ form.formtastic fieldset ol li p.inline-errors {clear:left}
 .sem-app .listing .dropdown li.trigger ul li a { padding: 5px 15px; }
 .sem-app .listing .dropdown li.trigger ul { background-color: #eee }
 
-/* Entry Editor */
-#entry-editor-panel { width: 650px; }
-#entry-editor-panel #attachment-listing .item { margin-bottom: 15px; }
+/* media Editor */
+#media-editor-panel { width: 650px; }
+#media-editor-panel #attachment-listing .item { margin-bottom: 15px; }
 
 
 /* Book order */

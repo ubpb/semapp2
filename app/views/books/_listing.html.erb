@@ -1,11 +1,11 @@
-<% unless entries.empty? %>
+<% unless media.empty? %>
   <div id="book-order-listing" class="pui-collection-view">
-    <% entries.each do |entry| %>
+    <% media.each do |media| %>
       <div class="item book-order">
-        <div class="date"><%= entry.created_at.to_s(:long) %></div>
-        <div class="signature"><%= entry.signature %></div>
+        <div class="date"><%= media.created_at.to_s(:long) %></div>
+        <div class="signature"><%= media.signature %></div>
         <div class="source">
-          <%= entry.title %><%= ', ' + entry.author if entry.author.present? %><%= ', ' + entry.year if entry.year.present? %>
+          <%= media.title %><%= ', ' + media.author if media.author.present? %><%= ', ' + media.year if media.year.present? %>
         </div>
       </div>
     <% end %>

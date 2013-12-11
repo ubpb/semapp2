@@ -13,7 +13,7 @@
         Signatur: <strong><%= sj.signature %></strong> //
         Seite von-bis: <strong><%= sj.pages_from %>-<%= sj.pages_to %></strong>
         <p>
-          <strong>Seminarapparat:</strong> (<%= sj.entry.sem_app.id %>) <%= link_to(sj.entry.sem_app.full_title, sem_app_path(sj.entry.sem_app, :anchor => 'media')) %>
+          <strong>Seminarapparat:</strong> (<%= sj.media.sem_app.id %>) <%= link_to(sj.media.sem_app.full_title, sem_app_path(sj.media.sem_app, :anchor => 'media')) %>
         </p>
 
         <div class="pui-panel align-right">

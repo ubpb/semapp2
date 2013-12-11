@@ -1,5 +1,4 @@
 <% content_for :head do %>
-  <%= javascript_include_tag 'views/sem_apps/show/manifest' %>
   <% if can?(:edit, @sem_app) %>
     <%= javascript_include_tag 'views/sem_apps/show/manifest_can_edit_sem_app' %>
   <% end %>
@@ -54,6 +53,7 @@
       <%= render 'shared_partials/sem_app_states', :sem_app => @sem_app %>
     </div>
   <% end %>
+
   <% if can?(:edit, @sem_app) %>
     <% if @sem_app.shared_secret != 'ubpad466' %>
       <div>
@@ -92,8 +92,8 @@
     </ul>
 
     <div class="pui-tab-panes">
-      <div id="books-tab" rel="<%= show_books_sem_app_path(@sem_app, :format => 'js') -%>"></div>
-      <div id="media-tab" rel="<%= show_media_sem_app_path(@sem_app, :format => 'js') -%>"></div>
+      <div id="books-tab"><%= render 'books_tab' %></div>
+      <div id="media-tab"><%= render 'media_tab' %></div>
     </div>
   </div>
 </div>

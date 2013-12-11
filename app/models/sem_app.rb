@@ -16,7 +16,7 @@ class SemApp < ActiveRecord::Base
   has_many   :ownerships, :dependent => :destroy
   has_many   :owners, :through => :ownerships, :source => :user
   has_many   :books, -> {order("title desc")}, :dependent => :destroy
-  has_many   :entries, -> {order("position asc")}, :dependent => :destroy
+  has_many   :media, -> {includes(:instance, :file_attachments, :scanjob).order("position asc")}, :dependent => :destroy
   has_many   :miless_passwords, :dependent => :destroy
 
   # Behavior
@@ -121,9 +121,9 @@ class SemApp < ActiveRecord::Base
     self.book_shelf_ref.present?
   end
 
-  def import_entries(source_sem_app)
+  def import_media(source_sem_app)
     if source_sem_app.present? and source_sem_app.is_a?(SemApp)
-      import_entries!(source_sem_app)
+      import_media!(source_sem_app)
     end
   end
 
@@ -148,7 +148,7 @@ class SemApp < ActiveRecord::Base
         clone.updated_at = Time.now
         clone.save!
 
-        clone.import_entries(self)
+        clone.import_media(self)
         clone.import_books(self)
 
         return clone
@@ -161,8 +161,8 @@ class SemApp < ActiveRecord::Base
 
     begin
       if origin_id.present?
-        origin_entry = Entry.find(origin_id)
-        position     = origin_entry.position + 1
+        origin_media = media.find(origin_id)
+        position     = origin_media.position + 1
       end
     rescue
       # nothing
@@ -173,9 +173,10 @@ class SemApp < ActiveRecord::Base
 
   private
 
-  def import_entries!(source_sem_app)
-    source_sem_app.entries.each do |entry|
-      instance = entry.instance
+  # TODO: Fix instance
+  def import_media!(source_sem_app)
+    source_sem_app.media.each do |media|
+      instance = media.instance
       clone = instance.dup(:validate => false)
 
       instance.file_attachments.each do |a|

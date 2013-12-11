@@ -1,8 +1,8 @@
 <% if can?(:edit, @sem_app) %>
   <% if @media.present? %>
-    <div class="pui-view align-center" style="font-size:90%">
+    <div class="pui-view" style="font-size:90%">
       <%= icon 'asterisk.png' %>
-      <i>Zum <strong>Erstellen</strong> oder <strong>Bearbeiten</strong> fahren Sie mit der Maus über die Einträge um weitere Optionen zu sehen.</i>
+      <i>Zum <strong>Erstellen</strong> oder <strong>Bearbeiten</strong> von Einträgen fahren Sie mit der Maus über die Einträge um weitere Optionen zu sehen.</i>
     </div>
   <% end %>
   <div class="pui-view align-right">
@@ -10,28 +10,16 @@
       <%= icon 'document-copy.png' %>
       Alte Daten Klonen
     <% end %>
-    <%= link_to clear_sem_app_path(@sem_app), :class => 'pui-button', :method => :delete, :data => {:confirm => 'Wollen Sie wirklich ALLE Einträge unwiederruflich löschen? Dieser Vorgang kann nicht Rückgängig gemacht werden!'} do %>
-      <%= icon 'cross.png' %>
-      Alle Einträge löschen
-    <% end %>
   </div>
 <% end %>
 
 <div id="media-listing" class="listing">
   <% if @media.present? %>
     <% if @sem_app.is_unlocked_in_session?(session) or can?(:edit, @sem_app) %>
-      <% @media.each do |entry| %>
-
-        <% if entry.to_be_published %>
-          <% if can?(:edit, @sem_app) %>
-            <%= render 'entry', :entry => entry %>
-          <% end %>
-        <% else %>
-          <% cache(entry) do %>
-            <%= render 'entry', :entry => entry %>
-          <% end %>
+      <% @media.each do |media| %>
+        <% cache(media) do %>
+          <%= render 'media', :media => media.instance %>
         <% end %>
-
       <% end %>
     <% else %>
       <%= render 'unlock_panel' %>
@@ -44,7 +32,7 @@
 
     <% if can?(:edit, @sem_app) %>
       <div class="pui-view align-center">
-        <%= link_to new_sem_app_entry_path(@sem_app, :format => 'js'), :class => 'pui-button new-entry-action' do %>
+        <%= link_to new_sem_app_media_path(@sem_app, :format => 'js'), :class => 'pui-button new-media-action' do %>
           <%= icon 'plus.png' %>
           Einen neuen Eintrag erstellen
         <% end %>
@@ -53,4 +41,4 @@
   <% end %>
 </div>
 
-<div class="pui-overlay" id="new-entry-panel" style="display:none"></div>
+<div class="pui-overlay" id="new-media-panel" style="display:none"></div>

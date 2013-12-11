@@ -1,0 +1,3 @@
+class MediaHeadlinesController < AbstractMediaController
+
+end
