@@ -1,0 +1,32 @@
+<% if media.parent.file_attachments.present? %>
+  <div class="pui-view">
+    <ol class="attachments clearfix">
+      <% media.parent.file_attachments.each do |a| %>
+        <li class="attachment">
+          <% if a.description.present? %>
+            <span class="description">
+              <%= textilize_without_paragraph(a.description).html_safe %>
+            </span>
+          <% end %>
+          <span class="download-link">
+            <%#= a.file_file_name %>
+            <%= number_to_human_size(a.file_file_size) %>
+            <% if a.updated_at.present? %>
+              / letzte Änderung: <%= l(a.updated_at, :format => :short) %>
+            <% end %>
+            <%= link_to '[Download]', a.file.url %>
+          </span>
+
+          <span class="toolbar" style="display: none">
+            <%= link_to file_attachment_path(a), :class => "toolbar-item", :method => :delete, :data => {:confirm => "Anhang wirklich löschen?"} do %>
+              <%= icon 'cross.png' %>
+            <% end %>
+            <%= link_to edit_file_attachment_path(a), :class => "toolbar-item" do %>
+              <%= icon 'wrench.png' %>
+            <% end %>
+          </span>
+        </li>
+      <% end %>
+    </ol>
+  </div>
+<% end %>

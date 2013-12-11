@@ -16,9 +16,9 @@
   <div class="book">
     <% cache(book) do %>
       <%= render 'shared_partials/book_ref', :book => book %>
-      <%= render 'entries/signature', :entry => book %>
-      <%= render 'entries/amazon', :entry => book %>
-      <%= render 'entries/comment', :entry => book %>
+      <%= render 'media/signature', :media => book %>
+      <%= render 'media/amazon', :media => book %>
+      <%= render 'media/comment', :media => book %>
     <% end %>
 
     <% if book.sem_app.is_from_current_semester? %>

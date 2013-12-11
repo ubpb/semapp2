@@ -9,7 +9,7 @@
       Zurück zur übersicht
     <% end %>
 
-    <%= link_to polymorphic_path(['edit', @scanjob.entry.instance]), :class => "pui-button" do %>
+    <%= link_to polymorphic_path(['edit', @scanjob.media.instance]), :class => "pui-button" do %>
       <%= icon 'wrench.png' %>
       Eintrag Bearbeiten
     <% end %>

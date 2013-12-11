@@ -1,0 +1,32 @@
+<% if @media.new_record?  %>
+  <div class="pui-panel">
+    <p>
+      <%= icon 'asterisk.png' %>
+      Bitte beachten Sie: Mit diesem Formular erstellen Sie einen Literaturverweis auf eine Monographie.
+      Wenn Sie einen Artikel oder einen Aufsatz aus einem Sammelwerk angeben möchten, verwenden Sie bitte das
+      Formular <%= link_to 'Beitrag aus einem Sammelwerk', new_sem_app_media_collected_article_path(@sem_app, :origin_id => @origin_id) %>.
+    </p>
+    <p>
+      Wenn Sie anschließend einzelne Seiten oder Kapitel aus einer Monographie scannen lassen möchten, können Sie in der
+      <b>Auftragsmaske für Scanaufträge</b> die Seitenzahlen und Kommentare (z.B. Titel des Kapitels) angeben.
+    </p>
+  </div>
+<% end %>
+
+<%= media_form do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :author,    :label => 'Autor(en)',        as: :string %>
+    <%= f.input :title,     :label => 'Titel',            as: :string, :required => false %>
+    <%= f.input :subtitle,  :label => 'Untertitel',       as: :string, :required => false %>
+    <%= f.input :year,      :label => 'Erscheinungsjahr', as: :string, :required => false %>
+    <%= f.input :place,     :label => 'Verlagsort',       as: :string, :required => false %>
+    <%= f.input :publisher, :label => 'Verlag',           as: :string, :required => false %>
+    <%= f.input :edition,   :label => 'Auflage',          as: :string, :required => false %>
+    <%= f.input :isbn,      :label => 'ISBN',             as: :string, :required => false %>
+    <%= f.input :signature, :label => 'Signatur in der Bibliothek', as: :string, :required => false, :hint => 'Wenn Sie hier die Signatur der Bibliothek angeben (sofern vorhanden), verlinken wir diesen Eintrag automatisch mit unserem Katalog. Bitte recherchieren Sie die Signatur mit unserem <a href="https://katalog.ub.uni-paderborn.de" target="blank">Katalog</a>'.html_safe %>
+  <% end %>
+
+  <%= f.inputs :name => 'Kommentar' do %>
+    <%= f.input :comment, :label => 'Kommentar', :input_html => {:rows => 5}, :required => false, :hint => 'Öffentlicher Kommentar. Der Text wird Ihren Studierenden angezeigt. Sie können hier z.B. Bearbeitungshinweise angeben.' %>
+  <% end %>
+<% end %>

@@ -1,9 +1,9 @@
 <p>
   <strong>Quelle:</strong>
-  <%= @scanjob.entry.instance.to_s %>
+  <%= @scanjob.media.instance.to_s %>
 </p>
 
-<%= semantic_form_for [@entry, @scanjob] do |f| %>
+<%= semantic_form_for [@media, @scanjob] do |f| %>
 
   <%= f.inputs do %>
     <%= f.input :signature,  :label => 'Signatur in der Bibliothek', :required => true, :hint => '<b>Bitte beachten Sie:</b> Wir scannen ausschließlich Bücher und Zeitschriften aus unserem Bestand. Geben Sie bitte dazu die Signatur der o.g. Quelle an. Bitte recherchieren Sie die Signatur mit unserem <a href="https://katalog.ub.uni-paderborn.de" target="blank">Katalog</a>'.html_safe %>
@@ -20,7 +20,7 @@
   <%= f.buttons do %>
     <%= f.commit_button 'Scan beauftragen' %>
     <li class="commit">
-      <%= link_to 'Abbrechen', sem_app_path(@scanjob.entry.sem_app, :anchor => 'media') %>
+      <%= link_to 'Abbrechen', sem_app_path(@scanjob.media.sem_app, :anchor => 'media') %>
     </li>
   <% end %>
 <% end %>

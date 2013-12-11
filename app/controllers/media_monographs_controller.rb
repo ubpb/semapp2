@@ -1,0 +1,3 @@
+class MediaMonographsController < AbstractMediaController
+
+end

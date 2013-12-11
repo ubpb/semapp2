@@ -1,0 +1,6 @@
+<%= media_form do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :style, :label => 'Typ', :as => :select, :collection => {"Überschrift 1 (h1)" => 0, "Überschrift 2 (h2)" => 1, "Überschrift 3 (h3)" => 2}, :selected => (@media.style || 0), :required => false %>
+    <%= f.input :headline, :label => 'Überschrift', as: :string %>
+  <% end %>
+<% end %>

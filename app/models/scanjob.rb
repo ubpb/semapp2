@@ -8,11 +8,11 @@ class Scanjob < ActiveRecord::Base
   }.freeze
 
   # Realations
-  belongs_to :entry, :touch => true
+  belongs_to :media, :touch => true
   belongs_to :creator, :class_name => 'User'
 
   # Validation
-  validates_presence_of :entry
+  validates_presence_of :media
   validates_presence_of :signature
   validates_presence_of :pages_from
   validates_presence_of :pages_to
@@ -21,10 +21,10 @@ class Scanjob < ActiveRecord::Base
   validates_acceptance_of :accepts_copyright
 
   # Scopes
-  scope :ordered,    lambda { where( state: Scanjob::States[:ordered]  ).includes( :entry => :sem_app ) }
-  scope :accepted,   lambda { where( state: Scanjob::States[:accepted] ).includes( :entry => :sem_app ) }
-  scope :rejected,   lambda { where( state: Scanjob::States[:rejected] ).includes( :entry => :sem_app ) }
-  scope :deferred,   lambda { where( state: Scanjob::States[:deferred] ).includes( :entry => :sem_app ) }
+  scope :ordered,    lambda { where( state: Scanjob::States[:ordered]  ).includes( :media => :sem_app ) }
+  scope :accepted,   lambda { where( state: Scanjob::States[:accepted] ).includes( :media => :sem_app ) }
+  scope :rejected,   lambda { where( state: Scanjob::States[:rejected] ).includes( :media => :sem_app ) }
+  scope :deferred,   lambda { where( state: Scanjob::States[:deferred] ).includes( :media => :sem_app ) }
   scope :ordered_by, lambda { |*order| order( order.flatten.first || 'created_at' ) }
 
   # virtual attributes

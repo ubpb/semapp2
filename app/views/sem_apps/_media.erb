@@ -1,0 +1,37 @@
+<div id="media-<%=media.parent.id-%>" class="item">
+  <div class="toolbar-wrapper" style="display: none">
+    <div class="toolbar" style="display: none">
+      <%= link_to new_sem_app_media_path(@sem_app, :origin_id => media.id, :format => 'js'), :class => "toolbar-item new-media-action" do %>
+        <%= icon 'plus-circle-frame.png', :title => 'Einen neuen Eintrag unterhalb dieses Eintrags erstellen' %>
+      <% end %>
+
+      <%= link_to polymorphic_path(['edit', media]), :class => "toolbar-item" do %>
+        <%= icon 'wrench.png', :title => 'Diesen Eintrag bearbeiten' %>
+      <% end %>
+
+      <%= link_to polymorphic_path([media]), :class => "toolbar-item delete-media-action" do %>
+        <%= icon 'cross-circle-frame.png', :title => 'Diesen Eintrag entfernen' %>
+      <% end %>
+
+      <%= link_to reorder_sem_app_media_index_path(@sem_app), :class => "toolbar-item reorder-media-action" do %>
+        <%= icon 'arrow-move.png', :title => 'Diese Eintrag mittels Drag&Drop umsortieren' %>
+      <% end %>
+
+      <% if media.is_a?(MediaText) or media.is_a?(MediaMonograph) or media.is_a?(MediaArticle) or media.is_a?(MediaCollectedArticle) %>
+        <%= link_to polymorphic_path(['new', media, 'file_attachment']), :class => 'toolbar-item' do %>
+          <%= icon 'overlay/document--plus.png', :title => 'Eine Datei anhängen' %>
+        <% end %>
+      <% end %>
+
+      <% if !media.parent.scanjob.present? and (media.is_a?(MediaMonograph) or media.is_a?(MediaArticle) or media.is_a?(MediaCollectedArticle)) %>
+        <%= link_to polymorphic_path(['new', media, 'scanjob']), :class => 'toolbar-item' do %>
+          <%= icon 'overlay/photo-album--plus.png', :title => 'Einen Scan beauftragen' %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="media">
+    <%= render "#{media.class.name.tableize}/show", media: media %>
+  </div>
+</div>
