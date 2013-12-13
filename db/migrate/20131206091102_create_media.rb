@@ -9,7 +9,6 @@ class CreateMedia < ActiveRecord::Migration
       t.integer     :creator_id,     index: true
       t.integer     :position,       index: true
       t.string      :miless_entry_id
-      t.timestamp   :publish_on
       t.timestamps
     end
     add_column :file_attachments, :media_id, :integer, index: true
@@ -91,7 +90,8 @@ class CreateMedia < ActiveRecord::Migration
     # Text
     #
     create_table :media_texts do |t|
-      t.text :text
+      t.text      :text
+      t.datetime  :publish_on
       t.timestamps
     end
   end

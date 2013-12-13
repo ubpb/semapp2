@@ -1,6 +1,6 @@
 <% if media.to_be_published  %>
-  <div class="align-center">
+  <div>
     <%= icon 'clock.png' %>
-    <i>Dieser Eintrag wird am <%= media.publish_on.to_s(:short) %> veröffentlicht.</i>
+    <i>Dieser Eintrag wird am <%= l(media.publish_on, format: :long) %> veröffentlicht.</i>
   </div>
 <% end %>

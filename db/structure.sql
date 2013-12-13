@@ -71,47 +71,6 @@ ALTER SEQUENCE application_settings_id_seq OWNED BY application_settings.id;
 
 
 --
--- Name: authorities; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE authorities (
-    id integer NOT NULL,
-    name character varying NOT NULL,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
---
--- Name: authorities_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE authorities_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: authorities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE authorities_id_seq OWNED BY authorities.id;
-
-
---
--- Name: authorities_users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE authorities_users (
-    authority_id integer NOT NULL,
-    user_id integer NOT NULL
-);
-
-
---
 -- Name: book_shelf_refs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -301,7 +260,6 @@ CREATE TABLE media (
     creator_id integer,
     "position" integer,
     miless_entry_id character varying(255),
-    publish_on timestamp without time zone,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -497,6 +455,7 @@ ALTER SEQUENCE media_monographs_id_seq OWNED BY media_monographs.id;
 CREATE TABLE media_texts (
     id integer NOT NULL,
     text text,
+    publish_on timestamp without time zone,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -745,7 +704,8 @@ CREATE TABLE users (
     id integer NOT NULL,
     login character varying NOT NULL,
     name character varying,
-    email character varying
+    email character varying,
+    is_admin boolean DEFAULT false NOT NULL
 );
 
 
@@ -773,13 +733,6 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 --
 
 ALTER TABLE ONLY application_settings ALTER COLUMN id SET DEFAULT nextval('application_settings_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY authorities ALTER COLUMN id SET DEFAULT nextval('authorities_id_seq'::regclass);
 
 
 --
@@ -914,14 +867,6 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 ALTER TABLE ONLY application_settings
     ADD CONSTRAINT application_settings_pkey PRIMARY KEY (id);
-
-
---
--- Name: authorities_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY authorities
-    ADD CONSTRAINT authorities_pkey PRIMARY KEY (id);
 
 
 --
@@ -1083,20 +1028,6 @@ CREATE INDEX index_application_settings_on_transit_target_semester_id ON applica
 
 
 --
--- Name: index_authorities_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE UNIQUE INDEX index_authorities_on_name ON authorities USING btree (name);
-
-
---
--- Name: index_authorities_users_on_authority_id_and_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE UNIQUE INDEX index_authorities_users_on_authority_id_and_user_id ON authorities_users USING btree (authority_id, user_id);
-
-
---
 -- Name: index_books_on_ils_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1206,22 +1137,6 @@ CREATE UNIQUE INDEX index_users_on_login ON users USING btree (login);
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
-
-
---
--- Name: authorities_users_authority_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY authorities_users
-    ADD CONSTRAINT authorities_users_authority_id_fkey FOREIGN KEY (authority_id) REFERENCES authorities(id);
-
-
---
--- Name: authorities_users_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY authorities_users
-    ADD CONSTRAINT authorities_users_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
 
 
 --
@@ -1365,6 +1280,10 @@ INSERT INTO schema_migrations (version) VALUES ('20131205132010');
 INSERT INTO schema_migrations (version) VALUES ('20131206091102');
 
 INSERT INTO schema_migrations (version) VALUES ('20131206102531');
+
+INSERT INTO schema_migrations (version) VALUES ('20131206104235');
+
+INSERT INTO schema_migrations (version) VALUES ('20131206110838');
 
 INSERT INTO schema_migrations (version) VALUES ('20131210183357');
 
