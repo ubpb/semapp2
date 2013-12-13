@@ -29,11 +29,10 @@ class User < ActiveRecord::Base
   def self.create_or_update_aleph_user!(aleph_user)
     if (user = User.find_by(login: aleph_user.user_id)).present?
       user.update_attributes!(:name => aleph_user.name, :email => aleph_user.email)
+      user
     else
       User.create!(:login => aleph_user.user_id, :name => aleph_user.name, :email => aleph_user.email)
     end
-
-    user
   end
 
 end
