@@ -28,8 +28,9 @@ gem 'slim',                 '~> 2.0.2'
 gem 'uglifier',             '>= 2.3.2'
 
 group :development, :test do
-  gem 'pry',                '0.9.12.2'  # 0.9.12.3 has a coloring bug in its repl which shows annoying ansi colors codes
+  gem 'pry',                '~> 0.9.12.4'
   gem 'pry-nav',            '~> 0.2.3'
+  gem 'pry-stack_explorer', '~> 0.4.9.1'
   gem 'pry-syntax-hacks',   '~> 0.0.6'
   gem 'puma',               '~> 2.7.0'
 end
