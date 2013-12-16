@@ -17,7 +17,7 @@
     <% cache(book) do %>
       <%= render 'shared_partials/book_ref', :book => book %>
       <%= render 'media/signature', :media => book %>
-      <%= render 'media/amazon', :media => book %>
+      <%= render 'media/catalog_link', :media => book %>
       <%= render 'media/comment', :media => book %>
     <% end %>
 

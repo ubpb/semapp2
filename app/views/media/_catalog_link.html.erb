@@ -1,0 +1,15 @@
+<% catalog_link_url = if media.respond_to?(:ils_id) %>
+  <% "https://katalog.ub.uni-paderborn.de/records/PAD_ALEPH#{media.ils_id.to_s.rjust(9, '0')}" %>
+<% elsif media.respond_to?(:signature) && media.respond_to?(:source_signature) %>
+  <% "https://katalog.ub.uni-paderborn.de/searches?if=lsr10&q=#{media.source_signature}&scope=catalog" %>
+<% elsif media.respond_to?(media.signature) %>
+  <% "https://katalog.ub.uni-paderborn.de/searches?if=lsr10&q=#{media.signature}&scope=catalog" %>
+<% elsif media.respond_to?(media.source_signature) %>
+  <% "https://katalog.ub.uni-paderborn.de/searches?if=lsr10&q=#{media.source_signature}&scope=catalog" %>
+<% end %>
+
+<% if catalog_link_url %>
+  <div>
+    <%= link_to 'Im Bibliothekskatalog anzeigen', catalog_link_url %>
+  </div>
+<% end %>
