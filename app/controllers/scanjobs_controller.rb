@@ -8,7 +8,7 @@ class ScanjobsController < ApplicationController
       redirect_to sem_app_path(@media.sem_app, :anchor => 'media')
     end
 
-    @scanjob = @media.build_scanjob
+    @scanjob = @media.parent.build_scanjob
 
     # Inspect the media
     if @media.respond_to?(:pages_from)
@@ -26,7 +26,7 @@ class ScanjobsController < ApplicationController
   end
 
   def create
-    @scanjob = @media.build_scanjob(params[:scanjob])
+    @scanjob = @media.parent.build_scanjob(params[:scanjob])
     @scanjob.creator = current_user
 
     if @scanjob.save
@@ -53,8 +53,8 @@ class ScanjobsController < ApplicationController
 
   def find_media
     params.each do |name, value|
-      if name =~ /(.+_media)_id$/
-        return $1.classify.constantize.find(value).includes(:parent)
+      if name =~ /(media_.+)_id$/
+        return $1.classify.constantize.includes(:parent).find(value)
       end
     end
     nil
