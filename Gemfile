@@ -25,7 +25,7 @@ gem 'jquery-rails',         '~> 3.0.4'
 gem 'jquery-ui-rails',      '~> 4.1.1'
 gem 'sass-rails',           '~> 4.0.1'
 gem 'slim',                 '~> 2.0.2'
-gem 'uglifier',             '>= 2.3.2'
+gem 'uglifier',             '>= 2.4.0'
 
 group :development, :test do
   gem 'pry',                '~> 0.9.12.4'
