@@ -10,7 +10,7 @@ gem 'barby',                '~> 0.5.1'
 gem 'chunky_png',           '~> 1.2.9'
 gem 'paperclip',            '~> 3.5.2'
 gem 'will_paginate',        '~> 3.0.5'
-gem 'acts_as_list',         '~> 0.1.2'
+gem 'acts_as_list',         '~> 0.3.0'
 gem 'RedCloth',             '~> 4.2.3'
 gem 'prarupa',              '~> 0.1.2'  # provides old textilize helper methods
 gem 'dynamic_form',         '~> 1.1.4'  # provides the old f.error_messages method
