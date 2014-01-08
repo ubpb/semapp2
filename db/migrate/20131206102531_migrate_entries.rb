@@ -92,6 +92,10 @@ class MigrateEntries < ActiveRecord::Migration
           instance.assign_attributes(instance_attributes(entry, instance), without_protection: true)
           instance.save!(validate: false)
 
+          ActiveRecord::Base.connection.execute(
+            "ALTER SEQUENCE #{instance.class.name.tableize}_id_seq RESTART WITH #{instance.id + 1}"
+          )
+
           media = Media.new(instance: instance)
           media.assign_attributes(media_attributes(entry, media), without_protection: true)
           media.save!(validate: false)
