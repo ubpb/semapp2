@@ -19,6 +19,8 @@ gem 'protected_attributes', '~> 1.0.5'  # Needed as long as we migrated to stron
 gem 'highline',             '~> 1.6.20' # Used by rake custom task
 gem 'acts_as_singleton',    '~> 0.0.8'
 gem 'formtastic',           github: 'ubpb/formtastic', branch: '1.2-stable'
+gem 'jbuilder',             '~> 2.0.2'
+gem 'rubyzip',              '~> 1.1.0', require: 'zip', github: 'ubpb/rubyzip'
 
 gem 'coffee-rails',         '~> 4.0.0'
 gem 'jquery-rails',         '~> 3.0.4'
@@ -33,6 +35,7 @@ group :development, :test do
   gem 'pry-stack_explorer', '~> 0.4.9.1'
   gem 'pry-syntax-hacks',   '~> 0.0.6'
   gem 'puma',               '~> 2.7.0'
+  gem 'quiet_assets',       '>= 1.0.2'
 end
 
 group :development do
