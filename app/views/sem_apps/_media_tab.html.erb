@@ -6,9 +6,9 @@
     </div>
   <% end %>
   <div class="pui-view align-right">
-    <%= link_to clones_sem_app_path(@sem_app), :class => 'pui-button' do %>
-      <%= icon 'document-copy.png' %>
-      Alte Daten Klonen
+    <%= link_to export_sem_app_path(@sem_app), :class => 'pui-button' do %>
+      <%= icon 'database-export.png' %>
+      Daten exportieren
     <% end %>
   </div>
 <% end %>
