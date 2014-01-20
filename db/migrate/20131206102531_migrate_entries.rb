@@ -100,6 +100,10 @@ class MigrateEntries < ActiveRecord::Migration
           media.assign_attributes(media_attributes(entry, media), without_protection: true)
           media.save!(validate: false)
 
+          ActiveRecord::Base.connection.execute(
+            "ALTER SEQUENCE #{media.class.name.tableize}_id_seq RESTART WITH #{media.id + 1}"
+          )
+
           # Relink file attachments
           ActiveRecord::Base.connection.execute <<-sql
             UPDATE file_attachments SET media_id=#{media.id} WHERE entry_id=#{entry.id};
