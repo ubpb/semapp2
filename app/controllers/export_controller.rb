@@ -4,9 +4,9 @@ class ExportController < ApplicationController
     sem_app  = SemApp.find(params[:id])
     exporter = SemAppExporter.new(sem_app)
 
-    filename = exporter.export!
-
-    send_file(filename, type: 'application/zip', filename: "#{sem_app.title}.zip")
+    filename = "#{sem_app.semester.title.parameterize}-#{sem_app.title.parameterize[0..50]}.zip"
+    zip      = exporter.export!
+    send_file(zip, type: 'application/zip', filename: filename)
   end
 
 end
