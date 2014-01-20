@@ -97,7 +97,7 @@ class MediaCollectedArticle < ActiveRecord::Base
   end
 
   def pages_to_s
-    pages_from.present? and pages_to.present? ? ", S. #{pages_from}-#{pages_to}" : ""
+    (pages_from.present? && pages_to.present?) ? ", S. #{pages_from}-#{pages_to}" : ""
   end
 
 end
