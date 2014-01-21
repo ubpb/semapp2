@@ -67,6 +67,7 @@ SemApp2::Application.routes.draw do
       get :show_books
       get :show_media
       put :generate_access_token
+      get :export, to: 'export#export', as: :export
     end
 
     collection do
