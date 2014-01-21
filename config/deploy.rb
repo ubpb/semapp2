@@ -11,9 +11,6 @@ set :pty,          true
 set :log_level,    :info
 set :keep_releases, 5
 
-set :rvm_ruby_version, 'ruby-2.0.0-p353'
-set :rvm_type,         :system
-
 set :linked_files, %w{config/database.yml}
 set :linked_dirs,  %w{log tmp data}
 
