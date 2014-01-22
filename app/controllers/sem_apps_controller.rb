@@ -13,9 +13,10 @@ class SemAppsController < ApplicationController
     @filter.approved = true
 
     @sem_apps = @filter.filtered
+      .includes(:semester)
       .page(params[:page])
       .per_page(10)
-      .reorder("sem_apps.semester_id asc, sem_apps.title asc")
+      .reorder("semesters.position asc, sem_apps.title asc")
   end
 
   def filter
@@ -31,7 +32,7 @@ class SemAppsController < ApplicationController
     @sem_apps = @filter.filtered
       .page(params[:page])
       .per_page(10)
-      .reorder("sem_apps.semester_id asc, sem_apps.title asc")
+      .reorder("sem_apps.title asc")
   end
 
   def filter_semester_index
