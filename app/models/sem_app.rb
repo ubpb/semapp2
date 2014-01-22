@@ -44,6 +44,9 @@ class SemApp < ActiveRecord::Base
   scope :approved, lambda { where( approved: true ) }
   scope :with_book_jobs, lambda { includes( :books ).where( "books.state = '#{Book::States[:ordered]}' OR books.state = '#{Book::States[:rejected]}'" ) }
 
+  # Auto strip
+  auto_strip_attributes :title, :tutors, :course_id, squish: true
+
   # virtual attributes
   attr_accessor :accepts_copyright
 
