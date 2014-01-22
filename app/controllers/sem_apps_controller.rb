@@ -9,7 +9,7 @@ class SemAppsController < ApplicationController
   before_filter :require_authenticate, only: [:new]
 
   def index
-    @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
+    @filter          = get_filter(SEM_APP_FILTER_NAME)
     @filter.approved = true
 
     @sem_apps = @filter.filtered
@@ -19,15 +19,15 @@ class SemAppsController < ApplicationController
   end
 
   def filter
-    filter = params[:filter].present? ? SemAppsFilter.new(params[:filter]) : SemAppsFilter.new()
-    session[SEM_APP_FILTER_NAME] = filter
+    set_filter(SEM_APP_FILTER_NAME)
     redirect_to :action => :index
   end
 
   def semester_index
-    @filter = session[SEM_APP_SEMESTER_INDEX_FILTER_NAME] || SemAppsFilter.new
+    @filter          = get_filter(SEM_APP_SEMESTER_INDEX_FILTER_NAME)
     @filter.approved = true
     @filter.semester =  Semester.current.id
+
     @sem_apps = @filter.filtered
       .page(params[:page])
       .per_page(10)
@@ -35,8 +35,7 @@ class SemAppsController < ApplicationController
   end
 
   def filter_semester_index
-    filter = params[:filter].present? ? SemAppsFilter.new(params[:filter]) : SemAppsFilter.new()
-    session[SEM_APP_SEMESTER_INDEX_FILTER_NAME] = filter
+    set_filter(SEM_APP_SEMESTER_INDEX_FILTER_NAME)
     redirect_to :action => :semester_index
   end
 
@@ -208,6 +207,15 @@ class SemAppsController < ApplicationController
   end
 
   private
+
+  def set_filter(index)
+    filter = params[:filter].present? ? SemAppsFilter.new(params[:filter]) : SemAppsFilter.new()
+    session[index] = filter
+  end
+
+  def get_filter(index)
+    session[index] || SemAppsFilter.new
+  end
 
   def load_sem_app
     begin
