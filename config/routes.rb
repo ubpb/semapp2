@@ -61,9 +61,6 @@ SemApp2::Application.routes.draw do
     member do
       post :unlock
       post :transit
-      get :clones
-      post :clone
-      post :filter_clones
       get :show_books
       get :show_media
       put :generate_access_token

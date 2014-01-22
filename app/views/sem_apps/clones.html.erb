@@ -1,7 +1,0 @@
-<h3 class="section">Welchen Apparat möchten Sie klonen</h3>
-
-<%= render 'filter_panel', :filter_path => filter_clones_sem_app_path(@sem_app), :filter_for => [:semester, :location, :title, :tutors, :slot_number] %>
-
-<%= render 'listing', :sem_apps => @sem_apps, :actions => [:clone] %>
-
-<%= will_paginate @sem_apps %>
