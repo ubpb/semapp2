@@ -124,74 +124,18 @@ class SemAppsController < ApplicationController
     unauthorized! if cannot?(:edit, @sem_app)
     unauthorized! if @sem_app.semester.id != ApplicationSettings.instance.transit_source_semester.id
 
-    clone = nil
-    begin
-      clone = @sem_app.transit
-      if clone
-        flash[:success] = """
-          <p>Ihr Seminarapparat wurde erfolgreich in das neue Semester übernommen. Wir prüfen die Angaben und schalten
-          den Seminarapparat nach erfolgter Prüfung für Sie frei. Sie sehen den Status unter
-          <strong>Meine Seminarapparate</strong>. Bis zur Freischaltung können nur Sie den Seminarapparat
-          sehen und bearbeiten.</p>
-        """.html_safe
-      else
-        flash[:error] = 'Bei dem Vorgang ist ein Fehler aufgetreten. Bitte wenden Sie sich an den Support.'
-      end
+    if clone = @sem_app.transit
+      flash[:success] = """
+        <p>Ihr Seminarapparat wurde erfolgreich in das neue Semester übernommen. Wir prüfen die Angaben und schalten
+        den Seminarapparat nach erfolgter Prüfung für Sie frei. Sie sehen den Status unter
+        <strong>Meine Seminarapparate</strong>. Bis zur Freischaltung können nur Sie den Seminarapparat
+        sehen und bearbeiten.</p>
+      """.html_safe
+      redirect_to sem_app_path(clone)
+    else
+      flash[:error] = 'Bei dem Vorgang ist ein Fehler aufgetreten. Bitte wenden Sie sich an den Support.'
+      redirect_to sem_apps_path
     end
-
-    redirect_to (clone.present?) ? sem_app_path(clone) : sem_apps_path
-  end
-
-  def clones
-    unauthorized! if cannot? :edit, @sem_app
-
-    @filter = session[SEM_APP_CLONES_FILTER_NAME] || SemAppsFilter.new
-    @sem_apps = @filter.filtered
-      .page(params[:page])
-      .per_page(10)
-      .where(:approved => true)
-      .reorder("sem_apps.semester_id asc, sem_apps.title asc")
-  end
-
-  def filter_clones
-    unauthorized! if cannot? :edit, @sem_app
-
-    filter = params[:filter].present? ? SemAppsFilter.new(params[:filter]) : SemAppsFilter.new()
-    session[SEM_APP_CLONES_FILTER_NAME] = filter
-    redirect_to clones_sem_app_path(@sem_app)
-  end
-
-  def clone
-    unauthorized! if cannot? :edit, @sem_app
-
-    # Try to find the source sem app we want to clone
-    source_sem_app = SemApp.find(params[:source])
-
-    # Check the password in the case the user has no edit rights
-    # on the source sem app (needed for old Miless sem apps)
-    if cannot? :edit, source_sem_app
-      password = params[:password]
-      unless password.present?
-        flash[:error] = "Bitte geben Sie das Passwort des Seminarapparates ein das sie damals (im alten System) bei der Beantragung gesetzt haben."
-        redirect_to :action => :clones
-        return false
-      end
-
-      unless source_sem_app.miless_passwords.map{|p| p.password}.include?(password)
-        flash[:error] = "Das Passwort ist falsch. Der Seminarapparat konnte nicht geklont werden."
-        redirect_to :action => :clones
-        return false
-      end
-    end
-
-    begin
-      @sem_app.import_media(source_sem_app)
-      flash[:success] = 'Einträge wurden erfolgreich kopiert.'
-    rescue Exception => e
-      puts e.backtrace
-      flash[:error] = 'Beim kopieren ist leider ein Fehler aufgetrten. Der Vorgang konnte nicht erfolgreich abgeschlossen werden.'
-    end
-    redirect_to sem_app_path(@sem_app, :anchor => 'media')
   end
 
   def generate_access_token

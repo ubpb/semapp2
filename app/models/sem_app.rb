@@ -119,39 +119,9 @@ class SemApp < ActiveRecord::Base
     self.book_shelf_ref.present?
   end
 
-  def import_media(source_sem_app)
-    if source_sem_app.present? and source_sem_app.is_a?(SemApp)
-      import_media!(source_sem_app)
-    end
-  end
-
-  def import_books(source_sem_app)
-    if source_sem_app.present? and source_sem_app.is_a?(SemApp)
-      import_books!(source_sem_app)
-    end
-  end
-
   def transit
     target_semester = ApplicationSettings.instance.transit_target_semester
-
-    if target_semester.present?
-      SemApp.transaction do
-        clone = self.dup(:include => :book_shelf, :validate => false)
-        clone.semester = target_semester
-        clone.archived = false
-        clone.approved = false
-        clone.miless_derivate_id = nil
-        clone.miless_document_id = nil
-        clone.created_at = Time.now
-        clone.updated_at = Time.now
-        clone.save!
-
-        clone.import_media(self)
-        clone.import_books(self)
-
-        return clone
-      end
-    end
+    SemAppTransit.new(self, target_semester, import_books: true).transit! if target_semester.present?
   end
 
   def next_position(origin_id)
@@ -167,36 +137,6 @@ class SemApp < ActiveRecord::Base
     end
 
     return position
-  end
-
-  private
-
-  # TODO: Fix instance
-  def import_media!(source_sem_app)
-    source_sem_app.media.each do |media|
-      instance = media.instance
-      clone = instance.dup(:validate => false)
-
-      instance.file_attachments.each do |a|
-        path = a.file.path
-        if File.exists?(path)
-          attachment = FileAttachment.new(:file => File.new(path), :description => a.description, :scanjob => a.scanjob)
-          attachment.file.instance_write(:file_name, a.file_file_name)
-          clone.file_attachments << attachment
-        end
-      end
-
-      clone.sem_app = self
-      clone.save(validate: false)
-    end
-  end
-
-  def import_books!(source_sem_app)
-    source_sem_app.books.each do |book|
-      clone = book.dup
-      clone.sem_app = self
-      clone.save(validate: false)
-    end
   end
 
 end
