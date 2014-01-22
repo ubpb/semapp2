@@ -37,8 +37,6 @@ class SemApp < ActiveRecord::Base
   validates_presence_of   :shared_secret
   validates_acceptance_of :accepts_copyright
 
-  #validates_uniqueness_of :course_id, :scope => :semester_id, :allow_nil => true, :allow_blank => false
-
   # Scopes
   scope :from_current_semester, lambda { where( semester_id: Semester.current.id ) }
   scope :ordered_by,  lambda { |*order| order( order.flatten.first || 'title DESC' ) }
@@ -59,7 +57,7 @@ class SemApp < ActiveRecord::Base
   def owned_by?(user)
     (user == self.creator) || owners.include?(user)
   end
-  
+
   ###########################################################################################
   #
   # Public API
