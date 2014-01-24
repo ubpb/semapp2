@@ -14,18 +14,16 @@ class SemAppExporter
     zip("#{EXPORT_PATH}/#{@sem_app.id}")
   end
 
-  private
+private
 
   def zip(filename, &block)
     File.delete(filename) if File.exists?(filename)
 
-    zipfile = Zip::File.open(filename, Zip::File::CREATE) do |zipfile|
+    Zip::File.open(filename, Zip::File::CREATE) do |zipfile|
       zipfile.dir.mkdir("export")
 
       zip_manifest(zipfile)
       zip_file_attachments(zipfile)
-
-      zipfile
     end
 
     filename
