@@ -10,6 +10,11 @@
       <%= icon 'database-export.png' %>
       Daten exportieren
     <% end %>
+
+    <%= link_to new_import_sem_app_path(@sem_app), :class => 'pui-button' do %>
+      <%= icon 'database-import.png' %>
+      Daten importieren
+    <% end %>
   </div>
 <% end %>
 
