@@ -1,7 +1,10 @@
 class BooksController < ApplicationController
 
+  MAX_BOOKS = 35.freeze
+
   before_filter :require_authenticate, :load_sem_app
   before_filter :check_current_semester, :only => [:index, :new, :create, :destroy]
+  before_filter :check_max_books, only: [:new, :create]
 
   def index
     @ordered_books  = Book.for_sem_app(@sem_app).ordered.ordered_by('created_at')
@@ -105,8 +108,19 @@ class BooksController < ApplicationController
     end
   end
 
+  def check_max_books
+    if book_count >= MAX_BOOKS
+      flash[:error] = "Sie haben das Maximum von #{MAX_BOOKS} Büchern erreicht. Es können keine weiteren Bücher mehr bestellt werden."
+      redirect_to sem_app_books_path(@sem_app)
+    end
+  end
+
   def get_aleph
     Aleph::Connector.new
+  end
+
+  def book_count
+    Book.for_sem_app(@sem_app).count - Book.for_sem_app(@sem_app).removed.count
   end
 
 end
