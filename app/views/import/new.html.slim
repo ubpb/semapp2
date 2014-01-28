@@ -5,5 +5,9 @@ h3.section Daten importieren
   == "Daten werden in den Seminarapparat <strong>#{@sem_app.full_title}</strong> importiert."
 
 = form_tag(import_sem_app_path(@sem_app), multipart: true) do
-  = file_field_tag 'import_file'
-  = submit_tag "Importieren"
+  p = file_field_tag 'import_file'
+  p
+    => submit_tag "Import starten"
+    = link_to 'Abbrechen', sem_app_path(@sem_app, anchor: 'media')
+
+
