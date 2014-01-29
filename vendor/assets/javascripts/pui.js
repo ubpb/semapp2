@@ -41,7 +41,7 @@
     //
     // PUI tabs
     //
-    $("div.pui-tabs-wrapper > ul.pui-tabs").tabs("div.pui-tab-panes > div").history();
+    $("div.pui-tabs-wrapper:not(.pui-tabs-non-js) > ul.pui-tabs").tabs("div.pui-tab-panes > div").history();
   });
-    
+
 })(jQuery)
