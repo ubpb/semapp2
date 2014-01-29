@@ -32,23 +32,6 @@ class SemAppsFilter
     sem_apps
   end
 
-=begin
-  def scope
-    scope = SemApp.scoped({:include => [:books, :book_shelf]})
-    scope = scope.conditions "lower(sem_apps.title) LIKE ?", "%#{@title.downcase}%" unless @title.blank?
-    scope = scope.conditions "lower(sem_apps.tutors) LIKE ?", "%#{@tutors.downcase}%" unless @tutors.blank?
-    scope = scope.conditions "lower(users.name) LIKE ? OR lower(users.login) LIKE ?", "#{@creator.downcase}%", "#{@creator.downcase}%" unless @creator.blank?
-    scope = scope.conditions "location_id = ?", "#{@location}" unless @location.blank?
-    scope = scope.conditions "semester_id = ?", "#{@semester}" unless @semester.blank?
-    scope = scope.conditions "lower(book_shelves.ils_account) like ?", "#{@ils_account.downcase}%" unless @ils_account.blank?
-    scope = scope.conditions "lower(book_shelves.slot_number) = ?", "#{@slot_number.downcase}" unless @slot_number.blank?
-    scope = scope.conditions "approved = ?", false if @unapproved_only
-    scope = scope.conditions "approved = ?", @approved if @approved.present?
-    scope = scope.conditions "books.state = ? OR books.state = ?", Book::States[:ordered], Book::States[:rejected] if @bookjobs_only
-    scope
-  end
-=end
-
   def filtered?(filters)
     filters.each do |f|
       return true if self.instance_variable_get("@#{f}").present?
