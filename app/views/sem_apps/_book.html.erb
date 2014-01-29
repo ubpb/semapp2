@@ -53,6 +53,13 @@
           <i>Dieses Exemplar steht in der Mediathek des ZfS (H2.211)</i>
         </p>
       <% end %>
+
+      <% if book.reference_copy == 4 %>
+        <p>
+          <%= icon 'asterisk.png' %>
+          <i>Dieses Exemplar steht im IMT Medien (H1.201)</i>
+        </p>
+      <% end %>
     <% end %>
   </div>
 </div>
