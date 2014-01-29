@@ -1,24 +1,49 @@
 <h3 class="section">Seminarapparate verwalten</h3>
 
 <div class="grid_8 alpha">
+
+  <div class="pui-tabs-wrapper pui-tabs-non-js" style="margin-bottom: 20px;">
+    <ul class="pui-tabs">
+      <li>
+        <%= link_to filter_admin_sem_apps_path('filter[only]'=>'all'), class: ((!@filter.unapproved_only and !@filter.bookjobs_only) ? 'current' : '') do %>
+          Alle
+        <% end %>
+      </li>
+      <li>
+        <%= link_to filter_admin_sem_apps_path('filter[only]'=>'unapproved'), class: (@filter.unapproved_only ? 'current' : '') do %>
+          <%= icon 'star.png' %>
+          Neu (<%= @new_sem_app_count %>)
+        <% end %>
+      </li>
+      <li>
+        <%= link_to filter_admin_sem_apps_path('filter[only]'=>'bookjobs'), class: (@filter.bookjobs_only ? 'current' : '') do %>
+          <%= icon 'book.png' %>
+          Bücher (<%= @booksjobs_count %>)
+        <% end %>
+      </li>
+    </ul>
+  </div>
+
   <%= render 'listing' %>
 </div>
 
 <div class="grid_4 omega">
   <div class="pui-panel">
     <%= form_tag filter_admin_sem_apps_path do %>
+      <!--
       <p>
-        <%= radio_button_tag "filter[only]", 'all',  !@filter.unapproved_only or !@filter.bookjobs_only %>
+        <%#= radio_button_tag "filter[only]", 'all',  !@filter.unapproved_only or !@filter.bookjobs_only %>
         <label>Alle Seminarapparate</label>
       </p>
       <p>
-        <%= radio_button_tag "filter[only]", 'unapproved', @filter.unapproved_only %>
+        <%#= radio_button_tag "filter[only]", 'unapproved', @filter.unapproved_only %>
         <label>Nur neue Seminarapparate</label>
       </p>
       <p>
-        <%= radio_button_tag "filter[only]", 'bookjobs', @filter.bookjobs_only %>
+        <%#= radio_button_tag "filter[only]", 'bookjobs', @filter.bookjobs_only %>
         <label>Nur Buchaufträge</label>
       </p>
+      -->
       <p>
         <label>Semester</label><br/>
         <%= collection_select(:filter, :semester, Semester.order('position ASC'), :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
@@ -55,4 +80,6 @@
       </div>
     <% end %>
   </div>
+
+  <p><i>Sortiert nach Datum der Beantragung</i></p>
 </div>

@@ -4,19 +4,19 @@ class Admin::SemAppsController < Admin::ApplicationController
 
   def index
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
-    if @filter
-      @sem_apps = @filter.filtered
-        .includes("semester")
-        .page(params[:page])
-        .per_page(10)
-        .reorder("semesters.position asc, sem_apps.title asc")
-    else
-      @sem_apps = SemApp
-        .includes("semester")
-        .page(params[:page])
-        .per_page(10)
-        .reorder("semesters.position asc, sem_apps.title asc")
-    end
+
+    ft = @filter.clone
+    ft.unapproved_only = true
+    @new_sem_app_count = ft.filtered.count
+
+    ft = @filter.clone
+    ft.bookjobs_only = true
+    @booksjobs_count = ft.filtered.count
+
+    @sem_apps = @filter.filtered
+      .page(params[:page])
+      .per_page(10)
+      .reorder("sem_apps.created_at desc")
   end
 
   def filter
@@ -33,12 +33,10 @@ class Admin::SemAppsController < Admin::ApplicationController
     @removed_books  = Book.for_sem_app(@sem_app).removed.ordered_by('signature asc')
     @deferred_books = Book.for_sem_app(@sem_app).deferred.ordered_by('signature asc')
 
-
     respond_to do |format|
       format.html { render 'show',  :format => 'html' }
       format.print { render 'show', :format => 'print', :layout => 'print' }
     end
-
   end
 
   def new
