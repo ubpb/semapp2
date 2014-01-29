@@ -6,10 +6,11 @@ class UsersController < ApplicationController
     @user = current_user
 
     @my_sem_apps = SemApp
+      .includes("semester")
       .page(params[:page])
       .per_page(10)
       .where(:creator_id => @user.id)
-      .reorder("sem_apps.semester_id asc, sem_apps.title asc")
+      .reorder("semesters.position asc, sem_apps.title asc")
 
     @ownerships  = @user.ownerships.map {|o| o.sem_app}
   end

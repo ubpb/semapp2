@@ -6,14 +6,16 @@ class Admin::SemAppsController < Admin::ApplicationController
     @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
     if @filter
       @sem_apps = @filter.filtered
+        .includes("semester")
         .page(params[:page])
         .per_page(10)
-        .reorder("sem_apps.semester_id asc, sem_apps.title asc")
+        .reorder("semesters.position asc, sem_apps.title asc")
     else
       @sem_apps = SemApp
+        .includes("semester")
         .page(params[:page])
         .per_page(10)
-        .reorder("sem_apps.semester_id asc, sem_apps.title asc")
+        .reorder("semesters.position asc, sem_apps.title asc")
     end
   end
 
