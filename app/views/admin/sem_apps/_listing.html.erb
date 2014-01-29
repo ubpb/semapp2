@@ -25,6 +25,9 @@
             im <%= sem_app.semester.title %><br/>
             Dozent(en): <%= sem_app.tutors %><br/>
             Fachbibliothek: <%= sem_app.location.title %>
+            <% if sem_app.book_shelf.present? %>
+              (Regal Nr. <%= sem_app.book_shelf.slot_number %>)
+            <% end %>
           </td>
         </tr>
       <% end %>
