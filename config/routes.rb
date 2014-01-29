@@ -9,7 +9,7 @@ SemApp2::Application.routes.draw do
 
     resources :sem_apps, path: 'apps' do
       collection do
-        post :filter
+        match :filter, via: [:get, :post]
       end
       member do
         put :set_creator
