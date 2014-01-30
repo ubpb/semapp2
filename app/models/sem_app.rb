@@ -73,7 +73,8 @@ class SemApp < ActiveRecord::Base
 
   def title
     title = self.read_attribute(:title)
-    self.course_id.present? ? "#{title} (#{self.course_id})" : "#{title}"
+    cid   = self.course_id
+    (cid.present? && !title.include?(cid)) ? "#{title} (#{self.course_id})" : "#{title}"
   end
 
   def has_book_jobs?
