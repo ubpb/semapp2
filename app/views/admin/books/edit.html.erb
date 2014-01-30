@@ -1,8 +1,14 @@
+<%
+  sem_apps = SemApp.joins(:book_shelf).where(semester_id: Semester.current.id).order('ils_account')
+  source = sem_apps.map{|s| {value: s.id, label: s.book_shelf.ils_account.upcase} }
+%>
+
 <%= semantic_form_for ['admin', @book] do |f| %>
   <%= f.error_messages %>
 
   <%= f.inputs do %>
-    <%= f.input :placeholder, :label => 'Sem App ID', :input_html => {:style => 'width:200px'}, :label_method => Proc.new {|sem_app| "#{sem_app.title} - #{sem_app.tutors}"}, :collection => SemApp.where(semester_id: Semester.current.id).order('title') %>
+    <input type="hidden" id="placeholder_id" name="book[placeholder_id]">
+    <%= f.input :placeholder, as: :string, label: 'Ausweis Nr.', input_html: {"data-autocomplete" => true, "data-autocomplete-source" => source.to_json, "data-autocomplete-id-field" => "#placeholder_id"} %>
   <% end %>
 
   <%= f.buttons do %>

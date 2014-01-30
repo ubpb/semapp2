@@ -27,3 +27,4 @@
 //= require pui
 //= require_tree ./jquery
 //= require_tree ./views/application
+//= require autocomplete
