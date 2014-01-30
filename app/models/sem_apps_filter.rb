@@ -19,7 +19,8 @@ class SemAppsFilter
 
   def filtered
     sem_apps = @slot_number.blank? ? SemApp.all : SemApp.search_by_slot_number(@slot_number)
-    sem_apps = sem_apps.includes( :books, :book_shelf )
+    sem_apps = sem_apps.includes(:books, :book_shelf, :semester)
+    sem_apps = sem_apps.references(:books, :book_shelf, :semester)
     sem_apps = sem_apps.search_by_title @title unless @title.blank?
     sem_apps = sem_apps.search_by_tutors @tutors unless @tutors.blank?
     sem_apps = sem_apps.where "lower(users.name) LIKE ? OR lower(users.login) LIKE ?", "#{@creator.downcase}%", "#{@creator.downcase}%" unless @creator.blank?
@@ -29,7 +30,8 @@ class SemAppsFilter
     sem_apps = sem_apps.where "approved = ?", false if @unapproved_only
     sem_apps = sem_apps.where "approved = ?", @approved if @approved.present?
     sem_apps = sem_apps.where "books.state = ? OR books.state = ?", Book::States[:ordered], Book::States[:rejected] if @bookjobs_only
-    sem_apps
+
+    sem_apps.reorder("semesters.position asc, sem_apps.title asc")
   end
 
   def filtered?(filters)

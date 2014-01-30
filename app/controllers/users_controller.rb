@@ -7,6 +7,7 @@ class UsersController < ApplicationController
 
     @my_sem_apps = SemApp
       .includes("semester")
+      .references("semester")
       .page(params[:page])
       .per_page(10)
       .where(:creator_id => @user.id)
