@@ -1,44 +1,150 @@
 class SemAppsFilter
 
-  attr_accessor :title, :tutors, :creator, :location, :semester, :ils_account, :slot_number, :unapproved_only, :bookjobs_only, :approved
+  FILTERS = [
+    :slot_number,
+    :title,
+    :tutors,
+    :owners,
+    :location_id,
+    :semester_id,
+    :ils_account,
+    :approved,
+    :unapproved,
+    :book_jobs
+  ].freeze
 
-  def initialize(filter = {})
-    filter = {} unless filter
+  attr_accessor *FILTERS
 
-    @title           = filter[:title]         if filter[:title].present?
-    @tutors          = filter[:tutors]        if filter[:tutors].present?
-    @creator         = filter[:creator]       if filter[:creator].present?
-    @location        = filter[:location].to_i if filter[:location].present?
-    @semester        = filter[:semester].to_i if filter[:semester].present?
-    @ils_account     = filter[:ils_account]   if filter[:ils_account].present?
-    @slot_number     = filter[:slot_number]   if filter[:slot_number].present?
-    @unapproved_only = filter[:only] == "unapproved"
-    @bookjobs_only   = filter[:only] == "bookjobs"
-    @approved        = filter[:approved]
+
+  class << self
+
+    def set_filter_in_session(session, filters, index)
+      filters        = filters.presence
+      session[index] = filters
+      self.new(filters)
+    end
+
+    def get_filter_from_session(session, index)
+      self.new(session[index].presence)
+    end
+
+  end
+
+
+  def initialize(filters = {})
+    @fulltext_filter = false
+    self.filter_attributes = filters
+  end
+
+  def filter_attributes=(filters)
+    filters = ActiveSupport::HashWithIndifferentAccess.new(filters.presence)
+
+    @slot_number = filters[:slot_number].presence
+    @title       = filters[:title].presence
+    @tutors      = filters[:tutors].presence
+    @owners      = filters[:owners].presence
+    @location_id = filters[:location_id].presence
+    @semester_id = filters[:semester_id].presence
+    @ils_account = filters[:ils_account].presence
+    @approved    = filters[:approved].presence
+    @unapproved  = filters[:unapproved].presence
+    @book_jobs   = filters[:book_jobs].presence
+  end
+
+  def filter_attributes
+    FILTERS.inject(ActiveSupport::HashWithIndifferentAccess.new) do |r, f|
+      r[f] = self.instance_variable_get("@#{f}")
+      r
+    end
   end
 
   def filtered
-    sem_apps = @slot_number.blank? ? SemApp.all : SemApp.search_by_slot_number(@slot_number)
-    sem_apps = sem_apps.includes(:books, :book_shelf, :semester)
-    sem_apps = sem_apps.references(:books, :book_shelf, :semester)
-    sem_apps = sem_apps.search_by_title @title unless @title.blank?
-    sem_apps = sem_apps.search_by_tutors @tutors unless @tutors.blank?
-    sem_apps = sem_apps.where "lower(users.name) LIKE ? OR lower(users.login) LIKE ?", "#{@creator.downcase}%", "#{@creator.downcase}%" unless @creator.blank?
-    sem_apps = sem_apps.where "location_id = ?", "#{@location}" unless @location.blank?
-    sem_apps = sem_apps.where "semester_id = ?", "#{@semester}" unless @semester.blank?
-    sem_apps = sem_apps.where "lower(book_shelves.ils_account) like ?", "#{@ils_account.downcase}%" unless @ils_account.blank?
-    sem_apps = sem_apps.where "approved = ?", false if @unapproved_only
-    sem_apps = sem_apps.where "approved = ?", @approved if @approved.present?
-    sem_apps = sem_apps.where "books.state = ? OR books.state = ?", Book::States[:ordered], Book::States[:rejected] if @bookjobs_only
+    scope = SemApp.all
 
-    sem_apps.reorder("semesters.position asc, sem_apps.title asc")
+    scope = filter_by_slot_number(scope)
+    scope = filter_by_title(scope)
+    scope = filter_by_tutors(scope)
+    scope = filter_by_owners(scope)
+    scope = filter_by_location_id(scope)
+    scope = filter_by_semester_id(scope)
+    scope = filter_by_ils_account(scope)
+    scope = filter_by_approved(scope)
+    scope = filter_by_unapproved(scope)
+    scope = filter_by_book_jobs(scope)
+
+    scope = default_order(scope)
+
+    scope
   end
 
-  def filtered?(filters)
-    filters.each do |f|
-      return true if self.instance_variable_get("@#{f}").present?
-    end
-    false
+  def filtered?(except: [])
+    except = [*except]
+    FILTERS.reject{|f| except.include?(f) }.any?{ |f| self.instance_variable_get("@#{f}").present? }
+  end
+
+private
+
+  def filtered_by_some_fulltext_filter?
+    @fulltext_filter == true
+  end
+
+  def filter_by_slot_number(scope)
+    @fulltext_filter = true
+    @slot_number ? scope.search_by_slot_number(@slot_number) : scope
+  end
+
+  def filter_by_title(scope)
+    @fulltext_filter = true
+    @title ? scope.search_by_title(@title) : scope
+  end
+
+  def filter_by_tutors(scope)
+    @fulltext_filter = true
+    @tutors ? scope.search_by_tutors(@tutors) : scope
+  end
+
+  def filter_by_owners(scope)
+    @fulltext_filter = true
+    @owners ? scope.search_by_owners(@owners) : scope
+  end
+
+  def filter_by_location_id(scope)
+    @location_id ? scope.where("location_id = ?", @location_id) : scope
+  end
+
+  def filter_by_semester_id(scope)
+    @semester_id ? scope.where("semester_id = ?", @semester_id) : scope
+  end
+
+  def filter_by_ils_account(scope)
+    @fulltext_filter = true
+    @ils_account ? scope.search_by_ils_account(@ils_account) : scope
+  end
+
+  def filter_by_approved(scope)
+    @approved ? scope.approved : scope
+  end
+
+  def filter_by_unapproved(scope)
+    @unapproved ? scope.unapproved : scope
+  end
+
+  def filter_by_book_jobs(scope)
+    @book_jobs ? scope.with_book_jobs : scope
+  end
+
+  def default_order(scope)
+    #
+    # FIXME: We can not order by pg_search_rank when using two or more
+    # pg_search scopes. That will result in an ambiguous pg_search_rank.
+    # There is no known workaround at the moment. Also see https://github.com/Casecommons/pg_search/issues/1
+    #
+
+    #if filtered_by_some_fulltext_filter?
+    #  scope.reorder("pg_search_rank desc")
+    #else
+    scope.joins(:semester).reorder("semesters.position asc, sem_apps.title asc")
+    #end
   end
 
 end

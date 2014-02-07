@@ -1,17 +1,10 @@
 class Admin::SemAppsController < Admin::ApplicationController
 
-  SEM_APP_FILTER_NAME = 'admin_sem_app_filter_name'.freeze
+  SEM_APP_FILTER_NAME = 'admin_sem_app_filter_name_p'.freeze
 
   def index
-    @filter = session[SEM_APP_FILTER_NAME] || SemAppsFilter.new
-
-    ft = @filter.clone
-    ft.unapproved_only = true
-    @new_sem_app_count = ft.filtered.count
-
-    ft = @filter.clone
-    ft.bookjobs_only = true
-    @booksjobs_count = ft.filtered.count
+    @filter   = SemAppsFilter.get_filter_from_session(session, SEM_APP_FILTER_NAME)
+    @filtered = @filter.filtered?(except: [:unapproved, :book_jobs])
 
     @sem_apps = @filter.filtered
       .page(params[:page])
@@ -20,8 +13,7 @@ class Admin::SemAppsController < Admin::ApplicationController
   end
 
   def filter
-    filter = SemAppsFilter.new(params[:filter])
-    session[SEM_APP_FILTER_NAME] = filter
+    SemAppsFilter.set_filter_in_session(session, params[:filter], SEM_APP_FILTER_NAME)
     redirect_to :action => :index
   end
 

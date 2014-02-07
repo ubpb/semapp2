@@ -32,20 +32,22 @@ class SemApp < ActiveRecord::Base
   validates_acceptance_of :accepts_copyright
 
   # Scopes
-  scope :from_current_semester, lambda { where( semester_id: Semester.current.id ) }
-  scope :ordered_by,  lambda { |*order| order( order.flatten.first || 'title DESC' ) }
-  scope :unapproved, lambda { where( approved: false ) }
-  scope :approved, lambda { where( approved: true ) }
-  scope :with_book_jobs, lambda { includes( :books ).where( "books.state = '#{Book::States[:ordered]}' OR books.state = '#{Book::States[:rejected]}'" ) }
+  scope :from_current_semester, lambda { where(semester_id: Semester.current.id) }
+  #scope :ordered_by,            lambda { |*order| order(order.flatten.first || 'title DESC') }
+  scope :unapproved,            lambda { where(approved: false) }
+  scope :approved,              lambda { where(approved: true) }
+  scope :with_book_jobs,        lambda { joins(:books).where( "books.state = '#{Book::States[:ordered]}' OR books.state = '#{Book::States[:rejected]}'" ) }
 
   # Auto strip
   auto_strip_attributes :title, :tutors, :course_id, squish: true
 
   # Fulltext search
   include PgSearch
-  pg_search_scope :search_by_title,       :against => :title,                                     :using => { :tsearch => { :prefix => true } }
-  pg_search_scope :search_by_tutors,      :against => :tutors,                                    :using => { :tsearch => { :prefix => true } }
-  pg_search_scope :search_by_slot_number, :associated_against => { :book_shelf => :slot_number }, :using => { :tsearch => { :prefix => true } }
+  pg_search_scope :search_by_title,       :against => :title,                                        :using => { :tsearch => { :prefix => true } }
+  pg_search_scope :search_by_tutors,      :against => :tutors,                                       :using => { :tsearch => { :prefix => true } }
+  pg_search_scope :search_by_slot_number, :associated_against => { :book_shelf => :slot_number    }, :using => { :tsearch => { :prefix => true } }
+  pg_search_scope :search_by_ils_account, :associated_against => { :book_shelf => :ils_account    }, :using => { :tsearch => { :prefix => true } }
+  pg_search_scope :search_by_owners,      :associated_against => { :owners     => [:name, :login] }, :using => { :tsearch => { :prefix => true } }
 
   # virtual attributes
   attr_accessor :accepts_copyright

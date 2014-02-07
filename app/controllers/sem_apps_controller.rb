@@ -1,16 +1,17 @@
 class SemAppsController < ApplicationController
 
-  SEM_APP_FILTER_NAME                 = 'sem_app_filter_name'.freeze
-  SEM_APP_SEMESTER_INDEX_FILTER_NAME  = 'sem_app_semester_index_filter_name'.freeze
-  SEM_APP_CLONES_FILTER_NAME          = 'sem_app_clones_filter_name'.freeze
+  SEM_APP_FILTER_NAME                 = 'sem_app_filter_name_p'.freeze
+  SEM_APP_SEMESTER_INDEX_FILTER_NAME  = 'sem_app_semester_index_filter_name_p'.freeze
+  SEM_APP_CLONES_FILTER_NAME          = 'sem_app_clones_filter_name_p'.freeze
 
   before_filter :load_sem_app, :only => [:show, :edit, :update, :unlock, :transit, :clones, :filter_clones, :clone, :clear, :show_books, :show_media, :generate_access_token]
 
   before_filter :require_authenticate, only: [:new]
 
   def index
-    @filter          = get_filter(SEM_APP_FILTER_NAME)
+    @filter          = SemAppsFilter.get_filter_from_session(session, SEM_APP_FILTER_NAME)
     @filter.approved = true
+    @filtered        = @filter.filtered?(except: :approved)
 
     @sem_apps = @filter.filtered
       .page(params[:page])
@@ -18,14 +19,15 @@ class SemAppsController < ApplicationController
   end
 
   def filter
-    set_filter(SEM_APP_FILTER_NAME)
+    SemAppsFilter.set_filter_in_session(session, params[:filter], SEM_APP_FILTER_NAME)
     redirect_to :action => :index
   end
 
   def semester_index
-    @filter          = get_filter(SEM_APP_SEMESTER_INDEX_FILTER_NAME)
-    @filter.approved = true
-    @filter.semester =  Semester.current.id
+    @filter             = SemAppsFilter.get_filter_from_session(session, SEM_APP_SEMESTER_INDEX_FILTER_NAME)
+    @filter.approved    = true
+    @filter.semester_id = Semester.current.id
+    @filtered           = @filter.filtered?(except: [:approved, :semester_id])
 
     @sem_apps = @filter.filtered
       .page(params[:page])
@@ -33,7 +35,7 @@ class SemAppsController < ApplicationController
   end
 
   def filter_semester_index
-    set_filter(SEM_APP_SEMESTER_INDEX_FILTER_NAME)
+    SemAppsFilter.set_filter_in_session(session, params[:filter], SEM_APP_SEMESTER_INDEX_FILTER_NAME)
     redirect_to :action => :semester_index
   end
 
@@ -149,15 +151,6 @@ class SemAppsController < ApplicationController
   end
 
   private
-
-  def set_filter(index)
-    filter = params[:filter].present? ? SemAppsFilter.new(params[:filter]) : SemAppsFilter.new()
-    session[index] = filter
-  end
-
-  def get_filter(index)
-    session[index] || SemAppsFilter.new
-  end
 
   def load_sem_app
     begin
