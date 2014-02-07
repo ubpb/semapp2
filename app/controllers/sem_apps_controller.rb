@@ -150,6 +150,62 @@ class SemAppsController < ApplicationController
     redirect_to edit_sem_app_path(@sem_app, :anchor => 'token')
   end
 
+
+  def clones
+    unauthorized! if cannot? :edit, @sem_app
+
+    @filter            = SemAppsFilter.get_filter_from_session(session, SEM_APP_CLONES_FILTER_NAME)
+    @filter.approved   = true
+
+    @sem_apps = @filter.filtered
+     .page(params[:page])
+     .per_page(10)
+
+    unless current_user.is_admin?
+      @sem_apps = @sem_apps.created_by(current_user)
+    end
+  end
+
+  def filter_clones
+    unauthorized! if cannot? :edit, @sem_app
+
+    SemAppsFilter.set_filter_in_session(session, params[:filter], SEM_APP_CLONES_FILTER_NAME)
+    redirect_to :action => :clones
+  end
+
+
+  def clone
+    unauthorized! if cannot? :edit, @sem_app
+    # Try to find the source sem app we want to clone
+    source_sem_app = SemApp.find(params[:source])
+    # Check the password in the case the user has no edit rights
+    # on the source sem app (needed for old Miless sem apps)
+    if cannot? :edit, source_sem_app
+     password = params[:password]
+     unless password.present?
+        flash[:error] = "Bitte geben Sie das Passwort des Seminarapparates ein das sie damals (im alten System) bei der Beantragung gesetzt haben."
+        redirect_to :action => :clones
+        return false
+     end
+     unless source_sem_app.miless_passwords.map{|p| p.password}.include?(password)
+        flash[:error] = "Das Passwort ist falsch. Der Seminarapparat konnte nicht geklont werden."
+        redirect_to :action => :clones
+        return false
+     end
+    end
+
+    begin
+      cloner = SemAppCloner.new(source_sem_app, @sem_app, clone_books: false, clone_media: true)
+      cloner.clone!
+      flash[:success] = 'Einträge wurden erfolgreich kopiert.'
+    rescue Exception => e
+      puts e.backtrace
+      flash[:error] = 'Beim kopieren ist leider ein Fehler aufgetrten. Der Vorgang konnte nicht erfolgreich abgeschlossen werden.'
+    end
+
+    redirect_to sem_app_path(@sem_app, :anchor => 'media')
+  end
+
   private
 
   def load_sem_app

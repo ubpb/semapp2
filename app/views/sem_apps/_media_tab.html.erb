@@ -6,15 +6,20 @@
     </div>
   <% end %>
   <div class="pui-view align-right">
-    <%= link_to export_sem_app_path(@sem_app), :class => 'pui-button', data: {confirm: 'Sie können hiermit alle Daten inkl. hochgeladener Dateien aus "Texte und Medien" exportieren und herunterladen. Bitte beachten Sie, dass es bei vielen Dateien etwas dauern kann, bis der Download startet.'} do %>
-      <%= icon 'database-export.png' %>
-      Daten exportieren
+    <%= link_to clones_sem_app_path(@sem_app), :class => 'pui-button' do %>
+      <%= icon 'document-copy.png' %>
+      Alte Daten Klonen
     <% end %>
 
-    <%= link_to new_import_sem_app_path(@sem_app), :class => 'pui-button' do %>
-      <%= icon 'database-import.png' %>
+    <!-- <%#= link_to export_sem_app_path(@sem_app), :class => 'pui-button', data: {confirm: 'Sie können hiermit alle Daten inkl. hochgeladener Dateien aus "Texte und Medien" exportieren und herunterladen. Bitte beachten Sie, dass es bei vielen Dateien etwas dauern kann, bis der Download startet.'} do %>
+      <%#= icon 'database-export.png' %>
+      Daten exportieren
+    <%# end %>
+
+    <%#= link_to new_import_sem_app_path(@sem_app), :class => 'pui-button' do %>
+      <%#= icon 'database-import.png' %>
       Daten importieren
-    <% end %>
+    <%# end %> -->
   </div>
 <% end %>
 
