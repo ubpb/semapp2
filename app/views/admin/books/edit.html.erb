@@ -1,6 +1,6 @@
 <%
   sem_apps = SemApp.joins(:book_shelf).where(semester_id: Semester.current.id).order('ils_account')
-  source = sem_apps.map{|s| {value: s.id, label: s.book_shelf.ils_account.upcase} }
+  source = sem_apps.map{|s| {value: s.id, label: s.book_shelf.clean_ils_account.upcase} }
 %>
 
 <%= semantic_form_for ['admin', @book] do |f| %>
