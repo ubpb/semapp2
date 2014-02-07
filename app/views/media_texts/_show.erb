@@ -1,7 +1,7 @@
 <%= render 'media/publish_notice', :media => media %>
 
 <% if media.present? and media.text.present? %>
-  <%= textilize(media.text).html_safe %>
+  <%= textilize(media.text.html_safe) %>
 <% end %>
 
 <%= render 'media/attachments', :media => media %>
