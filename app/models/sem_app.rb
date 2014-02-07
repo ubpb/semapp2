@@ -32,11 +32,12 @@ class SemApp < ActiveRecord::Base
   validates_acceptance_of :accepts_copyright
 
   # Scopes
-  scope :from_current_semester, lambda { where(semester_id: Semester.current.id) }
+  scope :from_current_semester, -> { where(semester_id: Semester.current.id) }
   #scope :ordered_by,            lambda { |*order| order(order.flatten.first || 'title DESC') }
-  scope :unapproved,            lambda { where(approved: false) }
-  scope :approved,              lambda { where(approved: true) }
-  scope :with_book_jobs,        lambda { joins(:books).where( "books.state = '#{Book::States[:ordered]}' OR books.state = '#{Book::States[:rejected]}'" ) }
+  scope :unapproved,            -> { where(approved: false) }
+  scope :approved,              -> { where(approved: true) }
+  scope :with_book_jobs,        -> { joins(:books).where( "books.state = '#{Book::States[:ordered]}' OR books.state = '#{Book::States[:rejected]}'" ) }
+  scope :created_by,            ->(user) { where("creator_id = ?", user.id) }
 
   # Auto strip
   auto_strip_attributes :title, :tutors, :course_id, squish: true
