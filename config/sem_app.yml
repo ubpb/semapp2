@@ -1,0 +1,19 @@
+default: &default_settings
+  aleph_base_url: https://ubtest/X
+  aleph_library: 'pad50'
+  aleph_search_base: 'pbaus'
+  aleph_allowed_user_types:
+    - /^PA.+/
+    - /\APS.+\Z/
+  aleph_allowed_ban_codes:
+    - /^00$/
+
+test:
+  <<: *default_settings
+
+development:
+  <<: *default_settings
+
+production:
+  <<: *default_settings
+  base_url: https://ubex/X
