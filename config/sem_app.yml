@@ -1,19 +1,18 @@
-default: &default_settings
-  aleph_base_url: https://ubtest/X
+defaults: &defaults
+  aleph_base_url: https://ubex/X
   aleph_library: 'pad50'
   aleph_search_base: 'pbaus'
   aleph_allowed_user_types:
-    - /^PA.+/
-    - /\APS.+\Z/
+    - !ruby/regexp /^PA.+/
+    - !ruby/regexp /\APS.+\Z/
   aleph_allowed_ban_codes:
-    - /^00$/
+    - !ruby/regexp /^00$/
 
 test:
-  <<: *default_settings
+  <<: *defaults
 
 development:
-  <<: *default_settings
+  <<: *defaults
 
 production:
-  <<: *default_settings
-  base_url: https://ubex/X
+  <<: *defaults
