@@ -5,8 +5,9 @@ class User < ActiveRecord::Base
   has_many :sem_apps,   :through   => :ownerships
 
   # Validations
-  validates_presence_of :login
+  validates :login, presence: true, uniqueness: { case_sensitive: false }
   validates_presence_of :name
+
 
   def self.authenticate(attributes)
     if (aleph_user = Aleph::Connector.new.authenticate(attributes[:login], attributes[:password])).is_a?(Aleph::User)
@@ -16,12 +17,16 @@ class User < ActiveRecord::Base
     end
   end
 
+  def login=(value)
+    self[:login] = value.strip.upcase if value
+  end
+
   def is_admin?
     is_admin
   end
 
   def is_lecturer?
-    (login =~ /\Apa/i).present?
+    (login =~ /\APA/i).present?
   end
 
   def to_s
