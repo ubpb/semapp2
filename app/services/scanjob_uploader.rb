@@ -12,7 +12,7 @@ class ScanjobUploader
   end
 
   def upload_scanjobs!
-    scanjob_files = File.join(::Rails.root.to_s, 'data', 'scanjobs', 'scanjob-*.pdf')
+    scanjob_files = File.join(Rails.root.to_s, 'data', 'scanjobs', 'scanjob-*.pdf')
     Dir.glob(scanjob_files).each do |filename|
       upload_scanjob(filename)
     end
@@ -28,7 +28,7 @@ class ScanjobUploader
     entry = scanjob.entry
     file  = File.new(filename)
 
-    processed_files = File.join(::Rails.root.to_s, 'data', 'scanjobs', 'processed')
+    processed_files = File.join(Rails.root.to_s, 'data', 'scanjobs', 'processed')
     FileUtils.mkdir(processed_files) unless File.exists?(processed_files)
 
     Entry.transaction do

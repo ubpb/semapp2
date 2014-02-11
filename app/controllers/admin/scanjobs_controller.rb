@@ -84,7 +84,7 @@ class Admin::ScanjobsController < Admin::ApplicationController
 
   def upload
     begin
-      ::ScanjobUploader.new.upload_scanjobs!
+      ScanjobUploader.new.upload_scanjobs!
       flash[:success] = 'Fertige Scans wurden hochgeladen.'
     rescue Exception => e
       flash[:error] = "Es ist ein Fehler aufgetreten. Die Scans konnten nicht hochgeladen werden. #{e.message}"
