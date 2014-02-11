@@ -46,8 +46,10 @@
                 </div>
               </div>
               <div class="grid_4 omega align-right">
-                <%= link_to ownership_path(os), :class => 'pui-button small', :method => :delete, :data => {:confirm => 'Bearbeitungsrechte wirklich löschen?'} do %>
-                  Löschen
+                <% if os.user != current_user %>
+                  <%= link_to ownership_path(os), :class => 'pui-button small', :method => :delete, :data => {:confirm => 'Bearbeitungsrechte wirklich löschen?'} do %>
+                    Löschen
+                  <% end %>
                 <% end %>
               </div>
             </div>
@@ -88,11 +90,9 @@
 
   <div class="pui-panel">
     <%= icon 'asterisk.png' %>
-    Um einem Nutzer Bearbeitungsrechte für Ihren Seminarapparat zu geben,
-    tragen Sie bitte die UB-Ausweisnummer (PA...) in das Feld ein und klicken
-    Sie auf Speichern. Die Anmeldung setzt einen A-Ausweis (Ausweis für
-    Mitarbeitende der Hochschule) voraus. Studierende mit S-Ausweisen können
-    keine Bearbeitungsrechte bekommen.
+    Um einer Person Bearbeitungsrechte für Ihren Seminarapparat zu geben,
+    tragen Sie bitte die entsprechende UB-Ausweisnummer (PAXXXXXXX oder PSXXXXXXX) in das Feld ein und klicken
+    Sie auf Speichern.
   </div>
 
   <%= form_tag(sem_app_ownerships_path(@sem_app), :class => 'formtastic', :method => :post) do %>
