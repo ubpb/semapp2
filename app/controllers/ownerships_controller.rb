@@ -2,7 +2,7 @@ class OwnershipsController < ApplicationController
 
   def create
     sem_app = SemApp.find(params[:sem_app_id])
-    authorize! :edit, @sem_app
+    authorize! :edit, sem_app
 
     login   = params[:login]
     user    = User.find_by_login(login)
@@ -26,10 +26,9 @@ class OwnershipsController < ApplicationController
   end
 
   def destroy
-    authorize! :edit, @sem_app
-
     os      = Ownership.find(params[:id])
     sem_app = os.sem_app
+    authorize! :edit, sem_app
 
     if os.destroy
       flash[:success] = "Bearbeitungsrechte entzogen"
