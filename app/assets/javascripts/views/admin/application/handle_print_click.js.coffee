@@ -1,7 +1,7 @@
 #= require utils/singletonReadyOrPageChange
 
 app.utils.singletonReadyOrPageChange 'app.views.admin.application.handlePrintClick', ->
-  $(".print").live 'click', (e) ->
+  $(".print").click (e) ->
     e.preventDefault()
 
     # remove old printframe
