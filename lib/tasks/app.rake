@@ -27,7 +27,7 @@ namespace :app do
   #
   desc "Upload scanjobs"
   task(:upload_scanjobs => :environment) do
-    ScanjobUploader.new.upload_scanjobs
+    ScanjobUploader.new.upload_scanjobs!
   end
 
   #

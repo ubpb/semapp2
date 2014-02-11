@@ -1,9 +1,5 @@
 class ScanjobUploader
 
-  def upload_scanjobs
-    upload_scanjobs!
-  end
-
   def upload_scanjobs!
     scanjob_files = File.join(Rails.root.to_s, 'data', 'scanjobs', 'scanjob-*.pdf')
     Dir.glob(scanjob_files).each do |filename|
