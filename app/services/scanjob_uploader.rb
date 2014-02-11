@@ -1,14 +1,7 @@
 class ScanjobUploader
 
   def upload_scanjobs
-    begin
-      upload_scanjobs!
-    rescue Exception => e
-      puts "Error: #{e.message}"
-      return false
-    end
-
-    return true
+    upload_scanjobs!
   end
 
   def upload_scanjobs!
@@ -25,16 +18,16 @@ class ScanjobUploader
     raise "Error: No Scanjob-ID found in filename." if scanjob_id.blank?
 
     scanjob = Scanjob.find(scanjob_id)
-    entry = scanjob.entry
+    media = scanjob.media
     file  = File.new(filename)
 
     processed_files = File.join(Rails.root.to_s, 'data', 'scanjobs', 'processed')
     FileUtils.mkdir(processed_files) unless File.exists?(processed_files)
 
-    Entry.transaction do
+    Media.transaction do
       attachment = FileAttachment.new(:file => file, :description => scanjob.comment, :scanjob => true)
       attachment.file.instance_write(:file_name, File.basename(filename))
-      entry.file_attachments << attachment
+      media.file_attachments << attachment
       scanjob.destroy
     end
 
