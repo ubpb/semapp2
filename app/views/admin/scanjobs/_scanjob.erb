@@ -6,7 +6,7 @@
     <%= labeled_item :label => 'Signatur', :content => scanjob.signature %>
     <%= labeled_item :label => 'Seiten von-bis', :content => "#{scanjob.pages_from}-#{scanjob.pages_to}" %>
 
-    <% if media.respond_to?(:title) and not media.is_a?(Monographmedia) %>
+    <% if media.respond_to?(:title) and not media.is_a?(MediaMonograph) %>
       <%= labeled_item :label => 'Aufsatztitel', :content => media.title %>
     <% end %>
 
