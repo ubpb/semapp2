@@ -4,7 +4,7 @@ class OwnershipsController < ApplicationController
     sem_app = SemApp.find(params[:sem_app_id])
     authorize! :edit, sem_app
 
-    login   = params[:login]
+    login   = params[:login].upcase
     user    = User.find_by_login(login)
 
     if user
