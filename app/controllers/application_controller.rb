@@ -9,18 +9,10 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  rescue_from Exception do |exception|
-    if Rails.env.production?
-      if exception.class == CanCan::AccessDenied
-        flash[:error] = "Zugriff verweigert!"
-        redirect_to root_url
-      else
-        logger.fatal("\n\n#{exception.class} (#{exception.message}):\n    " + exception.backtrace.join("\n    ") + "\n\n")
-        render 'shared_partials/unhandled_error', :locals => {:exception => exception}
-      end
-    else
-      raise exception
-    end
+  rescue_from CanCan::AccessDenied do |e|
+    flash[:error] = "Zugriff verweigert!"
+    redirect_to root_url
+    false
   end
 
 end
