@@ -42,7 +42,7 @@ class ScanjobsController < ApplicationController
 
   def load_media
     @media = find_media
-    unauthorized! if cannot?(:edit, @media.sem_app)
+    authorize! :edit, @media.sem_app
 
     if @media.parent.scanjob.present?
       flash[:error] = "Aktuell ist noch ein Scanauftrag anhängig. Sie können erst einen neuen Auftrag erstellen wenn dieser abgeschlossen wurde."

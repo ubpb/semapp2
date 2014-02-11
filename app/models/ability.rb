@@ -13,11 +13,15 @@ class Ability
       end
 
       can :create, SemApp do |sem_app|
-        user.present?
+        user.present? && user.is_lecturer?
       end
 
       can :edit, SemApp do |sem_app|
         user.present? && sem_app.owned_by?(user) && !sem_app.archived
+      end
+
+      can :transit, SemApp do |sem_app|
+        sem_app.semester.id == ApplicationSettings.instance.transit_source_semester.id
       end
     end
   end

@@ -4,7 +4,7 @@ class AbstractMediaController < ApplicationController
 
   def new
     @sem_app = SemApp.find(params[:sem_app_id])
-    unauthorized! if cannot? :edit, @sem_app
+    authorize! :edit, @sem_app
 
     @media         = model_class.new
     @origin_id     = params[:origin_id]
@@ -12,7 +12,7 @@ class AbstractMediaController < ApplicationController
 
   def create
     @sem_app = SemApp.find(params[:sem_app_id])
-    unauthorized! if cannot? :edit, @sem_app
+    authorize! :edit, @sem_app
 
     instance_params = params[model_class.name.underscore.to_sym]
 
@@ -33,7 +33,7 @@ class AbstractMediaController < ApplicationController
 
   def edit
     @media = model_class.includes(:parent => :sem_app).find(params[:id])
-    unauthorized! if cannot? :edit, @media.sem_app
+    authorize! :edit, @media.sem_app
 
     if not current_user.is_admin? and @media.respond_to?(:scanjob) and @media.scanjob.present?
       flash[:error] = "Für diesen Eintrag wurde ein Scan beauftragt, der noch nicht abgeschlossen ist. Solange der Scanauftrag durch die Bibliothek bearbeitet wird, kann der Eintrag nicht bearbeitet werden."
@@ -43,7 +43,7 @@ class AbstractMediaController < ApplicationController
 
   def update
     @media = model_class.includes(:parent => :sem_app).find(params[:id])
-    unauthorized! if cannot? :edit, @media.sem_app
+    authorize! :edit, @media.sem_app
 
     instance_params = params[model_class.name.underscore.to_sym]
 
@@ -56,7 +56,7 @@ class AbstractMediaController < ApplicationController
 
   def destroy
     @media = model_class.includes(:parent => :sem_app).find(params[:id])
-    unauthorized! if cannot? :edit, @media.sem_app
+    authorize! :edit, @media.sem_app
 
     if not current_user.is_admin? and @media.respond_to?(:scanjob) and @media.scanjob.present?
       flash[:error] = "Für diesen Eintrag wurde ein Scan beauftragt, der noch nicht abgeschlossen ist. Solange der Scanauftrag durch die Bibliothek bearbeitet wird, kann der Eintrag nicht gelöscht werden."

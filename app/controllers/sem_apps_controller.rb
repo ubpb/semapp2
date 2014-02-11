@@ -40,7 +40,7 @@ class SemAppsController < ApplicationController
   end
 
   def show
-    unauthorized! if cannot? :read, @sem_app
+    authorize! :read, @sem_app
 
     # check for access token
     token = params[:token]
@@ -59,13 +59,13 @@ class SemAppsController < ApplicationController
 
   def new
     @sem_app = SemApp.new
-    unauthorized! if cannot? :create, @sem_app
+    authorize! :create, @sem_app
     @sem_app.tutors = current_user.name
   end
 
   def create
     @sem_app = SemApp.new(params[:sem_app])
-    unauthorized! if cannot? :create, @sem_app
+    authorize! :create, @sem_app
 
     @sem_app.creator = current_user
 
@@ -87,14 +87,14 @@ class SemAppsController < ApplicationController
   end
 
   def edit
-    unauthorized! if cannot? :edit, @sem_app
+    authorize! :edit, @sem_app
 
     # Generate access token if no access token exists
     @sem_app.generate_access_token! if @sem_app.access_token.blank?
   end
 
   def update
-    unauthorized! if cannot? :edit, @sem_app
+    authorize! :edit, @sem_app
 
     # Cherrypick the values for security reasons
     options = {}
@@ -121,8 +121,8 @@ class SemAppsController < ApplicationController
   end
 
   def transit
-    unauthorized! if cannot?(:edit, @sem_app)
-    unauthorized! if @sem_app.semester.id != ApplicationSettings.instance.transit_source_semester.id
+    authorize! :edit,    @sem_app
+    authorize! :transit, @sem_app
 
     if clone = @sem_app.transit
       flash[:success] = """
@@ -139,7 +139,7 @@ class SemAppsController < ApplicationController
   end
 
   def generate_access_token
-    unauthorized! if cannot? :edit, @sem_app
+    authorize! :edit, @sem_app
 
     if @sem_app.generate_access_token!
       flash[:success] = 'Es wurde ein neuer Access Token erstellt. Alte Token sind jetzt nicht mehr gültig.'
@@ -152,7 +152,7 @@ class SemAppsController < ApplicationController
 
 
   def clones
-    unauthorized! if cannot? :edit, @sem_app
+    authorize! :edit, @sem_app
 
     @filter            = SemAppsFilter.get_filter_from_session(session, SEM_APP_CLONES_FILTER_NAME)
     @filter.approved   = true
@@ -167,7 +167,7 @@ class SemAppsController < ApplicationController
   end
 
   def filter_clones
-    unauthorized! if cannot? :edit, @sem_app
+    authorize! :edit, @sem_app
 
     SemAppsFilter.set_filter_in_session(session, params[:filter], SEM_APP_CLONES_FILTER_NAME)
     redirect_to :action => :clones
@@ -175,7 +175,8 @@ class SemAppsController < ApplicationController
 
 
   def clone
-    unauthorized! if cannot? :edit, @sem_app
+    authorize! :edit, @sem_app
+
     # Try to find the source sem app we want to clone
     source_sem_app = SemApp.find(params[:source])
     # Check the password in the case the user has no edit rights

@@ -20,7 +20,7 @@ private
 
   def load_sem_app
     @sem_app = SemApp.find(params[:id])
-    unauthorized! if cannot? :edit, @sem_app
+    authorize! :edit, @sem_app
   end
 
 end

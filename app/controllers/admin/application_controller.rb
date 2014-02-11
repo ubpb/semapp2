@@ -8,7 +8,7 @@ class Admin::ApplicationController < ApplicationController
   private
 
   def secure_controller
-    unauthorized! unless current_user and current_user.is_admin?
+    authorize! :manage, :all
   end
 
 end

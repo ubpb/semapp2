@@ -98,7 +98,7 @@ class BooksController < ApplicationController
 
   def load_sem_app
     @sem_app = SemApp.find(params[:sem_app_id])
-    unauthorized! if cannot? :edit, @sem_app
+    authorize! :edit, @sem_app
   end
 
   def check_current_semester
