@@ -19,7 +19,11 @@ class User < ActiveRecord::Base
   def is_admin?
     is_admin
   end
-  
+
+  def is_lecturer?
+    (login =~ /\Apa/i).present?
+  end
+
   def to_s
     ["#{name} (#{login})", "#{email}"].map(&:presence).compact.join(', ').strip
   end
