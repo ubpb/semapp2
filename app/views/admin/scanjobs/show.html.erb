@@ -6,7 +6,7 @@
   <div class="align-right" style="margin-bottom: 5px">
     <%= link_to admin_scanjobs_path(:anchor => @scanjob.state), :class => 'pui-button' do %>
       <%= icon 'arrow-curve-180-left.png' %>
-      Zurück zur übersicht
+      Zurück zur Übersicht
     <% end %>
 
     <%= link_to polymorphic_path(['edit', @scanjob.media.instance]), :class => "pui-button" do %>
