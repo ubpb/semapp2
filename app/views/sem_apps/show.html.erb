@@ -38,7 +38,7 @@
           <%= icon 'wrench.png' %>
           Einstellungen
         <% end %>
-        <% if can?(:manage, @sem_app) %>
+        <% if current_user.is_admin %>
           <%= link_to admin_sem_app_path(@sem_app), :class => 'pui-button' do %>
             <%= icon 'user-black.png' %>
             Administrieren
