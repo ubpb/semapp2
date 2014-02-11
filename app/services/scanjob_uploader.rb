@@ -24,6 +24,7 @@ class ScanjobUploader
       attachment = FileAttachment.new(:file => file, :description => scanjob.comment, :scanjob => true)
       attachment.file.instance_write(:file_name, File.basename(filename))
       media.file_attachments << attachment
+      media.touch
       scanjob.destroy
     end
 
