@@ -63,7 +63,7 @@ class BooksController < ApplicationController
         flash[:notice] = "Buchauftrag erfolgreich erstellt"
         redirect_to sem_app_books_path(@sem_app)
       else
-        flash[:error] = @book.errors.on(:ils_id).present? ? @book.errors.on(:ils_id) : "Es ist ein unbekannter Fehler aufgetreten. Bitte wenden Sie sich an das Informationszentrum der Bibliothek."
+        flash[:error] = @book.errors[:ils_id].present? ? @book.errors[:ils_id].join : "Es ist ein unbekannter Fehler aufgetreten. Bitte wenden Sie sich an das Informationszentrum der Bibliothek."
         redirect_to new_sem_app_book_path(@sem_app)
       end
     else
