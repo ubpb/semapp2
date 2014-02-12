@@ -40,6 +40,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'letter_opener',       '~> 1.1.2'
   gem 'capistrano',          '~> 3.1.0', require: false
   gem 'capistrano-rails',    '~> 1.1.1', require: false
   gem 'capistrano-bundler',  '~> 1.1.1', require: false
