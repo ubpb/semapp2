@@ -599,7 +599,6 @@ CREATE TABLE sem_apps (
     semester_id integer NOT NULL,
     location_id integer NOT NULL,
     approved boolean DEFAULT false,
-    archived boolean DEFAULT false,
     title character varying NOT NULL,
     tutors text,
     shared_secret character varying,
@@ -1296,3 +1295,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140123162928');
 INSERT INTO schema_migrations (version) VALUES ('20140211155653');
 
 INSERT INTO schema_migrations (version) VALUES ('20140212083059');
+
+INSERT INTO schema_migrations (version) VALUES ('20140212083933');

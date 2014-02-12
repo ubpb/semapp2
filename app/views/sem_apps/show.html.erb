@@ -8,15 +8,6 @@
   <%= link_to @sem_app.title, sem_app_path(@sem_app) %>
 </h3>
 
-<% if current_user && @sem_app.owned_by?(current_user) && @sem_app.archived %>
-  <div class="pui-panel align-center">
-    <%= icon "asterisk.png" %>
-    Dieser Seminarapparat wurde <strong>archiviert</strong>. Er kann nicht weiter bearbeitet werden.
-    Bitte wenden Sie sich an die <a href="#" class="pui-overlay-trigger" rel="#common-help">Bibliothek</a>
-    wenn Sie diesen Seminarapparat im aktuellen Semester wieder anbieten möchten.
-  </div>
-<% end %>
-
 <% if !@sem_app.is_from_current_semester? %>
   <div class="pui-panel align-center">
     <%= icon "asterisk.png" %>
