@@ -17,7 +17,7 @@ class Ability
       end
 
       can :edit, SemApp do |sem_app|
-        sem_app.owned_by?(user) && !sem_app.archived
+        sem_app.owned_by?(user)
       end
 
       can :manage, SemApp do |sem_app|

@@ -24,8 +24,7 @@ private
 
   def import_basics!(target_sem_app)
     target_sem_app.semester           = @target_semester
-    target_sem_app.archived           = false
-    target_sem_app.approved           = true # TODO
+    target_sem_app.approved           = false
     target_sem_app.miless_derivate_id = nil
     target_sem_app.miless_document_id = nil
     target_sem_app.created_at         = Time.now
