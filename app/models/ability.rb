@@ -2,6 +2,8 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
+    user ||= User.new
+
     if user.is_admin?
       can :manage, :all
     else
@@ -20,13 +22,10 @@ class Ability
         sem_app.owned_by?(user)
       end
 
-      can :manage, SemApp do |sem_app|
-        sem_app.creator == user
-      end
-
       can :transit, SemApp do |sem_app|
+        ApplicationSettings.instance.transit_source_semester.present? &&
         ApplicationSettings.instance.transit_target_semester.present? &&
-          (sem_app.semester.id == ApplicationSettings.instance.transit_source_semester.id)
+        (sem_app.semester.id == ApplicationSettings.instance.transit_source_semester.id)
       end
     end
   end
