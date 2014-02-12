@@ -14,7 +14,7 @@ module Aleph #:nodoc:
 
     @@base_url           = 'http://localhost/X'
     @@library            = 'lib50'
-    @@search_base        = 'lib01' 
+    @@search_base        = 'lib01'
     @@allowed_user_types = [/^PA.+/, /^PS.+/]
     @@allowed_ban_codes  = [/^00$/]
 
@@ -33,6 +33,16 @@ module Aleph #:nodoc:
             self.map{|m| m.match(s)}.select{|x|x}.length > 0
           end
         end
+      end
+    end
+
+    def user_exists?(ils_account_no)
+      data = post_url(@base_url, 'op' => 'bor_info', 'bor_id' => ils_account_no, 'loans' => 'N', 'cash' => 'N', 'hold' => 'N', 'library' => @library)
+
+      if data.xpath('/bor-info/error')[0]
+        return false
+      else
+        return true
       end
     end
 
@@ -96,7 +106,7 @@ module Aleph #:nodoc:
         unless @allowed_user_types.allows?(user.status)
           raise Aleph::UnsupportedAccountTypeError, "Authentication not allowed. Wrong user type."
         end
-        
+
         unless user.ban_codes.all?{|code| @allowed_ban_codes.allows?(code)}
           raise Aleph::AccountLockedError, "Authentication not allowed. Your account is locked."
         end
@@ -258,5 +268,5 @@ module Aleph #:nodoc:
   #
   class AccountLockedError < RuntimeError
   end
-  
+
 end
