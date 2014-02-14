@@ -4,6 +4,9 @@ class ApplicationSettings < ActiveRecord::Base
   belongs_to :transit_source_semester, class_name: 'Semester'
   belongs_to :transit_target_semester, class_name: 'Semester'
 
+  belongs_to :current_semester, class_name: 'Semester'
+  attr_accessor :current_semester_id
+
   validate :transit
 
   def transit_configured?
