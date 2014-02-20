@@ -64,8 +64,6 @@ SemApp2::Application.routes.draw do
       get  :clones
       post :clone
       post :filter_clones
-      get  :show_books
-      get  :show_media
       put  :generate_access_token
       get  :export, to: 'export#export', as: :export
       get  :import, to: 'import#new',    as: :new_import
