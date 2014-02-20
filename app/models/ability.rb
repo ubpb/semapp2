@@ -21,12 +21,6 @@ class Ability
       can :edit, SemApp do |sem_app|
         sem_app.owned_by?(user)
       end
-
-      can :transit, SemApp do |sem_app|
-        ApplicationSettings.instance.transit_source_semester.present? &&
-        ApplicationSettings.instance.transit_target_semester.present? &&
-        (sem_app.semester.id == ApplicationSettings.instance.transit_source_semester.id)
-      end
     end
   end
 end

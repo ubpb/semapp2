@@ -67,7 +67,7 @@
   <% end %>
 </div>
 
-<% if can?(:transit, @sem_app) && can?(:edit, @sem_app) %>
+<% if @sem_app.can_transit? && can?(:edit, @sem_app) %>
   <div class="pui-view align-right">
     <%= link_to transit_sem_app_path(@sem_app), :class => 'pui-button', :method => :post, :data => {:confirm => 'Soll der aktuelle Seminarapparat in das neue Semester übernommen werden? Die können den Apparat übernehmen, wenn Sie die Veranstaltung im kommenden Semester weiterführen. Dieser Vorgang kann länger dauern, brechen Sie ihn nicht ab!'} do %>
       <%= icon('arrow-turn-090.png') %>

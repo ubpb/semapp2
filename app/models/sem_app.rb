@@ -126,6 +126,12 @@ class SemApp < ActiveRecord::Base
     self.book_shelf_ref.present?
   end
 
+  def can_transit?
+    ApplicationSettings.instance.transit_source_semester.present? &&
+    ApplicationSettings.instance.transit_target_semester.present? &&
+    (self.semester.id == ApplicationSettings.instance.transit_source_semester.id)
+  end
+
   def transit
     target_semester = ApplicationSettings.instance.transit_target_semester
     SemAppTransit.new(self, target_semester, import_books: true).transit! if target_semester.present?
