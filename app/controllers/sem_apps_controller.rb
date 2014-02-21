@@ -121,10 +121,9 @@ class SemAppsController < ApplicationController
   end
 
   def transit
-    authorize! :edit,    @sem_app
-    authorize! :transit, @sem_app
+    authorize! :edit, @sem_app
 
-    if clone = @sem_app.transit
+    if @sem_app.can_transit? && clone = @sem_app.transit
       flash[:success] = """
         <p>Ihr Seminarapparat wurde erfolgreich in das neue Semester übernommen. Wir prüfen die Angaben und schalten
         den Seminarapparat nach erfolgter Prüfung für Sie frei. Sie sehen den Status unter
