@@ -50,6 +50,7 @@ SemApp2::Application.routes.draw do
   match 'login'         => 'sessions#new',     as: :login, via: [:get, :post]
   match 'logout'        => 'sessions#destroy', as: :logout, via: :get
   get   'switch/:login' => 'sessions#switch'
+  get   'switch-back'   => 'sessions#switch_back'
 
   # User profile
   resource :user, only: [:show]

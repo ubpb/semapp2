@@ -6,7 +6,8 @@ class SessionsController < ApplicationController
   def create
     user = authenticate(params[:session])
     if user
-      session[:user_id] = user.id
+      session[:user_id]          = user.id
+      session[:original_user_id] = nil
       redirect_to root_url, notice: 'Sie wurden erfolgreich angemeldet.'
     else
       render "new"
@@ -14,8 +15,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = nil
-    #reset_session
+    session[:user_id]          = nil
+    session[:original_user_id] = nil
     redirect_to root_url, notice: 'Sie wurden erfolgreich abgemeldet.'
   end
 
@@ -26,10 +27,21 @@ class SessionsController < ApplicationController
     authorize!(:manage, :all)
     user = User.find_by(login: (params[:login].presence || '').upcase)
     if user
-      session[:user_id] = user.id if user
+      session[:original_user_id] = session[:user_id]
+      session[:user_id]          = user.id
       redirect_to root_url, notice: "Sie sind nun der Nutzer mit dem Login #{user.login}."
     else
-      redirect_to root_url, error: "Der Nutzer existiert nicht im System."
+      redirect_to root_url, notice: "Der Nutzer existiert nicht im System."
+    end
+  end
+
+  def switch_back
+    if session[:user_id] && session[:original_user_id]
+      session[:user_id]          = session[:original_user_id]
+      session[:original_user_id] = nil
+      redirect_to root_url, notice: "Ihre ursprüngliches Login wurde wiederhergestellt."
+    else
+      redirect_to root_url, notice: "Ihre ursprüngliches Login konnte nicht wiederhergestellt werden."
     end
   end
 
