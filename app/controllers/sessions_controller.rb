@@ -19,6 +19,20 @@ class SessionsController < ApplicationController
     redirect_to root_url, notice: 'Sie wurden erfolgreich abgemeldet.'
   end
 
+  #
+  # Allow admins to switch to another user account
+  #
+  def switch
+    authorize!(:manage, :all)
+    user = User.find_by(login: (params[:login].presence || '').upcase)
+    if user
+      session[:user_id] = user.id if user
+      redirect_to root_url, notice: "Sie sind nun der Nutzer mit dem Login #{user.login}."
+    else
+      redirect_to root_url, error: "Der Nutzer existiert nicht im System."
+    end
+  end
+
   protected
 
     def authenticate(attributes)

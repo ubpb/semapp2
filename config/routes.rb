@@ -47,8 +47,9 @@ SemApp2::Application.routes.draw do
   end
 
   resources :sessions, only: [:new, :create, :destroy]
-  match 'login'  => 'sessions#new',     as: :login, via: [:get, :post]
-  match 'logout' => 'sessions#destroy', as: :logout, via: :get
+  match 'login'         => 'sessions#new',     as: :login, via: [:get, :post]
+  match 'logout'        => 'sessions#destroy', as: :logout, via: :get
+  get   'switch/:login' => 'sessions#switch'
 
   # User profile
   resource :user, only: [:show]
