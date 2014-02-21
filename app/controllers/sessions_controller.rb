@@ -25,7 +25,7 @@ class SessionsController < ApplicationController
   #
   def switch
     authorize!(:manage, :all)
-    user = User.find_by(login: (params[:login].presence || '').upcase)
+    user = User.find_by(login: params[:login].upcase)
     if user
       session[:original_user_id] = session[:user_id]
       session[:user_id]          = user.id
