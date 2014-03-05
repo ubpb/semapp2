@@ -7,6 +7,8 @@ SemApp2::Application.routes.draw do
     get   :application_settings, to: 'application_settings#index'
     patch :application_settings, to: 'application_settings#update'
 
+    resources :mailings, only: [:new, :create]
+
     resources :sem_apps, path: 'apps' do
       collection do
         match :filter, via: [:get, :post]
