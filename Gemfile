@@ -6,7 +6,7 @@ gem 'auto_strip_attributes', '~> 2.0.4'
 gem 'barby',                 '~> 0.5.1'
 gem 'cancan',                '~> 1.6.10'
 gem 'chunky_png',            '~> 1.3.0'
-gem 'coffee-rails',          '~> 4.0.0'
+gem 'coffee-rails',          '~> 4.0.1'
 gem 'deep_cloneable',        '~> 1.6.0'
 gem 'dynamic_form',          '~> 1.1.4'  # provides the old f.error_messages method
 gem 'formtastic',            github: 'ubpb/formtastic', branch: '1.2-stable'
@@ -42,7 +42,7 @@ group :development do
   gem 'capistrano',          '~> 3.1.0', require: false
   gem 'capistrano-bundler',  '~> 1.1.2', require: false
   gem 'capistrano-rails',    '~> 1.1.1', require: false
-  gem 'letter_opener',       '~> 1.1.2'
+  gem 'letter_opener',       '~> 1.2.0'
 end
 
 group :production do
