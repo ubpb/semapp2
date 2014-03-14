@@ -5,7 +5,7 @@ class SemApp < ActiveRecord::Base
   belongs_to :semester
   belongs_to :location
 
-  has_one    :book_shelf, :dependent => :destroy
+  has_one    :book_shelf, :dependent => :destroy, validate: true
   has_one    :book_shelf_ref, :dependent => :destroy
   has_many   :ownerships, :dependent => :destroy
   has_many   :owners, :through => :ownerships, :source => :user
@@ -33,7 +33,6 @@ class SemApp < ActiveRecord::Base
 
   # Scopes
   scope :from_current_semester, -> { where(semester_id: Semester.current.id) }
-  #scope :ordered_by,            lambda { |*order| order(order.flatten.first || 'title DESC') }
   scope :unapproved,            -> { where(approved: false) }
   scope :approved,              -> { where(approved: true) }
   scope :with_book_jobs,        -> { joins(:books).distinct.where( "books.state = '#{Book::States[:ordered]}' OR books.state = '#{Book::States[:rejected]}'" ) }

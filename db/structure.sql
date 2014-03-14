@@ -112,7 +112,8 @@ CREATE TABLE book_shelves (
     slot_number character varying NOT NULL,
     sem_app_id integer NOT NULL,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    semester_id integer
 );
 
 
@@ -1297,3 +1298,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140211155653');
 INSERT INTO schema_migrations (version) VALUES ('20140212083059');
 
 INSERT INTO schema_migrations (version) VALUES ('20140212083933');
+
+INSERT INTO schema_migrations (version) VALUES ('20140314111534');
