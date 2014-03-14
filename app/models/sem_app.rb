@@ -36,7 +36,7 @@ class SemApp < ActiveRecord::Base
   #scope :ordered_by,            lambda { |*order| order(order.flatten.first || 'title DESC') }
   scope :unapproved,            -> { where(approved: false) }
   scope :approved,              -> { where(approved: true) }
-  scope :with_book_jobs,        -> { joins(:books).where( "books.state = '#{Book::States[:ordered]}' OR books.state = '#{Book::States[:rejected]}'" ) }
+  scope :with_book_jobs,        -> { joins(:books).distinct.where( "books.state = '#{Book::States[:ordered]}' OR books.state = '#{Book::States[:rejected]}'" ) }
   scope :created_by,            ->(user) { where("creator_id = ?", user.id) }
 
   # Auto strip
