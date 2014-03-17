@@ -18,25 +18,18 @@ class BookShelf < ActiveRecord::Base
   #
   ###########################################################################################
 
-  def ils_account=(value)
-    write_attribute :ils_account, value.present? ? clean_ils_account!(value) : nil
+  def self.clean_ils_account(ils_account)
+    ils_account.gsub(/\s+/, '').slice(0..8).upcase
   end
 
-  ##
-  # TODO: This is a test, to return a clean ils account (9 digits)
-  # number without the check digit.
-  def clean_ils_account
-    clean_ils_account!(self.ils_account)
+  def ils_account=(value)
+    write_attribute :ils_account, value.present? ? self.clean_ils_account(value) : nil
   end
 
 protected
 
   def set_semester
     self.semester = sem_app.semester if sem_app.semester
-  end
-
-  def clean_ils_account!(ils_account)
-    ils_account.gsub(/\s+/, '').slice(0..8)
   end
 
 end
