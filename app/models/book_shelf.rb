@@ -23,7 +23,7 @@ class BookShelf < ActiveRecord::Base
   end
 
   def ils_account=(value)
-    write_attribute :ils_account, value.present? ? self.clean_ils_account(value) : nil
+    write_attribute :ils_account, value.present? ? self.class.clean_ils_account(value) : nil
   end
 
 protected
