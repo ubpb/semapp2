@@ -19,7 +19,7 @@ class BookShelf < ActiveRecord::Base
   ###########################################################################################
 
   def self.clean_ils_account(ils_account)
-    ils_account.gsub(/\s+/, '').slice(0..8).upcase
+    ils_account.gsub(/\s/, '').upcase[/\w\w\d{8,9}/]
   end
 
   def ils_account=(value)

@@ -16,7 +16,6 @@ class SyncEngine
     puts "# Found #{sem_apps.size} app(s) for the current semester: #{Semester.current.title}"
     puts "#\n\n"
 
-    @errors = 0
     sem_apps.each do |sem_app|
       sync_sem_app(sem_app)
     end
@@ -29,6 +28,7 @@ class SyncEngine
 
   def sync_sem_app(sem_app)
     print "Syncing #{sem_app.id}. "
+    @errors ||= 0
 
     if sem_app.has_book_shelf?
       begin
@@ -69,7 +69,7 @@ class SyncEngine
       rescue Exception => e
         puts e.backtrace
         @errors += 1
-        print "Error! #{e}"
+        print "Error! #{e.message}"
       ensure
         print "\n"
       end

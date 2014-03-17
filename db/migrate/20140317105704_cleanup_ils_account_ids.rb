@@ -1,8 +1,10 @@
 class CleanupIlsAccountIds < ActiveRecord::Migration
-  def change
+  def up
     BookShelf.all.each do |bs|
-      bs.ils_account = bs.ils_account
-      bs.save(validate: false)
+      if bs.ils_account.present?
+        bs.ils_account = bs.ils_account
+        bs.save(validate: false)
+      end
     end
   end
 end
