@@ -1,10 +1,10 @@
 class BooksController < ApplicationController
 
-  MAX_BOOKS = 35.freeze
+  MAX_BOOKS = 40.freeze
 
   before_filter :require_authenticate, :load_sem_app
   before_filter :check_current_semester, :only => [:index, :new, :create, :destroy]
-  before_filter :check_max_books, only: [:new, :create]
+  #before_filter :check_max_books, only: [:new, :create]
 
   def index
     @ordered_books  = Book.for_sem_app(@sem_app).ordered.ordered_by('created_at')
