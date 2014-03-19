@@ -56,6 +56,10 @@ class Book < ActiveRecord::Base
     placeholder.present?
   end
 
+  def reference_copy?
+    reference_copy.present?
+  end
+
   ###########################################################################################
   #
   # Class Methods

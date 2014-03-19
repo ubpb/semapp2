@@ -53,7 +53,12 @@ class SyncEngine
           # iterate over all db entries
           db_entries.each do |s, e|
             unless ils_entries.include?(s)
-              # found a book that is in the db AND _NOT_ in the ILS
+              # Ignore placeholders
+              next if e.placeholder?
+              # Ignore reference copies
+              next if e.reference_copy?
+
+              # Found a book that is in the db AND _NOT_ in the ILS
               if e.state == Book::States[:in_shelf] || e.state == Book::States[:rejected]
                 delete_entry(e)
               end
