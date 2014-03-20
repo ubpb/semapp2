@@ -16,16 +16,16 @@
     <% end %>
     <% if book.state == Book::States[:ordered] or book.state == Book::States[:deferred] %>
       <%= link_to 'Auftrag löschen', admin_book_path(book), :method => :delete, :class => 'pui-button small', :data => {:confirm => 'Auftrag wirklich löschen?'} %>
-      <%#= link_to 'Wurde verbucht', placed_in_shelf_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
+      <%= link_to 'Wurde verbucht', placed_in_shelf_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
     <% end %>
     <% if book.state == Book::States[:ordered] %>
       <%= link_to 'Wurde vorgemerkt', defer_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
       <%= link_to 'Als Stellvertreter', edit_admin_book_path(book), :class => 'pui-button small' %>
       <%= link_to 'Als Präsenzexemplar', '#', :class => 'pui-button small pui-overlay-trigger', :rel => "#reference-copy-panel-#{book.id}" %>
     <% end %>
-    <%# if book.state == Book::States[:rejected] %>
-      <%#= link_to 'Wurde aus dem Regal entfernt', removed_from_shelf_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
-    <%# end %>
+    <% if book.state == Book::States[:rejected] %>
+      <%= link_to 'Wurde aus dem Regal entfernt', removed_from_shelf_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
+    <% end %>
   </div>
 
   <div class="only-print" style="margin-bottom: 30px">&nbsp;<!-- Notizen --></div>
