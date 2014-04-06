@@ -27,7 +27,9 @@
   <% if @media.present? %>
     <% if @sem_app.is_unlocked_in_session?(session) or can?(:edit, @sem_app) %>
       <% @media.each do |media| %>
-        <% if media.instance.try(:to_be_published) %>
+        <% next if media.instance.blank? %>
+
+        <% if media.instance.to_be_published %>
           <% if can?(:edit, @sem_app) %>
             <%= render 'media', :media => media.instance %>
           <% end %>
