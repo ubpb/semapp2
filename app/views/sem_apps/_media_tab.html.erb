@@ -29,7 +29,7 @@
       <% @media.each do |media| %>
         <% next if media.instance.blank? %>
 
-        <% if media.instance.to_be_published %>
+        <% if media.instance.try(:to_be_published) %>
           <% if can?(:edit, @sem_app) %>
             <%= render 'media', :media => media.instance %>
           <% end %>
