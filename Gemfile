@@ -18,7 +18,6 @@ gem 'nokogiri',              '~> 1.6.1'
 gem 'paperclip',             '~> 3.5.3'
 gem 'pg',                    '~> 0.17.1'
 gem 'pg_search',             '~> 0.7.3'
-gem 'prarupa',               '~> 0.1.2'  # provides old textilize helper methods
 gem 'protected_attributes',  '~> 1.0.5'  # Needed as long as we migrated to strong parameters
 gem 'rails',                 '~> 4.0.3'
 gem 'rails-i18n',            '~> 4.0.1'

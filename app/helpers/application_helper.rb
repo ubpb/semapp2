@@ -30,4 +30,13 @@ module ApplicationHelper
     # ( block_given? ? concat(content) : content ).html_safe
   end
 
+  def textilize(text)
+    text.present? ? RedCloth.new(text).to_html : ""
+  end
+
+  def textilize_without_paragraph(text)
+    textilized = textilize(text)
+    textilized.match(/<p>(.*)<\/p>/m).try(:[], 1) || ""
+  end
+
 end
