@@ -133,7 +133,7 @@ module Aleph #:nodoc:
         lendings << {
           :barcode    => content_from_node(l, 'z30/z30-barcode'),
           :doc_number => content_from_node(l, 'z13/z13-doc-number'),
-          :signature  => content_from_node(l, 'z13/z13-call-no'),
+          :signature  => content_from_node(l, 'z30/z30-call-no'),
           :title      => content_from_node(l, 'z13/z13-title'),
           :author     => content_from_node(l, 'z13/z13-author'),
           :year       => content_from_node(l, 'z13/z13-year'),
