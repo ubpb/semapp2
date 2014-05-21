@@ -10,7 +10,7 @@ class SemApp < ActiveRecord::Base
   has_many   :ownerships, :dependent => :destroy
   has_many   :owners, :through => :ownerships, :source => :user
   has_many   :books, -> {order("title desc")}, :dependent => :destroy
-  has_many   :media, -> {includes(:instance, :file_attachments, :scanjob).order("position asc")}, :dependent => :destroy
+  has_many   :media, -> {includes(:instance, :file_attachments, :scanjob).order("position asc, instance_id asc")}, :dependent => :destroy
   has_many   :miless_passwords, :dependent => :destroy
 
   # Behavior
@@ -139,13 +139,9 @@ class SemApp < ActiveRecord::Base
   def next_position(origin_id)
     position = 1
 
-    begin
-      if origin_id.present?
-        origin_media = media.find(origin_id)
-        position     = origin_media.position + 1
-      end
-    rescue
-      # nothing
+    if origin_id.present?
+      origin_media = media.find_by(instance_id: origin_id)
+      position     = origin_media.position if origin_media
     end
 
     return position
