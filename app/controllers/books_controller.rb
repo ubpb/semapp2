@@ -102,7 +102,7 @@ class BooksController < ApplicationController
   end
 
   def check_current_semester
-    unless @sem_app.is_from_current_semester?
+    unless @sem_app.is_from_current_semester? || can?(:manage, :all)
       flash[:error] = "Der Seminarapparat ist nicht aus dem aktuellen Semester. Sie können Buchaufträge nur für aktuelle Seminarapparate beauftragen bzw. bearbeiten oder löschen."
       redirect_to sem_app_path(@sem_app, :anchor => 'books')
     end
