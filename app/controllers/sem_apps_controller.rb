@@ -178,20 +178,11 @@ class SemAppsController < ApplicationController
 
     # Try to find the source sem app we want to clone
     source_sem_app = SemApp.find(params[:source])
+
     # Check the password in the case the user has no edit rights
     # on the source sem app (needed for old Miless sem apps)
     if cannot? :edit, source_sem_app
-     password = params[:password]
-     unless password.present?
-        flash[:error] = "Bitte geben Sie das Passwort des Seminarapparates ein das sie damals (im alten System) bei der Beantragung gesetzt haben."
-        redirect_to :action => :clones
-        return false
-     end
-     unless source_sem_app.miless_passwords.map{|p| p.password}.include?(password)
-        flash[:error] = "Das Passwort ist falsch. Der Seminarapparat konnte nicht geklont werden."
-        redirect_to :action => :clones
-        return false
-     end
+      enforce_miless_password!
     end
 
     begin
@@ -206,7 +197,7 @@ class SemAppsController < ApplicationController
     redirect_to sem_app_path(@sem_app, :anchor => 'media')
   end
 
-  private
+private
 
   def load_sem_app
     begin
@@ -229,6 +220,23 @@ class SemAppsController < ApplicationController
     rescue
       flash[:error] = "Der Seminarapparat den Sie versucht haben aufzurufen existiert nicht."
       redirect_to sem_apps_path
+      return false
+    end
+  end
+
+  # TODO: Remove me when all traces of Miless has been removed.
+  def enforce_miless_password!
+    password = params[:password]
+
+    unless password.present?
+      flash[:error] = "Bitte geben Sie das Passwort des Seminarapparates ein das sie damals (im alten System) bei der Beantragung gesetzt haben."
+      redirect_to :action => :clones
+      return false
+    end
+
+    unless source_sem_app.miless_passwords.map{|p| p.password}.include?(password)
+      flash[:error] = "Das Passwort ist falsch. Der Seminarapparat konnte nicht geklont werden."
+      redirect_to :action => :clones
       return false
     end
   end
