@@ -27,13 +27,8 @@ module Aleph #:nodoc:
       @allowed_user_types = options[:allowed_user_types].present? ? options[:allowed_user_types] : @@allowed_user_types
       @allowed_ban_codes  = options[:allowed_ban_codes].present?  ? options[:allowed_ban_codes]  : @@allowed_ban_codes
 
-      [@allowed_user_types, @allowed_ban_codes].each do |o|
-        o.instance_eval do
-          def allows?(s)
-            self.map{|m| m.match(s)}.select{|x|x}.length > 0
-          end
-        end
-      end
+      apply_check_helper_to(@allowed_user_types)
+      apply_check_helper_to(@allowed_ban_codes)
     end
 
     def user_exists?(ils_account_no)
@@ -247,6 +242,16 @@ module Aleph #:nodoc:
       response = http.request(request)
 
       Nokogiri::XML(response.body)
+    end
+
+  private
+
+    def apply_check_helper_to(object)
+      object.instance_eval do
+        def allows?(s)
+          self.map{|m| m.match(s)}.select{|x|x}.length > 0
+        end
+      end
     end
 
   end
