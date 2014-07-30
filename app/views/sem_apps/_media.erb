@@ -18,13 +18,13 @@
       <% end %>
 
       <% if media.is_a?(MediaText) or media.is_a?(MediaMonograph) or media.is_a?(MediaArticle) or media.is_a?(MediaCollectedArticle) %>
-        <%= link_to polymorphic_path(['new', media, 'file_attachment']), :class => 'toolbar-item' do %>
+        <%= link_to polymorphic_path(['new', @sem_app, media, 'file_attachment']), :class => 'toolbar-item' do %>
           <%= icon 'overlay/document--plus.png', :title => 'Eine Datei anhängen' %>
         <% end %>
       <% end %>
 
       <% if !media.parent.scanjob.present? and (media.is_a?(MediaMonograph) or media.is_a?(MediaArticle) or media.is_a?(MediaCollectedArticle)) %>
-        <%= link_to polymorphic_path(['new', media, 'scanjob']), :class => 'toolbar-item' do %>
+        <%= link_to polymorphic_path(['new', @sem_app, media, 'scanjob']), :class => 'toolbar-item' do %>
           <%= icon 'overlay/photo-album--plus.png', :title => 'Einen Scan beauftragen' %>
         <% end %>
       <% end %>
