@@ -78,36 +78,53 @@ module Aleph #:nodoc:
       load_records(set_number, page, page_size)
     end
 
-    private
+  private
 
     def do_authenticate(ils_account_no, verification)
       raise "Account No. required" if ils_account_no.blank?
-      raise "Password required" if verification.blank?
+      raise "Password required"    if verification.blank?
 
-      ils_account_no.gsub!(/\s/, '')
-      ils_account_no.upcase!
+      data = trigger_auth_request(ils_account_no, verification)
 
-      data = post_url(@base_url, 'op' => 'bor-auth', 'bor_id' => ils_account_no, 'verification' => verification, 'library' => @library)
-
-      if data.xpath('/bor-auth/error')[0] || data.xpath('/bor-auth')[0].nil?
+      if invalid_auth_response?(data)
         raise Aleph::AuthenticationError, "Authentication failed"
       else
         user = Aleph::User.new(ils_account_no, data.xpath('/bor-auth')[0])
-
-        unless user.email.present?
-          raise Aleph::AuthenticationError, "No E-Mail address available."
-        end
-
-        unless @allowed_user_types.allows?(user.status)
-          raise Aleph::UnsupportedAccountTypeError, "Authentication not allowed. Wrong user type."
-        end
-
-        unless user.ban_codes.all?{|code| @allowed_ban_codes.allows?(code)}
-          raise Aleph::AccountLockedError, "Authentication not allowed. Your account is locked."
-        end
+        verify_user!(user)
 
         return user
       end
+    end
+
+    def trigger_auth_request(ils_account_no, verification)
+      ils_account_no.gsub!(/\s/, '')
+      ils_account_no.upcase!
+      post_url(@base_url,
+        'op'           => 'bor-auth',
+        'bor_id'       => ils_account_no,
+        'verification' => verification,
+        'library'      => @library
+      )
+    end
+
+    def invalid_auth_response?(data)
+      data.xpath('/bor-auth/error')[0] || data.xpath('/bor-auth')[0].nil?
+    end
+
+    def verify_user!(user)
+      unless user.email.present?
+        raise Aleph::AuthenticationError, "No E-Mail address available."
+      end
+
+      unless @allowed_user_types.allows?(user.status)
+        raise Aleph::UnsupportedAccountTypeError, "Authentication not allowed. Wrong user type."
+      end
+
+      unless user.ban_codes.all?{|code| @allowed_ban_codes.allows?(code)}
+        raise Aleph::AccountLockedError, "Authentication not allowed. Your account is locked."
+      end
+
+      user
     end
 
     ##
@@ -243,8 +260,6 @@ module Aleph #:nodoc:
 
       Nokogiri::XML(response.body)
     end
-
-  private
 
     def apply_check_helper_to(object)
       object.instance_eval do
