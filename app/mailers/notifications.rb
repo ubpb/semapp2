@@ -19,11 +19,14 @@ class Notifications < ActionMailer::Base
          subject:  "[Seminarapparate] Ihre Seminarapparate"
   end
 
-  def admin_mailing(user, subject, text)
+  def admin_mailing(user, subject, text, from = nil)
     @user = user
     @text = text
-    mail to:       user.email,
-         subject:  "[Seminarapparate] #{subject}"
+    mail(
+      to: user.email,
+      from: from.presence || Notifications.default[:from],
+      subject: "[Seminarapparate] #{subject}"
+    )
   end
 
 end

@@ -1,11 +1,12 @@
 .pui-panel.error.align-center
-  | !!!Actung!!! Mit diesem Formular können die eine Rundmail an alle Besitzer von Seminarapparaten schicken!
+  | !!!Achtung!!! Mit diesem Formular können die eine Rundmail an alle Besitzer von Seminarapparaten schicken!
 
 = semantic_form_for :message, url: admin_mailings_path do |f|
   = f.inputs :name => nil do
     = f.input :semesters, :label => 'Welche Semester?', :collection => Semester.order('position ASC'), as: :check_boxes
     = f.input :subject,   :label => 'Betreff', as: :string
     = f.input :text,      :label => 'Text',    as: :text
+    = f.input :from,      :label => 'Absender E-Mail Adresse', as: :string, required: false, hint: "Optional: Wenn Feld leer ist wird <b>#{Notifications.default[:from]}</b> verwendet.".html_safe
 
   = f.buttons do
     = f.commit_button 'Senden'

@@ -8,6 +8,7 @@ class Admin::MailingsController < Admin::ApplicationController
     semester_ids = params[:message][:semesters]
     subject      = params[:message][:subject]
     text         = params[:message][:text]
+    from         = params[:message][:from]
     users        = users(semester_ids)
 
     if users.blank?
@@ -21,7 +22,7 @@ class Admin::MailingsController < Admin::ApplicationController
       render :new
     else
       users.each do |user|
-        Notifications.admin_mailing(user, subject, text).deliver
+        Notifications.admin_mailing(user, subject, text, from).deliver
       end
       flash[:success] = "Nachricht wurde versendet"
       redirect_to action: :new
