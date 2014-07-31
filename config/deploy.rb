@@ -12,7 +12,7 @@ set :log_level,    :info
 set :keep_releases, 5
 
 set :linked_files, %w{config/database.yml config/sem_app.yml}
-set :linked_dirs,  %w{log tmp data}
+set :linked_dirs,  %w{log tmp data public/assets}
 
 namespace :deploy do
   desc 'Restart application'
@@ -22,14 +22,14 @@ namespace :deploy do
     end
   end
 
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      within release_path do
-        execute :rake, 'tmp:clear'
-      end
-    end
-  end
+  # after :restart, :clear_cache do
+  #   on roles(:web), in: :groups, limit: 3, wait: 10 do
+  #     within release_path do
+  #       execute :rake, 'tmp:clear'
+  #     end
+  #   end
+  # end
 
   after :finishing, 'deploy:restart'
-  after :finishing, 'deploy:cleanup'
+  #after :finishing, 'deploy:cleanup'
 end
