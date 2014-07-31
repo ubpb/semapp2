@@ -8,7 +8,7 @@ set :branch,   'master'
 set :rails_env,    'production'
 set :format,       :pretty
 set :pty,          true
-set :log_level,    :info
+set :log_level,    :debug
 set :keep_releases, 5
 
 set :linked_files, %w{config/database.yml config/sem_app.yml}
