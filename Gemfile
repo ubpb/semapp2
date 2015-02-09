@@ -41,7 +41,3 @@ group :development do
   gem 'capistrano-rails',    '~> 1.1.1', require: false
   gem 'letter_opener',       '~> 1.2.0'
 end
-
-group :production do
-  gem 'therubyracer',       '~> 0.12.1'
-end
