@@ -22,7 +22,7 @@ gem 'protected_attributes',  '~> 1.0.8'  # Needed as long as we migrated to stro
 gem 'rails',                 '~> 4.0.8'
 gem 'rails-i18n',            '~> 4.0.2'
 gem 'RedCloth',              '~> 4.2.3'
-gem 'rubyzip',               '~> 1.1.0', require: 'zip', github: 'ubpb/rubyzip'
+gem 'rubyzip',               '~> 1.1.7', require: 'zip'
 gem 'sass-rails',            '~> 4.0.1'
 gem 'slim',                  '~> 2.0.2'
 gem 'uglifier',              '>= 2.5.3'
