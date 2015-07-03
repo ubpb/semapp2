@@ -3,7 +3,9 @@ defaults: &defaults
   aleph_library: 'pad50'
   aleph_search_base: 'pbaus'
   aleph_allowed_user_types:
-    - !ruby/regexp /^PA.+/
+    - !ruby/regexp /\APA.+/
+    - !ruby/regexp /\APD.+/
+    - !ruby/regexp /\A10/ # die neuen PD Ausweise haben Status 10 gesetzt anstatt PD - Dienstlich
     - !ruby/regexp /\APS.+\Z/
   aleph_allowed_ban_codes:
     - !ruby/regexp /^00$/

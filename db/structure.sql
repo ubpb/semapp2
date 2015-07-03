@@ -10,6 +10,13 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
+-- Name: binary_upgrade; Type: SCHEMA; Schema: -; Owner: -
+--
+
+CREATE SCHEMA binary_upgrade;
+
+
+--
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -21,6 +28,89 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = binary_upgrade, pg_catalog;
+
+--
+-- Name: create_empty_extension(text, text, boolean, text, oid[], text[], text[]); Type: FUNCTION; Schema: binary_upgrade; Owner: -
+--
+
+CREATE FUNCTION create_empty_extension(text, text, boolean, text, oid[], text[], text[]) RETURNS void
+    LANGUAGE c
+    AS '$libdir/pg_upgrade_support', 'create_empty_extension';
+
+
+--
+-- Name: set_next_array_pg_type_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
+--
+
+CREATE FUNCTION set_next_array_pg_type_oid(oid) RETURNS void
+    LANGUAGE c STRICT
+    AS '$libdir/pg_upgrade_support', 'set_next_array_pg_type_oid';
+
+
+--
+-- Name: set_next_heap_pg_class_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
+--
+
+CREATE FUNCTION set_next_heap_pg_class_oid(oid) RETURNS void
+    LANGUAGE c STRICT
+    AS '$libdir/pg_upgrade_support', 'set_next_heap_pg_class_oid';
+
+
+--
+-- Name: set_next_index_pg_class_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
+--
+
+CREATE FUNCTION set_next_index_pg_class_oid(oid) RETURNS void
+    LANGUAGE c STRICT
+    AS '$libdir/pg_upgrade_support', 'set_next_index_pg_class_oid';
+
+
+--
+-- Name: set_next_pg_authid_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
+--
+
+CREATE FUNCTION set_next_pg_authid_oid(oid) RETURNS void
+    LANGUAGE c STRICT
+    AS '$libdir/pg_upgrade_support', 'set_next_pg_authid_oid';
+
+
+--
+-- Name: set_next_pg_enum_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
+--
+
+CREATE FUNCTION set_next_pg_enum_oid(oid) RETURNS void
+    LANGUAGE c STRICT
+    AS '$libdir/pg_upgrade_support', 'set_next_pg_enum_oid';
+
+
+--
+-- Name: set_next_pg_type_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
+--
+
+CREATE FUNCTION set_next_pg_type_oid(oid) RETURNS void
+    LANGUAGE c STRICT
+    AS '$libdir/pg_upgrade_support', 'set_next_pg_type_oid';
+
+
+--
+-- Name: set_next_toast_pg_class_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
+--
+
+CREATE FUNCTION set_next_toast_pg_class_oid(oid) RETURNS void
+    LANGUAGE c STRICT
+    AS '$libdir/pg_upgrade_support', 'set_next_toast_pg_class_oid';
+
+
+--
+-- Name: set_next_toast_pg_type_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
+--
+
+CREATE FUNCTION set_next_toast_pg_type_oid(oid) RETURNS void
+    LANGUAGE c STRICT
+    AS '$libdir/pg_upgrade_support', 'set_next_toast_pg_type_oid';
 
 
 SET search_path = public, pg_catalog;
@@ -1302,3 +1392,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140212083933');
 INSERT INTO schema_migrations (version) VALUES ('20140314111534');
 
 INSERT INTO schema_migrations (version) VALUES ('20140317105704');
+
+INSERT INTO schema_migrations (version) VALUES ('20150703070412');

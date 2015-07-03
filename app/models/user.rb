@@ -10,8 +10,16 @@ class User < ActiveRecord::Base
 
 
   def self.authenticate(attributes)
-    if (aleph_user = Aleph::Connector.new.authenticate(attributes[:login], attributes[:password])).is_a?(Aleph::User)
-      create_or_update_aleph_user!(attributes[:login], aleph_user)
+    login    = attributes[:login]
+    password = attributes[:password]
+
+    # Handle Admin PA -> PD switch
+    if login =~ /PA10123456/i
+      login = "PD10123456"
+    end
+
+    if (aleph_user = Aleph::Connector.new.authenticate(login, password)).is_a?(Aleph::User)
+      create_or_update_aleph_user!(login, aleph_user)
     else
       raise "Aleph authentication failed"
     end
