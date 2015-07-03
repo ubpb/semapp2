@@ -28,6 +28,10 @@ gem 'slim',                  '~> 2.0.2'
 gem 'uglifier',              '>= 2.5.3'
 gem 'will_paginate',         '~> 3.0.7'
 
+group :production do
+  gem 'therubyracer'
+end
+
 group :development, :test do
   gem 'pry',                 '~> 0.10.0'
   gem 'pry-byebug',          '~> 1.3.3'
