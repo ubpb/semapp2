@@ -3,10 +3,10 @@ class ScanjobsController < ApplicationController
   before_filter :load_media
 
   def new
-    unless @media.sem_app.is_from_current_semester?
-      flash[:error] = "Der Seminarapparat ist nicht aus dem aktuellen Semester. Sie können Scanaufträge nur für aktuelle Seminarapparate beauftragen."
-      redirect_to sem_app_path(@media.sem_app, :anchor => 'media')
-    end
+    # unless @media.sem_app.is_from_current_semester?
+    #   flash[:error] = "Der Seminarapparat ist nicht aus dem aktuellen Semester. Sie können Scanaufträge nur für aktuelle Seminarapparate beauftragen."
+    #   redirect_to sem_app_path(@media.sem_app, :anchor => 'media')
+    # end
 
     @scanjob = @media.parent.build_scanjob
 
