@@ -16,7 +16,7 @@
 // * use the minified version of jquery-migrate for production, because this versions also doesn't shout out to the console
 //
 //= require jquery
-//= require jquery-migrate-1.2.1.min
+//= require jquery-migrate-1.4.1.min
 //= require jquery_ujs
 //= require jquery.ui.draggable
 //= require jquery.ui.sortable
