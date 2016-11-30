@@ -15,7 +15,7 @@ gem "jbuilder",              "~> 2.0.4"
 gem "jquery-rails",          "~> 3.1.0"
 gem "jquery-ui-rails",       "~> 4.2.0"
 gem "nokogiri",              "~> 1.6.1"
-gem "paperclip",             "~> 3.5.4"
+gem "paperclip",             "~> 4.3.7"
 gem "pg",                    "~> 0.17.1"
 gem "pg_search",             "~> 0.7.6"
 gem "protected_attributes",  "~> 1.0.8"  # Needed as long as we migrated to strong parameters
