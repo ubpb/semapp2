@@ -1,5 +1,5 @@
-<%= form.buttons do %>
-  <%= form.commit_button 'Speichern' %>
+<%= form.actions do %>
+  <%= form.action :submit, label: 'Speichern' %>
   <li class="commit">
     <%= link_to 'Abbrechen', sem_app_path(@media.sem_app || @sem_app, :anchor => 'media') %>
   </li>
