@@ -6,5 +6,5 @@
     = f.input :transit_source_semester, :label => 'Quell-Semester', :collection => Semester.order('position ASC')
     = f.input :transit_target_semester, :label => 'Ziel-Semester',  :collection => Semester.order('position ASC')
 
-  = f.buttons do
-    = f.commit_button 'Speichern'
+  = f.actions do
+    = f.action :submit, label: 'Speichern'

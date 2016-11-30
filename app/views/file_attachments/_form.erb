@@ -21,8 +21,8 @@
     <%= f.input :accepts_copyright, :as => :boolean, :required => false, :label => "Ich bestätige, dass ich mit der Bereitstellung dieser Datei nicht gegen geltendes Urheberrecht verstoße.<br/>#{link_to('Hinweise zum Urheberrecht', '#', :class => 'pui-overlay-trigger', :rel => '#legal-info')}".html_safe %>
   <% end %>
 
-  <%= f.buttons do %>
-    <%= f.commit_button 'Datei hochladen' %>
+  <%= f.actions do %>
+    <%= f.action :submit, label: 'Datei hochladen' %>
     <li class="commit">
       <%= link_to 'Abbrechen', sem_app_path(sem_app, :anchor => 'media') %>
     </li>

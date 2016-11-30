@@ -9,8 +9,8 @@
     <%= f.input :comment, :label => 'Kommentar', :required => false %>
   <% end %>
 
-  <%= f.buttons do %>
-    <%= f.commit_button 'Speichern' %>
+  <%= f.actions do %>
+    <%= f.action :submit, label: 'Speichern' %>
     <li class="commit">
       <%= link_to 'Abbrechen', sem_app_path(@sem_app, :anchor => 'books') %>
     </li>

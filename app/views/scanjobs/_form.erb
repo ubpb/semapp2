@@ -28,8 +28,8 @@
     <%= f.input :message, :label => 'Ihre Nachricht an uns', :required => false, :input_html => {:rows => 2}, :hint => 'Ihre Nachricht/Hinweise an die Bibliothek. Wird nicht öffentlich angezeigt.' %>
   <% end %>
 
-  <%= f.buttons do %>
-    <%= f.commit_button 'Scan beauftragen' %>
+  <%= f.actions do %>
+    <%= f.action :submit, label: 'Scan beauftragen' %>
     <li class="commit">
       <%= link_to 'Abbrechen', sem_app_path(sem_app, :anchor => 'media') %>
     </li>
