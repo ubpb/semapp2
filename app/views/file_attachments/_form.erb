@@ -1,16 +1,4 @@
-<%
-  sem_app = @file_attachment.media.sem_app
-
-  if @file_attachment.new_record?
-    url = polymorphic_path([sem_app, @media, @file_attachment])
-  else
-    url = polymorphic_path([@media, @file_attachment])
-  end
-%>
-
-
-<%= semantic_form_for @file_attachment, url: url, :html => {:multipart => true} do |f| %>
-
+<%= semantic_form_for @file_attachment, url: polymorphic_path([@media, @file_attachment]), :html => {:multipart => true} do |f| %>
   <%= f.inputs do %>
     <% if f.object.new_record?  %>
       <%= f.input :file, :label => 'Datei', :required => true %>
@@ -24,7 +12,7 @@
   <%= f.actions do %>
     <%= f.action :submit, label: 'Datei hochladen' %>
     <li class="commit">
-      <%= link_to 'Abbrechen', sem_app_path(sem_app, :anchor => 'media') %>
+      <%= link_to 'Abbrechen', sem_app_path(@file_attachment.media.sem_app, :anchor => 'media') %>
     </li>
   <% end %>
 <% end %>
