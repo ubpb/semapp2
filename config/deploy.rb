@@ -6,7 +6,7 @@ set :branch,   'master'
 set :log_level,   :debug
 
 set :linked_files, fetch(:linked_files, []).push(
-  "config/database.yml", "config/sem_app.yml"
+  "config/database.yml", "config/sem_app.yml", "config/secrets.yml"
 )
 set :linked_dirs, fetch(:linked_dirs, []).push(
   "log", "tmp", "data", "public/assets"
