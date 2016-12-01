@@ -6,6 +6,7 @@ class FileAttachment < ActiveRecord::Base
 
   # Behavior
   has_attached_file :file, :styles => {}, :processors => []
+  do_not_validate_attachment_file_type :file
 
   # Validation
   validates_presence_of :media

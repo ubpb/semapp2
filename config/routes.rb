@@ -1,4 +1,4 @@
-SemApp2::Application.routes.draw do
+Rails.application.routes.draw do
 
   # Admin routes
   namespace :admin do |admin|

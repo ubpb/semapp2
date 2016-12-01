@@ -1,7 +1,7 @@
 class DownloadController < ApplicationController
 
   def download
-    attachment = FileAttachment.find(params[:id], :include => {:media => [:sem_app]})
+    attachment = FileAttachment.includes(:media => :sem_app).find(params[:id])
 
     sem_app = attachment.media.sem_app
     if sem_app.is_unlocked_in_session?(session) or can?(:edit, sem_app)

@@ -14,8 +14,8 @@
     <%= f.input :password, :label => 'Passwort', :required => false %>
   <% end %>
 
-  <%= f.buttons do %>
-    <%= f.commit_button 'Anmelden' %>
+  <%= f.actions do %>
+    <%= f.action :submit, label: 'Anmelden' %>
   <% end %>
 <% end %>
 

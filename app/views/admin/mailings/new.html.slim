@@ -8,5 +8,5 @@
     = f.input :text,      :label => 'Text',    as: :text
     = f.input :from,      :label => 'Absender E-Mail Adresse', as: :string, required: false, hint: "Optional: Wenn Feld leer ist wird <b>#{Notifications.default[:from]}</b> verwendet.".html_safe
 
-  = f.buttons do
-    = f.commit_button 'Senden'
+  = f.actions do
+    = f.action :submit, label: 'Senden'

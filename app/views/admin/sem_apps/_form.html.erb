@@ -56,8 +56,8 @@
     <%= f.input :shared_secret, :label => 'Lesekennung' %>
   <% end %>
 
-  <%= f.buttons do %>
-    <%= f.commit_button 'Speichern' %>
+  <%= f.actions do %>
+    <%= f.action :submit, label: 'Speichern' %>
     <li>
       <% if f.object.new_record?  %>
         <%= link_to 'Abbrechen', admin_sem_apps_path %>
