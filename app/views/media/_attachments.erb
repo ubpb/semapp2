@@ -14,7 +14,12 @@
             <% if a.updated_at.present? %>
               / letzte Änderung: <%= l(a.updated_at, :format => :short) %>
             <% end %>
-            <%= link_to '[Download]', a.file.url %>
+
+            <% if can?(:download, a) %>
+              <%= link_to '[Download]', a.file.url %>
+            <% else %>
+              <strong><%= link_to '[Download aktuell nicht möglich! Klicken für Info]', '/info' %></strong>
+            <% end %>
           </span>
 
           <span class="toolbar" style="display: none">

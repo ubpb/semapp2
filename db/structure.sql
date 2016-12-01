@@ -2,19 +2,17 @@
 -- PostgreSQL database dump
 --
 
+-- Dumped from database version 9.6.1
+-- Dumped by pg_dump version 9.6.1
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
-
---
--- Name: binary_upgrade; Type: SCHEMA; Schema: -; Owner: -
---
-
-CREATE SCHEMA binary_upgrade;
-
+SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
@@ -28,89 +26,6 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
-SET search_path = binary_upgrade, pg_catalog;
-
---
--- Name: create_empty_extension(text, text, boolean, text, oid[], text[], text[]); Type: FUNCTION; Schema: binary_upgrade; Owner: -
---
-
-CREATE FUNCTION create_empty_extension(text, text, boolean, text, oid[], text[], text[]) RETURNS void
-    LANGUAGE c
-    AS '$libdir/pg_upgrade_support', 'create_empty_extension';
-
-
---
--- Name: set_next_array_pg_type_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
---
-
-CREATE FUNCTION set_next_array_pg_type_oid(oid) RETURNS void
-    LANGUAGE c STRICT
-    AS '$libdir/pg_upgrade_support', 'set_next_array_pg_type_oid';
-
-
---
--- Name: set_next_heap_pg_class_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
---
-
-CREATE FUNCTION set_next_heap_pg_class_oid(oid) RETURNS void
-    LANGUAGE c STRICT
-    AS '$libdir/pg_upgrade_support', 'set_next_heap_pg_class_oid';
-
-
---
--- Name: set_next_index_pg_class_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
---
-
-CREATE FUNCTION set_next_index_pg_class_oid(oid) RETURNS void
-    LANGUAGE c STRICT
-    AS '$libdir/pg_upgrade_support', 'set_next_index_pg_class_oid';
-
-
---
--- Name: set_next_pg_authid_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
---
-
-CREATE FUNCTION set_next_pg_authid_oid(oid) RETURNS void
-    LANGUAGE c STRICT
-    AS '$libdir/pg_upgrade_support', 'set_next_pg_authid_oid';
-
-
---
--- Name: set_next_pg_enum_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
---
-
-CREATE FUNCTION set_next_pg_enum_oid(oid) RETURNS void
-    LANGUAGE c STRICT
-    AS '$libdir/pg_upgrade_support', 'set_next_pg_enum_oid';
-
-
---
--- Name: set_next_pg_type_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
---
-
-CREATE FUNCTION set_next_pg_type_oid(oid) RETURNS void
-    LANGUAGE c STRICT
-    AS '$libdir/pg_upgrade_support', 'set_next_pg_type_oid';
-
-
---
--- Name: set_next_toast_pg_class_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
---
-
-CREATE FUNCTION set_next_toast_pg_class_oid(oid) RETURNS void
-    LANGUAGE c STRICT
-    AS '$libdir/pg_upgrade_support', 'set_next_toast_pg_class_oid';
-
-
---
--- Name: set_next_toast_pg_type_oid(oid); Type: FUNCTION; Schema: binary_upgrade; Owner: -
---
-
-CREATE FUNCTION set_next_toast_pg_type_oid(oid) RETURNS void
-    LANGUAGE c STRICT
-    AS '$libdir/pg_upgrade_support', 'set_next_toast_pg_type_oid';
 
 
 SET search_path = public, pg_catalog;
@@ -131,13 +46,14 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: application_settings; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: application_settings; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE application_settings (
     id integer NOT NULL,
     transit_source_semester_id integer,
-    transit_target_semester_id integer
+    transit_target_semester_id integer,
+    restrict_download_of_files_restricted_by_copyright boolean DEFAULT false NOT NULL
 );
 
 
@@ -161,7 +77,7 @@ ALTER SEQUENCE application_settings_id_seq OWNED BY application_settings.id;
 
 
 --
--- Name: book_shelf_refs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: book_shelf_refs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE book_shelf_refs (
@@ -193,7 +109,7 @@ ALTER SEQUENCE book_shelf_refs_id_seq OWNED BY book_shelf_refs.id;
 
 
 --
--- Name: book_shelves; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: book_shelves; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE book_shelves (
@@ -227,7 +143,7 @@ ALTER SEQUENCE book_shelves_id_seq OWNED BY book_shelves.id;
 
 
 --
--- Name: books; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: books; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE books (
@@ -272,7 +188,7 @@ ALTER SEQUENCE books_id_seq OWNED BY books.id;
 
 
 --
--- Name: file_attachments; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: file_attachments; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE file_attachments (
@@ -284,7 +200,8 @@ CREATE TABLE file_attachments (
     description text,
     scanjob boolean DEFAULT false NOT NULL,
     updated_at timestamp without time zone,
-    media_id integer
+    media_id integer,
+    restricted_by_copyright boolean DEFAULT true NOT NULL
 );
 
 
@@ -308,7 +225,7 @@ ALTER SEQUENCE file_attachments_id_seq OWNED BY file_attachments.id;
 
 
 --
--- Name: locations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: locations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE locations (
@@ -340,7 +257,7 @@ ALTER SEQUENCE locations_id_seq OWNED BY locations.id;
 
 
 --
--- Name: media; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: media; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE media (
@@ -357,7 +274,7 @@ CREATE TABLE media (
 
 
 --
--- Name: media_articles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: media_articles; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE media_articles (
@@ -401,7 +318,7 @@ ALTER SEQUENCE media_articles_id_seq OWNED BY media_articles.id;
 
 
 --
--- Name: media_collected_articles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: media_collected_articles; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE media_collected_articles (
@@ -449,7 +366,7 @@ ALTER SEQUENCE media_collected_articles_id_seq OWNED BY media_collected_articles
 
 
 --
--- Name: media_headlines; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: media_headlines; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE media_headlines (
@@ -500,7 +417,7 @@ ALTER SEQUENCE media_id_seq OWNED BY media.id;
 
 
 --
--- Name: media_monographs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: media_monographs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE media_monographs (
@@ -540,7 +457,7 @@ ALTER SEQUENCE media_monographs_id_seq OWNED BY media_monographs.id;
 
 
 --
--- Name: media_texts; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: media_texts; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE media_texts (
@@ -572,7 +489,7 @@ ALTER SEQUENCE media_texts_id_seq OWNED BY media_texts.id;
 
 
 --
--- Name: miless_passwords; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: miless_passwords; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE miless_passwords (
@@ -602,7 +519,7 @@ ALTER SEQUENCE miless_passwords_id_seq OWNED BY miless_passwords.id;
 
 
 --
--- Name: ownerships; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: ownerships; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE ownerships (
@@ -634,7 +551,7 @@ ALTER SEQUENCE ownerships_id_seq OWNED BY ownerships.id;
 
 
 --
--- Name: scanjobs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: scanjobs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE scanjobs (
@@ -672,7 +589,7 @@ ALTER SEQUENCE scanjobs_id_seq OWNED BY scanjobs.id;
 
 
 --
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE schema_migrations (
@@ -681,7 +598,7 @@ CREATE TABLE schema_migrations (
 
 
 --
--- Name: sem_apps; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sem_apps; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sem_apps (
@@ -722,7 +639,7 @@ ALTER SEQUENCE sem_apps_id_seq OWNED BY sem_apps.id;
 
 
 --
--- Name: semesters; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: semesters; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE semesters (
@@ -755,7 +672,7 @@ ALTER SEQUENCE semesters_id_seq OWNED BY semesters.id;
 
 
 --
--- Name: sessions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sessions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sessions (
@@ -787,7 +704,7 @@ ALTER SEQUENCE sessions_id_seq OWNED BY sessions.id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE users (
@@ -819,140 +736,140 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: application_settings id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY application_settings ALTER COLUMN id SET DEFAULT nextval('application_settings_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: book_shelf_refs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY book_shelf_refs ALTER COLUMN id SET DEFAULT nextval('book_shelf_refs_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: book_shelves id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY book_shelves ALTER COLUMN id SET DEFAULT nextval('book_shelves_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: books id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY books ALTER COLUMN id SET DEFAULT nextval('books_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: file_attachments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY file_attachments ALTER COLUMN id SET DEFAULT nextval('file_attachments_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: locations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY locations ALTER COLUMN id SET DEFAULT nextval('locations_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: media id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY media ALTER COLUMN id SET DEFAULT nextval('media_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: media_articles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY media_articles ALTER COLUMN id SET DEFAULT nextval('media_articles_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: media_collected_articles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY media_collected_articles ALTER COLUMN id SET DEFAULT nextval('media_collected_articles_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: media_headlines id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY media_headlines ALTER COLUMN id SET DEFAULT nextval('media_headlines_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: media_monographs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY media_monographs ALTER COLUMN id SET DEFAULT nextval('media_monographs_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: media_texts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY media_texts ALTER COLUMN id SET DEFAULT nextval('media_texts_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: miless_passwords id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY miless_passwords ALTER COLUMN id SET DEFAULT nextval('miless_passwords_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: ownerships id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ownerships ALTER COLUMN id SET DEFAULT nextval('ownerships_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: scanjobs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY scanjobs ALTER COLUMN id SET DEFAULT nextval('scanjobs_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: sem_apps id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sem_apps ALTER COLUMN id SET DEFAULT nextval('sem_apps_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: semesters id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY semesters ALTER COLUMN id SET DEFAULT nextval('semesters_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: sessions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sessions ALTER COLUMN id SET DEFAULT nextval('sessions_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
 --
--- Name: application_settings_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: application_settings application_settings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY application_settings
@@ -960,7 +877,7 @@ ALTER TABLE ONLY application_settings
 
 
 --
--- Name: book_shelf_refs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: book_shelf_refs book_shelf_refs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY book_shelf_refs
@@ -968,7 +885,7 @@ ALTER TABLE ONLY book_shelf_refs
 
 
 --
--- Name: book_shelves_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: book_shelves book_shelves_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY book_shelves
@@ -976,7 +893,7 @@ ALTER TABLE ONLY book_shelves
 
 
 --
--- Name: books_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: books books_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY books
@@ -984,7 +901,7 @@ ALTER TABLE ONLY books
 
 
 --
--- Name: file_attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: file_attachments file_attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY file_attachments
@@ -992,7 +909,7 @@ ALTER TABLE ONLY file_attachments
 
 
 --
--- Name: locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: locations locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY locations
@@ -1000,7 +917,7 @@ ALTER TABLE ONLY locations
 
 
 --
--- Name: media_articles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: media_articles media_articles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY media_articles
@@ -1008,7 +925,7 @@ ALTER TABLE ONLY media_articles
 
 
 --
--- Name: media_collected_articles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: media_collected_articles media_collected_articles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY media_collected_articles
@@ -1016,7 +933,7 @@ ALTER TABLE ONLY media_collected_articles
 
 
 --
--- Name: media_headlines_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: media_headlines media_headlines_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY media_headlines
@@ -1024,7 +941,7 @@ ALTER TABLE ONLY media_headlines
 
 
 --
--- Name: media_monographs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: media_monographs media_monographs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY media_monographs
@@ -1032,7 +949,7 @@ ALTER TABLE ONLY media_monographs
 
 
 --
--- Name: media_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: media media_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY media
@@ -1040,7 +957,7 @@ ALTER TABLE ONLY media
 
 
 --
--- Name: media_texts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: media_texts media_texts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY media_texts
@@ -1048,7 +965,7 @@ ALTER TABLE ONLY media_texts
 
 
 --
--- Name: miless_passwords_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: miless_passwords miless_passwords_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY miless_passwords
@@ -1056,7 +973,7 @@ ALTER TABLE ONLY miless_passwords
 
 
 --
--- Name: ownerships_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: ownerships ownerships_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ownerships
@@ -1064,7 +981,7 @@ ALTER TABLE ONLY ownerships
 
 
 --
--- Name: scanjobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: scanjobs scanjobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY scanjobs
@@ -1072,7 +989,7 @@ ALTER TABLE ONLY scanjobs
 
 
 --
--- Name: sem_apps_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sem_apps sem_apps_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sem_apps
@@ -1080,7 +997,7 @@ ALTER TABLE ONLY sem_apps
 
 
 --
--- Name: semesters_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: semesters semesters_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY semesters
@@ -1088,7 +1005,7 @@ ALTER TABLE ONLY semesters
 
 
 --
--- Name: sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sessions sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sessions
@@ -1096,7 +1013,7 @@ ALTER TABLE ONLY sessions
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users
@@ -1104,133 +1021,133 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: index_application_settings_on_transit_source_semester_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_application_settings_on_transit_source_semester_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_application_settings_on_transit_source_semester_id ON application_settings USING btree (transit_source_semester_id);
 
 
 --
--- Name: index_application_settings_on_transit_target_semester_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_application_settings_on_transit_target_semester_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_application_settings_on_transit_target_semester_id ON application_settings USING btree (transit_target_semester_id);
 
 
 --
--- Name: index_books_on_ils_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_books_on_ils_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_books_on_ils_id ON books USING btree (ils_id);
 
 
 --
--- Name: index_books_on_sem_app_id_and_ils_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_books_on_sem_app_id_and_ils_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_books_on_sem_app_id_and_ils_id ON books USING btree (sem_app_id, ils_id);
 
 
 --
--- Name: index_books_on_state; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_books_on_state; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_books_on_state ON books USING btree (state);
 
 
 --
--- Name: index_media_on_instance_id_and_instance_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_media_on_instance_id_and_instance_type; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_media_on_instance_id_and_instance_type ON media USING btree (instance_id, instance_type);
 
 
 --
--- Name: index_media_on_sem_app_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_media_on_sem_app_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_media_on_sem_app_id ON media USING btree (sem_app_id);
 
 
 --
--- Name: index_miless_passwords_on_password; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_miless_passwords_on_password; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_miless_passwords_on_password ON miless_passwords USING btree (password);
 
 
 --
--- Name: index_ownerships_on_sem_app_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_ownerships_on_sem_app_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_ownerships_on_sem_app_id ON ownerships USING btree (sem_app_id);
 
 
 --
--- Name: index_ownerships_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_ownerships_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_ownerships_on_user_id ON ownerships USING btree (user_id);
 
 
 --
--- Name: index_sem_apps_on_miless_derivate_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_sem_apps_on_miless_derivate_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_sem_apps_on_miless_derivate_id ON sem_apps USING btree (miless_derivate_id);
 
 
 --
--- Name: index_sem_apps_on_miless_document_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_sem_apps_on_miless_document_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_sem_apps_on_miless_document_id ON sem_apps USING btree (miless_document_id);
 
 
 --
--- Name: index_semesters_on_current; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_semesters_on_current; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_semesters_on_current ON semesters USING btree (current);
 
 
 --
--- Name: index_sessions_on_session_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_sessions_on_session_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_sessions_on_session_id ON sessions USING btree (session_id);
 
 
 --
--- Name: index_sessions_on_updated_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_sessions_on_updated_at; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_sessions_on_updated_at ON sessions USING btree (updated_at);
 
 
 --
--- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_users_on_email ON users USING btree (email);
 
 
 --
--- Name: index_users_on_login; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_login; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_users_on_login ON users USING btree (login);
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
 
 
 --
--- Name: book_shelf_refs_sem_app_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: book_shelf_refs book_shelf_refs_sem_app_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY book_shelf_refs
@@ -1238,7 +1155,7 @@ ALTER TABLE ONLY book_shelf_refs
 
 
 --
--- Name: book_shelf_refs_sem_app_ref_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: book_shelf_refs book_shelf_refs_sem_app_ref_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY book_shelf_refs
@@ -1246,7 +1163,7 @@ ALTER TABLE ONLY book_shelf_refs
 
 
 --
--- Name: book_shelves_sem_app_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: book_shelves book_shelves_sem_app_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY book_shelves
@@ -1254,7 +1171,7 @@ ALTER TABLE ONLY book_shelves
 
 
 --
--- Name: books_creator_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: books books_creator_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY books
@@ -1262,7 +1179,7 @@ ALTER TABLE ONLY books
 
 
 --
--- Name: books_placeholder_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: books books_placeholder_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY books
@@ -1270,7 +1187,7 @@ ALTER TABLE ONLY books
 
 
 --
--- Name: books_sem_app_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: books books_sem_app_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY books
@@ -1278,7 +1195,7 @@ ALTER TABLE ONLY books
 
 
 --
--- Name: file_attachments_creator_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: file_attachments file_attachments_creator_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY file_attachments
@@ -1286,7 +1203,7 @@ ALTER TABLE ONLY file_attachments
 
 
 --
--- Name: miless_passwords_sem_app_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: miless_passwords miless_passwords_sem_app_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY miless_passwords
@@ -1294,7 +1211,7 @@ ALTER TABLE ONLY miless_passwords
 
 
 --
--- Name: ownerships_sem_app_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: ownerships ownerships_sem_app_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ownerships
@@ -1302,7 +1219,7 @@ ALTER TABLE ONLY ownerships
 
 
 --
--- Name: ownerships_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: ownerships ownerships_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ownerships
@@ -1310,7 +1227,7 @@ ALTER TABLE ONLY ownerships
 
 
 --
--- Name: scanjobs_creator_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: scanjobs scanjobs_creator_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY scanjobs
@@ -1318,7 +1235,7 @@ ALTER TABLE ONLY scanjobs
 
 
 --
--- Name: sem_apps_creator_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: sem_apps sem_apps_creator_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sem_apps
@@ -1326,7 +1243,7 @@ ALTER TABLE ONLY sem_apps
 
 
 --
--- Name: sem_apps_location_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: sem_apps sem_apps_location_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sem_apps
@@ -1334,7 +1251,7 @@ ALTER TABLE ONLY sem_apps
 
 
 --
--- Name: sem_apps_semester_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: sem_apps sem_apps_semester_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sem_apps
@@ -1345,7 +1262,7 @@ ALTER TABLE ONLY sem_apps
 -- PostgreSQL database dump complete
 --
 
-SET search_path TO "$user",public;
+SET search_path TO "$user", public;
 
 INSERT INTO schema_migrations (version) VALUES ('20091110135349');
 
@@ -1394,3 +1311,8 @@ INSERT INTO schema_migrations (version) VALUES ('20140314111534');
 INSERT INTO schema_migrations (version) VALUES ('20140317105704');
 
 INSERT INTO schema_migrations (version) VALUES ('20150703070412');
+
+INSERT INTO schema_migrations (version) VALUES ('20161201103459');
+
+INSERT INTO schema_migrations (version) VALUES ('20161201115436');
+

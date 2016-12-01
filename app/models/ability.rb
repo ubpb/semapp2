@@ -21,6 +21,13 @@ class Ability
       can :edit, SemApp do |sem_app|
         sem_app.owned_by?(user)
       end
+
+      #
+      # File attachments
+      #
+      can :download, FileAttachment do |attachment|
+        !(ApplicationSettings.instance.restrict_download_of_files_restricted_by_copyright && attachment.restricted_by_copyright)
+      end
     end
   end
 end
