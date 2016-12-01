@@ -3,18 +3,7 @@
   <%= @scanjob.media.instance.to_s %>
 </p>
 
-<%
-  sem_app = @scanjob.media.sem_app
-
-  if @scanjob.new_record?
-    url = polymorphic_path([sem_app, @media, @scanjob])
-  else
-    url = polymorphic_path([@media, @scanjob])
-  end
-%>
-
-
-<%= semantic_form_for @scanjob, url: url do |f| %>
+<%= semantic_form_for @scanjob, url: polymorphic_path([@media, @scanjob]) do |f| %>
 
   <%= f.inputs do %>
     <%= f.input :signature,  :label => 'Signatur in der Bibliothek', :required => true, :hint => '<b>Bitte beachten Sie:</b> Wir scannen ausschließlich Bücher und Zeitschriften aus unserem Bestand. Geben Sie bitte dazu die Signatur der o.g. Quelle an. Bitte recherchieren Sie die Signatur mit unserem <a href="https://katalog.ub.uni-paderborn.de" target="blank">Katalog</a>'.html_safe %>
@@ -31,7 +20,7 @@
   <%= f.actions do %>
     <%= f.action :submit, label: 'Scan beauftragen' %>
     <li class="commit">
-      <%= link_to 'Abbrechen', sem_app_path(sem_app, :anchor => 'media') %>
+      <%= link_to 'Abbrechen', sem_app_path(@scanjob.media.sem_app, :anchor => 'media') %>
     </li>
   <% end %>
 <% end %>
