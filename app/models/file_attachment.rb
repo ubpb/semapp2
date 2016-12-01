@@ -15,6 +15,7 @@ class FileAttachment < ActiveRecord::Base
 
   # virtuell attributes
   attr_accessor :accepts_copyright
+  attr_accessor :is_not_subject_to_copyright_or_owner_has_copyright
 
   ################################################################################################
   #
