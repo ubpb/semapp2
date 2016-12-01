@@ -1,2 +1,3 @@
-set :branch, 'production'
-server 'ubsemapp', user: 'ubpb', roles: [:web, :app, :db]
+server "ubsemapp", user: "ubpb", roles: [:web, :app, :db]
+set :deploy_to, "/semapp"
+set :branch, "production"
