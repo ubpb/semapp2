@@ -26,7 +26,8 @@ class Ability
       # File attachments
       #
       can :download, FileAttachment do |attachment|
-        !(ApplicationSettings.instance.restrict_download_of_files_restricted_by_copyright && attachment.restricted_by_copyright)
+        can?(:edit, attachment.media.sem_app) ||
+          (!(ApplicationSettings.instance.restrict_download_of_files_restricted_by_copyright && attachment.restricted_by_copyright))
       end
     end
   end
