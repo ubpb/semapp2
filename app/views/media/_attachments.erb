@@ -17,8 +17,6 @@
 
             <% if can?(:download, a) %>
               <%= link_to '[Download]', a.file.url %>
-            <% else %>
-              <strong><%= link_to '[Download aktuell nicht möglich! Klicken für Info]', '/info' %></strong>
             <% end %>
           </span>
 
@@ -30,6 +28,22 @@
               <%= icon 'wrench.png' %>
             <% end %>
           </span>
+
+          <% if can?(:edit, @sem_app) %>
+            <% if a.restricted_by_copyright %>
+              <% if ApplicationSettings.instance.restrict_download_of_files_restricted_by_copyright %>
+                <div><strong>Unterliegt §52a UrhG: Der Download für Studierende ist gesperrt!</strong></div>
+              <% else %>
+                <div><strong>Unterliegt §52a UrhG: Der Download für Studierende wird zum 1.1.2017 gesperrt!</strong></div>
+              <% end %>
+            <% else %>
+              <div><strong>Unterliegt NICHT §52a UrhG. Der Download für Studierende ist jederzeit möglich!</strong></div>
+            <% end %>
+          <% end %>
+
+          <% if cannot?(:download, a) %>
+            <div><strong><%= link_to 'Download nicht möglich! Klicken für Info', '/info' %></strong></div>
+          <% end %>
         </li>
       <% end %>
     </ol>
