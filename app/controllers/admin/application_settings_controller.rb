@@ -18,6 +18,7 @@ class Admin::ApplicationSettingsController < Admin::ApplicationController
     @settings = ApplicationSettings.instance
     @settings.current_semester_id = Semester.current.try(:id)
     if @settings.update_attributes(params[:application_settings])
+      Rails.cache.clear
       redirect_to admin_application_settings_path
     else
       render :index

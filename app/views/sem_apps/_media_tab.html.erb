@@ -34,7 +34,7 @@
             <%= render 'media', :media => media.instance %>
           <% end %>
         <% else %>
-          <% cache(media.instance) do %>
+          <% cache_unless(can?(:edit, @sem_app), media.instance) do %>
             <%= render 'media', :media => media.instance %>
           <% end %>
         <% end %>

@@ -1,5 +1,6 @@
 class Notifications < ActionMailer::Base
   default from: "information@ub.uni-paderborn.de"
+  layout "mailer"
 
   def sem_app_created_notification(sem_app)
     @sem_app = sem_app

@@ -12,3 +12,6 @@ Rails.application.config.assets.version = '1.0'
 
 Rails.application.config.assets.precompile += %w( pui/**/*.png )
 Rails.application.config.assets.precompile += %w( views/**/*.js )
+
+Rails.application.config.assets.precompile += %w( markitup/sets/textile/**/*.css markitup/sets/textile/**/*.png markitup/sets/textile/**/*.js )
+Rails.application.config.assets.precompile += %w( markitup/skins/pui/**/*.css markitup/skins/pui/**/*.png markitup/skins/pui/**/*.js )

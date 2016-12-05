@@ -4,7 +4,7 @@ module MediaSupport
   module ClassMethods
     def acts_as_media_parent
       self.class_eval do
-        belongs_to :instance,      -> { includes :parent }, polymorphic: true, dependent: :destroy
+        belongs_to :instance,      -> { includes :parent }, polymorphic: true, dependent: :destroy, touch: true
         validates  :instance_id,   presence: true
         validates  :instance_type, presence: true
       end
