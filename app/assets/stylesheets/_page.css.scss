@@ -58,6 +58,19 @@ form.formtastic fieldset ol li p.inline-errors {clear:left}
   overflow: hidden;
 }
 
+#global-message {
+  text-align: center;
+  padding: 8px;
+  background: #D80C25;
+  color: white;
+  font-weight: bold;
+
+  a {
+    color: white;
+    text-decoration: underline;
+  }
+}
+
 #header-wrapper {
   background: image-url("page/header-bg.png") repeat-x;
 }
