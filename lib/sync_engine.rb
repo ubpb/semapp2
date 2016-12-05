@@ -88,7 +88,7 @@ class SyncEngine
   def load_sem_apps
     current_semester = Semester.current
     raise "No current semester" unless current_semester
-    return SemApp.find_all_by_semester_id(current_semester.id)
+    return SemApp.where(semester: current_semester)
   end
 
   def mergable_hash_from_db_entries(db_entries)
