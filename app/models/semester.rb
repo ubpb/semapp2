@@ -17,7 +17,7 @@ class Semester < ActiveRecord::Base
       write_attribute(:current, nil)
     else
       unless current
-        connection.execute('update semesters set current = NULL')
+        ActiveRecord::Base.connection.execute('update semesters set current = NULL')
         write_attribute(:current, true)
       end
     end
