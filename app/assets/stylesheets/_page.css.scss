@@ -49,6 +49,16 @@ table.pui-tableview td { width: auto }
 
 form.formtastic fieldset ol li p.inline-errors {clear:left}
 
+form.formtastic .input-important {
+  background: #D80C25;
+  color: white;
+
+  a {
+    color: white;
+    text-decoration: underline !important;
+  }
+}
+
 /* Page structure
 ----------------------------------------------------------------------------------------------------*/
 
