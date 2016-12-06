@@ -9,7 +9,7 @@
   copyright_label << "<p>Unterliegen die Datei-Inhalte nicht §52a UrhG, sind diese z.B. gemeinfrei, Sie selbst sind der Urheber
     (z.B. Vorlesungsfolien) oder Sie besitzen entsprechende Verwertungsrechte, können Sie den Harken entfernen und so den Download
     für Ihre Studierende ermöglichen.</p>"
-  copyright_label << "<p>Für weitere Informationen zu dem Thema <a href=\"#\">klicken Sie bitte hier</a>.</p>"
+  copyright_label << '<p>Für weitere Informationen zu dem Thema <a href="https://www.ub.uni-paderborn.de/recherche/hinweise-zur-nutzung-der-elektronischen-angebote/52a-urhg/" target="_blank">klicken Sie bitte hier</a>.</p>'
 %>
 
 <%= semantic_form_for @file_attachment, url: polymorphic_path([@media, @file_attachment]), :html => {:multipart => true} do |f| %>
@@ -20,7 +20,7 @@
       <%= f.input :file, :label => 'Datei', :required => false, :hint => 'Wenn Sie die vorhandene Datei ersetzen möchten, wählen Sie eine neue Datei aus. Ansonsten lassen Sie dieses Feld einfach leer.' %>
     <% end %>
     <%= f.input :description, :label => 'Beschreibung', :required => false, :input_html => {:rows => 5} %>
-    <%= f.input :restricted_by_copyright, :label => copyright_label.html_safe, wrapper_html: {style: "background: #FB0016"} %>
+    <%= f.input :restricted_by_copyright, :label => copyright_label.html_safe, wrapper_html: {class: "input-important"} %>
     <%= f.input :accepts_copyright, :as => :boolean, :required => false, :label => "Ich bestätige, dass ich mit der Bereitstellung dieser Datei für meine Studierenden nicht gegen geltendes Urheberrecht verstoße.<br/>#{link_to('Hinweise zum Urheberrecht', '#', :class => 'pui-overlay-trigger', :rel => '#legal-info')}".html_safe %>
   <% end %>
 
