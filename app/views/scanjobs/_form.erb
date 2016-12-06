@@ -18,6 +18,9 @@
   <% end %>
 
   <%= f.actions do %>
+    <div class="pui-panel error">
+      Auf Grund der aktuellen Situation zum §52a UrhG nehmen wir aktuell nur Scanaufträge von gemeinfreien Werken entgegen.
+    </div>
     <%= f.action :submit, label: 'Scan beauftragen' %>
     <li class="commit">
       <%= link_to 'Abbrechen', sem_app_path(@scanjob.media.sem_app, :anchor => 'media') %>

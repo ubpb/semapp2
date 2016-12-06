@@ -42,7 +42,7 @@
           <% end %>
 
           <% if cannot?(:download, a) %>
-            <div><strong><%= link_to 'Download nicht möglich! Klicken für Info', '/info' %></strong></div>
+            <div><strong>Download nicht möglich! <%= link_to 'Klicken Sie hier für weitere Infos.', '#' %></strong></div>
           <% end %>
         </li>
       <% end %>
