@@ -41,7 +41,7 @@
             <% else %>
               <div><strong>Unterliegt NICHT §52a UrhG => Der Download für Studierende ist jederzeit möglich!</strong></div>
             <% end %>
-            <%= link_to "Klicken Sie auf Bearbeiten um diese Einstellung zu ändern", edit_file_attachment_path(a) %>
+            <%= link_to "Klicken Sie auf bearbeiten um diese Einstellung zu ändern", edit_file_attachment_path(a) %>
           <% end %>
 
           <% if cannot?(:download, a) %>
