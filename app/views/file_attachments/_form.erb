@@ -1,13 +1,13 @@
 <%
-  copyright_label = "Die Datei-Inhalte unterliegen §52a UrhG!"
+  copyright_label = "Die Datei-Inhalte unterliegen §52a UrhG!<br/><br/>"
   if ApplicationSettings.instance.restrict_download_of_files_restricted_by_copyright
-    copyright_label << "<p>Ist der Harken gesetzt, ist der Download für Studierende für diese Datei nicht möglich.</b></p>"
+    copyright_label << "<p>Ist der Haken gesetzt, ist der Download für Studierende für diese Datei nicht möglich.</b></p>"
   else
-    copyright_label << "<p><b>Ist der Harken gesetzt, ist der Download für Studierende für diese Datei ab dem 1.1.2017 nicht mehr möglich.</b></p>"
+    copyright_label << "<p><b>Ist der Haken gesetzt, ist der Download für Studierende für diese Datei ab dem 1.1.2017 nicht mehr möglich.</b></p>"
   end
 
   copyright_label << "<p>Unterliegen die Datei-Inhalte nicht §52a UrhG, sind diese z.B. gemeinfrei, Sie selbst sind der Urheber
-    (z.B. Vorlesungsfolien) oder Sie besitzen entsprechende Verwertungsrechte, können Sie den Harken entfernen und so den Download
+    (z.B. Vorlesungsfolien) oder Sie besitzen entsprechende Verwertungsrechte, können Sie den Haken entfernen und so den Download
     für Ihre Studierende ermöglichen.</p>"
   copyright_label << '<p>Für weitere Informationen zu dem Thema <a href="https://www.ub.uni-paderborn.de/recherche/hinweise-zur-nutzung-der-elektronischen-angebote/52a-urhg/" target="_blank">klicken Sie bitte hier</a>.</p>'
 %>
@@ -25,7 +25,7 @@
   <% end %>
 
   <%= f.actions do %>
-    <%= f.action :submit, label: 'Datei hochladen' %>
+    <%= f.action :submit, label: 'Speichern' %>
     <li class="commit">
       <%= link_to 'Abbrechen', sem_app_path(@file_attachment.media.sem_app, :anchor => 'media') %>
     </li>

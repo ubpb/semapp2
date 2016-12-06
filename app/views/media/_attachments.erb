@@ -31,14 +31,17 @@
 
           <% if can?(:edit, @sem_app) %>
             <% if a.restricted_by_copyright %>
-              <% if ApplicationSettings.instance.restrict_download_of_files_restricted_by_copyright %>
-                <div><strong>Unterliegt §52a UrhG: Der Download für Studierende ist gesperrt!</strong></div>
-              <% else %>
-                <div><strong>Unterliegt §52a UrhG: Der Download für Studierende wird zum 1.1.2017 gesperrt!</strong></div>
-              <% end %>
+              <div>
+                <% if ApplicationSettings.instance.restrict_download_of_files_restricted_by_copyright %>
+                  <strong>Unterliegt §52a UrhG => Der Download für Studierende ist gesperrt!</strong>
+                <% else %>
+                  <strong>Unterliegt §52a UrhG => Der Download für Studierende wird zum 1.1.2017 gesperrt!</strong>
+                <% end %>
+              </div>
             <% else %>
-              <div><strong>Unterliegt NICHT §52a UrhG. Der Download für Studierende ist jederzeit möglich!</strong></div>
+              <div><strong>Unterliegt NICHT §52a UrhG => Der Download für Studierende ist jederzeit möglich!</strong></div>
             <% end %>
+            <%= link_to "Klicken Sie auf Bearbeiten um diese Einstellung zu ändern", edit_file_attachment_path(a) %>
           <% end %>
 
           <% if cannot?(:download, a) %>
