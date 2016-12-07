@@ -27,6 +27,7 @@ gem "sass-rails",            "~> 4.0.1"
 gem "slim",                  "~> 2.0.2"
 gem "uglifier",              ">= 2.5.3"
 gem "will_paginate",         "~> 3.0.7"
+gem "newrelic_rpm"
 
 group :production do
   gem "therubyracer"

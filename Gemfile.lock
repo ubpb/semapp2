@@ -124,6 +124,7 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (3.2.0)
+    newrelic_rpm (3.17.0.325)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
     nokogiri (1.6.8.1-x86-mingw32)
@@ -253,6 +254,7 @@ DEPENDENCIES
   jquery-rails (~> 3.1.0)
   jquery-ui-rails (~> 4.2.0)
   letter_opener (~> 1.4.1)
+  newrelic_rpm
   nokogiri (~> 1.6.1)
   paperclip (~> 4.3.7)
   pg (~> 0.17.1)
