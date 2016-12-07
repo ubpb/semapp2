@@ -7,19 +7,19 @@ h3.section § 52a Dateifreigaben prüfen
   table.pui-tableview
     thead
       tr
+        th Datei
         th Aktualisiert am
-        th SemApp ID
         th
     tbody
       - @file_attachments.each do |a|
         tr
           td
+            = a.file_file_name
+          td
             - if a.updated_at.present?
-              = l(a.updated_at, :format => :short)
+              = l(a.updated_at, :format => '%d.%m.%Y, %H:%m')
             - else
               = "–"
-          td
-            = a.media.sem_app.id
           td(style="text-align:right")
             = link_to '[Download]', a.file.url
             =< link_to '[Bearbeiten]', edit_file_attachment_path(a), target: "_blank"
