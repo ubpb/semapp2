@@ -32,6 +32,8 @@ module ApplicationHelper
 
   def textilize(text)
     text.present? ? RedCloth.new(text).to_html : ""
+  rescue
+    "PARSING ERROR!"
   end
 
   def textilize_without_paragraph(text)
