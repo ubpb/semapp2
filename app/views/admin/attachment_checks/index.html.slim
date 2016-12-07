@@ -8,19 +8,19 @@ h3.section § 52a Dateifreigaben prüfen
     thead
       tr
         th Datei
-        th Aktualisiert am
         th
     tbody
       - @file_attachments.each do |a|
         tr
           td
-            = a.file_file_name
-          td
-            - if a.updated_at.present?
-              = l(a.updated_at, :format => '%d.%m.%Y, %H:%m')
-            - else
-              = "–"
-          td(style="text-align:right")
+            div = a.file_file_name
+            i
+              ' Aktualisiert am:
+              - if a.updated_at.present?
+                = l(a.updated_at, :format => '%d.%m.%Y, %H:%m')
+              - else
+                = "–"
+          td(style="text-align:right" nowrap)
             = link_to '[Download]', a.file.url
             =< link_to '[Bearbeiten]', edit_file_attachment_path(a), target: "_blank"
             =< link_to '[Semapp öffnen]', sem_app_path(a.media.sem_app), target: "_blank"
