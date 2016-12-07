@@ -21,7 +21,7 @@ gem "pg_search",             "~> 0.7.6"
 gem "protected_attributes",  "~> 1.0.8"  # Needed as long as we migrated to strong parameters
 gem "rails",                 "~> 4.2.7", "< 4.2.8"
 gem "rails-i18n",            "~> 4.0.9"
-gem "RedCloth",              "~> 4.2.3"
+gem "RedCloth",              "~> 4.3.2"
 gem "rubyzip",               "~> 1.1.7", require: "zip"
 gem "sass-rails",            "~> 4.0.1"
 gem "slim",                  "~> 2.0.2"
