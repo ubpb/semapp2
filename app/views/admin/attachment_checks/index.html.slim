@@ -1,0 +1,28 @@
+h3.section § 52a Dateifreigaben prüfen
+
+.pui-panel.notice
+  ' Die folgenden Dateien sind markiert worden, dass sie nicht § 52a UrhG unterliegen.
+
+- if @file_attachments.present?
+  table.pui-tableview
+    thead
+      tr
+        th Aktualisiert am
+        th SemApp ID
+        th
+    tbody
+      - @file_attachments.each do |a|
+        tr
+          td
+            - if a.updated_at.present?
+              = l(a.updated_at, :format => :short)
+            - else
+              = "–"
+          td
+            = a.media.sem_app.id
+          td(style="text-align:right")
+            = link_to '[Download]', a.file.url
+            =< link_to '[Bearbeiten]', edit_file_attachment_path(a), target: "_blank"
+            =< link_to '[Semapp öffnen]', sem_app_path(a.media.sem_app), target: "_blank"
+
+  = will_paginate @file_attachments

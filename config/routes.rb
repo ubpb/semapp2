@@ -43,6 +43,8 @@ Rails.application.routes.draw do
      end
     end
 
+    get "attachment-checks", to: "attachment_checks#index", as: :attachment_checks
+
     match 'scanjobs/:id/print-job' => 'scanjobs#print_job', as: :scanjob_print_job, via: [:get, :post]
     match 'scanjobs/print-list/:list_name' => 'scanjobs#print_list', as: :scanjobs_print_list, via: [:get, :post]
     match 'scanjobs/:id/barcode' => 'scanjobs#barcode', as: :scanjob_barcode, via: [:get, :post]
