@@ -20,6 +20,7 @@ gem "paperclip",             "~> 4.3.7"
 gem "pg",                    "~> 0.17.1"
 gem "pg_search",             "~> 0.7.6"
 gem "protected_attributes",  "~> 1.0.8"  # Needed as long as we migrated to strong parameters
+gem "rack-attack",           "~> 5.0.1"
 gem "rails",                 "~> 4.2.7", "< 4.2.8"
 gem "rails-i18n",            "~> 4.0.9"
 gem "RedCloth",              "~> 4.3.2"
