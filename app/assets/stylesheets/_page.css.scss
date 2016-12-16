@@ -50,11 +50,11 @@ table.pui-tableview td { width: auto }
 form.formtastic fieldset ol li p.inline-errors {clear:left}
 
 form.formtastic .input-important {
-  background: #D80C25;
-  color: white;
+  //background: #D80C25;
+  //color: white;
 
   a {
-    color: white;
+    //color: white;
     text-decoration: underline !important;
   }
 
@@ -75,7 +75,7 @@ form.formtastic .input-important {
 #global-message {
   text-align: center;
   padding: 8px;
-  background: #D80C25;
+  background: #2AAE25;
   color: white;
   font-weight: bold;
 
