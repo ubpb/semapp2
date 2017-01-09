@@ -26,7 +26,7 @@ private
 
   def clone_media!
     @source_sem_app.media.each do |media|
-      clone = media.dup(include: :instance, validate: false)
+      clone = media.deep_clone(include: :instance, validate: false)
 
       clone.sem_app          = @target_sem_app
       clone.file_attachments = media_file_attachments(media)

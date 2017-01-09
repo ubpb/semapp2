@@ -7,7 +7,7 @@ gem "barby",                 "~> 0.5.1"
 gem "cancan",                "~> 1.6.10"
 gem "chunky_png",            "~> 1.3.0"
 gem "coffee-rails",          "~> 4.0.1"
-gem "deep_cloneable",        "~> 1.6.0"
+gem "deep_cloneable",        "~> 2.2.2"
 gem "dynamic_form",          "~> 1.1.4"  # provides the old f.error_messages method
 gem "formtastic",            "~> 3.1.4"  #github: "ubpb/formtastic", branch: "1.2-stable"
 gem "highline",              "~> 1.6.21" # Used by rake custom task
