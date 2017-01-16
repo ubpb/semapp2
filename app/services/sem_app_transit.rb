@@ -9,7 +9,7 @@ class SemAppTransit
 
   def transit!
     SemApp.transaction do
-      target_sem_app = @source_sem_app.dup(include: :book_shelf, validate: false)
+      target_sem_app = @source_sem_app.deep_clone(include: :book_shelf, validate: false)
 
       import_basics!(target_sem_app)
 
