@@ -1,14 +1,20 @@
 defaults: &defaults
-  aleph_base_url: https://ubex/X
+  aleph_base_url: https://ubtest/X
   aleph_library: 'pad50'
   aleph_search_base: 'pbaus'
-  aleph_allowed_user_types:
-    - !ruby/regexp /\APA.+/
-    - !ruby/regexp /\APD.+/
-    - !ruby/regexp /\A10/ # die neuen PD Ausweise haben Status 10 gesetzt anstatt PD - Dienstlich
-    - !ruby/regexp /\APS.+\Z/
+  aleph_allowed_user_types: # ... as in z305-bor-status
+    - !ruby/regexp /\APA/ # PA - Mitarbeitende mit Vertrag
+    - !ruby/regexp /\A02/ # PA - Mitarbeitende mit Vertrag
+    - !ruby/regexp /\APS/ # PS - Studierende
+    - !ruby/regexp /\A01/ # PS - Studierende
+    - !ruby/regexp /\APD/ # PD - Dienstlich
+    - !ruby/regexp /\A10/ # PD - Dienstlich
+    - !ruby/regexp /\APG/ # PG – Gäste / Mitarbeitende ohne Vertrag
+    - !ruby/regexp /\A13/ # PG – Gäste / Mitarbeidende ohne Vertrag
+    #- !ruby/regexp /\APP/ # PP - Emeriti
+    #- !ruby/regexp /\A12/ # PP - Emeriti
   aleph_allowed_ban_codes:
-    - !ruby/regexp /^00$/
+    - !ruby/regexp /\A00/
 
 test:
   <<: *defaults

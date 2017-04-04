@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   end
 
   def is_lecturer?
-    (login =~ /\APA/i).present?
+    (login =~ /\APA|\APD|\APG/i).present?
   end
 
   #def to_s

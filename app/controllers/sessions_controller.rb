@@ -53,7 +53,7 @@ class SessionsController < ApplicationController
       rescue Aleph::AuthenticationError
         flash.now.alert = 'Anmeldung fehlgeschlagen. Überprüfen Sie Login und Passwort.'
       rescue Aleph::UnsupportedAccountTypeError
-        flash.now.alert = 'Anmeldung nicht möglich. Dei Anmeldung setzt einen A-Ausweis voraus.'
+        flash.now.alert = 'Anmeldung nicht möglich.'
       rescue Aleph::AccountLockedError
         flash.now.alert = 'Ihr Konto wurde gesperrt. Bitte wenden Sie sich an die Bibliothek.'
       rescue Exception => e
