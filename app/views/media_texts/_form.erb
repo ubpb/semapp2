@@ -1,6 +1,5 @@
 <%= media_form do |f| %>
   <%= f.inputs do %>
     <%= f.input :text, :label => 'Text', :input_html => { :rows => '10', :class => 'textile'} %>
-    <%= f.input :publish_on, :label => 'Veröffentlichen am', :required => false, :as => :datetime_picker, start_year: Date.today.year, hint: "Leer lassen um den Beitrag sofort zu veröffentlichen" %>
   <% end %>
 <% end %>

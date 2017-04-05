@@ -20,6 +20,7 @@ class AbstractMediaController < ApplicationController
     media.sem_app    = @sem_app
     media.creator    = current_user
     media.position   = @sem_app.next_position(params[:origin_id])
+    media.hidden     = instance_params.delete(:hidden) || false
 
     @media          = model_class.new(instance_params)
     @media.parent   = media
@@ -46,6 +47,8 @@ class AbstractMediaController < ApplicationController
     authorize! :edit, @media.sem_app
 
     instance_params = params[model_class.name.underscore.to_sym]
+
+    @media.parent.update_attributes(hidden: instance_params.delete(:hidden) || false)
 
     if @media.update_attributes(instance_params)
       redirect_to sem_app_path(@media.sem_app, :anchor => 'media')

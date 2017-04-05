@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.1
--- Dumped by pg_dump version 9.6.1
+-- Dumped from database version 9.6.2
+-- Dumped by pg_dump version 9.6.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -269,7 +269,8 @@ CREATE TABLE media (
     "position" integer,
     miless_entry_id character varying(255),
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    hidden boolean DEFAULT false
 );
 
 
@@ -463,7 +464,6 @@ ALTER SEQUENCE media_monographs_id_seq OWNED BY media_monographs.id;
 CREATE TABLE media_texts (
     id integer NOT NULL,
     text text,
-    publish_on timestamp without time zone,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -1315,4 +1315,8 @@ INSERT INTO schema_migrations (version) VALUES ('20150703070412');
 INSERT INTO schema_migrations (version) VALUES ('20161201103459');
 
 INSERT INTO schema_migrations (version) VALUES ('20161201115436');
+
+INSERT INTO schema_migrations (version) VALUES ('20170405074158');
+
+INSERT INTO schema_migrations (version) VALUES ('20170405075029');
 

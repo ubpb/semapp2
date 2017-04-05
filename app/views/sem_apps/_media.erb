@@ -31,7 +31,13 @@
     </div>
   </div>
 
-  <div class="media">
-    <%= render "#{media.class.name.tableize}/show", media: media %>
+  <div class="media <%= can?(:edit, @sem_app) && media.hidden ? 'media-hidden' : 'media-visible' %>">
+    <% if can?(:edit, @sem_app) && media.hidden %>
+      <div class="media-hidden-label">Für Studierende nicht sichtbar</div>
+    <% end %>
+
+    <div>
+      <%= render "#{media.class.name.tableize}/show", media: media %>
+    </div>
   </div>
 </div>

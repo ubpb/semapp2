@@ -329,6 +329,8 @@ form.formtastic .input-important {
 .sem-app .listing .item .media .text {}
 .sem-app .listing .item .media .file {}
 .sem-app .listing .item .media .bibref { margin: 7px 0 }
+.sem-app .listing .item .media.media-hidden { outline: 1px solid red; }
+.sem-app .listing .item .media .media-hidden-label { background: red; color: #fff; padding: 2px; display: inline-block; }
 
 .sem-app .listing .item .media .attachments { list-style: none; margin: 0; padding: 0 }
 .sem-app .listing .item .media .attachments .attachment { margin: 0 0 1px 0; padding: 5px; display: block; background-color: #eee }

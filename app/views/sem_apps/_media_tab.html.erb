@@ -29,13 +29,13 @@
       <% @media.each do |media| %>
         <% next if media.instance.blank? %>
 
-        <% if media.instance.try(:to_be_published) %>
-          <% if can?(:edit, @sem_app) %>
-            <%= render 'media', :media => media.instance %>
-          <% end %>
+        <% if can?(:edit, @sem_app) %>
+          <%= render 'media', :media => media.instance %>
         <% else %>
-          <% cache_unless(can?(:edit, @sem_app), media.instance) do %>
-            <%= render 'media', :media => media.instance %>
+          <% unless media.hidden %>
+            <% cache(media.instance) do %>
+              <%= render 'media', :media => media.instance %>
+            <% end %>
           <% end %>
         <% end %>
       <% end %>
