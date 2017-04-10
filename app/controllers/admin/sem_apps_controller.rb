@@ -73,22 +73,29 @@ class Admin::SemAppsController < Admin::ApplicationController
   def set_creator
     @sem_app = SemApp.find(params[:id])
 
-    login = params[:login].upcase
-    user  = User.find_by_login(login)
+    login      = params[:login].upcase
+    aleph_user = Aleph::Connector.new.resolve_user(login)
 
-    if user
-      if @sem_app.update_attribute(:creator, user)
-        flash[:success] = ActionController::Base.helpers.sanitize "Besitzer erfolgreich gesetzt. #{login} kann den Seminarapparat <i>#{@sem_app.title}</i> nun bearbeiten."
+    if aleph_user
+      user = User.find_by(ilsuserid: aleph_user.id)
+
+      if user
+        if @sem_app.update_attribute(:creator, user)
+          flash[:success] = ActionController::Base.helpers.sanitize "Besitzer erfolgreich gesetzt. #{login} kann den Seminarapparat <i>#{@sem_app.title}</i> nun bearbeiten."
+        else
+          flash[:error] = "Fehler: Der Benutzer konnte nicht als Besitzer eingetragen werden."
+        end
       else
-        flash[:error] = "Fehler: Der Benutzer konnte nicht als Besitzer eingetragen werden."
+        u = User.new(ilsuserid: aleph_user.id, login: login)
+
+        if u.save(validate: false) and @sem_app.update_attribute(:creator, u)
+          flash[:success] = ActionController::Base.helpers.sanitize "Der Benutzer '#{login}' existierte nicht, wurde aber angelegt. Name und E-Mail sind erst verfügbar wenn der Nutzer sich das erste mal anmeldet. #{login} kann den Seminarapparat <i>#{@sem_app.title}</i> nun bearbeiten."
+        else
+          flash[:error] = "Es ist ein unbekannter Fehler aufgetreten!"
+        end
       end
     else
-      u = User.new(:login => login)
-      if u.save(validate: false) and @sem_app.update_attribute(:creator, u)
-        flash[:success] = ActionController::Base.helpers.sanitize "Der Benutzer '#{login}' existierte nicht, wurde aber angelegt. Name und E-Mail sind erst verfügbar wenn der Nutzer sich das erste mal anmeldet. #{login} kann den Seminarapparat <i>#{@sem_app.title}</i> nun bearbeiten."
-      else
-        flash[:error] = "Es ist ein unbekannter Fehler aufgetreten!"
-      end
+      flash[:error] = "Ein Nutzer mit der Bibliotheksausweisnummer #{login} existiert nicht."
     end
 
     redirect_to admin_sem_app_path(@sem_app, :anchor => 'users')

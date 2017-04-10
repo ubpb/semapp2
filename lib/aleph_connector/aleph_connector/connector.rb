@@ -45,6 +45,15 @@ module Aleph #:nodoc:
       do_authenticate(ils_account_no, verification)
     end
 
+    def resolve_user(ils_account_no)
+      data = post_url(@base_url, 'op' => 'bor_info', 'bor_id' => ils_account_no, 'loans' => 'N', 'cash' => 'N', 'hold' => 'N', 'library' => @library)
+      if data.xpath('/bor-info/error')[0]
+        nil
+      else
+        Aleph::User.new(ils_account_no, data.xpath('/bor-info')[0])
+      end
+    end
+
     def get_lendings(ils_account_no)
       load_lendings(ils_account_no)
     end

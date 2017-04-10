@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
 
   # Validations
   validates :login, presence: true, uniqueness: { case_sensitive: false }
+  validates :ilsuserid, presence: true, uniqueness: { case_sensitive: false }
   validates_presence_of :name
 
 
@@ -48,11 +49,11 @@ class User < ActiveRecord::Base
  private
 
   def self.create_or_update_aleph_user!(login, aleph_user)
-    if (user = User.find_by(login: login.upcase)).present?
-      user.update_attributes!(:name => aleph_user.name, :email => aleph_user.email)
+    if (user = User.find_by(ilsuserid: aleph_user.id)).present?
+      user.update_attributes!(login: login.upcase, name: aleph_user.name, email: aleph_user.email)
       user
     else
-      User.create!(:login => login.upcase, :name => aleph_user.name, :email => aleph_user.email)
+      User.create!(ilsuserid: aleph_user.id, login: login.upcase, name: aleph_user.name, email: aleph_user.email)
     end
   end
 

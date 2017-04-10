@@ -712,7 +712,8 @@ CREATE TABLE users (
     login character varying NOT NULL,
     name character varying,
     email character varying,
-    is_admin boolean DEFAULT false NOT NULL
+    is_admin boolean DEFAULT false NOT NULL,
+    ilsuserid character varying
 );
 
 
@@ -1133,6 +1134,13 @@ CREATE INDEX index_users_on_email ON users USING btree (email);
 
 
 --
+-- Name: index_users_on_ilsuserid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_users_on_ilsuserid ON users USING btree (ilsuserid);
+
+
+--
 -- Name: index_users_on_login; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1319,4 +1327,6 @@ INSERT INTO schema_migrations (version) VALUES ('20161201115436');
 INSERT INTO schema_migrations (version) VALUES ('20170405074158');
 
 INSERT INTO schema_migrations (version) VALUES ('20170405075029');
+
+INSERT INTO schema_migrations (version) VALUES ('20170407085332');
 
