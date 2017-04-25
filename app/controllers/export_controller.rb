@@ -2,7 +2,7 @@ class ExportController < ApplicationController
 
   def export
     sem_app  = SemApp.find(params[:id])
-    authorize! :edit, @sem_app
+    authorize! :edit, sem_app
 
     exporter = SemAppExporter.new(sem_app)
 
