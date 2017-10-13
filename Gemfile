@@ -21,7 +21,7 @@ gem "pg",                    "~> 0.17.1"
 gem "pg_search",             "~> 0.7.6"
 gem "protected_attributes",  "~> 1.0.8"  # Needed as long as we migrated to strong parameters
 gem "rack-attack",           "~> 5.0.1"
-gem "rails",                 "~> 4.2.7", "< 4.2.8"
+gem "rails",                 "~> 4.2.10"
 gem "rails-i18n",            "~> 4.0.9"
 gem "RedCloth",              "~> 4.3.2"
 gem "rubyzip",               "~> 1.1.7", require: "zip"
@@ -35,11 +35,9 @@ group :production do
 end
 
 group :development, :test do
-  gem "pry",                "~> 0.10.3"
-  gem "pry-byebug",         "~> 3.4.0"
-  gem "pry-rails",          "~> 0.3.4"
+  gem "pry-byebug",         ">= 3.5.0"
+  gem "pry-rails",          "~> 0.3.6"
   gem "pry-rescue",         "~> 1.4.4"
-  gem "pry-state",          "~> 0.1.7"
   gem "puma",               "~> 3.6"
   gem "quiet_assets",       ">= 1.0.3"
 end
