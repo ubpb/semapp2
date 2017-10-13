@@ -1,4 +1,4 @@
-lock "~> 3.6"
+lock "~> 3.9"
 
 set :application, "semapp"
 set :repo_url, 'git@github.com:ubpb/semapp2.git'

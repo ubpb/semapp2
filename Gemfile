@@ -43,9 +43,9 @@ group :development, :test do
 end
 
 group :development do
-  gem "capistrano",         "~> 3.6.0"
-  gem "capistrano-bundler", "~> 1.1.4"
-  gem "capistrano-rails",   "~> 1.1.7"
+  gem "capistrano",         "~> 3.9.1"
+  gem "capistrano-bundler", "~> 1.3.0"
+  gem "capistrano-rails",   "~> 1.3.0"
   gem "capistrano-rvm",     "~> 0.1.2"
   gem "letter_opener",      "~> 1.4.1"
 end
