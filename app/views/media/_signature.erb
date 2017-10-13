@@ -2,9 +2,9 @@
 <% signature = media.source_signature if media.respond_to?(:source_signature) %>
 
 <% if signature.present? %>
-  <div>
+  <span>
     Signatur: <%= signature -%>
-  </div>
+  </span>
 <% end %>
 
 <%= render 'media/catalog_link', media: media %>

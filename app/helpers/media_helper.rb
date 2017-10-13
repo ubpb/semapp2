@@ -8,7 +8,7 @@ module MediaHelper
 
       concat(
         f.inputs do
-          f.input(:hidden, label: "Eintrag verstecken", as: :boolean, hint: "Wenn Sie den Harken setzen, wird der Eintrag für Ihre Studienrenden nicht sichtbar sein.")
+          f.input(:hidden, label: "Eintrag verstecken", as: :boolean, hint: "Wenn Sie den Haken setzen, wird der Eintrag für Ihre Studierenden nicht sichtbar sein.")
         end
       )
 

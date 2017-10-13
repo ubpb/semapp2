@@ -10,13 +10,12 @@
           <% end %>
           <span class="download-link">
             <%#= a.file_file_name %>
-            <%= number_to_human_size(a.file_file_size) %>
-            <% if a.updated_at.present? %>
-              / letzte Änderung: <%= l(a.updated_at, :format => :short) %>
-            <% end %>
 
             <% if can?(:download, a) %>
-              <%= link_to '[Download]', a.file.url %>
+              <%= link_to a.file.url do %>
+                <%= icon 'drive-download.png' %>
+                Download
+              <% end %>
             <% end %>
           </span>
 
@@ -27,9 +26,18 @@
             <%= link_to edit_file_attachment_path(a), :class => "toolbar-item" do %>
               <%= icon 'wrench.png' %>
             <% end %>
+
+
+            <% if a.restricted_by_copyright %>
+              <strong>Unterliegt § 52a UrhG</strong> /
+            <% end %>
+            <%= number_to_human_size(a.file_file_size) %>
+            <% if a.updated_at.present? %>
+              / letzte Änderung: <%= l(a.updated_at, :format => "%d.%m.%Y, %H:%M Uhr") %>
+            <% end %>
           </span>
 
-          <% if can?(:edit, @sem_app) %>
+<!--           <% if can?(:edit, @sem_app) %>
             <% if a.restricted_by_copyright %>
               <div>
                 <% if ApplicationSettings.instance.restrict_download_of_files_restricted_by_copyright %>
@@ -42,7 +50,7 @@
               <div><strong>Unterliegt NICHT § 52a UrhG</strong></div>
             <% end %>
             <%= link_to 'Klicken Sie auf "Bearbeiten", um diese Einstellung zu ändern.', edit_file_attachment_path(a) %>
-          <% end %>
+          <% end %> -->
 
           <% if cannot?(:download, a) %>
             <div><strong>Download nicht möglich! <%= link_to 'Klicken Sie hier für weitere Infos.', 'https://www.ub.uni-paderborn.de/recherche/hinweise-zur-nutzung-der-elektronischen-angebote/52a-urhg/', target: "_blank" %></strong></div>
