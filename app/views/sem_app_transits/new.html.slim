@@ -1,0 +1,33 @@
+h3.section Seminarapparat übernehmen
+
+.pui-panel
+  => icon 'asterisk.png'
+  ' Übernommene Seminarapparate werden durch die Universitätsbibliothek <strong>überprüft</strong> und <strong>freigeschaltet</strong>.
+  ' Voraussetzung ist, dass die Veranstaltung im Semester offiziell stattfindet
+  ' (z.B. Nachweis im <a href="http://paul.uni-paderborn.de">Vorlesungsverzeichnis</a>).
+
+p
+  ' Der Seminarapparat <strong>#{@sem_app.title}</strong> aus dem <strong>#{@sem_app.semester}</strong> soll in das <strong>#{Semester.transit_target}</strong> übernommen werden.
+
+= form_tag(sem_app_transit_path(@sem_app))
+  - if @sem_app.book_shelf.present? && @sem_app.books.present?
+    - if @sem_app.books_can_be_cloned_when_transit?
+      p
+        ' Die Bücher im Seminarapparatsregal Nr. #{@sem_app.book_shelf.slot_number} (#{@sem_app.location.title}) bleiben bestehen.
+    - else
+      p
+        ' Die Bücher müssen neu aufgestellt werden. Bitte wählen Sie aus der folgenden Liste die Bücher aus, die in dem neuen
+        ' Seminarapparat aufgestellt werden sollen. Neue Bücher können Sie nach der Einrichtung hinzufügen.
+
+      - @sem_app.books.in_shelf.each do |book|
+        ruby:
+          label = book.signature
+          label = label + ", #{book.title}" if book.title.present?
+          label = label + ", #{book.author}" if book.author.present?
+          label = label + ", #{book.year}" if book.year.present?
+        p
+          = check_box_tag("books[]", book.id, false, id: "books_#{book.id}")
+          =< label_tag("books_#{book.id}", label)
+
+  div(style="margin-top: 20px") = submit_tag('Seminarapparat jetzt übernehmen')
+

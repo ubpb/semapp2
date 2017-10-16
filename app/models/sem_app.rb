@@ -126,14 +126,11 @@ class SemApp < ActiveRecord::Base
   end
 
   def can_transit?
-    ApplicationSettings.instance.transit_source_semester.present? &&
-    ApplicationSettings.instance.transit_target_semester.present? &&
-    (self.semester.id == ApplicationSettings.instance.transit_source_semester.id)
+    self.semester != Semester.transit_target
   end
 
-  def transit
-    target_semester = ApplicationSettings.instance.transit_target_semester
-    SemAppTransit.new(self, target_semester, import_books: true).transit! if target_semester.present?
+  def books_can_be_cloned_when_transit?
+    (Semester.transit_target != Semester.current) && (self.semester == Semester.current)
   end
 
   def next_position(origin_id)

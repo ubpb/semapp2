@@ -66,7 +66,6 @@ Rails.application.routes.draw do
   resources :sem_apps, :path => 'apps' do
     member do
       post :unlock
-      post :transit
       get  :clones
       post :clone
       post :filter_clones
@@ -79,6 +78,8 @@ Rails.application.routes.draw do
     collection do
       post :filter
     end
+
+    resource :transit, only: [:new, :create], controller: :sem_app_transits
 
     resources :books
 

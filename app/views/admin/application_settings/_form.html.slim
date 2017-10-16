@@ -2,7 +2,7 @@
   = f.inputs :name => 'Aktuelles Semester' do
     = f.input :current_semester, :label => 'Aktuelles Semester', :collection => Semester.order('position ASC')
 
-  = f.inputs :name => 'Transit' do
+  /= f.inputs :name => 'Transit' do
     = f.input :transit_source_semester, :label => 'Quell-Semester', :collection => Semester.order('position ASC')
     = f.input :transit_target_semester, :label => 'Ziel-Semester',  :collection => Semester.order('position ASC')
 

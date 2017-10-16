@@ -27,4 +27,16 @@ class Semester < ActiveRecord::Base
     Semester.where(current: true).first
   end
 
+  def self.next
+    Semester.current&.higher_item
+  end
+
+  def self.previous
+    Semester.current&.lower_item
+  end
+
+  def self.transit_target
+    Semester.next || Semester.current
+  end
+
 end
