@@ -4,9 +4,7 @@ class SemAppsController < ApplicationController
   SEM_APP_SEMESTER_INDEX_FILTER_NAME  = 'sem_app_semester_index_filter_name_p'.freeze
   SEM_APP_CLONES_FILTER_NAME          = 'sem_app_clones_filter_name_p'.freeze
 
-  before_action :load_sem_app, :only => [:show, :edit, :update, :unlock, :transit, :clones, :filter_clones, :clone, :clear, :show_books, :show_media, :generate_access_token]
-
-  before_action :require_authenticate, only: [:new]
+  before_action :authenticate!, only: [:new, :create, :edit, :update, :unlock, :generate_access_token, :clones, :filter_clones, :clone]
 
   def index
     @filter          = SemAppsFilter.get_filter_from_session(session, SEM_APP_FILTER_NAME)
@@ -40,6 +38,7 @@ class SemAppsController < ApplicationController
   end
 
   def show
+    load_sem_app or return
     authorize! :read, @sem_app
 
     # check for access token
@@ -64,7 +63,9 @@ class SemAppsController < ApplicationController
   end
 
   def create
-    @sem_app = SemApp.new(params[:sem_app])
+    @sem_app = SemApp.new(params.require(:sem_app).permit(
+      :semester_id, :title, :course_id, :tutors, :location_id, :shared_secret, :accepts_copyright
+    ))
     authorize! :create, @sem_app
 
     @sem_app.creator = current_user
@@ -87,6 +88,7 @@ class SemAppsController < ApplicationController
   end
 
   def edit
+    load_sem_app or return
     authorize! :edit, @sem_app
 
     # Generate access token if no access token exists
@@ -94,14 +96,10 @@ class SemAppsController < ApplicationController
   end
 
   def update
+    load_sem_app or return
     authorize! :edit, @sem_app
 
-    # Cherrypick the values for security reasons
-    options = {}
-    options[:tutors]        = params[:sem_app][:tutors]
-    options[:shared_secret] = params[:sem_app][:shared_secret]
-
-    if @sem_app.update_attributes(options)
+    if @sem_app.update_attributes(params.require(:sem_app).permit(:tutors, :shared_secret))
       flash[:success] = "Änderungen erfolgreich gespeichert."
       redirect_to sem_app_path(@sem_app)
     else
@@ -110,7 +108,10 @@ class SemAppsController < ApplicationController
   end
 
   def unlock
+    load_sem_app or return
+
     shared_secret = params[:shared_secret]
+
     if (shared_secret == @sem_app.shared_secret) or @sem_app.miless_passwords.map{|p| p.password}.include?(shared_secret)
       @sem_app.unlock_in_session(session)
     else
@@ -121,6 +122,7 @@ class SemAppsController < ApplicationController
   end
 
   def generate_access_token
+    load_sem_app or return
     authorize! :edit, @sem_app
 
     if @sem_app.generate_access_token!
@@ -132,8 +134,8 @@ class SemAppsController < ApplicationController
     redirect_to edit_sem_app_path(@sem_app, :anchor => 'token')
   end
 
-
   def clones
+    load_sem_app or return
     authorize! :edit, @sem_app
 
     @filter            = SemAppsFilter.get_filter_from_session(session, SEM_APP_CLONES_FILTER_NAME)
@@ -149,24 +151,20 @@ class SemAppsController < ApplicationController
   end
 
   def filter_clones
+    load_sem_app or return
     authorize! :edit, @sem_app
 
     SemAppsFilter.set_filter_in_session(session, params[:filter], SEM_APP_CLONES_FILTER_NAME)
     redirect_to :action => :clones
   end
 
-
   def clone
+    load_sem_app or return
     authorize! :edit, @sem_app
 
     # Try to find the source sem app we want to clone
     source_sem_app = SemApp.find(params[:source])
-
-    # Check the password in the case the user has no edit rights
-    # on the source sem app (needed for old Miless sem apps)
-    if cannot? :edit, source_sem_app
-      enforce_miless_password!
-    end
+    authorize! :edit, @source_sem_app
 
     begin
       cloner = SemAppCloner.new(source_sem_app, @sem_app, clone_books: false, clone_media: true)
@@ -195,33 +193,16 @@ private
           elektronische Seminarapparate weitergeleitet. Bitte aktualisieren die Ihre Links und
           Lesezeichen auf diese neue URL.
         """
-        redirect_to sem_app_path(@sem_app, :anchor => 'media')
-        return false
+        redirect_to sem_app_path(@sem_app, :anchor => 'media') and return
       else
         @sem_app = SemApp.find_by_id!(id)
       end
     rescue
       flash[:error] = "Der Seminarapparat den Sie versucht haben aufzurufen existiert nicht."
-      redirect_to sem_apps_path
-      throw(:abort)
-    end
-  end
-
-  # TODO: Remove me when all traces of Miless has been removed.
-  def enforce_miless_password!
-    password = params[:password]
-
-    unless password.present?
-      flash[:error] = "Bitte geben Sie das Passwort des Seminarapparates ein das sie damals (im alten System) bei der Beantragung gesetzt haben."
-      redirect_to :action => :clones
-      throw(:abort)
+      redirect_to sem_apps_path and return
     end
 
-    unless source_sem_app.miless_passwords.map{|p| p.password}.include?(password)
-      flash[:error] = "Das Passwort ist falsch. Der Seminarapparat konnte nicht geklont werden."
-      redirect_to :action => :clones
-      throw(:abort)
-    end
+    return true
   end
 
 end

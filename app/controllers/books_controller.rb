@@ -2,7 +2,7 @@ class BooksController < ApplicationController
 
   MAX_BOOKS = 40.freeze
 
-  before_action :require_authenticate, :load_sem_app
+  before_action :authenticate!, :load_sem_app
   before_action :check_current_semester, :only => [:index, :new, :create, :destroy]
   #before_action :check_max_books, only: [:new, :create]
 

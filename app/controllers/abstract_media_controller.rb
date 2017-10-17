@@ -1,6 +1,6 @@
 class AbstractMediaController < ApplicationController
 
-  before_action :require_authenticate
+  before_action :authenticate!
 
   def new
     @sem_app = SemApp.find(params[:sem_app_id])
