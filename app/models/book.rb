@@ -1,4 +1,4 @@
-class Book < ActiveRecord::Base
+class Book < ApplicationRecord
 
   States = {
     :ordered  => "ordered",  # the book is marked to be added to the shelf

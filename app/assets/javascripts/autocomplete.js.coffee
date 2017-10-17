@@ -1,5 +1,3 @@
-#= require jquery.ui.autocomplete
-
 app.utils.singletonReadyOrPageChange 'app.autocomplete', ->
 
   input   = $('form input[type="text"][data-autocomplete]')

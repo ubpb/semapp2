@@ -1,4 +1,4 @@
-class MilessPassword < ActiveRecord::Base
+class MilessPassword < ApplicationRecord
 
   # Relations
   belongs_to :sem_app

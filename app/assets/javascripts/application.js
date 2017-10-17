@@ -18,9 +18,9 @@
 //= require jquery
 //= require jquery-migrate-1.4.1.min
 //= require jquery_ujs
-//= require jquery.ui.draggable
-//= require jquery.ui.sortable
-//= require jquery.ui.effect.all
+//= require jquery-ui/widgets/draggable
+//= require jquery-ui/widgets/sortable
+//= require jquery-ui/effect.all
 //= require jquery-tools-1.1.2.min
 //= require jquery-form-2.33
 //= require markitup/jquery.markitup.pack

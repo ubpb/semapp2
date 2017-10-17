@@ -1,5 +1,5 @@
 class Ability
-  include CanCan::Ability
+  include CanCanCan::Ability
 
   def initialize(user)
     user ||= User.new

@@ -1,4 +1,4 @@
-class MediaText < ActiveRecord::Base
+class MediaText < ApplicationRecord
 
   # Behavior
   acts_as_media_instance

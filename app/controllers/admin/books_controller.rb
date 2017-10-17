@@ -1,6 +1,6 @@
 class Admin::BooksController < Admin::ApplicationController
 
-  before_filter :load_book
+  before_action :load_book
 
 
   def edit

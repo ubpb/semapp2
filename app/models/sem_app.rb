@@ -1,4 +1,4 @@
-class SemApp < ActiveRecord::Base
+class SemApp < ApplicationRecord
 
   # Relations
   belongs_to :creator, :class_name => 'User'

@@ -1,6 +1,6 @@
 class ScanjobsController < ApplicationController
 
-  before_filter :load_media
+  before_action :load_media
 
   def new
     # unless @media.sem_app.is_from_current_semester?

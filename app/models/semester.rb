@@ -1,4 +1,4 @@
-class Semester < ActiveRecord::Base
+class Semester < ApplicationRecord
   # model relations
   has_many :sem_apps, :dependent => :destroy
 

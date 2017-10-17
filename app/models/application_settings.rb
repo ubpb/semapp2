@@ -1,4 +1,4 @@
-class ApplicationSettings < ActiveRecord::Base
+class ApplicationSettings < ApplicationRecord
   acts_as_singleton
 
   belongs_to :transit_source_semester, class_name: 'Semester'

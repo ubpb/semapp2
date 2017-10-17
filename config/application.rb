@@ -8,6 +8,10 @@ Bundler.require(*Rails.groups)
 
 module SemApp2
   class Application < Rails::Application
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 5.1
+
+    # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
@@ -35,10 +39,6 @@ module SemApp2
 
     # Set cache store location
     config.cache_store = :file_store, File.join(Rails.root, 'tmp', 'cache')
-    # Do not whitelist attributes. TODO: Remove when migrating to strong parameters.
-    config.active_record.whitelist_attributes = false
-    # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
     # Enable rack-attack
     config.middleware.use Rack::Attack
   end

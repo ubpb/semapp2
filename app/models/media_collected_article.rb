@@ -1,4 +1,4 @@
-class MediaCollectedArticle < ActiveRecord::Base
+class MediaCollectedArticle < ApplicationRecord
 
   # Behavior
   acts_as_media_instance

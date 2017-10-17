@@ -1,7 +1,7 @@
 class Admin::ApplicationController < ApplicationController
 
-  before_filter :require_authenticate
-  before_filter :secure_controller
+  before_action :require_authenticate
+  before_action :secure_controller
 
   layout 'admin'
 

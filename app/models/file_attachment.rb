@@ -1,4 +1,4 @@
-class FileAttachment < ActiveRecord::Base
+class FileAttachment < ApplicationRecord
 
   # Relations
   belongs_to :media,   :touch => true

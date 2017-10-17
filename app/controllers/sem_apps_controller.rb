@@ -4,9 +4,9 @@ class SemAppsController < ApplicationController
   SEM_APP_SEMESTER_INDEX_FILTER_NAME  = 'sem_app_semester_index_filter_name_p'.freeze
   SEM_APP_CLONES_FILTER_NAME          = 'sem_app_clones_filter_name_p'.freeze
 
-  before_filter :load_sem_app, :only => [:show, :edit, :update, :unlock, :transit, :clones, :filter_clones, :clone, :clear, :show_books, :show_media, :generate_access_token]
+  before_action :load_sem_app, :only => [:show, :edit, :update, :unlock, :transit, :clones, :filter_clones, :clone, :clear, :show_books, :show_media, :generate_access_token]
 
-  before_filter :require_authenticate, only: [:new]
+  before_action :require_authenticate, only: [:new]
 
   def index
     @filter          = SemAppsFilter.get_filter_from_session(session, SEM_APP_FILTER_NAME)
@@ -203,7 +203,7 @@ private
     rescue
       flash[:error] = "Der Seminarapparat den Sie versucht haben aufzurufen existiert nicht."
       redirect_to sem_apps_path
-      return false
+      throw(:abort)
     end
   end
 
@@ -214,13 +214,13 @@ private
     unless password.present?
       flash[:error] = "Bitte geben Sie das Passwort des Seminarapparates ein das sie damals (im alten System) bei der Beantragung gesetzt haben."
       redirect_to :action => :clones
-      return false
+      throw(:abort)
     end
 
     unless source_sem_app.miless_passwords.map{|p| p.password}.include?(password)
       flash[:error] = "Das Passwort ist falsch. Der Seminarapparat konnte nicht geklont werden."
       redirect_to :action => :clones
-      return false
+      throw(:abort)
     end
   end
 
