@@ -11,7 +11,7 @@ class FileAttachmentsController < ApplicationController
     @media = find_media
     authorize! :edit, @media.sem_app
 
-    @file_attachment = @media.file_attachments.build(params[:file_attachment])
+    @file_attachment = @media.file_attachments.build(permitted_params)
     @file_attachment.creator = current_user
 
     if @file_attachment.save
@@ -30,7 +30,7 @@ class FileAttachmentsController < ApplicationController
     @file_attachment = FileAttachment.find(params[:id])
     authorize! :edit, @file_attachment.media.sem_app
 
-    if @file_attachment.update_attributes(params[:file_attachment])
+    if @file_attachment.update_attributes(permitted_params)
       redirect_to sem_app_path(@file_attachment.media.sem_app, :anchor => 'media')
     else
       render :edit
@@ -47,7 +47,7 @@ class FileAttachmentsController < ApplicationController
     redirect_to sem_app_path(@file_attachment.media.sem_app, :anchor => 'media')
   end
 
-  private
+private
 
   def find_media
     params.each do |name, value|
@@ -57,6 +57,10 @@ class FileAttachmentsController < ApplicationController
       end
     end
     nil
+  end
+
+  def permitted_params
+    params.require(:file_attachment).permit(:file, :description, :restricted_by_copyright, :accepts_copyright)
   end
 
 end
