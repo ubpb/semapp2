@@ -71,7 +71,7 @@ class AbstractMediaController < ApplicationController
     end
 
     if @media.destroy && @media.parent.destroy
-      render :nothing => true
+      render body: nil
     else
       flash[:error] = "Der Eintrag konnte nicht gelöscht werden. Es ist ein Fehler aufgetreten."
       redirect_to sem_app_path(@media.sem_app, :anchor => 'media')

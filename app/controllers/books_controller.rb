@@ -91,7 +91,7 @@ class BooksController < ApplicationController
       book.set_state(:rejected)
     end
 
-    render :nothing => true
+    render body: nil
   end
 
   private

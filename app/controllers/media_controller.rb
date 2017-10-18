@@ -17,7 +17,7 @@ class MediaController < ApplicationController
       Media.where(id: id).update_all(position: index+1)
     end
 
-    render :nothing => true
+    render body: nil
   end
 
 end
