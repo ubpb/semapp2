@@ -31,23 +31,6 @@ class Admin::SemAppsController < Admin::ApplicationController
     end
   end
 
-  def new
-    @sem_app = SemApp.new
-    @sem_app.build_book_shelf unless @sem_app.book_shelf.present?
-  end
-
-  def create
-    @sem_app = SemApp.new(params[:sem_app])
-    @sem_app.creator = current_user
-    if @sem_app.save
-      flash[:success] = "Der Seminarapparat wurde erfolgreich erstellt"
-      redirect_to :action => :index
-    else
-      @sem_app.build_book_shelf unless @sem_app.book_shelf.present?
-      render :action => :new
-    end
-  end
-
   def edit
     @sem_app = SemApp.find(params[:id])
     @sem_app.build_book_shelf unless @sem_app.book_shelf.present?

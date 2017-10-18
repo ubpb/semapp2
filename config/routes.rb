@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
     resources :mailings, only: [:new, :create]
 
-    resources :sem_apps, path: 'apps' do
+    resources :sem_apps, path: 'apps', except: [:new, :create] do
       collection do
         match :filter, via: [:get, :post]
       end
