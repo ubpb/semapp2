@@ -1,10 +1,6 @@
 = semantic_form_for @settings, url: admin_application_settings_path do |f|
   = f.inputs :name => 'Aktuelles Semester' do
-    = f.input :current_semester, :label => 'Aktuelles Semester', :collection => Semester.order('position ASC')
-
-  /= f.inputs :name => 'Transit' do
-    = f.input :transit_source_semester, :label => 'Quell-Semester', :collection => Semester.order('position ASC')
-    = f.input :transit_target_semester, :label => 'Ziel-Semester',  :collection => Semester.order('position ASC')
+    = f.input :current_semester_id, :label => 'Aktuelles Semester', :collection => Semester.order('position ASC')
 
   = f.inputs :name => '§ 52a UrhG' do
     = f.input :restrict_download_of_files_restricted_by_copyright, :label => "Download deaktivieren", :hint => "Der Download wird für alle Dateien deaktiviert für die nicht explizit hinterlegt worden ist, dass diese entweder nicht dem Urheberrecht unterliegen oder der Dozent die Verwertungsrechte besitzt."

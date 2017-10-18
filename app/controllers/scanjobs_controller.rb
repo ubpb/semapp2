@@ -26,7 +26,7 @@ class ScanjobsController < ApplicationController
   end
 
   def create
-    @scanjob = @media.parent.build_scanjob(params[:scanjob])
+    @scanjob = @media.parent.build_scanjob(permitted_params)
     @scanjob.creator = current_user
 
     if @scanjob.save
@@ -37,8 +37,7 @@ class ScanjobsController < ApplicationController
     end
   end
 
-  private
-
+private
 
   def load_media
     @media = find_media
@@ -58,6 +57,10 @@ class ScanjobsController < ApplicationController
       end
     end
     nil
+  end
+
+  def permitted_params
+    params.require(:scanjob).permit(:signature, :pages_from, :pages_to, :comment, :accepts_copyright, :message)
   end
 
 end
