@@ -20,8 +20,9 @@
 //= require jquery_ujs
 //= require jquery-ui/widgets/draggable
 //= require jquery-ui/widgets/sortable
+//= require jquery-ui/widgets/autocomplete
 //= require jquery-ui/effect.all
-//= require jquery-tools-1.1.2.min
+//= require jquery-tools-1.2.6.min
 //= require jquery-form-2.33
 //= require markitup/jquery.markitup.pack
 //= require pui
