@@ -2,7 +2,9 @@ module MediaHelper
 
   def media_form(&block)
     semantic_form_for([@sem_app, @media]) do |f|
-      concat hidden_field_tag(:origin_id, @origin_id)
+      if params[:origin_id].present?
+        concat hidden_field_tag(:origin_id, params[:origin_id])
+      end
 
       yield f
 
