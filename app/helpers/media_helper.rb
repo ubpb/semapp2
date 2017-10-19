@@ -6,6 +6,10 @@ module MediaHelper
         concat hidden_field_tag(:origin_id, params[:origin_id])
       end
 
+      if params[:scroll_to].present?
+        concat hidden_field_tag(:scroll_to, params[:scroll_to])
+      end
+
       yield f
 
       concat(

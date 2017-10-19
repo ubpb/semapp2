@@ -6,8 +6,9 @@ class AbstractMediaController < ApplicationController
     @sem_app = SemApp.find(params[:sem_app_id])
     authorize! :edit, @sem_app
 
-    @media         = model_class.new
-    @origin_id     = params[:origin_id]
+    @media     = model_class.new
+    @origin_id = params[:origin_id]
+    @scroll_to = params[:scroll_to]
   end
 
   def create
@@ -26,6 +27,7 @@ class AbstractMediaController < ApplicationController
     @media.parent   = media
 
     if @media.save
+      flash[:scroll_to] = params.delete(:scroll_to)
       redirect_to sem_app_path(@sem_app, :anchor => 'media')
     else
       render :new
@@ -51,6 +53,7 @@ class AbstractMediaController < ApplicationController
     @media.parent.update_attributes(hidden: instance_params.delete(:hidden) || false)
 
     if @media.update_attributes(instance_params)
+      flash[:scroll_to] = params.delete(:scroll_to)
       redirect_to sem_app_path(@media.sem_app, :anchor => 'media')
     else
       render :edit

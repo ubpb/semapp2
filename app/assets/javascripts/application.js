@@ -28,3 +28,5 @@
 //= require_tree ./jquery
 //= require_tree ./views/application
 //= require autocomplete
+//= require scroll_to
+

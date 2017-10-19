@@ -22,7 +22,7 @@
     <%= yield :head %>
   </head>
 
-  <body>
+  <body data-scroll-to="<%= flash[:scroll_to] %>">
     <%= render 'shared_partials/ie6_notice' %>
 
     <% global_message_file = "#{::Rails.root}/config/_global_message.erb" %>
