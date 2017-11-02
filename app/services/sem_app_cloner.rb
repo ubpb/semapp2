@@ -1,10 +1,11 @@
 class SemAppCloner
 
-  def initialize(source_sem_app, target_sem_app, clone_books: true, clone_media: true)
-    @source_sem_app = source_sem_app
-    @target_sem_app = target_sem_app
-    @clone_books    = clone_books
-    @clone_media    = clone_media
+  def initialize(source_sem_app, target_sem_app, clone_books: true, clone_media: true, exclude_book_ids: [])
+    @source_sem_app   = source_sem_app
+    @target_sem_app   = target_sem_app
+    @clone_books      = clone_books
+    @clone_media      = clone_media
+    @exclude_book_ids = exclude_book_ids
   end
 
   def clone!
@@ -17,10 +18,25 @@ class SemAppCloner
 private
 
   def clone_books!
-    @source_sem_app.books.each do |book|
-      clone = book.dup
-      clone.sem_app = @target_sem_app
-      clone.save!(validate: false)
+    if @source_sem_app.books_can_be_cloned_when_transit?
+      # Clone books
+      @source_sem_app.books.each do |book|
+        next if @exclude_book_ids.include?(book.id)
+
+        clone = book.dup
+        clone.sem_app = @target_sem_app
+        clone.save!(validate: false)
+      end
+    else
+      # Reorder books
+      @source_sem_app.books.in_shelf.each do |book|
+        next if @exclude_book_ids.include?(book.id)
+
+        clone = book.dup
+        clone.sem_app = @target_sem_app
+        clone.state = :ordered
+        clone.save!(validate: false)
+      end
     end
   end
 

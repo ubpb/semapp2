@@ -8,10 +8,17 @@
   <%= link_to @sem_app.title, sem_app_path(@sem_app) %>
 </h3>
 
-<% if !@sem_app.is_from_current_semester? %>
+<% if Semester.current.lower_items.include?(@sem_app.semester) %>
   <div class="pui-panel align-center">
     <%= icon "asterisk.png" %>
-    <strong>Achtung: Dieser Seminarapparat ist nicht aus dem aktuellen Semester.</strong>
+    <strong>Achtung: Dieser Seminarapparat ist aus einem vergangenen Semester.</strong>
+  </div>
+<% end %>
+
+<% if Semester.current.higher_items.include?(@sem_app.semester) %>
+  <div class="pui-panel align-center">
+    <%= icon "asterisk.png" %>
+    <strong>Achtung: Dieser Seminarapparat ist für das kommende Semester.</strong>
   </div>
 <% end %>
 
@@ -67,11 +74,11 @@
   <% end %>
 </div>
 
-<% if @sem_app.can_transit? && can?(:edit, @sem_app) %>
+<% if can?(:edit, @sem_app) && @sem_app.can_transit? %>
   <div class="pui-view align-right">
-    <%= link_to transit_sem_app_path(@sem_app), :class => 'pui-button', :method => :post, :data => {:confirm => 'Soll der aktuelle Seminarapparat in das neue Semester übernommen werden? Die können den Apparat übernehmen, wenn Sie die Veranstaltung im kommenden Semester weiterführen. Dieser Vorgang kann länger dauern, brechen Sie ihn nicht ab!'} do %>
+    <%= link_to new_sem_app_transit_path(@sem_app), :class => 'pui-button' do %>
       <%= icon('arrow-turn-090.png') %>
-      In das neue Semester übernehmen
+      In das <%= Semester.transit_target %> übernehmen
     <% end %>
   </div>
 <% end %>

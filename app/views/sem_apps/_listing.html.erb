@@ -62,7 +62,7 @@
   <div id="transit-panel-<%=sem_app.id-%>" class="pui-overlay align-left">
     <h3 class="section">Seminarapparat kopieren</h3>
 
-    <%= form_tag(transit_sem_app_path(sem_app), :class => 'formtastic') do %>
+    <%= form_tag(sem_app_transit_path(sem_app), :class => 'formtastic') do %>
       <fieldset class="inputs">
         <ol>
           <li class="string">

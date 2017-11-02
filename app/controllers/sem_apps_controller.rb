@@ -120,23 +120,6 @@ class SemAppsController < ApplicationController
     redirect_to sem_app_path(@sem_app, :anchor => 'media')
   end
 
-  def transit
-    authorize! :edit, @sem_app
-
-    if @sem_app.can_transit? && clone = @sem_app.transit
-      flash[:success] = """
-        <p>Ihr Seminarapparat wurde erfolgreich in das neue Semester übernommen. Wir prüfen die Angaben und schalten
-        den Seminarapparat nach erfolgter Prüfung für Sie frei. Sie sehen den Status unter
-        <strong>Meine Seminarapparate</strong>. Bis zur Freischaltung können nur Sie den Seminarapparat
-        sehen und bearbeiten.</p>
-      """.html_safe
-      redirect_to sem_app_path(clone)
-    else
-      flash[:error] = 'Bei dem Vorgang ist ein Fehler aufgetreten. Bitte wenden Sie sich an den Support.'
-      redirect_to sem_apps_path
-    end
-  end
-
   def generate_access_token
     authorize! :edit, @sem_app
 
