@@ -65,8 +65,9 @@ class Book < ActiveRecord::Base
 
     # Cleanup z13 GND additions
     if author.present?
-      author = author.gsub(/\d{4}-/, "")
       author = author.gsub(/\(.+\)[0-9X]+/, "")
+      author = author.gsub(/\d{4}-/, "")
+      author = author.gsub(/\d{4}/, "")
       author = author.strip
     end
 
