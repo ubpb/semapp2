@@ -60,6 +60,19 @@ class Book < ActiveRecord::Base
     reference_copy.present?
   end
 
+  def author
+    author = read_attribute(:author)
+
+    # Cleanup z13 GND additions
+    if author.present?
+      author = author.gsub(/\d{4}-/, "")
+      author = author.gsub(/\(.+\)[0-9X]+/, "")
+      author = author.strip
+    end
+
+    author
+  end
+
   ###########################################################################################
   #
   # Class Methods
