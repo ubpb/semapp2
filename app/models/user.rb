@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
     end
 
     if (aleph_user = Aleph::Connector.new.authenticate(login, password)).is_a?(Aleph::User)
-      create_or_update_aleph_user!(login, aleph_user)
+      create_or_update_aleph_user!(login.upcase, aleph_user)
     else
       raise "Aleph authentication failed"
     end
@@ -49,12 +49,20 @@ class User < ActiveRecord::Base
  private
 
   def self.create_or_update_aleph_user!(login, aleph_user)
-    if (user = User.find_by(ilsuserid: aleph_user.id)).present?
-      user.update_attributes!(login: login.upcase, name: aleph_user.name, email: aleph_user.email)
-      user
-    else
-      User.create!(ilsuserid: aleph_user.id, login: login.upcase, name: aleph_user.name, email: aleph_user.email)
-    end
+    user = User.where(
+      'ilsuserid=:ilsuserid OR login=:login', ilsuserid: aleph_user.id, login: login
+    ).first_or_initialize
+
+    user.attributes = {
+      login: login,
+      ilsuserid: aleph_user.id,
+      name: aleph_user.name,
+      email: aleph_user.email
+    }
+
+    user.save!
+
+    user
   end
 
 end
