@@ -31,13 +31,38 @@ namespace :app do
   end
 
   #
+  # Resolve users
   #
+  desc "Resolve / Update local users with Aleph"
+  task(:resolve_users => :environment) do
+    success = 0
+    errors = 0
 
+    User.all.each do |user|
+      aleph_user = nil
+      aleph_user = Aleph::Connector.new.resolve_user(user.login) if user.login.present?
+      aleph_user = Aleph::Connector.new.resolve_user(user.ilsuserid) if user.ilsuserid.present? && aleph_user.nil?
 
+      if aleph_user
+        success += 1
+        user.update_attributes!(
+          login: aleph_user.login,
+          ilsuserid: aleph_user.id,
+          name: aleph_user.name,
+          email: aleph_user.email
+        )
+        puts "OK: User '#{user.name.presence || 'n.a'} (#{user.id})' resolved and updated with login=#{aleph_user.login} and ilsuserid=#{aleph_user.ilsuserid}"
+      else
+        errors += 1
+        puts "ERROR: User '#{user.name.presence || 'n.a'} (#{user.id})' can't be resolved using login=#{user.login.presence || 'n.a.'} or ilsuserid=#{user.ilsuserid.presence || 'n.a.'}"
       end
 
+      sleep(0.3) # de-stress Aleph
     end
 
+    puts "--------------"
+    puts "Success: #{success}"
+    puts "Errors: #{errors}"
   end
 
 end
