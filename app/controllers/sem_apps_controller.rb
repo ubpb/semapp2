@@ -4,7 +4,7 @@ class SemAppsController < ApplicationController
   SEM_APP_SEMESTER_INDEX_FILTER_NAME  = 'sem_app_semester_index_filter_name_p'.freeze
   SEM_APP_CLONES_FILTER_NAME          = 'sem_app_clones_filter_name_p'.freeze
 
-  before_action :authenticate!, only: [:new, :create, :edit, :update, :unlock, :generate_access_token, :clones, :filter_clones, :clone]
+  before_action :authenticate!, only: [:new, :create, :edit, :update, :generate_access_token, :clones, :filter_clones, :clone]
 
   def index
     @filter          = SemAppsFilter.get_filter_from_session(session, SEM_APP_FILTER_NAME)
