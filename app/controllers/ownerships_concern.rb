@@ -10,22 +10,12 @@ protected
     aleph_user = Aleph::Connector.new.resolve_user(login)
 
     if aleph_user
-      user = User.find_by(ilsuserid: aleph_user.id)
+      user = User.create_or_update_aleph_user!(login, aleph_user)
 
-      if user
-        if sem_app.add_ownership(user)
-          flash[:success] = "Nutzer hinzugefügt"
-        else
-          flash[:error] = "Nutzer konnte nicht hinzugefügt werden"
-        end
+      if sem_app.add_ownership(user)
+        flash[:success] = "#{user.name} (#{login}) kann den Seminarapparat <i>#{sem_app.title}</i> nun bearbeiten.".html_safe
       else
-        u = User.new(ilsuserid: aleph_user.id, login: login)
-
-        if u.save(validate: false) and sem_app.add_ownership(u)
-          flash[:success] = ActionController::Base.helpers.sanitize "Der Nutzer '#{login}' existierte nicht, wurde aber angelegt. Name und E-Mail sind erst verfügbar wenn der Nutzer sich das erste mal anmeldet. #{login} kann den Seminarapparat <i>#{sem_app.title}</i> nun bearbeiten."
-        else
-          flash[:error] = "Es ist ein unbekannter Fehler aufgetreten!"
-        end
+        flash[:error] = "Nutzer konnte nicht hinzugefügt werden"
       end
     else
       flash[:error] = "Ein Nutzer mit der Bibliotheksausweisnummer #{login} existiert nicht."
