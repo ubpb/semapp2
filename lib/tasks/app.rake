@@ -51,7 +51,7 @@ namespace :app do
           name: aleph_user.name,
           email: aleph_user.email
         )
-        puts "OK: User '#{user.name.presence || 'n.a'} (#{user.id})' resolved and updated with login=#{aleph_user.login} and ilsuserid=#{aleph_user.ilsuserid}"
+        puts "OK: User '#{user.name.presence || 'n.a'} (#{user.id})' resolved and updated with login=#{aleph_user.login} and ilsuserid=#{aleph_user.id}"
       else
         errors += 1
         puts "ERROR: User '#{user.name.presence || 'n.a'} (#{user.id})' can't be resolved using login=#{user.login.presence || 'n.a.'} or ilsuserid=#{user.ilsuserid.presence || 'n.a.'}"
