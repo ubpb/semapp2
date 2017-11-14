@@ -8,14 +8,12 @@ module Aleph
     ##
     # Inititalize the object with the given raw data as LibXML::XML::Node
     #
-    def initialize(login, node)
+    def initialize(node)
       raise "Node is required" unless node.present?
 
-      @login = login
       d      = Nokogiri::XML::Document.new
       d.root = node.dup
       @data  = d
-      raise "Login is required" unless @login.present?
     end
 
     #########################################################################################
@@ -40,7 +38,7 @@ module Aleph
     #########################################################################################
 
     def login
-      @login
+      content_from_node(@data, "//z308[z308-key-type=01]/z308-id")
     end
 
     def data

@@ -46,11 +46,11 @@ module Aleph #:nodoc:
     end
 
     def resolve_user(ils_account_no)
-      data = post_url(@base_url, 'op' => 'bor_info', 'bor_id' => ils_account_no, 'loans' => 'N', 'cash' => 'N', 'hold' => 'N', 'library' => @library)
+      data = post_url(@base_url, 'op' => 'bor_info', 'bor_id' => ils_account_no, 'loans' => 'N', 'cash' => 'N', 'hold' => 'N', 'library' => @library, 'format' => 1)
       if data.xpath('/bor-info/error')[0]
         nil
       else
-        Aleph::User.new(ils_account_no, data.xpath('/bor-info')[0])
+        Aleph::User.new(data.xpath('/bor-info')[0])
       end
     end
 
@@ -98,7 +98,7 @@ module Aleph #:nodoc:
       if invalid_auth_response?(data)
         raise Aleph::AuthenticationError, "Authentication failed"
       else
-        user = Aleph::User.new(ils_account_no, data.xpath('/bor-auth')[0])
+        user = resolve_user(data.xpath('//z303-id')[0].text)
         verify_user!(user)
 
         return user
