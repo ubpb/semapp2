@@ -10,10 +10,10 @@ protected
     aleph_user = Aleph::Connector.new.resolve_user(login)
 
     if aleph_user
-      user = User.create_or_update_aleph_user!(login, aleph_user)
+      user = User.create_or_update_aleph_user!(aleph_user)
 
       if sem_app.add_ownership(user)
-        flash[:success] = "#{user.name} (#{login}) kann den Seminarapparat <i>#{sem_app.title}</i> nun bearbeiten.".html_safe
+        flash[:success] = "#{user.name} (#{user.login}) kann den Seminarapparat <i>#{sem_app.title}</i> nun bearbeiten.".html_safe
       else
         flash[:error] = "Nutzer konnte nicht hinzugefügt werden"
       end
