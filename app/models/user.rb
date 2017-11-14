@@ -46,8 +46,6 @@ class User < ActiveRecord::Base
   #  ["#{name} (#{login})", "#{email}"].map(&:presence).compact.join(', ').strip
   #end
 
- private
-
   def self.create_or_update_aleph_user!(login, aleph_user)
     user = User.where(
       'ilsuserid=:ilsuserid OR login=:login', ilsuserid: aleph_user.id, login: login
