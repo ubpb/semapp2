@@ -54,7 +54,7 @@ module Aleph
     end
 
     def email
-      content_from_node(@data, "//z304-email-address")
+      @data.xpath("//z304-email-address").map{|n| n.text.presence}.compact.first
     end
 
     def status
