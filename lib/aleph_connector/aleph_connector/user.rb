@@ -38,7 +38,7 @@ module Aleph
     #########################################################################################
 
     def login
-      content_from_node(@data, "//z308[z308-key-type=01]/z308-id")
+      content_from_node(@data, "//z308[z308-key-type=01]/z308-key-data")
     end
 
     def data
