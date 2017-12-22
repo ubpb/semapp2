@@ -1,7 +1,15 @@
 Rails.application.routes.draw do
 
+  # API routes
+  namespace :api, defaults: {format: :json} do
+    # Speacial Admin API routes
+    namespace :admin do
+      get :owners, to: "owners#index"
+    end
+  end
+
   # Admin routes
-  namespace :admin do |admin|
+  namespace :admin do
     root to: 'sem_apps#index'
 
     get   :application_settings, to: 'application_settings#index'
