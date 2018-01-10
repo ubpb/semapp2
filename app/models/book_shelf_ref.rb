@@ -1,4 +1,4 @@
-class BookShelfRef < ActiveRecord::Base
+class BookShelfRef < ApplicationRecord
 
   # Relations
   belongs_to :sem_app

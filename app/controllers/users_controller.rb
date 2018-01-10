@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_filter :require_authenticate
+  before_action :authenticate!
 
   def show
     @user = current_user

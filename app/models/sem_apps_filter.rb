@@ -37,6 +37,12 @@ class SemAppsFilter
   end
 
   def filter_attributes=(filters)
+    if filters && filters.is_a?(ActionController::Parameters)
+      filters = filters.permit(
+        :slot_number, :title, :tutors, :owners, :location_id, :semester_id, :ils_account, :approved, :unapproved, :book_jobs
+      )
+    end
+
     filters = ActiveSupport::HashWithIndifferentAccess.new(filters.presence)
 
     @slot_number = filters[:slot_number].presence
@@ -61,16 +67,16 @@ class SemAppsFilter
   def filtered
     scope = SemApp.all
 
-    scope = filter_by_slot_number(scope)
-    scope = filter_by_title(scope)
-    scope = filter_by_tutors(scope)
-    scope = filter_by_owners(scope)
-    scope = filter_by_location_id(scope)
-    scope = filter_by_semester_id(scope)
-    scope = filter_by_ils_account(scope)
-    scope = filter_by_approved(scope)
-    scope = filter_by_unapproved(scope)
-    scope = filter_by_book_jobs(scope)
+    scope = filter_by_slot_number(scope) if @slot_number
+    scope = filter_by_title(scope) if @title
+    scope = filter_by_tutors(scope) if @tutors
+    scope = filter_by_owners(scope) if @owners
+    scope = filter_by_location_id(scope) if @location_id
+    scope = filter_by_semester_id(scope) if @semester_id
+    scope = filter_by_ils_account(scope) if @ils_account
+    scope = filter_by_approved(scope) if @approved
+    scope = filter_by_unapproved(scope) if @unapproved
+    scope = filter_by_book_jobs(scope) if @book_jobs
 
     scope = default_order(scope)
 
@@ -134,17 +140,7 @@ private
   end
 
   def default_order(scope)
-    #
-    # FIXME: We can not order by pg_search_rank when using two or more
-    # pg_search scopes. That will result in an ambiguous pg_search_rank.
-    # There is no known workaround at the moment. Also see https://github.com/Casecommons/pg_search/issues/1
-    #
-
-    #if filtered_by_some_fulltext_filter?
-    #  scope.reorder("pg_search_rank desc")
-    #else
     scope.joins(:semester).reorder("semesters.position asc, sem_apps.title asc")
-    #end
   end
 
 end

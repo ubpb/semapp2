@@ -2,11 +2,7 @@
   <p>
     Texte und Medien sind urheberrechtlich geschützt. Sie müssen
     diesen Seminarapparat zunächst mittels der <strong>Lesekennung</strong>
-    freischalten.
-  </p>
-
-  <p>
-    Diese Kennung erhalten Sie von Dozierenden der Veranstaltung.
+    freischalten. Diese Kennung erhalten Sie von Dozierenden der Veranstaltung.
   </p>
 
   <%= form_tag unlock_sem_app_path do %>
@@ -14,12 +10,4 @@
     <%= password_field_tag 'shared_secret' %>
     <%= submit_tag "Freischalten" %>
   <% end %>
-
-  <p>
-    <i>
-      Für Seminarapparate vor dem Sommersemester 2010 ist die Lesekennung das Passwort, welches Sie
-      im alten System für Seminarapparate (<a href="http://ubdok.uni-paderborn.de">Seminarapparate in DuPS</a>)
-      auch schon verwendet haben.
-    </i>
-  </p>
 </div>

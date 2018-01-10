@@ -1,4 +1,4 @@
-class Scanjob < ActiveRecord::Base
+class Scanjob < ApplicationRecord
 
   States = {
     :ordered  => "ordered",  # the scanjob is new

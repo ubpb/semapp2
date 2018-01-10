@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
 
   # Relations
   has_many :ownerships, :dependent => :destroy

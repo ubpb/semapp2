@@ -1,6 +1,6 @@
 class AbstractMediaController < ApplicationController
 
-  before_filter :require_authenticate
+  before_action :authenticate!
 
   def new
     @sem_app = SemApp.find(params[:sem_app_id])
@@ -15,7 +15,8 @@ class AbstractMediaController < ApplicationController
     @sem_app = SemApp.find(params[:sem_app_id])
     authorize! :edit, @sem_app
 
-    instance_params = params[model_class.name.underscore.to_sym]
+    instance_type   = model_class.name.underscore.to_sym
+    instance_params = permitted_instance_params(instance_type, params[instance_type])
 
     media            = Media.new
     media.sem_app    = @sem_app
@@ -48,7 +49,8 @@ class AbstractMediaController < ApplicationController
     @media = model_class.includes(:parent => :sem_app).find(params[:id])
     authorize! :edit, @media.sem_app
 
-    instance_params = params[model_class.name.underscore.to_sym]
+    instance_type   = model_class.name.underscore.to_sym
+    instance_params = permitted_instance_params(instance_type, params[instance_type])
 
     @media.parent.update_attributes(hidden: instance_params.delete(:hidden) || false)
 
@@ -71,7 +73,7 @@ class AbstractMediaController < ApplicationController
     end
 
     if @media.destroy && @media.parent.destroy
-      render :nothing => true
+      render body: nil
     else
       flash[:error] = "Der Eintrag konnte nicht gelöscht werden. Es ist ein Fehler aufgetreten."
       redirect_to sem_app_path(@media.sem_app, :anchor => 'media')
@@ -82,6 +84,23 @@ class AbstractMediaController < ApplicationController
 
   def model_class
     self.controller_name.classify.constantize
+  end
+
+  def permitted_instance_params(type, instance_params)
+    case type
+    when :media_headline
+      instance_params.permit(:style, :headline, :hidden)
+    when :media_text
+      instance_params.permit(:text, :hidden)
+    when :media_monograph
+      instance_params.permit(:author, :title, :subtitle, :year, :place, :publisher, :edition, :isbn, :signature, :comment, :hidden)
+    when :media_article
+      instance_params.permit(:author, :title, :journal, :volume, :year, :issue, :pages_from, :pages_to, :issn, :signature, :comment, :hidden)
+    when :media_collected_article
+      instance_params.permit(:source_editor, :source_title, :source_subtitle, :source_year, :source_place, :source_publisher, :source_edition, :source_isbn, :source_signature, :author, :title, :pages_from, :pages_to, :comment, :hidden)
+    else
+      instance_params
+    end
   end
 
 end

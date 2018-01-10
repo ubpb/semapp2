@@ -18,8 +18,12 @@ class Admin::SemAppsController < Admin::ApplicationController
   end
 
   def show
-    @sem_app        = SemApp.find_by_id(params[:id])
-    (flash[:error] = "Dieser Apparat existiert nicht"; redirect_to admin_sem_apps_path) unless @sem_app.present?
+    @sem_app = SemApp.find_by_id(params[:id])
+
+    unless @sem_app.present?
+      flash[:error] = "Dieser Apparat existiert nicht"
+      redirect_to admin_sem_apps_path and return
+    end
 
     @ordered_books  = Book.for_sem_app(@sem_app).ordered.ordered_by('signature asc')
     @removed_books  = Book.for_sem_app(@sem_app).removed.ordered_by('signature asc')
@@ -28,23 +32,6 @@ class Admin::SemAppsController < Admin::ApplicationController
     respond_to do |format|
       format.html { render 'show',  :format => 'html' }
       format.print { render 'show', :format => 'print', :layout => 'print' }
-    end
-  end
-
-  def new
-    @sem_app = SemApp.new
-    @sem_app.build_book_shelf unless @sem_app.book_shelf.present?
-  end
-
-  def create
-    @sem_app = SemApp.new(params[:sem_app])
-    @sem_app.creator = current_user
-    if @sem_app.save
-      flash[:success] = "Der Seminarapparat wurde erfolgreich erstellt"
-      redirect_to :action => :index
-    else
-      @sem_app.build_book_shelf unless @sem_app.book_shelf.present?
-      render :action => :new
     end
   end
 
@@ -59,7 +46,7 @@ class Admin::SemAppsController < Admin::ApplicationController
 
     was_approved = @sem_app.approved
 
-    if @sem_app.update_attributes(params[:sem_app])
+    if @sem_app.update_attributes(permitted_params)
       if (@sem_app.approved and not was_approved and @sem_app.creator.present? and @sem_app.creator.email.present?)
         Notifications.sem_app_activated_notification(@sem_app).deliver
       end
@@ -106,6 +93,22 @@ class Admin::SemAppsController < Admin::ApplicationController
     @sem_app.destroy
     flash[:success] = "Seminarpparat '#{@sem_app.title}' gelöscht."
     redirect_to :action => :index
+  end
+
+private
+
+  def permitted_params
+    params.require(:sem_app).permit(
+      :approved,
+      :semester_id,
+      :title,
+      :course_id,
+      :tutors,
+      :location_id,
+      :shared_secret,
+      book_shelf_attributes: [:slot_number, :ils_account, :_destroy, :id],
+      book_shelf_ref_attributes: [:sem_app_ref_id],
+    )
   end
 
 end

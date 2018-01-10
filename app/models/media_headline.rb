@@ -1,4 +1,4 @@
-class MediaHeadline < ActiveRecord::Base
+class MediaHeadline < ApplicationRecord
 
   # Behavior
   acts_as_media_instance

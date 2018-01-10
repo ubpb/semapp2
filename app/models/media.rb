@@ -1,4 +1,4 @@
-class Media < ActiveRecord::Base
+class Media < ApplicationRecord
 
   # Realations
   belongs_to :sem_app, :touch => true

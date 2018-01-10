@@ -1,4 +1,4 @@
-class Ownership < ActiveRecord::Base
+class Ownership < ApplicationRecord
 
   belongs_to :user
   belongs_to :sem_app

@@ -1,4 +1,4 @@
-class MediaMonograph < ActiveRecord::Base
+class MediaMonograph < ApplicationRecord
 
   # Behavior
   acts_as_media_instance

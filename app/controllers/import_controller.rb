@@ -1,6 +1,6 @@
 class ImportController < ApplicationController
 
-  before_filter :load_sem_app
+  before_action :load_sem_app
 
   def create
     if params[:import_file].present?
