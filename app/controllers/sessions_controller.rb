@@ -55,7 +55,7 @@ class SessionsController < ApplicationController
       rescue Aleph::UnsupportedAccountTypeError
         flash.now.alert = 'Anmeldung nicht möglich.'
       rescue Aleph::AccountLockedError
-        flash.now.alert = 'Ihr Konto wurde gesperrt. Bitte wenden Sie sich an die Bibliothek.'
+        flash.now.alert = 'Ihr Bibliothekskonto ist gesperrt. Bitte wenden Sie sich an die Bibliothek.'
       rescue Exception => e
         puts e.message
         puts e.backtrace

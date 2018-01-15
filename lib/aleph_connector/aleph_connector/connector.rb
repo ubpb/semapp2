@@ -12,23 +12,20 @@ module Aleph #:nodoc:
 
     include Aleph::XmlUtils
 
-    @@base_url           = 'http://localhost/X'
-    @@library            = 'lib50'
-    @@search_base        = 'lib01'
-    @@allowed_user_types = [/^PA.+/, /^PS.+/]
-    @@allowed_ban_codes  = [/^00$/]
+    @@base_url             = 'http://localhost/X'
+    @@library              = 'lib50'
+    @@search_base          = 'lib01'
+    @@allowed_user_types   = [/^PA.+/, /^PS.+/]
+    @@disallowed_ban_codes = []
 
-    cattr_accessor :base_url, :library, :search_base, :allowed_user_types, :allowed_ban_codes
+    cattr_accessor :base_url, :library, :search_base, :allowed_user_types, :disallowed_ban_codes
 
     def initialize(options = {})
-      @base_url           = options[:base_url].present?           ? options[:base_url]           : @@base_url
-      @library            = options[:library].present?            ? options[:library]            : @@library
-      @search_base        = options[:search_base].present?        ? options[:search_base]        : @@search_base
-      @allowed_user_types = options[:allowed_user_types].present? ? options[:allowed_user_types] : @@allowed_user_types
-      @allowed_ban_codes  = options[:allowed_ban_codes].present?  ? options[:allowed_ban_codes]  : @@allowed_ban_codes
-
-      apply_check_helper_to(@allowed_user_types)
-      apply_check_helper_to(@allowed_ban_codes)
+      @base_url             = options[:base_url].present?             ? options[:base_url]             : @@base_url
+      @library              = options[:library].present?              ? options[:library]              : @@library
+      @search_base          = options[:search_base].present?          ? options[:search_base]          : @@search_base
+      @allowed_user_types   = options[:allowed_user_types].present?   ? options[:allowed_user_types]   : @@allowed_user_types
+      @disallowed_ban_codes = options[:disallowed_ban_codes].present? ? options[:disallowed_ban_codes] : @@disallowed_ban_codes
     end
 
     def user_exists?(ils_account_no)
@@ -125,11 +122,11 @@ module Aleph #:nodoc:
         raise Aleph::AuthenticationError, "No E-Mail address available."
       end
 
-      unless @allowed_user_types.allows?(user.status)
+      if @allowed_user_types.none?{ |type_regexp| type_regexp.is_a?(Regexp) && user.status&.match(type_regexp) }
         raise Aleph::UnsupportedAccountTypeError, "Authentication not allowed. Wrong user type."
       end
 
-      unless user.ban_codes.all?{|code| @allowed_ban_codes.allows?(code)}
+      if @disallowed_ban_codes.any?{ |type_regexp| type_regexp.is_a?(Regexp) && user.ban_codes.any?{ |code| code.match(type_regexp) } }
         raise Aleph::AccountLockedError, "Authentication not allowed. Your account is locked."
       end
 
@@ -268,14 +265,6 @@ module Aleph #:nodoc:
       response = http.request(request)
 
       Nokogiri::XML(response.body)
-    end
-
-    def apply_check_helper_to(object)
-      object.instance_eval do
-        def allows?(s)
-          self.map{|m| m.match(s)}.select{|x|x}.length > 0
-        end
-      end
     end
 
   end

@@ -13,8 +13,21 @@ defaults: &defaults
     - !ruby/regexp /\A13/ # PG – Gäste / Mitarbeidende ohne Vertrag
     #- !ruby/regexp /\APP/ # PP - Emeriti
     #- !ruby/regexp /\A12/ # PP - Emeriti
-  aleph_allowed_ban_codes:
-    - !ruby/regexp /\A00/
+  aleph_disallowed_ban_codes:
+    - !ruby/regexp /\A01/ # Ausgeschieden
+    - !ruby/regexp /\A02/ # Ausschluss von der Benutzung
+    - !ruby/regexp /\A03/ # Ausweis verloren / gestohlen
+    - !ruby/regexp /\A04/ # Ausweis vertauscht
+    - !ruby/regexp /\A09/ # Exmatrikuliert
+    #- !ruby/regexp /\A14/ # Justitiar
+    - !ruby/regexp /\A21/ # Exmatrikuliert (konv.)
+    - !ruby/regexp /\A22/ # Ausgeschieden (konv.)
+    - !ruby/regexp /\A23/ # Gesprerrt (konv.)
+    - !ruby/regexp /\A24/ # Gesperrt auf Zeit (konv.)
+    - !ruby/regexp /\A25/ # Ausweis verloren (konv.)
+    - !ruby/regexp /\A26/ # Gelöscht (konv.)
+    #- !ruby/regexp /\A51/ # Gesperrt (IMT-Serviceportal)
+
 
 test:
   <<: *defaults
