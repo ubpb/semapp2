@@ -10,7 +10,7 @@ class Book < ApplicationRecord
   # Relations
   belongs_to :sem_app
   belongs_to :creator,     :class_name => 'User'
-  belongs_to :placeholder, :class_name => 'SemApp'
+  belongs_to :placeholder, :class_name => 'SemApp', optional: true
 
   # Validation
   validates_presence_of   :sem_app
