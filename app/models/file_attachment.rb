@@ -2,7 +2,7 @@ class FileAttachment < ApplicationRecord
 
   # Relations
   belongs_to :media,   :touch => true
-  belongs_to :creator, :class_name => 'User'
+  belongs_to :creator, :class_name => 'User', optional: true
 
   # Behavior
   has_attached_file :file, :styles => {}, :processors => []

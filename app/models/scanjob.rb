@@ -9,7 +9,7 @@ class Scanjob < ApplicationRecord
 
   # Realations
   belongs_to :media, :touch => true
-  belongs_to :creator, :class_name => 'User'
+  belongs_to :creator, :class_name => 'User', optional: true
 
   # Validation
   validates_presence_of :media
