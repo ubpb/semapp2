@@ -19,6 +19,7 @@ class SemAppTransitsController < ApplicationController
       den Seminarapparat nach erfolgter Prüfung für Sie frei. Sie sehen den Status unter
       <strong>Meine Seminarapparate</strong>. Bis zur Freischaltung können nur Sie den Seminarapparat
       sehen und bearbeiten.</p>
+      <p>Bitte überprüfen bzw. bearbeiten Sie unter 'Einstellungen' die Bearbeitungsrechte.</p>
     """.html_safe
     redirect_to sem_app_path(target_sem_app)
   end

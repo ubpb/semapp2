@@ -9,9 +9,9 @@ class SemAppTransit
   def transit!
     SemApp.transaction do
       target_sem_app = if @source_sem_app.books_can_be_cloned_when_transit?
-        @source_sem_app.deep_clone(include: :book_shelf, validate: false)
+        @source_sem_app.deep_clone(include: [:book_shelf, :ownerships], validate: false)
       else
-        @source_sem_app.deep_clone(validate: false)
+        @source_sem_app.deep_clone(include: [:ownerships], validate: false)
       end
 
       import_basics!(target_sem_app)
