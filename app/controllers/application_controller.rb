@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |e|
     flash[:error] = "Zugriff verweigert!"
-    redirect_to(root_url) and return
+    redirect_to(root_url)
   end
 
 end
