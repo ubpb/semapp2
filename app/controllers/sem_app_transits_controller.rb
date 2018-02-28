@@ -9,7 +9,11 @@ class SemAppTransitsController < ApplicationController
     @sem_app = SemApp.find(params[:sem_app_id])
     check_can_transit or return
 
-    exclude_book_ids = @sem_app.book_ids - (params[:books] || []).map(&:to_i)
+    exclude_book_ids = []
+
+    unless @sem_app.books_can_be_cloned_when_transit?
+      exclude_book_ids = @sem_app.book_ids - (params[:books] || []).map(&:to_i)
+    end
 
     transit_service = SemAppTransit.new(@sem_app, Semester.transit_target, exclude_book_ids: exclude_book_ids)
     target_sem_app = transit_service.transit!
