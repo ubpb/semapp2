@@ -164,7 +164,7 @@ class SemAppsController < ApplicationController
 
     # Try to find the source sem app we want to clone
     source_sem_app = SemApp.find(params[:source])
-    authorize! :edit, @source_sem_app
+    authorize! :edit, source_sem_app
 
     begin
       cloner = SemAppCloner.new(source_sem_app, @sem_app, clone_books: false, clone_media: true)
