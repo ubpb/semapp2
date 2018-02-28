@@ -3,7 +3,7 @@ class BooksController < ApplicationController
   MAX_BOOKS = 40.freeze
 
   before_action :authenticate!, :load_sem_app
-  before_action :check_current_semester, :only => [:index, :new, :create, :destroy]
+  before_action :check_semester, :only => [:index, :new, :create, :destroy]
   #before_action :check_max_books, only: [:new, :create]
 
   def index
@@ -101,9 +101,9 @@ class BooksController < ApplicationController
     authorize! :edit, @sem_app
   end
 
-  def check_current_semester
-    unless @sem_app.is_from_current_semester? || can?(:manage, :all)
-      flash[:error] = "Der Seminarapparat ist nicht aus dem aktuellen Semester. Sie können Buchaufträge nur für aktuelle Seminarapparate beauftragen bzw. bearbeiten oder löschen."
+  def check_semester
+    unless @sem_app.is_from_current_semester? || Semester.current.higher_items.include?(@sem_app.semester) || can?(:manage, :all)
+      flash[:error] = "Der Seminarapparat ist nicht aus dem aktuellen oder dem kommenden Semester. Sie können Buchaufträge nur für solche beauftragen bzw. bearbeiten oder löschen."
       redirect_to sem_app_path(@sem_app, :anchor => 'books')
     end
   end
