@@ -34,6 +34,8 @@ private
 
         clone = book.dup
         clone.sem_app = @target_sem_app
+        clone.reference_copy = nil
+        clone.placeholder = nil
         clone.state = :ordered
         clone.save!(validate: false)
       end
