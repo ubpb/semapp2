@@ -47,7 +47,7 @@ class SemApp < ApplicationRecord
   pg_search_scope :search_by_tutors,      :against => :tutors,                                       :using => { :tsearch => { :prefix => true  } }
   pg_search_scope :search_by_slot_number, :associated_against => { :book_shelf => :slot_number    }, :using => { :tsearch => { :prefix => false } }
   pg_search_scope :search_by_ils_account, :associated_against => { :book_shelf => :ils_account    }, :using => { :tsearch => { :prefix => false } }
-  pg_search_scope :search_by_owners,      :associated_against => { :owners     => [:name, :login] }, :using => { :tsearch => { :prefix => true  } }
+  pg_search_scope :search_by_creator,     :associated_against => { :creator    => [:name, :login, :ilsuserid] }, :using => { :tsearch => { :prefix => true  } }
 
   # virtual attributes
   attr_accessor :accepts_copyright

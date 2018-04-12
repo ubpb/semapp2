@@ -4,7 +4,7 @@ class SemAppsFilter
     :slot_number,
     :title,
     :tutors,
-    :owners,
+    :creator,
     :location_id,
     :semester_id,
     :ils_account,
@@ -39,7 +39,7 @@ class SemAppsFilter
   def filter_attributes=(filters)
     if filters && filters.is_a?(ActionController::Parameters)
       filters = filters.permit(
-        :slot_number, :title, :tutors, :owners, :location_id, :semester_id, :ils_account, :approved, :unapproved, :book_jobs
+        :slot_number, :title, :tutors, :creator, :location_id, :semester_id, :ils_account, :approved, :unapproved, :book_jobs
       )
     end
 
@@ -48,7 +48,7 @@ class SemAppsFilter
     @slot_number = filters[:slot_number].presence
     @title       = filters[:title].presence
     @tutors      = filters[:tutors].presence
-    @owners      = filters[:owners].presence
+    @creator     = filters[:creator].presence
     @location_id = filters[:location_id].presence
     @semester_id = filters[:semester_id].presence
     @ils_account = filters[:ils_account].presence
@@ -70,7 +70,7 @@ class SemAppsFilter
     scope = filter_by_slot_number(scope) if @slot_number
     scope = filter_by_title(scope) if @title
     scope = filter_by_tutors(scope) if @tutors
-    scope = filter_by_owners(scope) if @owners
+    scope = filter_by_creator(scope) if @creator
     scope = filter_by_location_id(scope) if @location_id
     scope = filter_by_semester_id(scope) if @semester_id
     scope = filter_by_ils_account(scope) if @ils_account
@@ -109,9 +109,9 @@ private
     @tutors ? scope.search_by_tutors(@tutors) : scope
   end
 
-  def filter_by_owners(scope)
+  def filter_by_creator(scope)
     @fulltext_filter = true
-    @owners ? scope.search_by_owners(@owners) : scope
+    @creator ? scope.search_by_creator(@creator) : scope
   end
 
   def filter_by_location_id(scope)
