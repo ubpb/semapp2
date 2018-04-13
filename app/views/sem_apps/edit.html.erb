@@ -10,7 +10,7 @@
     <ul id="sem-app-tabs" class="pui-tabs sem-app">
       <li><a href="#semapp">Daten</a></li>
       <li><a href="#users">Bearbeitungsrechte</a></li>
-      <li><a href="#token">Access-Token</a></li>
+      <li><a href="#token">PANDA/KOALA Integration</a></li>
       <li><a href="#export">Export</a></li>
     </ul>
 
@@ -59,26 +59,44 @@
       </div>
 
       <div>
-        <div class="pui-view align-right">
-          <%= form_for @sem_app, :url => generate_access_token_sem_app_path, :method => :put do |f| %>
-            <%= f.submit 'Neuen Access-Token erzeugen', :data => {:confirm => 'Neuen Access-Token erzeugen? Alten Token sind danach nicht mehr gültig!'} %>
-          <% end %>
+        <div class="pui-panel">
+          <p>
+            Sie können von Ihrem PANDA- bzw. KOALA-Kursraum direkt auf den E-Seminarapparat verlinken.
+            Studierende, die dem Link folgen, sind direkt im E-Seminarapparat angemeldet (die Eingabe der
+            Lesekennung ist in diesem Fall nicht mehr erforderlich).
+          </p>
+          <p>
+            Für die Verlinkung benötigen Sie die unten dargestellte ID des E-Seminarapparats sowie den
+            Access-Token, die Sie bei der Einrichtung in PANDA bzw. in KOALA eingeben müssen.
+          </p>
+          <p>
+            Für PANDA finden Sie eine Anleitung im
+            <a href="https://hilfe.uni-paderborn.de/Kurs:_Seminarapparat_einfügen" target="_blank">IMT HilfeWiki</a>.
+            Für KOALA folgen Sie bitte unserem <a href="https://vimeo.com/11104312" target="_blank">Video-Tutorial</a>.
+          </p>
+        </div>
+
+
+        <p>
+          <strong>ID</strong>
+        </p>
+
+        <div class="pui-panel align-center">
+          <code><%= @sem_app.id %></code>
         </div>
 
         <p>
-          Der aktuelle Access-Token für diesen Seminarapparat lautet
+          <strong>Access-Token</strong>
         </p>
 
         <div class="pui-panel align-center">
           <code><%= @sem_app.access_token || '-' %></code>
         </div>
 
-        <p>
-          Die ID für diesen Seminarapparat lautet
-        </p>
-
-        <div class="pui-panel align-center">
-          <code><%= @sem_app.id %></code>
+        <div class="pui-view">
+          <%= form_for @sem_app, :url => generate_access_token_sem_app_path, :method => :put do |f| %>
+            <%= f.submit 'Neuen Access-Token erzeugen', :data => {:confirm => 'Neuen Access-Token erzeugen? Alten Token sind danach nicht mehr gültig!'} %>
+          <% end %>
         </div>
       </div>
 
