@@ -13,6 +13,9 @@ class SemApp < ApplicationRecord
   has_many   :media, -> {includes(:instance, :file_attachments, :scanjob).order("position asc, instance_id asc")}, :dependent => :destroy
   has_many   :miless_passwords, :dependent => :destroy
 
+  # ...virtual attributes
+  attr_accessor :fachzuordnung
+
   # Behavior
   accepts_nested_attributes_for :book_shelf, :allow_destroy => true, :reject_if => lambda {
     |attrs| attrs.all? { |k, v| v.blank? }
@@ -30,6 +33,7 @@ class SemApp < ApplicationRecord
   validates_presence_of   :tutors
   validates_presence_of   :shared_secret
   validates_acceptance_of :accepts_copyright
+  validates_presence_of   :fachzuordnung, on: :create
 
   # Scopes
   scope :from_current_semester, -> { where(semester_id: Semester.current.id) }

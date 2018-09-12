@@ -10,13 +10,10 @@
       <%= f.input :course_id, :label => 'Kurs-ID',  :input_html => {:disabled => true}, :required => false %>
     <% end %>
     <%= f.input :tutors, :label => 'Dozent(en)', :as => :string, :hint => 'Die Namen der beteiligten Dozenten (Format: Nachname, Vorname). Trennen Sie mehrere Namen durch ein Semikolon.' %>
-  <% end %>
 
-  <%= f.inputs :name => 'Bibliotheksdaten' do %>
-    <% if @sem_app.new_record? %>
-      <%= f.input :location, :label => 'Standort', :hint => 'Welcher Fachbibliothek soll der Seminarapparat zugeordnet werden?', :collection => Location.order('position ASC') %>
-    <% else %>
-      <%= f.input :location, :label => 'Standort', :input_html => {:disabled => true}, :collection => Location.order('position ASC') %>
+    <%- fachzuordnungen = SemApp2.config&.fachzuordnungen&.map{|f| [f.label, f.id]} %>
+    <% if fachzuordnungen.present? %>
+      <%= f.input :fachzuordnung, :label => 'Fachzuordnung', :collection => fachzuordnungen %>
     <% end %>
   <% end %>
 

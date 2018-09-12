@@ -28,6 +28,122 @@ defaults: &defaults
     - !ruby/regexp /\A26/ # Gelöscht (konv.)
     #- !ruby/regexp /\A51/ # Gesperrt (IMT-Serviceportal)
 
+  fachzuordnungen:
+    - !ruby/object:OpenStruct
+      table:
+        :id: 1
+        :label: Allgemeine und vergleichende Sprach- und Literaturwissenschaft
+        :location_id: 4
+    - !ruby/object:OpenStruct
+      table:
+        :id: 2
+        :label: Anglistik und Amerikanistik
+        :location_id: 8
+    - !ruby/object:OpenStruct
+      table:
+        :id: 3
+        :label: Chemie
+        :location_id: 3
+    - !ruby/object:OpenStruct
+      table:
+        :id: 4
+        :label: Elektrotechnik
+        :location_id: 3
+    - !ruby/object:OpenStruct
+      table:
+        :id: 5
+        :label: Erziehungswissenschaft
+        :location_id: 2
+    - !ruby/object:OpenStruct
+      table:
+        :id: 6
+        :label: Germanistik
+        :location_id: 4
+    - !ruby/object:OpenStruct
+      table:
+        :id: 7
+        :label: Geschichte
+        :location_id: 5
+    - !ruby/object:OpenStruct
+      table:
+        :id: 8
+        :label: Haushalts-, Ernährungs- und Lebensmittelwissenschaften
+        :location_id: 3
+    - !ruby/object:OpenStruct
+      table:
+        :id: 9
+        :label: Informatik
+        :location_id: 3
+    - !ruby/object:OpenStruct
+      table:
+        :id: 10
+        :label: Kunstwissenschaften
+        :location_id: 1
+    - !ruby/object:OpenStruct
+      table:
+        :id: 11
+        :label: Maschinenbau
+        :location_id: 3
+    - !ruby/object:OpenStruct
+      table:
+        :id: 12
+        :label: Mathematik
+        :location_id: 3
+    - !ruby/object:OpenStruct
+      table:
+        :id: 13
+        :label: Medienwissenschaft
+        :location_id: 1
+    - !ruby/object:OpenStruct
+      table:
+        :id: 14
+        :label: Philosophie
+        :location_id: 2
+    - !ruby/object:OpenStruct
+      table:
+        :id: 15
+        :label: Physik
+        :location_id: 3
+    - !ruby/object:OpenStruct
+      table:
+        :id: 16
+        :label: Politikwissenschaft
+        :location_id: 5
+    - !ruby/object:OpenStruct
+      table:
+        :id: 17
+        :label: Psychologie
+        :location_id: 2
+    - !ruby/object:OpenStruct
+      table:
+        :id: 18
+        :label: Rechtswissenschaft
+        :location_id: 5
+    - !ruby/object:OpenStruct
+      table:
+        :id: 19
+        :label: Religionswissenschaft. Theologie
+        :location_id: 2
+    - !ruby/object:OpenStruct
+      table:
+        :id: 20
+        :label: Romanistik
+        :location_id: 4
+    - !ruby/object:OpenStruct
+      table:
+        :id: 21
+        :label: Soziologie
+        :location_id: 5
+    - !ruby/object:OpenStruct
+      table:
+        :id: 22
+        :label: Sportwissenschaft
+        :location_id: 3
+    - !ruby/object:OpenStruct
+      table:
+        :id: 23
+        :label: Wirtschaftswissenschaften
+        :location_id: 5
 
 test:
   <<: *defaults

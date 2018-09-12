@@ -20,7 +20,7 @@
         <%= collection_select(:filter, :semester_id, Semester.order('position ASC'), :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
       </p>
       <p>
-        <label>Fachbibliothek</label><br/>
+        <label>Standort</label><br/>
         <%= collection_select(:filter, :location_id, Location.all, :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
       </p>
       <p>

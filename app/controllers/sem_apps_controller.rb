@@ -64,11 +64,15 @@ class SemAppsController < ApplicationController
 
   def create
     @sem_app = SemApp.new(params.require(:sem_app).permit(
-      :semester_id, :title, :course_id, :tutors, :location_id, :shared_secret, :accepts_copyright
+      :semester_id, :title, :course_id, :tutors, :location_id, :shared_secret, :accepts_copyright, :fachzuordnung
     ))
     authorize! :create, @sem_app
 
     @sem_app.creator = current_user
+
+    # Map Fach to location
+    location_id = SemApp2.config.fachzuordnungen.find{|f| f.id == 10}&.location_id
+    @sem_app.location = Location.find_by(id: location_id)
 
     # Finally create the semapp and add the ownership
     if @sem_app.save
@@ -83,6 +87,10 @@ class SemAppsController < ApplicationController
 
       redirect_to user_path(:anchor => 'apps')
     else
+      if @sem_app.location.nil?
+        @sem_app.errors.add(:fachzuordnung, "Für das Fach konnte kein Standort ermittelt werden. Bitte wenden Sie sich an das Informationszentrum der Bibliothek.")
+      end
+
       render :action => :new
     end
   end

@@ -13,7 +13,7 @@
 
         <% if filter_for.include?(:location_id) %>
           <li class="string">
-            <label>Fachbibliothek</label>
+            <label>Standort</label>
             <%= collection_select(:filter, :location_id, Location.all, :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
           </li>
         <% end %>
@@ -63,7 +63,7 @@
       <% end %>
 
       <% if filter_for.include?(:location_id) %>
-        <% filter_strings << "Fachbibliothek = '#{Location.find(@filter.location_id).title}'" if @filter.location_id %>
+        <% filter_strings << "Standort = '#{Location.find(@filter.location_id).title}'" if @filter.location_id %>
       <% end %>
 
       <% if filter_for.include?(:title) %>

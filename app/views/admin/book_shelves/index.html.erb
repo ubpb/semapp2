@@ -2,7 +2,7 @@
 
 <div class="pui-view align-right">
   <%= form_tag admin_book_shelves_path, :method => :get do %>
-    <label>Fachbibliothek:</label>
+    <label>Standort:</label>
     <%= collection_select(:filter, :location, Location.all, :id, :title, {:include_blank => "Alle"}, {:style => 'width: 195px'}) %>
     <%= submit_tag 'Filtern' %>
   <% end %>
@@ -34,6 +34,6 @@
   </table>
 <% else %>
   <div class="pui-panel notice align-center">
-    Keine Regale gefunden. Wählen Sie eine gültige Fachbibliothek.
+    Keine Regale gefunden.
   </div>
 <% end %>
