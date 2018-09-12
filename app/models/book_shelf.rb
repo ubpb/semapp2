@@ -19,7 +19,7 @@ class BookShelf < ApplicationRecord
   ###########################################################################################
 
   def self.clean_ils_account(ils_account)
-    ils_account.gsub(/\s/, '').upcase[/\w\w\d{1,8}/]
+    ils_account.gsub(/\s/, '').upcase[0..9]
   end
 
   def ils_account=(value)
