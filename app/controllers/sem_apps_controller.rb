@@ -71,7 +71,7 @@ class SemAppsController < ApplicationController
     @sem_app.creator = current_user
 
     # Map Fach to location
-    location_id = SemApp2.config.fachzuordnungen&.find{|f| f.id == 10}&.location_id
+    location_id = SemApp2.config.fachzuordnungen&.find{|f| f.id == params[:sem_app][:fachzuordnung].to_i}&.location_id
     @sem_app.location = Location.find_by(id: location_id)
 
     # Finally create the semapp and add the ownership
