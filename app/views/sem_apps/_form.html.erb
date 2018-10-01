@@ -11,8 +11,10 @@
     <% end %>
     <%= f.input :tutors, :label => 'Dozent(en)', :as => :string, :hint => 'Die Namen der beteiligten Dozenten (Format: Nachname, Vorname). Trennen Sie mehrere Namen durch ein Semikolon.' %>
 
-    <%- fachzuordnungen = SemApp2.config&.fachzuordnungen&.map{|f| [f.label, f.id]} %>
-    <%= f.input :fachzuordnung, :label => 'Fachzuordnung', :collection => fachzuordnungen || [] %>
+    <% if @sem_app.new_record? %>
+      <%- fachzuordnungen = SemApp2.config&.fachzuordnungen&.map{|f| [f.label, f.id]} %>
+      <%= f.input :fachzuordnung, :label => 'Fachzuordnung', :collection => fachzuordnungen || [] %>
+    <% end %>
   <% end %>
 
   <%= f.inputs :name => 'Zugriffsschutz' do %>
