@@ -13,7 +13,7 @@ p
   - if @sem_app.book_shelf.present? && @sem_app.books.present?
     - if @sem_app.books_can_be_cloned_when_transit?
       p
-        ' Die Bücher im Regal Nr. #{@sem_app.book_shelf.slot_number} (#{@sem_app.location.title}) bleiben bestehen.
+        ' Die Bücher im Seminarapparat Nr. #{@sem_app.book_shelf.slot_number} (#{@sem_app.location.title}) bleiben bestehen.
     - else
       p(style="background: #cc0000; color: #fff; padding: 6px; font-weight: bold")
         ' Bitte beachten Sie: Die Bücher müssen neu aufgestellt werden. Bitte wählen Sie aus der folgenden Liste die Bücher aus, die in dem neuen

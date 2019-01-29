@@ -34,7 +34,7 @@
 
         <% if filter_for.include?(:slot_number) %>
           <li class="string">
-            <label>Regal Nr.</label>
+            <label>Seminarapparat Nr.</label>
             <%= text_field_tag "filter[slot_number]", @filter.slot_number, {:style => 'width: 190px'}  %>
           </li>
         <% end %>
@@ -75,7 +75,7 @@
       <% end %>
 
       <% if filter_for.include?(:slot_number) %>
-        <% filter_strings << "Regal Nr. = '#{@filter.slot_number}'" if @filter.slot_number %>
+        <% filter_strings << "Seminarapparat Nr. = '#{@filter.slot_number}'" if @filter.slot_number %>
       <% end %>
 
       <%= filter_strings.join(", ") %>
