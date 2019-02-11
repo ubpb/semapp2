@@ -18,11 +18,12 @@ class AbstractMediaController < ApplicationController
     instance_type   = model_class.name.underscore.to_sym
     instance_params = permitted_instance_params(instance_type, params[instance_type])
 
-    media            = Media.new
-    media.sem_app    = @sem_app
-    media.creator    = current_user
-    media.position   = @sem_app.next_position(params[:origin_id])
-    media.hidden     = instance_params.delete(:hidden) || false
+    media              = Media.new
+    media.sem_app      = @sem_app
+    media.creator      = current_user
+    media.position     = @sem_app.next_position(params[:origin_id])
+    media.hidden       = instance_params.delete(:hidden) || false
+    media.assign_attributes(extract_hidden_until_attributes_from(instance_params))
 
     @media          = model_class.new(instance_params)
     @media.parent   = media
@@ -53,6 +54,8 @@ class AbstractMediaController < ApplicationController
     instance_params = permitted_instance_params(instance_type, params[instance_type])
 
     @media.parent.update_attributes(hidden: instance_params.delete(:hidden) || false)
+    @media.parent.update_attributes(hidden_until: instance_params.delete(:hidden_until) || nil)
+    @media.parent.update_attributes(extract_hidden_until_attributes_from(instance_params))
 
     if @media.update_attributes(instance_params)
       flash[:scroll_to] = params.delete(:scroll_to)
@@ -89,18 +92,28 @@ class AbstractMediaController < ApplicationController
   def permitted_instance_params(type, instance_params)
     case type
     when :media_headline
-      instance_params.permit(:style, :headline, :hidden)
+      instance_params.permit(:style, :headline, :hidden, "hidden_until(1i)", "hidden_until(2i)", "hidden_until(3i)", "hidden_until(4i)", "hidden_until(5i)")
     when :media_text
-      instance_params.permit(:text, :hidden)
+      instance_params.permit(:text, :hidden, :hidden_until)
     when :media_monograph
-      instance_params.permit(:author, :title, :subtitle, :year, :place, :publisher, :edition, :isbn, :signature, :comment, :hidden)
+      instance_params.permit(:author, :title, :subtitle, :year, :place, :publisher, :edition, :isbn, :signature, :comment, :hidden, :hidden_until)
     when :media_article
-      instance_params.permit(:author, :title, :journal, :volume, :year, :issue, :pages_from, :pages_to, :issn, :signature, :comment, :hidden)
+      instance_params.permit(:author, :title, :journal, :volume, :year, :issue, :pages_from, :pages_to, :issn, :signature, :comment, :hidden, :hidden_until)
     when :media_collected_article
-      instance_params.permit(:source_editor, :source_title, :source_subtitle, :source_year, :source_place, :source_publisher, :source_edition, :source_isbn, :source_signature, :author, :title, :pages_from, :pages_to, :comment, :hidden)
+      instance_params.permit(:source_editor, :source_title, :source_subtitle, :source_year, :source_place, :source_publisher, :source_edition, :source_isbn, :source_signature, :author, :title, :pages_from, :pages_to, :comment, :hidden, :hidden_until)
     else
       instance_params
     end
+  end
+
+  def extract_hidden_until_attributes_from(params)
+    {
+      "hidden_until(1i)" => params.delete("hidden_until(1i)") || nil,
+      "hidden_until(2i)" => params.delete("hidden_until(2i)") || nil,
+      "hidden_until(3i)" => params.delete("hidden_until(3i)") || nil,
+      "hidden_until(4i)" => params.delete("hidden_until(4i)") || nil,
+      "hidden_until(5i)" => params.delete("hidden_until(5i)") || nil
+    }
   end
 
 end

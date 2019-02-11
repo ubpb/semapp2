@@ -31,9 +31,13 @@
     </div>
   </div>
 
-  <div class="media <%= can?(:edit, @sem_app) && media.hidden ? 'media-hidden' : 'media-visible' %>">
-    <% if can?(:edit, @sem_app) && media.hidden %>
-      <div class="media-hidden-label">Für Studierende nicht sichtbar</div>
+  <div class="media <%= can?(:edit, @sem_app) && media.currently_hidden? ? 'media-hidden' : 'media-visible' %>">
+    <% if can?(:edit, @sem_app) && media.currently_hidden? %>
+      <% if media.hidden %>
+        <div class="media-hidden-label">Für Studierende nicht sichtbar</div>
+      <% elsif media.hidden_until %>
+        <div class="media-hidden-label">Für Studierende nicht sichtbar bis <%= l(media.hidden_until) %></div>
+      <% end %>
     <% end %>
 
     <div>

@@ -34,3 +34,5 @@ form.formtastic fieldset ol li fieldset legend { font-size: 100%; color: #000; w
 form.formtastic fieldset ol li fieldset ol li label { padding-left: 0; }
 
 form.formtastic fieldset ol li.check_boxes fieldset ol li { margin: 0.5em 0 0.5em !important; }
+
+form.formtastic fieldset ol li.datetime_select fieldset ol li { display: inline-block; }

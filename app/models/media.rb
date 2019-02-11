@@ -16,4 +16,8 @@ class Media < ApplicationRecord
   # Behavior
   acts_as_media_parent
 
+  def currently_hidden?
+    self.hidden || (self.hidden_until.present? && self.hidden_until > Time.zone.now)
+  end
+
 end

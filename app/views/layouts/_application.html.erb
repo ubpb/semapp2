@@ -23,17 +23,15 @@
   </head>
 
   <body data-scroll-to="<%= flash[:scroll_to] %>">
-    <%= render 'shared_partials/ie6_notice' %>
-
     <% global_message_file = "#{::Rails.root}/config/_global_message.erb" %>
     <% if File.exists?(global_message_file) %>
       <%= render :file => global_message_file %>
     <% end %>
 
+    <!--
     <div id="global-message">
-      WICHTIGES UPDATE FÜR LEHRENDE: Seit dem 1.3.2018 gilt das neue Urheberrechts-Wissensgesellschafts-Gesetz (UrhWissG).
-      <a href="https://www.ub.uni-paderborn.de/recherche/hinweise-zur-nutzung-der-elektronischen-angebote/52a-urhg/" target="_blank">Klicken Sie hier für weitere Informationen</a>.
     </div>
+    -->
 
     <div id="meta-wrapper">
       <div id="meta" class="container_16 clearfix">

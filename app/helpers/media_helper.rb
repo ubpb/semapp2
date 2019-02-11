@@ -14,7 +14,8 @@ module MediaHelper
 
       concat(
         f.inputs do
-          f.input(:hidden, label: "Eintrag verstecken", as: :boolean, hint: "Wenn Sie den Haken setzen, wird der Eintrag für Ihre Studierenden nicht sichtbar sein.")
+          concat f.input(:hidden, label: "Eintrag dauerhaft verstecken", required: false, as: :boolean, hint: "Solange der Harken gesetzt ist, wird der Eintrag für Ihre Studierenden nicht sichtbar sein.")
+          concat f.input(:hidden_until, label: "Eintrag verstecken bis", required: false, as: :datetime_select, prompt: true, include_blank: false, minute_step: 5, labels: false, start_year: Date.today.year, hint: "Alternativ können Sie den Eintrag bis zu einem bestimmten Datum/Uhrzeit vor den Studierenden verstecken.")
         end
       )
 

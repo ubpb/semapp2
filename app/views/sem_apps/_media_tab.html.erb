@@ -28,10 +28,8 @@
         <% if can?(:edit, @sem_app) %>
           <%= render 'media', :media => media.instance %>
         <% else %>
-          <% unless media.hidden %>
-            <% cache(media.instance) do %>
-              <%= render 'media', :media => media.instance %>
-            <% end %>
+          <% unless media.currently_hidden? %>
+            <%= render 'media', :media => media.instance %>
           <% end %>
         <% end %>
       <% end %>

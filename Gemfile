@@ -41,7 +41,6 @@ end
 group :development, :test do
   gem "pry-byebug",         ">= 3.5.0"
   gem "pry-rails",          "~> 0.3.6"
-  gem "pry-rescue",         "~> 1.4.4"
   gem "puma",               "~> 3.10"
 end
 
