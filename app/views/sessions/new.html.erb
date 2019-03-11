@@ -10,8 +10,8 @@
 <%= semantic_form_for :session, url: sessions_path do |f| %>
   <%= f.error_messages %>
   <%= f.inputs :name => "Anmeldung (mit Bibliothekslogin**)" do %>
-    <%= f.input :login,    :label => 'Login', :required => false %>
-    <%= f.input :password, :label => 'Passwort', :required => false %>
+    <%= f.input :login,    :label => 'Ausweisnummer', :required => false, hint: "Die Nummer finden Sie auf Ihrem Bibliotheks- oder Studierendenausweis." %>
+    <%= f.input :password, :label => 'Passwort', :required => false, hint: "Das Standard-Passwort ist Ihr Geburtsdatum, in der Form: TTMMJJJJ (wenn Sie z.B. am 3. Mai 1991 geboren sind, dann lautet Ihr Passwort: 03051991)" %>
   <% end %>
 
   <%= f.actions do %>
