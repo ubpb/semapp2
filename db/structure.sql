@@ -9,6 +9,20 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
 -- Name: make_plpgsql(); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -663,38 +677,6 @@ ALTER SEQUENCE public.semesters_id_seq OWNED BY public.semesters.id;
 
 
 --
--- Name: sessions; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.sessions (
-    id integer NOT NULL,
-    session_id character varying NOT NULL,
-    data text,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
---
--- Name: sessions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.sessions_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: sessions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.sessions_id_seq OWNED BY public.sessions.id;
-
-
---
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -844,13 +826,6 @@ ALTER TABLE ONLY public.sem_apps ALTER COLUMN id SET DEFAULT nextval('public.sem
 --
 
 ALTER TABLE ONLY public.semesters ALTER COLUMN id SET DEFAULT nextval('public.semesters_id_seq'::regclass);
-
-
---
--- Name: sessions id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.sessions ALTER COLUMN id SET DEFAULT nextval('public.sessions_id_seq'::regclass);
 
 
 --
@@ -1005,14 +980,6 @@ ALTER TABLE ONLY public.semesters
 
 
 --
--- Name: sessions sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.sessions
-    ADD CONSTRAINT sessions_pkey PRIMARY KEY (id);
-
-
---
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1109,20 +1076,6 @@ CREATE INDEX index_sem_apps_on_miless_document_id ON public.sem_apps USING btree
 --
 
 CREATE UNIQUE INDEX index_semesters_on_current ON public.semesters USING btree (current);
-
-
---
--- Name: index_sessions_on_session_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_sessions_on_session_id ON public.sessions USING btree (session_id);
-
-
---
--- Name: index_sessions_on_updated_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_sessions_on_updated_at ON public.sessions USING btree (updated_at);
 
 
 --
@@ -1302,6 +1255,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170405075029'),
 ('20170407085332'),
 ('20180912131113'),
-('20190211105330');
+('20190211105330'),
+('20190312124732');
 
 
