@@ -65,4 +65,47 @@ namespace :app do
     puts "Errors: #{errors}"
   end
 
+  #
+  # Migrate data from PG to mysql
+  #
+  desc "Migrate data from PG to mysql"
+  task(:pg2mysql => :environment) do
+    require "sequel"
+
+    MYSQL    = Sequel.connect('mysql2://root@localhost/semapp2_development')
+    POSTGRES = Sequel.connect('postgres://localhost/semapp2')
+
+    errors = 0
+
+    MYSQL.run("SET FOREIGN_KEY_CHECKS=0;")
+    MYSQL['SELECT table_name FROM information_schema.tables WHERE table_schema = ?', 'semapp2_development'].each do |row|
+      table_name = row[:TABLE_NAME]
+      print "Migrating table: #{table_name}\n"
+
+      MYSQL.run("TRUNCATE TABLE #{table_name}")
+      print "  [1] Cleaning target table: DONE\n"
+
+      source_ds = POSTGRES[table_name.to_sym]
+      target_ds = MYSQL[table_name.to_sym]
+      print "  [2] Processing #{source_ds.count} record(s): "
+      source_ds.all.each_slice(50000) do |rows|
+        target_ds.multi_insert(rows)
+      end
+      print "DONE\n"
+
+      valid = source_ds.count == target_ds.count
+      errors += 1 unless valid
+      print "  [3] Validating row count: #{valid ?  'SUCCESS' : 'FAILED'}\n"
+
+      puts ""
+    end
+    MYSQL.run("SET FOREIGN_KEY_CHECKS=1;")
+
+    if errors > 0
+      puts "=> FINISHED. There has been #{error} error(s) during migration."
+    else
+      puts "=> FINISHED. No errors!"
+    end
+  end
+
 end
