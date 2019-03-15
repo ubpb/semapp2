@@ -72,14 +72,18 @@ namespace :app do
   task(:pg2mysql => :environment) do
     require "sequel"
 
-    MYSQL    = Sequel.connect('mysql2://root@localhost/semapp2_development')
-    POSTGRES = Sequel.connect('postgres://localhost/semapp2')
+    mysql_conn    = ask("MYSQL connection string?")
+    mysql_db_name = ask("MYSQL db name?")
+    postgres_conn = ask("POSTGRES connection string?")
+
+    MYSQL    = Sequel.connect(mysql_conn)
+    POSTGRES = Sequel.connect(postgres_conn)
 
     errors = 0
 
     MYSQL.run("SET FOREIGN_KEY_CHECKS=0;")
-    MYSQL['SELECT table_name FROM information_schema.tables WHERE table_schema = ?', 'semapp2_development'].each do |row|
-      table_name = row[:TABLE_NAME]
+    MYSQL['SELECT table_name FROM information_schema.tables WHERE table_schema = ?', mysql_db_name].each do |row|
+      table_name = row[:TABLE_NAME] || row[:table_name]
       print "Migrating table: #{table_name}\n"
 
       MYSQL.run("TRUNCATE TABLE #{table_name}")
