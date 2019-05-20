@@ -106,7 +106,7 @@ namespace :app do
     MYSQL.run("SET FOREIGN_KEY_CHECKS=1;")
 
     if errors > 0
-      puts "=> FINISHED. There has been #{error} error(s) during migration."
+      puts "=> FINISHED. There has been #{errors} error(s) during migration."
     else
       puts "=> FINISHED. No errors!"
     end
