@@ -6,6 +6,7 @@ class FileAttachment < ApplicationRecord
 
   # Behavior
   has_attached_file :file, :styles => {}, :processors => []
+  validates_attachment_file_name :file, matches: [/\.[a-zA-Z0-9]+\z/], message: "Datei hat keine Dateiendung."
   do_not_validate_attachment_file_type :file
 
   # Validation
