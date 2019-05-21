@@ -32,7 +32,6 @@ class SemAppsFilter
 
 
   def initialize(filters = {})
-    @fulltext_filter = false
     self.filter_attributes = filters
   end
 
@@ -65,7 +64,7 @@ class SemAppsFilter
   end
 
   def filtered
-    scope = SemApp.all
+    scope = SemApp.joins(:semester, :creator).includes(:book_shelf)
 
     scope = filter_by_slot_number(scope) if @slot_number
     scope = filter_by_title(scope) if @title
@@ -90,28 +89,37 @@ class SemAppsFilter
 
 private
 
-  def filtered_by_some_fulltext_filter?
-    @fulltext_filter == true
-  end
-
   def filter_by_slot_number(scope)
-    @fulltext_filter = true
-    @slot_number ? scope.search_by_slot_number(@slot_number) : scope
+    @slot_number ? scope.joins(:book_shelf).where(book_shelves: {slot_number: @slot_number}) : scope
   end
 
   def filter_by_title(scope)
-    @fulltext_filter = true
-    @title ? scope.search_by_title(@title) : scope
+    if @title
+      tokens(@title).each do |token|
+        scope = scope.where("sem_apps.title like ?", "%#{token}%")
+      end
+    end
+
+    scope
   end
 
   def filter_by_tutors(scope)
-    @fulltext_filter = true
-    @tutors ? scope.search_by_tutors(@tutors) : scope
+    if @tutors
+      tokens(@tutors).each do |token|
+        scope = scope.where("sem_apps.tutors like ?", "%#{token}%")
+      end
+    end
+
+    scope
   end
 
   def filter_by_creator(scope)
-    @fulltext_filter = true
-    @creator ? scope.search_by_creator(@creator) : scope
+    if @creator
+      like_token = @creator.gsub('%', '\%')
+      scope = scope.where("users.name like :like_token or users.login = :token or users.ilsuserid = :token", like_token: "%#{like_token}%", token: @creator)
+    end
+
+    scope
   end
 
   def filter_by_location_id(scope)
@@ -123,8 +131,7 @@ private
   end
 
   def filter_by_ils_account(scope)
-    @fulltext_filter = true
-    @ils_account ? scope.search_by_ils_account(@ils_account) : scope
+    @ils_account ? scope.joins(:book_shelf).where(book_shelves: {ils_account: @ils_account}) : scope
   end
 
   def filter_by_approved(scope)
@@ -140,7 +147,11 @@ private
   end
 
   def default_order(scope)
-    scope.joins(:semester).reorder("semesters.position asc, sem_apps.title asc")
+    scope.reorder("semesters.position asc, sem_apps.title asc")
+  end
+
+  def tokens(string_value)
+    string_value.gsub('%', '\%').split(" ")
   end
 
 end
