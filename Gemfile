@@ -9,7 +9,7 @@ gem "auto_strip_attributes", "~> 2.2.0"
 gem "barby",                 "~> 0.6.5"
 gem "cancancan",             "~> 2.0.0"
 gem "chunky_png",            "~> 1.3.8"
-gem "coffee-rails",          "~> 4.2.2"
+gem "coffee-rails",          "~> 5.0.0"
 gem "deep_cloneable",        "~> 2.3.1"
 gem "dynamic_form",          "~> 1.1.4"  # provides the old f.error_messages method
 gem "formtastic",            "~> 3.1.5"
