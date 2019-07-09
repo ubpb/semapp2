@@ -19,10 +19,10 @@ gem "highline",              "~> 1.7.8" # Used by rake custom task
 gem "jbuilder",              "~> 2.7.0"
 gem "jquery-rails",          "~> 4.3.1"
 gem "jquery-ui-rails",       "~> 6.0.1"
+gem "mysql2",                ">= 0.4.4", "< 0.6.0"
 gem "nokogiri",              "~> 1.8.1"
 gem "paperclip",             "~> 5.2.1"
 gem "pg",                    ">= 0.21.0", "< 1.0.0"
-gem "pg_search",             "~> 2.1.1"
 gem "rack-attack",           "~> 5.0.1"
 gem "rails",                 "~> 5.1.4"
 gem "rails-i18n",            "~> 5.0.4"
@@ -32,6 +32,8 @@ gem "sass-rails",            "~> 5.0.6"
 gem "slim",                  "~> 3.0.8"
 gem "uglifier",              ">= 3.2.0"
 gem "will_paginate",         "~> 3.1.6"
+
+gem "sequel",                "~> 5.18", require: false
 
 group :production do
   gem "therubyracer", ">= 0.12.3"
