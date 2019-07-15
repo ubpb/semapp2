@@ -127,7 +127,7 @@ private
   end
 
   def filter_by_semester_id(scope)
-    @semester_id ? scope.where("semester_id = ?", @semester_id) : scope
+    @semester_id ? scope.where("sem_apps.semester_id = ?", @semester_id) : scope
   end
 
   def filter_by_ils_account(scope)
