@@ -23,6 +23,8 @@
   </head>
 
   <body data-scroll-to="<%= flash[:scroll_to] %>">
+    <%= render "shared_partials/test_server_warning" %>
+
     <% global_message_file = "#{::Rails.root}/config/_global_message.erb" %>
     <% if File.exists?(global_message_file) %>
       <%= render :file => global_message_file %>

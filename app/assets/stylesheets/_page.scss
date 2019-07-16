@@ -85,6 +85,19 @@ form.formtastic .input-important {
   }
 }
 
+#test-server-warning {
+  text-align: center;
+  padding: 8px;
+  background: #E20009;
+  color: white;
+  font-weight: bold;
+
+  a {
+    color: white;
+    text-decoration: underline;
+  }
+}
+
 #header-wrapper {
   background: image-url("page/header-bg.png") repeat-x;
 }
