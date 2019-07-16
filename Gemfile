@@ -33,8 +33,6 @@ gem "slim",                  "~> 3.0.8"
 gem "uglifier",              ">= 3.2.0"
 gem "will_paginate",         "~> 3.1.6"
 
-gem "sequel",                "~> 5.18", require: false
-
 group :production do
   gem "therubyracer", ">= 0.12.3"
   gem "newrelic_rpm", ">= 4.5.0"
