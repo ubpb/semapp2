@@ -27,6 +27,11 @@ namespace :deploy do
   end
 end
 
+def ask_and_fetch(thing, default_value = nil)
+  ask(thing, default_value)
+  fetch(thing)
+end
+
 namespace :app do
   namespace :db do
     desc 'Pull db from remote server'
@@ -36,32 +41,44 @@ namespace :app do
       raise "No proper server found" if server.nil?
 
       # Setup variables
-      dump_file_name = "semapp-#{Time.now.strftime("%Y%m%d-%H%M%S")}.dump"
-      remote_db = "semapp"
-      local_db = "semapp2"
-      remote_dump_file = "/tmp/#{dump_file_name}"
-      local_dump_file = "/tmp/#{dump_file_name}"
+      dump_file_name = "semapp-#{Time.now.strftime("%Y%m%d-%H%M%S")}.sql"
+      dump_file = "/tmp/#{dump_file_name}"
+
+      remote_db   = ask_and_fetch(:remote_db)
+      remote_user = ask_and_fetch(:remote_user)
+      remote_pw   = ask_and_fetch(:remote_pw)
+      local_db    = ask_and_fetch(:local_db, "semapp2_development")
+      local_user  = ask_and_fetch(:local_user, "root")
+      local_pw    = ask_and_fetch(:local_pw)
 
       # Dump db on remote server
       on(server) do |host|
-        execute("export PGPASSWORD=#{ENV['REMOTE_DB_PASSWORD']} ; pg_dump -x -O -F c -f #{remote_dump_file} -U postgres #{remote_db}")
+        if remote_pw
+          execute("mysqldump -h mysqlmaster -u #{remote_user} -p#{remote_pw} #{remote_db} > #{dump_file}")
+        else
+          execute("mysqldump -h mysqlmaster -u #{remote_user} #{remote_db} > #{dump_file}")
+        end
       end
 
       # Download file
       on(server) do |host|
-        download!(remote_dump_file, local_dump_file)
+        download!(dump_file, dump_file)
       end
 
       # Restore dump locally
-      system("pg_restore -x -O -c -d #{local_db} #{local_dump_file}")
+      if local_pw
+        system("mysql -h localhost -u #{local_user} -p#{local_pw} #{local_db} < #{dump_file}")
+      else
+        system("mysql -h localhost -u #{local_user} #{local_db} < #{dump_file}")
+      end
 
       # Delete dump on remote server
       on(server) do |host|
-        execute("rm #{remote_dump_file}")
+        execute("rm #{dump_file}")
       end
 
       # Delete dump locally
-      system("rm #{local_dump_file}")
+      system("rm #{dump_file}")
     end
   end
 end
