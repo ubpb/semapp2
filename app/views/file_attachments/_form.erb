@@ -1,13 +1,14 @@
 <%
-  copyright_label = "Die Datei-Inhalte unterliegen § 52a UrhG!<br/><br/>"
+  copyright_label = "Die Datei-Inhalte unterliegen § 60a UrhWissG bzw. § 60c UrhWissG!<br/><br/>"
+
   # if ApplicationSettings.instance.restrict_download_of_files_restricted_by_copyright
   #   copyright_label << "<p>Ist der Haken gesetzt, ist der Download für Studierende für diese Datei nicht möglich.</b></p>"
   # else
   #   copyright_label << "<p>Ist der Haken gesetzt, ist der Download für Studierende für diese Datei ab dem 1.1.2017 nicht mehr möglich.</p>"
   # end
 
-  copyright_label << "<p><b>Unterliegen die Datei-Inhalte nicht § 52a UrhG können Sie den Haken entfernen und so die Datei entsprechend markieren.</b></p><p>Nicht § 52a UrhG unterliegende Dokumente sind z. B. (Vorlesungs-) Skripte, von Lehrenden selbst erstellte Unterrichtsmaterialien (Folien, Aufgaben/Übungsblätter, Lösungen), Protokolle, Literaturlisten sowie gemeinfreie Werke, d.h. Werke, deren Autorinnen/Autoren mehr als 70 Jahre tot sind, Werke mit freien Lizenzen (Open Access, Open Educational Resources (OER), Creative Commons-Lizenzen), Gesetzestexte, Urteile, Gesetzesbegründungen.</p>"
-  copyright_label << '<p>Für weitere Informationen zu dem Thema <a href="https://www.ub.uni-paderborn.de/recherche/hinweise-zur-nutzung-der-elektronischen-angebote/52a-urhg/" target="_blank">klicken Sie bitte hier</a>.</p>'
+  copyright_label << "<p><b>Unterliegen die Datei-Inhalte nicht § 60a UrhWissG bzw. § 60c UrhWissG können Sie den Haken entfernen und so die Datei entsprechend markieren.</b></p><p>Nicht § 60a UrhWissG bzw. § 60c UrhWissG unterliegende Dokumente sind z.B. (Vorlesungs-) Skripte, von Lehrenden selbst erstellte Unterrichtsmaterialien (Folien, Aufgaben/Übungsblätter, Lösungen), Protokolle, Literaturlisten sowie gemeinfreie Werke, d.h. Werke, deren Autorinnen/Autoren mehr als 70 Jahre tot sind, Werke mit freien Lizenzen (Open Access, Open Educational Resources (OER), Creative Commons-Lizenzen), Gesetzestexte, Urteile, Gesetzesbegründungen.</p>"
+  copyright_label << '<p>Für weitere Informationen zu dem Thema <a href="https://www.ub.uni-paderborn.de/recherche/hinweise-zur-nutzung-der-elektronischen-angebote/60a-urhwissg/" target="_blank">klicken Sie bitte hier</a>.</p>'
 %>
 
 <%= semantic_form_for @file_attachment, url: polymorphic_path([@media, @file_attachment]), :html => {:multipart => true} do |f| %>
