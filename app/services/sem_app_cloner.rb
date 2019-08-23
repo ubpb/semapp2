@@ -61,7 +61,8 @@ private
         attachment = FileAttachment.new(
           file: File.new(path),
           description: a.description,
-          scanjob: a.scanjob
+          scanjob: a.scanjob,
+          restricted_by_copyright: a.restricted_by_copyright
         )
         attachment.file.instance_write(:file_name, a.file_file_name)
         attachment
