@@ -21,8 +21,9 @@ class Admin::MailingsController < Admin::ApplicationController
       flash.now[:error] = "Bitte geben Sie einen Text ein."
       render :new
     else
-      users.each do |user|
-        Notifications.admin_mailing(user, subject, text, from).deliver
+      users[0..0].each do |user|
+        clean_text = text.gsub(/\r\n/, "\n")
+        Notifications.admin_mailing(user, subject, clean_text, from).deliver
       end
       flash[:success] = "Nachricht wurde versendet"
       redirect_to action: :new
