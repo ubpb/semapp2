@@ -38,8 +38,9 @@ group :production do
 end
 
 group :development, :test do
-  gem "pry-byebug", ">= 3.6", platform: :mri
-  gem "pry-rails",  ">= 0.3", platform: :mri
+  gem "letter_opener", ">= 1.7.0"
+  gem "pry-byebug",    ">= 3.6", platform: :mri
+  gem "pry-rails",     ">= 0.3", platform: :mri
 end
 
 group :development do
