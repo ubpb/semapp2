@@ -18,7 +18,7 @@ set :rvm_ruby_version, IO.read(".ruby-version").strip
 set :rails_env, "production"
 
 namespace :deploy do
-  after :publishing, :app, :restart
+  after :publishing, "app:restart"
 end
 
 def ask_and_fetch(thing, default_value = nil)
