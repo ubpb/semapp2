@@ -25,15 +25,9 @@
   <body data-scroll-to="<%= flash[:scroll_to] %>">
     <%= render "shared_partials/test_server_warning" %>
 
-    <% global_message_file = "#{::Rails.root}/config/_global_message.erb" %>
-    <% if File.exists?(global_message_file) %>
-      <%= render :file => global_message_file %>
-    <% end %>
-
-    <!--
     <div id="global-message">
+      Der Scan-Service für die Seminarapparate wird voraussichtlich in Kürze wieder angeboten, Sie können bereits jetzt entsprechende Scan-Aufträge für Ihre Seminarapparate absetzen.
     </div>
-    -->
 
     <div id="meta-wrapper">
       <div id="meta" class="container_16 clearfix">
