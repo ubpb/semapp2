@@ -18,13 +18,7 @@ set :rvm_ruby_version, IO.read(".ruby-version").strip
 set :rails_env, "production"
 
 namespace :deploy do
-  after :publishing, :restart_app do
-    on roles(:web) do
-      within release_path do
-        execute :touch, "tmp/restart.txt"
-      end
-    end
-  end
+  after :publishing, :app, :restart
 end
 
 def ask_and_fetch(thing, default_value = nil)
@@ -33,6 +27,15 @@ def ask_and_fetch(thing, default_value = nil)
 end
 
 namespace :app do
+  desc 'Restart the app'
+  task :restart do
+    on roles(:web), in: :parallel do
+      within release_path do
+        execute :touch, "tmp/restart.txt"
+      end
+    end
+  end
+
   namespace :maintenance do
     desc 'Activate maintenance mode'
     task :on do
