@@ -1,5 +1,5 @@
 defaults: &defaults
-  aleph_base_url: https://ubtest/X
+  aleph_base_url: https://ubtest.upb.de/X
   aleph_library: 'pad50'
   aleph_search_base: 'pbaus'
   aleph_allowed_user_types: # ... as in z305-bor-status
