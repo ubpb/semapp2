@@ -58,7 +58,6 @@ class SemAppsController < ApplicationController
 
   def new
     @sem_app = SemApp.new
-    authorize! :create, @sem_app
     @sem_app.tutors = current_user.name
   end
 

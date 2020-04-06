@@ -1,12 +1,28 @@
 <h3 class="section">Einen neuen Seminarapparat beantragen</h3>
 
-<div class="pui-panel">
-  <%= icon 'asterisk.png' %>
-  Beantragte Seminarapparate werden durch die Universitätsbibliothek <strong>überprüft</strong> und
-  <strong>aktiviert</strong>.
-  Jeder Lehrende kann einen Seminarapparat für eine Veranstaltung beantragen.
-  <strong>Voraussetzung ist, dass die Veranstaltung im Semester offiziell stattfindet</strong>
-  (z.B. Nachweis im <a href="http://paul.uni-paderborn.de">Vorlesungsverzeichnis</a>).
-</div>
+<% if can? :create, @sem_app %>
+  <div class="pui-panel">
+    <%= icon 'asterisk.png' %>
+    Beantragte Seminarapparate werden durch die Universitätsbibliothek <strong>überprüft</strong> und
+    <strong>aktiviert</strong>.
+    Jeder Lehrende kann einen Seminarapparat für eine Veranstaltung beantragen.
+    <strong>Voraussetzung ist, dass die Veranstaltung im Semester offiziell stattfindet</strong>
+    (z.B. Nachweis im <a href="http://paul.uni-paderborn.de">Vorlesungsverzeichnis</a>).
+  </div>
 
-<%= render 'form' %>
+  <%= render 'form' %>
+<% else %>
+  <h4 style="margin-bottom: 8px">Zugriff verweigert</h4>
+  <div class="pui-panel error">
+    <p>Bitte beachten Sie: Um einen Seminarapparat beantragen zu können, müssen Sie sich mit einem PA, PD oder PG
+    Ausweis anmelden.</p>
+    <p>Mitarbeitende der Hochschule können diesen über das
+      <a href="https://serviceportal.uni-paderborn.de/" target="_blank">IMT Serviceportal</a> beantragen.
+    </p>
+    <p>
+      Corona-Hinweis: Da die Bibliothek bis auf weiteres geschlossen ist, können die beantragten Ausweise nicht
+      wie gewohnt in der Bibliothek abgeholt werden. Melden Sie sich bitte daher nach der Beantragung des Ausweises
+      im IMT Serviceportal per E-Mail unter <a href="mailto:information@ub.uni-paderborn.de">information@ub.uni-paderborn.de</a>.
+    </p>
+  </div>
+<% end %>
