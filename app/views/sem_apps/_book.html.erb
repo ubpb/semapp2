@@ -14,11 +14,11 @@
   </div>
 
   <div class="book">
-    <% cache(book) do %>
+    <% #cache(book) do %>
       <%= render 'shared_partials/book_ref', :book => book %>
       <%= render 'media/signature', :media => book %>
       <%= render 'media/comment', :media => book %>
-    <% end %>
+    <% #end %>
 
     <% if book.sem_app.is_from_current_semester? || can?(:manage, :all) %>
       <% if book.placeholder? %>
