@@ -57,51 +57,59 @@ namespace :app do
   end
 
   namespace :db do
-    desc 'Pull db from remote server'
+    desc "Pull db from remote server and install locally"
     task :pull do
       # Find the first server in role 'db' (all db servers read the same database)
       server = Capistrano::Configuration.env.send(:servers).find{ |s| s.roles.include?(:db) }
-      raise "No proper server found" if server.nil?
+      raise "No server in role 'db' found" if server.nil?
 
       # Setup variables
-      dump_file_name = "semapp-#{Time.now.strftime("%Y%m%d-%H%M%S")}.sql"
-      dump_file = "/tmp/#{dump_file_name}"
-
-      remote_db   = ask_and_fetch(:remote_db)
-      remote_user = ask_and_fetch(:remote_user)
-      remote_pw   = ask_and_fetch(:remote_pw)
-      local_db    = ask_and_fetch(:local_db, "semapp2_development")
-      local_user  = ask_and_fetch(:local_user, "root")
-      local_pw    = ask_and_fetch(:local_pw)
+      dump_file_name   = "#{fetch(:application)}-#{Time.now.strftime("%Y%m%d-%H%M%S")}.dump"
+      remote_dump_file = "/tmp/#{dump_file_name}"
+      local_dump_file  = "/tmp/#{dump_file_name}"
 
       # Dump db on remote server
       on(server) do |host|
-        if remote_pw
-          execute("mysqldump -h mysqlmaster -u #{remote_user} -p#{remote_pw} #{remote_db} > #{dump_file}")
-        else
-          execute("mysqldump -h mysqlmaster -u #{remote_user} #{remote_db} > #{dump_file}")
-        end
+        db_config = YAML.load(capture("cat #{shared_path}/config/database.yml"))[fetch(:rails_env)]
+
+        host     = db_config["host"]
+        database = db_config["database"]
+        username = db_config["username"]
+        password = db_config["password"]
+
+        execute("mysqldump -h #{host} -u #{username} -p#{password} -r #{remote_dump_file} #{database}")
       end
 
       # Download file
       on(server) do |host|
-        download!(dump_file, dump_file)
+        download!(remote_dump_file, local_dump_file)
       end
 
       # Restore dump locally
-      if local_pw
-        system("mysql -h localhost -u #{local_user} -p#{local_pw} #{local_db} < #{dump_file}")
-      else
-        system("mysql -h localhost -u #{local_user} #{local_db} < #{dump_file}")
+      run_locally do
+        db_config = YAML.load(capture(:cat, "config/database.yml"))["development"]
+
+        host     = db_config["host"] || "localhost"
+        database = db_config["database"]
+        username = db_config["username"]
+        password = db_config["password"]
+
+        password_param = password ? "-p#{password}" : ""
+
+        execute("mysql -h #{host} -u #{username} #{password_param} -e \"DROP DATABASE IF EXISTS #{database}\"")
+        execute("mysql -h #{host} -u #{username} #{password_param} -e \"CREATE DATABASE #{database}\"")
+        execute("mysql -h #{host} -u #{username} #{password_param} #{database} < #{local_dump_file}")
       end
 
       # Delete dump on remote server
       on(server) do |host|
-        execute("rm #{dump_file}")
+        execute("rm #{remote_dump_file}")
       end
 
-      # Delete dump locally
-      system("rm #{dump_file}")
+      Delete dump locally
+      run_locally do
+        execute("rm #{local_dump_file}")
+      end
     end
   end
 end
