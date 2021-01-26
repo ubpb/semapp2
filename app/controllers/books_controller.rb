@@ -13,6 +13,11 @@ class BooksController < ApplicationController
   end
 
   def new
+    # Disable Book orders for now
+    redirect_to sem_app_books_path(@sem_app)
+    return
+    # END
+
     #@title     = params[:title]
     #@author    = params[:author]
     #@isbn      = params[:isbn]
@@ -42,6 +47,11 @@ class BooksController < ApplicationController
   end
 
   def create
+    # Disable Book orders for now
+    redirect_to sem_app_books_path(@sem_app)
+    return
+    # END
+
     aleph  = get_aleph
     record = aleph.get_record(params[:doc_number])
     signature = aleph.get_signature(params[:doc_number])
