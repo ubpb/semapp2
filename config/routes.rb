@@ -123,6 +123,9 @@ Rails.application.routes.draw do
   # Download (secured download of attachments)
   match 'download/:id/:style/*other' => 'download#download', :as => :download, via: [:get, :post]
 
+  # Static links
+  get '/datenschutz', to: redirect("https://www.ub.uni-paderborn.de/fileadmin/ub/Dokumente_Formulare/DSE_UB_003_Seminarapparate.pdf")
+
   # Root Page
   root to: "home#index"
 
