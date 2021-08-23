@@ -9,18 +9,13 @@
       Zurück zum Seminarapparat
     <% end %>
 
-    <%# Disable Book orders for now %>
-    <!--
     <%= link_to new_sem_app_book_path(@sem_app), :class => 'pui-button' do %>
       <%= icon 'overlay/book--plus.png' %>
       Neues Buch bestellen
     <% end %>
-    -->
   </div>
 </h3>
 
-<%= render "books/corona_info" %>
-<!--
 <div class="pui-panel">
   <p>
     <%= icon "asterisk.png" %>
@@ -30,7 +25,6 @@
   </p>
   <p><strong>Bitte beachten Sie die Beschränkung von max. <%= BooksController::MAX_BOOKS %> Büchern pro Seminarapparat.</strong></p>
 </div>
--->
 
 <div class="pui-tabs-wrapper">
 

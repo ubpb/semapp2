@@ -9,10 +9,10 @@ h3.section Seminarapparat übernehmen
 p
   ' Der Seminarapparat <strong>#{@sem_app.title}</strong> aus dem <strong>#{@sem_app.semester}</strong> wird in das <strong>#{Semester.transit_target}</strong> übernommen.
 
-= render "books/corona_info"
+/= render "books/corona_info"
 
 = form_tag(sem_app_transit_path(@sem_app))
-  /- if @sem_app.book_shelf.present? && @sem_app.books.present?
+  - if @sem_app.book_shelf.present? && @sem_app.books.present?
     - if @sem_app.books_can_be_cloned_when_transit?
       p
         ' Die Bücher im Seminarapparat Nr. #{@sem_app.book_shelf.slot_number} (#{@sem_app.location.title}) bleiben bestehen.
