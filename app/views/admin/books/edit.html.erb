@@ -2,7 +2,7 @@
   source = @placeholders.map{|s| {value: s.id, label: s.book_shelf.ils_account} }
 %>
 
-<%= semantic_form_for ['admin', @book] do |f| %>
+<%= semantic_form_for [:admin, @book] do |f| %>
   <%= f.error_messages %>
 
   <%= f.inputs do %>
