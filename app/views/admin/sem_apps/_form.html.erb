@@ -27,7 +27,7 @@
       <% unless shelf_ref.object.new_record? %>
         <%= shelf_ref.input '_destroy',  :label => 'Verknüpfung löschen?', :as => :boolean, :required => false %>
       <% end %>
-      <%= shelf_ref.input :sem_app_ref_id, :label => 'SemApp ID', :required => false, :hint => 'Die Bücher stehen in einem anderen Regal. ID des anderen Sem Apps eingeben.', :as => 'string' %>
+      <%= shelf_ref.input :sem_app_ref_id, :label => 'SemApp ID', :required => false, :hint => 'Die Bücher stehen in einem anderen Regal. ID des anderen Sem Apps eingeben.', :as => 'string', input_html: { maxlength: "11" } %>
     <% end %>
   <% end %>
 
