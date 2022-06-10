@@ -33,6 +33,8 @@ gem "will_paginate",         "~> 3.1.6"
 
 gem "bootsnap", ">= 1.4.2", require: false
 
+gem "exl_api",  "~> 1.0.0", path: "vendor/gems/exl_api"
+
 group :production do
   gem "newrelic_rpm", ">= 4.5.0"
 end
