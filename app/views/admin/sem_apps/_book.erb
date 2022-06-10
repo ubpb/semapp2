@@ -1,6 +1,6 @@
 <div class="pui-view item section">
-  Signatur: <strong><%= book.signature %></strong>
-  -
+  Alma ID: <strong><%= book.ils_id %></strong>
+  /
   Auftrag vom: <strong><%= book.updated_at.to_formatted_s(:short) %></strong>
 
   <% if book.placeholder? %>

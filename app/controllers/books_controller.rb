@@ -13,51 +13,35 @@ class BooksController < ApplicationController
   end
 
   def new
-    #@title     = params[:title]
-    #@author    = params[:author]
-    #@isbn      = params[:isbn]
-    @signature = params[:signature]
-    @signature = Book.get_base_signature(@signature) if @signature.present?
+    @title_id = params[:title_id]
 
-    search_terms  = []
-    #search_terms << "pti=#{@title}"     if @title.present?
-    #search_terms << "wpe=#{@author}"    if @author.present?
-    #search_terms << "ibn=#{@isbn}"      if @isbn.present?
-    search_terms << "psg=#{@signature}" if @signature.present?
-
-    search_term = "(#{search_terms.join(" and ")})"
-
-    aleph = get_aleph
-    t     = aleph.find(search_term)
-    if t.present?
-      @page          = params[:page].present? ? params[:page].to_i : 1
-      @per_page      = 10
-      @total_results = t[1]
-
-      # Use pagination with will_paginate
-      @results = WillPaginate::Collection.create(@page, @per_page, @total_results) do |pager|
-        pager.replace(aleph.get_records(t, @page, @per_page))
-      end
+    if alma_result = get_title_from_alma(@title_id)
+      @result = OpenStruct.new({
+        title: alma_result["title"] || "n.n.",
+        author: alma_result["author"],
+        edition: alma_result["complete_edition"],
+        place: alma_result["place_of_publication"],
+        publisher: alma_result["publisher_const"],
+        year: alma_result["date_of_publication"],
+        isbn: alma_result["isbn"]
+      })
     end
   end
 
   def create
-    aleph  = get_aleph
-    record = aleph.get_record(params[:doc_number])
-    signature = aleph.get_signature(params[:doc_number])
+    @title_id = params[:title_id]
 
-    if record.present? and signature.present?
+    if alma_result = get_title_from_alma(@title_id)
       @book = Book.new(:sem_app => @sem_app)
       @book.creator    = current_user
-      @book.ils_id     = record.doc_number
-      @book.signature  = signature     || 'n.n'
-      @book.title      = record.title  || 'n.n'
-      @book.author     = record.author || 'n.n'
-      @book.year       = record.year
-      @book.place      = record.place
-      @book.publisher  = record.publisher
-      @book.isbn       = record.isbn
-      @book.edition    = record.edition
+      @book.ils_id     = @title_id
+      @book.title      = alma_result["title"]  || 'n.n.'
+      @book.author     = alma_result["author"] || 'n.n.'
+      @book.year       = alma_result["date_of_publication"]
+      @book.place      = alma_result["place_of_publication"]
+      @book.publisher  = alma_result["publisher_const"]
+      @book.isbn       = alma_result["isbn"]
+      @book.edition    = alma_result["complete_edition"]
 
       if @book.save
         flash[:notice] = "Buchauftrag erfolgreich erstellt"
@@ -67,7 +51,7 @@ class BooksController < ApplicationController
         redirect_to new_sem_app_book_path(@sem_app)
       end
     else
-      flash[:error] = "Der Buchauftrag konnte nicht erstellt werden. Ggf. kann das gefundenen Exemplar nicht beauftragt werden (z.B. elektronische Resource). Bitte wenden Sie sich an das Informationszentrum der Bibliothek."
+      flash[:error] = "Der Buchauftrag konnte nicht erstellt werden. Bitte wenden Sie sich an das Informationszentrum der Bibliothek."
       redirect_to new_sem_app_book_path(@sem_app)
     end
   end
@@ -121,6 +105,18 @@ class BooksController < ApplicationController
 
   def book_count
     Book.for_sem_app(@sem_app).count - Book.for_sem_app(@sem_app).removed.count
+  end
+
+  def get_title_from_alma(title_id)
+    SemApp2.alma_api.get("bibs/#{@title_id}",
+      format: "application/json",
+      params: {
+        view: "brief"
+      }
+    )
+  rescue ExlApi::LogicalError => e
+    puts e.backtrace.join("\n")
+    nil
   end
 
 end
