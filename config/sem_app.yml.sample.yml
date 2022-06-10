@@ -1,4 +1,8 @@
 defaults: &defaults
+  alma_api_key: "API_KEY"
+  alma_api_base_url: "https://api-eu.hosted.exlibrisgroup.com/almaws/v1"
+  alma_api_language: "en"
+
   aleph_base_url: https://ubtest.upb.de/X
   aleph_library: 'pad50'
   aleph_search_base: 'pbaus'
