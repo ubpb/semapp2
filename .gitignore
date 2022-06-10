@@ -8,3 +8,6 @@ tmp/*
 data/*
 public/assets
 *.dump
+
+config/sem_app.yml
+config/database.yml
