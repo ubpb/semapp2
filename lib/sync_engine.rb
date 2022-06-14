@@ -35,6 +35,8 @@ class SyncEngine
         # load the books for this sem_app
         ils_entries = @adapter.get_books(sem_app.book_shelf.ils_account)
         db_entries  = mergable_hash_from_db_entries(sem_app.books)
+        # Give the adapter a chance to manipulate the db_entries
+        db_entries = @adapter.fix_db_entries(db_entries)
 
         print "Found #{ils_entries.count} ILS entries. "
 

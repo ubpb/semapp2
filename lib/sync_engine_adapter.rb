@@ -7,4 +7,8 @@ class SyncEngineAdapter
     raise "implement in your subclass"
   end
 
+  def fix_db_entries(db_entries)
+    db_entries
+  end
+
 end

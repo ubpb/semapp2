@@ -11,7 +11,7 @@ class AlmaSyncEngineAdapter < SyncEngineAdapter
 
     if loans.present?
       loans.each do |loan|
-        mms_id  = loan["mms_id"]
+        mms_id = loan["mms_id"]
         next if mms_id.blank?
 
         item_id = loan["item_id"]
@@ -34,6 +34,22 @@ class AlmaSyncEngineAdapter < SyncEngineAdapter
     end
 
     return books
+  end
+
+  def fix_db_entries(db_entries)
+    # We need to replace the aleph ils_id for old db_entries with
+    # the mms_id from alma.
+    db_entries.keys.each do |ils_id|
+      mms_id = get_mms_id_for_aleph_id(ils_id)
+      book = db_entries[ils_id]
+
+      if mms_id != ils_id
+        book.update(ils_id: mms_id)
+        db_entries[mms_id] = db_entries.delete(ils_id)
+      end
+    end
+
+    db_entries
   end
 
 private
@@ -60,6 +76,26 @@ private
   rescue ExlApi::LogicalError => e
     puts e.backtrace.join("\n")
     nil
+  end
+
+  def get_mms_id_for_aleph_id(aleph_id)
+    return aleph_id if aleph_id.length > 9 # Already an mms_id
+
+    # For some strange reason the Aleph IDs are missing the leading zeros.
+    aleph_id_fixed = aleph_id.to_s.rjust(9, '0')
+
+    sru_url = "https://hbz-pad.alma.exlibrisgroup.com/view/sru/49HBZ_PAD?version=1.2&operation=searchRetrieve&recordSchema=dcx&query=alma.local_field_981=#{aleph_id_fixed}"
+
+    mms_id = nil
+    response = RestClient.get(sru_url)
+    if response.code == 200
+      doc = Nokogiri::XML(response.body).remove_namespaces!
+      mms_id = doc.at_xpath("//records/record/recordIdentifier")&.text
+    end
+
+    mms_id ? mms_id : aleph_id
+  rescue
+    aleph_id
   end
 
 end
