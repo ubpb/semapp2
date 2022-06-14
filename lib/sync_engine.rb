@@ -58,8 +58,8 @@ class SyncEngine
               # Ignore reference copies
               next if e.reference_copy?
 
-              # Found a book that is in the db AND _NOT_ in the ILS
-              if e.state == Book::States[:in_shelf] || e.state == Book::States[:rejected]
+              # Found a book that is in the db in state rejected AND _NOT_ in the ILS
+              if e.state == Book::States[:rejected]
                 delete_entry(e)
               end
             else
