@@ -18,7 +18,7 @@ class BooksController < ApplicationController
     if alma_result = get_title_from_alma(@title_id)
       @result = OpenStruct.new({
         title: alma_result["title"] || "n.n.",
-        author: alma_result["author"],
+        author: alma_result["author"] || "n.n.",
         edition: alma_result["complete_edition"],
         place: alma_result["place_of_publication"],
         publisher: alma_result["publisher_const"],
