@@ -1,9 +1,9 @@
 <% catalog_link_url = if media.respond_to?(:ils_id) %>
-  <% "https://katalog.ub.uni-paderborn.de/local/records/#{media.ils_id.to_s.rjust(9, '0')}" %>
-<% elsif media.respond_to?(:source_signature) && media.source_signature.present?%>
-  <% "https://katalog.ub.uni-paderborn.de/local/searches?search_request=%7B%22queries%22%3A%5B%7B%22type%22%3A%22query_string%22%2C%20%22fields%22%3A%5B%22signature_search%22%5D%2C%22query%22%3A%22#{media.source_signature}%22%7D%5D%7D" %>
+  <% "https://katalog.ub.uni-paderborn.de/local/r/#{media.ils_id.to_s.rjust(9, '0')}" %>
+<% elsif media.respond_to?(:source_signature) && media.source_signature.present? %>
+  <% "https://katalog.ub.uni-paderborn.de/local/s?sr[q,call_number]=#{media.source_signature}" %>
 <% elsif media.respond_to?(:signature) && media.signature.present? %>
-  <% "https://katalog.ub.uni-paderborn.de/local/searches?search_request=%7B%22queries%22%3A%5B%7B%22type%22%3A%22query_string%22%2C%20%22fields%22%3A%5B%22signature_search%22%5D%2C%22query%22%3A%22#{media.signature}%22%7D%5D%7D" %>
+  <% "https://katalog.ub.uni-paderborn.de/local/s?sr[q,call_number]=#{media.signature}"  %>
 <% end %>
 
 <% if catalog_link_url %>
