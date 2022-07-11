@@ -1,5 +1,7 @@
 class SemAppTransitsController < ApplicationController
 
+  before_action :authenticate!
+
   def new
     @sem_app = SemApp.find(params[:sem_app_id])
     check_can_transit or return
