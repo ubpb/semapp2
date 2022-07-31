@@ -19,7 +19,7 @@ class AlmaConnector
   end
 
   def self.get_title_from_alma(title_id)
-    SemApp2.alma_api.get("bibs/#{@title_id}",
+    SemApp2.alma_api.get("bibs/#{title_id}",
       format: "application/json",
       params: {
         view: "brief"

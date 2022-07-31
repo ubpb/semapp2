@@ -15,7 +15,7 @@ class BooksController < ApplicationController
   def new
     @title_id = params[:title_id]
 
-    if alma_result = get_title_from_alma(@title_id)
+    if @title_id.present? && alma_result = AlmaConnector.get_title_from_alma(@title_id)
       @result = OpenStruct.new({
         title: alma_result["title"] || "n.n.",
         author: alma_result["author"] || "n.n.",
@@ -31,7 +31,7 @@ class BooksController < ApplicationController
   def create
     @title_id = params[:title_id]
 
-    if alma_result = AlmaConnector.get_title_from_alma(@title_id)
+    if @title_id.present? && alma_result = AlmaConnector.get_title_from_alma(@title_id)
       @book = Book.new(:sem_app => @sem_app)
       @book.creator    = current_user
       @book.ils_id     = @title_id
