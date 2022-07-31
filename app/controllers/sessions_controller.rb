@@ -4,8 +4,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = authenticate(params[:session])
-    if user
+    if user = authenticate(params[:session])
       session[:user_id]          = user.id
       session[:original_user_id] = nil
       redirect_to root_url, notice: 'Sie wurden erfolgreich angemeldet.'
@@ -48,19 +47,11 @@ class SessionsController < ApplicationController
   protected
 
     def authenticate(attributes)
-      begin
-        return User.authenticate(attributes)
-      rescue Aleph::AuthenticationError
-        flash.now.alert = 'Anmeldung fehlgeschlagen. Überprüfen Sie Login und Passwort.'
-      rescue Aleph::UnsupportedAccountTypeError
-        flash.now.alert = 'Anmeldung nicht möglich.'
-      rescue Aleph::AccountLockedError
-        flash.now.alert = 'Ihr Bibliothekskonto ist gesperrt. Bitte wenden Sie sich an die Bibliothek.'
-      rescue Exception => e
-        puts e.message
-        puts e.backtrace
-        flash.now[:error] = 'Anmeldung fehlgeschlagen. Überprüfen Sie Login und Passwort.'
-      end
+      User.authenticate(attributes)
+    rescue Exception => e
+      puts e.message
+      puts e.backtrace
+      flash.now[:error] = e.message
       nil
     end
 

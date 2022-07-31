@@ -19,15 +19,28 @@ class User < ApplicationRecord
       login = "PD10123456"
     end
 
-    if (aleph_user = Aleph::Connector.new.authenticate(login, password)).is_a?(Aleph::User)
-      create_or_update_aleph_user!(aleph_user)
+    if (
+      AlmaConnector.authenticate(login, password) &&
+      (alma_user = AlmaConnector.resolve_user(login))
+    )
+      if alma_user.email.blank?
+        raise "Anmeldung fehlgeschlagen. In Ihrem Konto ist keine E-Mail Adresse konfiguriert."
+      end
+
+      unless ["01", "02", "10", "13"].include?(alma_user.user_group)
+        raise "Anmeldung nicht möglich."
+      end
+
+      # TODO: Check for Blocks
+
+      create_or_update_alma_user!(alma_user)
     else
-      raise "Aleph authentication failed"
+      raise 'Anmeldung fehlgeschlagen. Überprüfen Sie Login und Passwort.'
     end
   end
 
   def self.exists_in_ils?(ils_account_no)
-    Aleph::Connector.new.user_exists?(ils_account_no)
+    AlmaConnector.user_exists?(ils_account_no)
   end
 
   def login=(value)
@@ -46,16 +59,16 @@ class User < ApplicationRecord
   #  ["#{name} (#{login})", "#{email}"].map(&:presence).compact.join(', ').strip
   #end
 
-  def self.create_or_update_aleph_user!(aleph_user)
+  def self.create_or_update_alma_user!(alma_user)
     user = User.where(
-      'ilsuserid=:ilsuserid OR login=:login', ilsuserid: aleph_user.id, login: aleph_user.login
+      'ilsuserid=:ilsuserid OR login=:login', ilsuserid: alma_user.primary_id, login: alma_user.login
     ).first_or_initialize
 
     user.attributes = {
-      login: aleph_user.login,
-      ilsuserid: aleph_user.id,
-      name: aleph_user.name,
-      email: aleph_user.email
+      login: alma_user.login,
+      ilsuserid: alma_user.primary_id,
+      name: alma_user.name,
+      email: alma_user.email
     }
 
     user.save!

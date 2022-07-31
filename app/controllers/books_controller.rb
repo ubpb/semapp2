@@ -31,7 +31,7 @@ class BooksController < ApplicationController
   def create
     @title_id = params[:title_id]
 
-    if alma_result = get_title_from_alma(@title_id)
+    if alma_result = AlmaConnector.get_title_from_alma(@title_id)
       @book = Book.new(:sem_app => @sem_app)
       @book.creator    = current_user
       @book.ils_id     = @title_id
@@ -99,24 +99,8 @@ class BooksController < ApplicationController
     end
   end
 
-  def get_aleph
-    Aleph::Connector.new
-  end
-
   def book_count
     Book.for_sem_app(@sem_app).count - Book.for_sem_app(@sem_app).removed.count
-  end
-
-  def get_title_from_alma(title_id)
-    SemApp2.alma_api.get("bibs/#{@title_id}",
-      format: "application/json",
-      params: {
-        view: "brief"
-      }
-    )
-  rescue ExlApi::LogicalError => e
-    puts e.backtrace.join("\n")
-    nil
   end
 
 end

@@ -60,11 +60,11 @@ class Admin::SemAppsController < Admin::ApplicationController
   def set_creator
     @sem_app = SemApp.find(params[:id])
 
-    login      = params[:login].upcase
-    aleph_user = Aleph::Connector.new.resolve_user(login)
+    login     = params[:login].upcase
+    alma_user = AlmaConnector.resolve_user(login)
 
-    if aleph_user
-      user = User.find_by(ilsuserid: aleph_user.id)
+    if alma_user
+      user = User.find_by(ilsuserid: alma_user.primary_id)
 
       if user
         if @sem_app.update_attribute(:creator, user)
@@ -73,7 +73,7 @@ class Admin::SemAppsController < Admin::ApplicationController
           flash[:error] = "Fehler: Der Benutzer konnte nicht als Besitzer eingetragen werden."
         end
       else
-        u = User.new(ilsuserid: aleph_user.id, login: login)
+        u = User.new(ilsuserid: alma_user.primary_id, login: login)
 
         if u.save(validate: false) and @sem_app.update_attribute(:creator, u)
           flash[:success] = ActionController::Base.helpers.sanitize "Der Benutzer '#{login}' existierte nicht, wurde aber angelegt. Name und E-Mail sind erst verfügbar wenn der Nutzer sich das erste mal anmeldet. #{login} kann den Seminarapparat <i>#{@sem_app.title}</i> nun bearbeiten."
