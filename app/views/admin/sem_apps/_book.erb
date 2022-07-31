@@ -1,5 +1,8 @@
 <div class="pui-view item section">
-  Alma ID: <strong><%= book.ils_id %></strong>
+  Signatur: <strong><%= book.signature.presence || "–" %></strong>
+  /
+  Aleph/Alma ID: <%= link_to "http://katalog.ub.uni-paderborn.de/local/r/#{book.ils_id_formated}" do %>
+    <strong><%= book.ils_id_formated %></strong><% end %>
   /
   Auftrag vom: <strong><%= book.updated_at.to_formatted_s(:short) %></strong>
 

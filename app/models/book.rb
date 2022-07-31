@@ -33,6 +33,18 @@ class Book < ApplicationRecord
   #
   ###########################################################################################
 
+  def ils_id_formated
+    if self.ils_id.present?
+      if self.ils_id.length > 9
+        # Alma MMS ID
+        self.ils_id
+      else
+        # For some strange reason the Aleph IDs are missing the leading zeros.
+        self.ils_id&.to_s.rjust(9, '0')
+      end
+    end
+  end
+
   def state=(value)
     if value.present? and States[value.to_sym].present?
       write_attribute(:state, States[value.to_sym])
