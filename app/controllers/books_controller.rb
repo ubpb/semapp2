@@ -15,7 +15,7 @@ class BooksController < ApplicationController
   def new
     @title_id = params[:title_id]
 
-    if @title_id.present? && alma_result = AlmaConnector.get_title_from_alma(@title_id)
+    if @title_id.present? && alma_result = AlmaConnector.get_title(@title_id)
       @result = OpenStruct.new({
         title: alma_result["title"] || "n.n.",
         author: alma_result["author"] || "n.n.",
@@ -23,7 +23,8 @@ class BooksController < ApplicationController
         place: alma_result["place_of_publication"],
         publisher: alma_result["publisher_const"],
         year: alma_result["date_of_publication"],
-        isbn: alma_result["isbn"]
+        isbn: alma_result["isbn"],
+        call_number: alma_result["call_number"]
       })
     end
   end
@@ -31,7 +32,7 @@ class BooksController < ApplicationController
   def create
     @title_id = params[:title_id]
 
-    if @title_id.present? && alma_result = AlmaConnector.get_title_from_alma(@title_id)
+    if @title_id.present? && alma_result = AlmaConnector.get_title(@title_id)
       @book = Book.new(:sem_app => @sem_app)
       @book.creator    = current_user
       @book.ils_id     = @title_id
@@ -42,6 +43,7 @@ class BooksController < ApplicationController
       @book.publisher  = alma_result["publisher_const"]
       @book.isbn       = alma_result["isbn"]
       @book.edition    = alma_result["complete_edition"]
+      @book.signature  = alma_result["call_number"]
 
       if @book.save
         flash[:notice] = "Buchauftrag erfolgreich erstellt"

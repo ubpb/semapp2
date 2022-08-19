@@ -37,6 +37,9 @@
         <tr>
           <td>
             <%= render 'shared_partials/book_ref', :book => @result %>
+            <% if @result.call_number.present? %>
+              Signatur: <%= @result.call_number %>
+            <% end %>
           </td>
           <th>
             <%= form_tag(sem_app_books_path(@sem_app)) do %>
