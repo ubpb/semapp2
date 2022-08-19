@@ -23,7 +23,7 @@ p
 
       - @sem_app.books.in_shelf.each do |book|
         ruby:
-          label = book.signature
+          label = book.signature.presence || ""
           label = label + "; #{book.title}" if book.title.present?
           label = label + " / #{book.author}" if book.author.present?
           label = label + ".- #{book.year}" if book.year.present?
