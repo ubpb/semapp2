@@ -22,5 +22,24 @@ namespace :app do
       end
     end
 
+    desc "fix missing call numbers"
+    task missing_call_numbers: :environment do
+      Book.where(signature: nil).each do |book|
+        record_id = book.ils_id
+
+        if record_id && record_id.starts_with?("99")
+          if title = AlmaConnector.get_title(record_id)
+            call_number = title["call_number"]
+
+            puts "#{record_id} => #{call_number}"
+
+            if call_number.present?
+              book.update(signature: call_number)
+            end
+          end
+        end
+      end
+    end
+
   end
 end
