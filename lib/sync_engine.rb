@@ -32,41 +32,36 @@ class SyncEngine
 
     if sem_app.has_book_shelf?
       begin
-        # load the books for this sem_app
-        ils_entries = @adapter.get_books(sem_app.book_shelf.ils_account)
-        db_entries  = mergable_hash_from_db_entries(sem_app.books)
-        # Give the adapter a chance to manipulate the db_entries
-        db_entries = @adapter.fix_db_entries(db_entries)
+        # load the books for this sem_app (loaned for this sem app)
+        ils_books = @adapter.get_ils_books(sem_app.book_shelf.ils_account)
 
-        print "Found #{ils_entries.count} ILS entries. "
+        # give the adapter a chance to manipulate/fix records before sync
+        @adapter.fix_db_books(sem_app)
+        # load the books that are already in the database
+        db_books = sem_app.books
 
-        # sync the books
+        print "Found #{ils_books.count} books in ILS and #{db_books.count} books in DB. "
+
+        # Sync ...
         SemApp.transaction do
-          # iterate over all card entries
-          ils_entries.each do |s, e|
-            unless db_entries.include?(s)
-              # found a book that is in the ILS AND NOT in the db => Create
-              create_or_update_entry(sem_app, s, e)
-            else
-              # found a book that is in the ILS AND in the db => Update
-              create_or_update_entry(sem_app, s, e)
-            end
+          # iterate over all ils entries
+          ils_books.each do |ils_book|
+            create_or_update_db_book(sem_app, ils_book)
           end
-          # iterate over all db entries
-          db_entries.each do |s, e|
-            unless ils_entries.include?(s)
-              # Ignore placeholders
-              next if e.placeholder?
-              # Ignore reference copies
-              next if e.reference_copy?
 
-              # Found a book that is in the db in state rejected AND _NOT_ in the ILS
-              if e.state == Book::States[:rejected]
-                delete_entry(e)
+          # iterate over all db entries
+          db_books.each do |db_book|
+            # Ignore placeholders
+            next if db_book.placeholder?
+            # Ignore reference copies
+            next if db_book.reference_copy?
+
+            # Handle books that are not in ILS
+            if (ils_books.find{|b| b[:ils_id] == db_book.ils_id}).nil?
+              # Delete Books in state "rejected"
+              if db_book.state == Book::States[:rejected]
+                delete_db_book(db_book)
               end
-            else
-              # found a book that is in the db AND in the ILS
-              # do nothing: handled in the other case
             end
           end
         end
@@ -93,64 +88,52 @@ class SyncEngine
     return SemApp.where(semester: current_semester)
   end
 
-  def mergable_hash_from_db_entries(db_entries)
-    m = {}
-    db_entries.each {|e| m[e.ils_id] = e }
-    return m
-  end
-
-  #
-  # ILS Entry:
-  #   :title
-  #   :author
-  #   :edition
-  #   :place
-  #   :publisher
-  #   :year
-  #   :isbn
-  #
-  def create_or_update_entry(sem_app, ils_id, ils_entry)
-    options = {
-      :sem_app     => sem_app,
-      :ils_id      => ils_id,
-      :placeholder => nil,
-      :signature   => ils_entry[:signature],
-      :title       => ils_entry[:title],
-      :author      => ils_entry[:author],
-      :year        => ils_entry[:year],
-      :edition     => ils_entry[:edition],
-      :place       => ils_entry[:place],
-      :publisher   => ils_entry[:publisher],
-      :isbn        => ils_entry[:isbn]
+  def create_or_update_db_book(sem_app, ils_book)
+    attributes = {
+      sem_app_id: sem_app.id,
+      ils_id:     ils_book[:ils_id],
+      signature:  ils_book[:signature],
+      title:      ils_book[:title],
+      author:     ils_book[:author],
+      year:       ils_book[:year],
+      edition:    ils_book[:edition],
+      place:      ils_book[:place],
+      publisher:  ils_book[:publisher],
+      isbn:       ils_book[:isbn]
     }
 
-    db_entry = sem_app.book_by_ils_id(ils_id)
-    db_entry ? update_entry(db_entry, options) : create_entry(options)
-  end
-
-  def create_entry(options)
-    book = Book.new(options)
-    book.state = "in_shelf"
-    unless book.save(validate: false)
-      raise book.errors.full_messages.to_sentence
+    # Check if this book exists in db, then update or create
+    # the record.
+    if db_book = sem_app.book_by_ils_id(attributes[:ils_id])
+      update_db_book(db_book, attributes)
+    else
+      create_db_book(attributes)
     end
   end
 
-  def update_entry(db_entry, options)
+  def create_db_book(attributes)
+    db_book = Book.new(attributes)
+    db_book.state = Book::States[:in_shelf]
+
+    unless db_book.save(validate: false)
+      raise "Failed for ILS ID #{db_book[:ils_id]} while creating new record. Message: #{db_book.errors.full_messages.to_sentence}"
+    end
+  end
+
+  def update_db_book(db_book, attributes)
     # ignore books that are rejected
-    if db_entry.state != Book::States[:rejected]
-      options[:state] = :in_shelf
-    end
+    return if db_book.state == Book::States[:rejected]
 
-    db_entry.attributes = options
-    unless db_entry.save(validate: false)
-      raise "Failed for signature #{options[:signature]} while updating an exsisting entry."
+    db_book.attributes = attributes
+    db_book.state = Book::States[:in_shelf]
+
+    unless db_book.save(validate: false)
+      raise "Failed for ILS ID #{db_book[:ils_id]} while updating existing record. Message: #{db_book.errors.full_messages.to_sentence}"
     end
   end
 
-  def delete_entry(db_entry)
-    entry = Book.find(db_entry.id)
-    entry.destroy if entry
+  def delete_db_book(db_book)
+    Book.destroy(db_book.id)
   end
 
 end
