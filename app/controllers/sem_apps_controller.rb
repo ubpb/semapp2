@@ -52,7 +52,7 @@ class SemAppsController < ApplicationController
       redirect_to :action => :show
     end
 
-    @books = Book.for_sem_app(@sem_app).in_shelf.ordered_by
+    @books = Book.for_sem_app(@sem_app).in_shelf.ordered_by("title")
     @media = @sem_app.media
   end
 
