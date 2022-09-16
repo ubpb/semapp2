@@ -8,7 +8,7 @@ class SyncEngine
   def sync
     sem_apps = load_sem_apps
 
-    started_on = Time.now()
+    started_on = Time.now
 
     puts "#"
     puts "# Started Book Synchronization #{started_on}"
@@ -21,13 +21,13 @@ class SyncEngine
     end
 
     puts "\n#"
-    puts "# Synchronization finished in #{Time.now()-started_on}s"
+    puts "# Synchronization finished in #{Time.now - started_on} sec."
     puts "# #{@errors} Error(s)"
     puts "#"
   end
 
   def sync_sem_app(sem_app)
-    print "Syncing #{sem_app.id}. "
+    print "Syncing #{sem_app.id}: "
     @errors ||= 0
 
     if sem_app.has_book_shelf?
@@ -39,8 +39,6 @@ class SyncEngine
         @adapter.fix_db_books(sem_app)
         # load the books that are already in the database
         db_books = sem_app.books
-
-        print "Found #{ils_books.count} books in ILS and #{db_books.count} books in DB. "
 
         # Sync ...
         SemApp.transaction do
@@ -67,11 +65,13 @@ class SyncEngine
         end
 
         # finished we are
-        print "Ok."
+        print "=> Ok!"
       rescue Exception => e
-        puts e.backtrace
         @errors += 1
-        print "Error! #{e.message}"
+        print "=> Error!\n"
+        print "Error message: #{e.message}\n"
+        print "Error backtrace:\n"
+        puts e.backtrace
       ensure
         print "\n"
       end

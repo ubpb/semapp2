@@ -6,7 +6,7 @@ namespace :app do
   # Synchronize books
   #
   desc "Synchronize books"
-  task(:sync_books => :environment) do
+  task(:sync_sem_apps => :environment) do
     adapter   = AlmaSyncEngineAdapter.new
     engine    = SyncEngine.new(adapter)
     engine.sync
