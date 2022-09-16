@@ -66,6 +66,18 @@ class Admin::BooksController < Admin::ApplicationController
     redirect_to_new_books
   end
 
+  def set_ebook_reference
+    url = params.dig(:book, :ebook_reference)
+
+    if url.present?
+      @book.update(ebook_reference: url, state: :in_shelf)
+    else
+      set_common_flash_error
+    end
+
+    redirect_to_new_books
+  end
+
   def destroy
     unless @book.destroy
       flash[:error] = "Es ist ein Fehler aufgetreten."

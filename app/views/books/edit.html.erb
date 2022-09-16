@@ -1,4 +1,4 @@
-<h3 class="section">Buch kommentieren</h3>
+<h3 class="section">Buch bearbeiten</h3>
 
 <div class="pui-view">
   <%= render 'shared_partials/book_ref', :book => @book %>
@@ -7,6 +7,7 @@
 <%= semantic_form_for [@sem_app, @book] do |f| %>
   <%= f.inputs do %>
     <%= f.input :comment, :label => 'Kommentar', :required => false %>
+    <%= f.input :ebook_reference, :label => 'URL zum E-Book / Online-Resource', :required => false %>
   <% end %>
 
   <%= f.actions do %>

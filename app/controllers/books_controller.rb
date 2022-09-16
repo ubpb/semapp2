@@ -64,7 +64,15 @@ class BooksController < ApplicationController
 
   def update
     @book = Book.find(params[:id])
-    @book.update_attribute(:comment, params[:book][:comment])
+
+    comment = params.dig(:book, :comment)
+    ebook_reference = params.dig(:book, :ebook_reference)
+
+    @book.update(
+      comment: comment,
+      ebook_reference: ebook_reference
+    )
+
     redirect_to sem_app_path(@sem_app, :anchor => 'books')
   end
 

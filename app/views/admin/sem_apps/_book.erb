@@ -25,6 +25,7 @@
       <%= link_to 'Wurde vorgemerkt', defer_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
       <%= link_to 'Als Stellvertreter', edit_admin_book_path(book), :class => 'pui-button small' %>
       <%= link_to 'Als Präsenzexemplar', '#', :class => 'pui-button small pui-overlay-trigger', :rel => "#reference-copy-panel-#{book.id}" %>
+      <%= link_to 'Als E-Book', '#', :class => 'pui-button small pui-overlay-trigger', :rel => "#ebook-reference-panel-#{book.id}" %>
     <% end %>
     <% if book.state == Book::States[:rejected] %>
       <%= link_to 'Wurde aus dem Regal entfernt', removed_from_shelf_admin_book_path(book), :method => :put, :class => 'pui-button small' %>
@@ -42,4 +43,17 @@
     <%= link_to 'Im ZfS', reference_admin_book_path(book, :ref_type => 3), :method => :put, :class => 'pui-button' %>
     <%= link_to 'IMT-Medien', reference_admin_book_path(book, :ref_type => 4), :method => :put, :class => 'pui-button' %>
   </div>
+</div>
+
+<div id="ebook-reference-panel-<%= book.id -%>" class="pui-overlay">
+  <h3 class="section">Referenz zu einem E-Book setzen</h3>
+  <%= semantic_form_for book, url: set_ebook_reference_admin_book_path(book), method: :put do |f| %>
+    <%= f.inputs do %>
+      <%= f.input :ebook_reference, :label => 'URL zum E-Book / Online-Resource', :required => true %>
+    <% end %>
+
+    <%= f.actions do %>
+      <%= f.action :submit, label: 'Speichern' %>
+    <% end %>
+  <% end %>
 </div>

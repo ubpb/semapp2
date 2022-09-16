@@ -60,6 +60,15 @@
           <i>Dieses Exemplar steht im IMT Medien (H1.201)</i>
         </p>
       <% end %>
+
+      <% if book.ebook_reference? %>
+        <p>
+          <%= icon 'asterisk.png' %>
+          <i>
+            <%= link_to "Als Online-Resource verfügbar", book.ebook_reference, target: "_blank" %>
+          </i>
+        </p>
+      <% end %>
     <% end %>
   </div>
 </div>

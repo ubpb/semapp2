@@ -29,13 +29,14 @@ Rails.application.routes.draw do
 
     resources :books,
           only: [:edit, :update, :destroy, :defer, :dedefer, :placed_in_shelf,
-                  :removed_from_shelf, :reference] do
+                  :removed_from_shelf, :reference, :set_ebook_reference] do
       member do
         put :defer
         put :dedefer
         put :placed_in_shelf
         put :removed_from_shelf
         put :reference
+        put :set_ebook_reference
       end
     end
 

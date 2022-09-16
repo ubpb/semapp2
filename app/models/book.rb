@@ -71,6 +71,10 @@ class Book < ApplicationRecord
     reference_copy.present?
   end
 
+  def ebook_reference?
+    ebook_reference.present?
+  end
+
   def author
     author = read_attribute(:author)
 
