@@ -53,6 +53,8 @@ class SyncEngine
             next if db_book.placeholder?
             # Ignore reference copies
             next if db_book.reference_copy?
+            # Ignore ebook references
+            next if db_book.ebook_reference?
 
             # Handle books that are not in ILS
             if (ils_books.find{|b| b[:ils_id] == db_book.ils_id}).nil?
