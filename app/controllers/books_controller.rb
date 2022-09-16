@@ -17,8 +17,8 @@ class BooksController < ApplicationController
 
     if @title_id.present? && alma_result = AlmaConnector.get_title(@title_id)
       @result = OpenStruct.new({
-        title: alma_result["title"] || "n.n.",
-        author: alma_result["author"] || "n.n.",
+        title: alma_result["title"].presence&.truncate(250)  || "n.n.",
+        author: alma_result["author"].presence || "n.n.",
         edition: alma_result["complete_edition"],
         place: alma_result["place_of_publication"],
         publisher: alma_result["publisher_const"],
@@ -36,8 +36,8 @@ class BooksController < ApplicationController
       @book = Book.new(:sem_app => @sem_app)
       @book.creator    = current_user
       @book.ils_id     = @title_id
-      @book.title      = alma_result["title"]  || 'n.n.'
-      @book.author     = alma_result["author"] || 'n.n.'
+      @book.title      = alma_result["title"].presence&.truncate(250)  || 'n.n.'
+      @book.author     = alma_result["author"].presence || 'n.n.'
       @book.year       = alma_result["date_of_publication"]
       @book.place      = alma_result["place_of_publication"]
       @book.publisher  = alma_result["publisher_const"]

@@ -23,8 +23,8 @@ class AlmaSyncEngineAdapter < SyncEngineAdapter
         books << {
           ils_id: mms_id,
           signature: bib.dig("item_data", "alternative_call_number"),
-          title: bib.dig("bib_data", "title") || "n.n.",
-          author: bib.dig("bib_data", "author") || "n.n.",
+          title: bib.dig("bib_data", "title").presence&.truncate(250) || "n.n.",
+          author: bib.dig("bib_data", "author").presence || "n.n.",
           edition: bib.dig("bib_data", "complete_edition"),
           place: bib.dig("bib_data", "place_of_publication"),
           publisher: bib.dig("bib_data", "publisher_const"),
@@ -48,6 +48,12 @@ class AlmaSyncEngineAdapter < SyncEngineAdapter
         # If this is the case we will delete the existing record.
         if existing_book = sem_app.book_by_ils_id(mms_id)
           existing_book.destroy
+        end
+
+        # There are cases where author is blank. As author is a required field,
+        # we will fix this here
+        if db_book.author.blank?
+          db_book.author = "n.n."
         end
 
         # Update the ils_id with the MMS ID from Alma
