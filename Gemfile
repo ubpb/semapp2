@@ -5,6 +5,7 @@ ruby IO.read(".ruby-version").strip
 
 gem "acts_as_list",          "~> 0.9.9"
 gem "acts_as_singleton",     "~> 0.0.8"
+gem "addressable",           "~> 2.8"
 gem "auto_strip_attributes", "~> 2.2.0"
 gem "barby",                 "~> 0.6.5"
 gem "cancancan",             "~> 2.0.0"
