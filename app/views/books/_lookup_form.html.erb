@@ -2,12 +2,20 @@
   <fieldset class="inputs">
     <ol>
       <li class="string">
-        <label>Titel ID</label>
-        <%= text_field_tag 'title_id' %>
-        <p class="inline-hints">
-          Bitte recherchieren Sie die Titel ID in unserem <a href="https://katalog.ub.uni-paderborn.de" target="blank">Katalog</a>.
-          Sie finden die Titel ID in der Detailansicht eines Titels unter "Identifikatoren".
-          Beispiel: 990009723250106463
+        <label>Sucheingabe</label>
+        <%= text_field_tag 'query' %>
+        <p style="padding: 5px 10px; font-style: italic">
+          Sie können Titel anhand von Stichworten und Identifikatoren (z.B. Signaturen, ISBN Nummern, etc.)
+          suchen. Diese einfache Suchmaske bildet jedoch nicht die Möglichkeiten unseres Katalogs ab und es werden
+          nur die ersten 25 Treffer angezeigt.
+        </p>
+        <p style="padding: 5px 10px; font-style: italic">
+          Für eine alternative Recherche nutzen Sie bitte unseren <a href="https://katalog.ub.uni-paderborn.de" target="blank">Katalog</a>.
+          Kopieren Sie dort die Titel ID und geben Sie sie hier wieder ein um das entsprechende Buch zu bestellen.
+          Sie finden die Titel ID in der Detailansicht eines Titels unter "Identifikatoren". Beispiel: 990009723250106463.
+        </p>
+        <p style="padding: 5px 10px; font-style: italic; font-weight: bold">
+          Bitte beachten Sie, dass nur gedruckte Bücher berücksichtigt werden.
         </p>
       </li>
     </ol>

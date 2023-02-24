@@ -14,6 +14,10 @@ module SemApp2
       config.language     = self.config.alma_api_language || "de"
     end
   end
+
+  def self.catalog_base_url
+    self.config.catalog_base_url || "https://katalog.ub.uni-paderborn.de"
+  end
 end
 
 SemApp2.config = YAML.load_file("config/sem_app.yml")[Rails.env]

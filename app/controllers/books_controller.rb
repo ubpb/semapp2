@@ -13,29 +13,37 @@ class BooksController < ApplicationController
   end
 
   def new
-    @title_id = params[:title_id]
+    @query = params[:query]
 
-    if @title_id.present? && alma_result = AlmaConnector.get_title(@title_id)
-      @result = OpenStruct.new({
-        title: alma_result["title"].presence&.truncate(250)  || "n.n.",
-        author: alma_result["author"].presence || "n.n.",
-        edition: alma_result["complete_edition"],
-        place: alma_result["place_of_publication"],
-        publisher: alma_result["publisher_const"],
-        year: alma_result["date_of_publication"],
-        isbn: alma_result["isbn"],
-        call_number: alma_result["call_number"]
-      })
+    if @query.present? && result = CatalogConnector.search_print_title(@query)
+      @results = result["hits"].map { |hit|
+        record = hit["record"]
+        next unless record
+
+        place, publisher = record["publication_notices"].first&.split(" : ")
+
+        OpenStruct.new({
+          title:       record["title"].presence&.truncate(250)  || "n.n.",
+          author:      record["creators"].map{|c|c["name"]}.join("; ").presence || "n.n.",
+          edition:     record["edition"],
+          place:       place,
+          publisher:   publisher,
+          year:        record["year_of_publication"],
+          isbn:        record["additional_identifiers"].select{|i| i["type"] == "isbn"}.map{|i| i["value"]}.join("; "),
+          call_number: record["call_numbers"].join("; "),
+          ils_id:      record["id"]
+        })
+      }.compact
     end
   end
 
   def create
-    @title_id = params[:title_id]
+    @ils_id = params[:ils_id]
 
-    if @title_id.present? && alma_result = AlmaConnector.get_title(@title_id)
+    if @ils_id.present? && alma_result = AlmaConnector.get_title(@ils_id)
       @book = Book.new(:sem_app => @sem_app)
       @book.creator    = current_user
-      @book.ils_id     = @title_id
+      @book.ils_id     = @ils_id
       @book.title      = alma_result["title"].presence&.truncate(250)  || 'n.n.'
       @book.author     = alma_result["author"].presence || 'n.n.'
       @book.year       = alma_result["date_of_publication"]
