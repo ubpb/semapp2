@@ -44,6 +44,7 @@ group :development, :test do
   gem "letter_opener", ">= 1.7.0"
   gem "pry-byebug",    ">= 3.6", platform: :mri
   gem "pry-rails",     ">= 0.3", platform: :mri
+  gem "ubpb-rubocop-config", github: "ubpb/rubocop-config", branch: "main", require: "ubpb/rubocop-config"
 end
 
 group :development do
