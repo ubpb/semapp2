@@ -15,14 +15,14 @@ class AlmaConnector
   def self.authenticate(user_id, password)
     SemApp2.alma_api.post("users/#{user_id}", params: {password: password})
     true
-  rescue ExlApi::LogicalError => e
+  rescue AlmaApi::LogicalError
     false
   end
 
   def self.resolve_user(user_id)
-    response = SemApp2.alma_api.get("users/#{user_id}", format: "application/json")
+    response = SemApp2.alma_api.get("users/#{user_id}", format: "json")
     UserFactory.build(response)
-  rescue ExlApi::LogicalError
+  rescue AlmaApi::LogicalError
     nil
   end
 
@@ -54,7 +54,7 @@ class AlmaConnector
     end
 
     title
-  rescue ExlApi::LogicalError => e
+  rescue AlmaApi::LogicalError => e
     nil
   end
 

@@ -7,18 +7,6 @@
   beauftragt wurden. Alle Anderen melden sich mittels Lesekennung direkt am jeweiligen Apparat an*.
 </div>-->
 
-<div class="pui-panel">
-  <p>
-    <%= icon 'asterisk.png' %>
-    <strong>Ihr Passwort zur Anmeldung an Ihrem Bibliothekskonto ist nach Umstellung auf das
-    <a href="https://www.ub.uni-paderborn.de/ueber-uns/aktuelle-mitteilungen/mitteilungen-2022/neues-bibliotheksmanagementsystem">neue Bibliotheksmanagementsystem</a>
-    ab dem 1.8.2022 nicht mehr gültig und muss einmalig neu gesetzt werden.</strong>
-  </p>
-  <p>
-    => Folgen Sie dazu bitte den Informationen auf der <a href="https://katalog.ub.uni-paderborn.de/login">Login-Seite des Katalogs</a>.
-  </p>
-</div>
-
 <%= semantic_form_for :session, url: sessions_path do |f| %>
   <%= f.error_messages %>
   <%= f.inputs :name => "Anmeldung (mit Bibliothekslogin**)" do %>

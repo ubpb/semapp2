@@ -8,10 +8,10 @@ module SemApp2
   end
 
   def self.alma_api
-    @@alma_api ||= ExlApi.configure do |config|
-      config.api_key      = self.config.alma_api_key
-      config.api_base_url = self.config.alma_api_base_url || "https://api-eu.hosted.exlibrisgroup.com/almaws/v1"
-      config.language     = self.config.alma_api_language || "de"
+    @@alma_api ||= AlmaApi::Client.configure do |config|
+      config.api_key  = self.config.alma_api_key
+      config.base_url = self.config.alma_api_base_url || :eu
+      config.language = self.config.alma_api_language || "de"
     end
   end
 
@@ -20,4 +20,4 @@ module SemApp2
   end
 end
 
-SemApp2.config = YAML.load_file("config/sem_app.yml")[Rails.env]
+SemApp2.config = YAML.load_file("config/sem_app.yml", permitted_classes: [Symbol, OpenStruct], aliases: true)[Rails.env]
