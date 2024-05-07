@@ -2,7 +2,7 @@
   <div id="book-order-listing" class="pui-collection-view">
     <% books.each do |book| %>
       <div class="item book-order">
-        <div class="date">Auftrag vom: <%= book.created_at.to_s(:long) %></div>
+        <div class="date">Auftrag vom: <%= l(book.created_at, format: :long) %></div>
         <div class="date">Titel ID: <%= book.ils_id %></div>
         <% if book.signature.present? %>
           <div class="date">
