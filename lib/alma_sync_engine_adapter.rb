@@ -67,7 +67,7 @@ private
 
   def get_loans(ils_user_id)
     SemApp2.alma_api.get("users/#{ils_user_id}/loans",
-      format: "application/json",
+      format: :json,
       params: {
         limit: 100
       }
@@ -76,7 +76,7 @@ private
 
   def get_bib_from_alma(mms_id, item_id)
     SemApp2.alma_api.get("bibs/#{mms_id}/holdings/ALL/items/#{item_id}",
-      format: "application/json",
+      format: :json,
       params: {
         view: "brief"
       }

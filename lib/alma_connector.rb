@@ -32,7 +32,7 @@ class AlmaConnector
 
   def self.get_title(record_id)
     title = SemApp2.alma_api.get("bibs/#{record_id}",
-      format: "application/json",
+      format: :json,
       params: {
         view: "brief"
       }
@@ -95,7 +95,7 @@ class AlmaConnector
   def self.load_items(record_id, limit:, offset:)
     SemApp2.alma_api.get(
       "bibs/#{record_id}/holdings/ALL/items",
-      format: "application/json",
+      format: :json,
       params: {
         #expand: "due_date_policy,due_date",
         limit: limit,
