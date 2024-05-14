@@ -57,7 +57,7 @@ private
     media.file_attachments.map do |a|
       path = a.file.path
 
-      if File.exists?(path)
+      if File.exist?(path)
         attachment = FileAttachment.new(
           file: File.new(path),
           description: a.description,
