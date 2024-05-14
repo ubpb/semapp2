@@ -53,11 +53,11 @@ class AbstractMediaController < ApplicationController
     instance_type   = model_class.name.underscore.to_sym
     instance_params = permitted_instance_params(instance_type, params[instance_type])
 
-    @media.parent.update_attributes(hidden: instance_params.delete(:hidden) || false)
-    @media.parent.update_attributes(hidden_until: instance_params.delete(:hidden_until) || nil)
-    @media.parent.update_attributes(extract_hidden_until_attributes_from(instance_params))
+    @media.parent.update(hidden: instance_params.delete(:hidden) || false)
+    @media.parent.update(hidden_until: instance_params.delete(:hidden_until) || nil)
+    @media.parent.update(extract_hidden_until_attributes_from(instance_params))
 
-    if @media.update_attributes(instance_params)
+    if @media.update(instance_params)
       flash[:scroll_to] = params.delete(:scroll_to)
       redirect_to sem_app_path(@media.sem_app, :anchor => 'media')
     else

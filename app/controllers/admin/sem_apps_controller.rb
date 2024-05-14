@@ -46,7 +46,7 @@ class Admin::SemAppsController < Admin::ApplicationController
 
     was_approved = @sem_app.approved
 
-    if @sem_app.update_attributes(permitted_params)
+    if @sem_app.update(permitted_params)
       if (@sem_app.approved and not was_approved and @sem_app.creator.present? and @sem_app.creator.email.present?)
         Notifications.sem_app_activated_notification(@sem_app).deliver
       end

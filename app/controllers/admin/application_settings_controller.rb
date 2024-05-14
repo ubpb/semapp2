@@ -7,7 +7,7 @@ class Admin::ApplicationSettingsController < Admin::ApplicationController
   def update
     @settings = ApplicationSettings.instance
 
-    if @settings.update_attributes(permitted_params)
+    if @settings.update(permitted_params)
       Rails.cache.clear
       flash[:success] = "Änderungen wurden gespeichert"
     else
