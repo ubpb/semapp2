@@ -3,41 +3,41 @@
 // By Jay Salvat - http://markitup.jaysalvat.com/
 // ------------------------------------------------------------------*/
 .markItUp .markItUpButton1 a {
-  background-image:image-url("markitup/sets/textile/images/h1.png");
+  background-image:url("markitup/sets/textile/images/h1.png");
 }
 .markItUp .markItUpButton2 a {
-  background-image:image-url("markitup/sets/textile/images/h2.png");
+  background-image:url("markitup/sets/textile/images/h2.png");
 }
 .markItUp .markItUpButton3 a {
-  background-image:image-url("markitup/sets/textile/images/h3.png");
+  background-image:url("markitup/sets/textile/images/h3.png");
 }
 .markItUp .markItUpButton4 a {
-  background-image:image-url("markitup/sets/textile/images/paragraph.png");
+  background-image:url("markitup/sets/textile/images/paragraph.png");
 }
 .markItUp .markItUpButton5 a {
-  background-image:image-url("markitup/sets/textile/images/bold.png");
+  background-image:url("markitup/sets/textile/images/bold.png");
 }
 .markItUp .markItUpButton6 a {
-  background-image:image-url("markitup/sets/textile/images/italic.png");
+  background-image:url("markitup/sets/textile/images/italic.png");
 }
 .markItUp .markItUpButton7 a {
-  background-image:image-url("markitup/sets/textile/images/stroke.png");
+  background-image:url("markitup/sets/textile/images/stroke.png");
 }
 .markItUp .markItUpButton8 a {
-  background-image:image-url("markitup/sets/textile/images/list-bullet.png");
+  background-image:url("markitup/sets/textile/images/list-bullet.png");
 }
 .markItUp .markItUpButton9 a {
-  background-image:image-url("markitup/sets/textile/images/list-numeric.png");
+  background-image:url("markitup/sets/textile/images/list-numeric.png");
 }
 .markItUp .markItUpButton10 a {
-  background-image:image-url("markitup/sets/textile/images/link.png");
+  background-image:url("markitup/sets/textile/images/link.png");
 }
 .markItUp .markItUpButton11 a {
-  background-image:image-url("markitup/sets/textile/images/quotes.png");
+  background-image:url("markitup/sets/textile/images/quotes.png");
 }
 .markItUp .markItUpButton12 a {
-  background-image:image-url("markitup/sets/textile/images/code.png");
+  background-image:url("markitup/sets/textile/images/code.png");
 }
 .markItUp .markItUpButton13 a {
-  background-image:image-url("markitup/sets/textile/images/code.png");
+  background-image:url("markitup/sets/textile/images/code.png");
 }

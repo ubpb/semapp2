@@ -30,7 +30,7 @@ class FileAttachmentsController < ApplicationController
     @file_attachment = FileAttachment.find(params[:id])
     authorize! :edit, @file_attachment.media.sem_app
 
-    if @file_attachment.update_attributes(permitted_params)
+    if @file_attachment.update(permitted_params)
       redirect_to sem_app_path(@file_attachment.media.sem_app, :anchor => 'media')
     else
       render :edit

@@ -18,7 +18,7 @@ class ScanjobUploader
     file  = File.new(filename)
 
     processed_files = File.join(Rails.root.to_s, 'data', 'scanjobs', 'processed')
-    FileUtils.mkdir(processed_files) unless File.exists?(processed_files)
+    FileUtils.mkdir(processed_files) unless File.exist?(processed_files)
 
     Media.transaction do
       attachment = FileAttachment.new(:file => file, :description => scanjob.comment, :scanjob => true)

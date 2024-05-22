@@ -22,7 +22,7 @@
 }
 .markItUpContainer  {
   border: 1px solid #efefef;
-  background: transparent image-url("markitup/skins/pui/images/bg-container.png") repeat-x top left;
+  background: transparent url("markitup/skins/pui/images/bg-container.png") repeat-x top left;
   padding: 5px 5px 0 5px !important;
 }
 .markItUpEditor {
@@ -31,7 +31,7 @@
   border: 1px solid #efefef;
   width: 646px !important;
   height: 280px;
-  background-image:image-url("markitup/skins/pui/images/bg-editor-textile.png");
+  background-image:url("markitup/skins/pui/images/bg-editor-textile.png");
   background-repeat:no-repeat;
   clear:both;
   display:block;
@@ -55,7 +55,7 @@
   width:22px; height:5px;
   margin-left:auto;
   margin-right:auto;
-  background-image:image-url("markitup/skins/pui/images/handle.png");
+  background-image:url("markitup/skins/pui/images/handle.png");
   cursor:n-resize;
 }
 

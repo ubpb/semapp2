@@ -1,6 +1,6 @@
 defaults: &defaults
   alma_api_key: "API_KEY"
-  alma_api_base_url: "https://api-eu.hosted.exlibrisgroup.com/almaws/v1"
+  alma_api_base_url: :eu
   alma_api_language: "en"
 
   catalog_base_url: "https://katalog.ub.uni-paderborn.de"

@@ -106,7 +106,7 @@ class SemAppsController < ApplicationController
     load_sem_app or return
     authorize! :edit, @sem_app
 
-    if @sem_app.update_attributes(params.require(:sem_app).permit(:tutors, :shared_secret))
+    if @sem_app.update(params.require(:sem_app).permit(:tutors, :shared_secret))
       flash[:success] = "Änderungen erfolgreich gespeichert."
       redirect_to sem_app_path(@sem_app)
     else

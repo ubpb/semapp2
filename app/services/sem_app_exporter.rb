@@ -17,7 +17,7 @@ class SemAppExporter
 private
 
   def zip(filename, &block)
-    File.delete(filename) if File.exists?(filename)
+    File.delete(filename) if File.exist?(filename)
 
     Zip::File.open(filename, Zip::File::CREATE) do |zipfile|
       zipfile.dir.mkdir("export")

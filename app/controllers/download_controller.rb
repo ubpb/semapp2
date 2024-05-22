@@ -8,7 +8,7 @@ class DownloadController < ApplicationController
     sem_app = attachment.media.sem_app
     if sem_app.is_unlocked_in_session?(session) or can?(:edit, sem_app)
       file = attachment.file.path(params[:style])
-      unless File.exists?(file)
+      unless File.exist?(file)
         flash[:error] = 'Diese Datei existiert nicht'
         redirect_to sem_app_path(sem_app, :anchor => 'media')
       else

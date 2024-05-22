@@ -29,7 +29,7 @@
 ----------------------------------------------------------------------------------------------------*/
 
 a.pui-button, button, input[type="submit"] {
-  background: #fff image-url("pui/pui-button/bg.png") repeat-x bottom left;
+  background: #fff url("pui/pui-button/bg.png") repeat-x bottom left;
   color: #333 !important;
   display: inline-block;
   margin: 0 !important;
@@ -78,7 +78,7 @@ a:hover.pui-button.small, button.small:hover, input[type="submit"].small:hover {
 a:active.pui-button, button:active, input[type="submit"]:active {
   color: #333;
   border: 1px solid #999;
-  background: #cdcdcd image-url("pui/pui-button/bg-active.png") repeat-x bottom left;
+  background: #cdcdcd url("pui/pui-button/bg-active.png") repeat-x bottom left;
 }
 
 /* Forms
@@ -103,7 +103,7 @@ a:active.pui-button, button:active, input[type="submit"]:active {
 }
 
 .pui-overlay .close {
-  background-image: image-url("pui/overlays/close.png");
+  background-image: url("pui/overlays/close.png");
   position: absolute;
   right: -15px;
   top: -15px;
