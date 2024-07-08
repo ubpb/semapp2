@@ -12,6 +12,7 @@ class SemAppImporter
   def import!
     unzip do |destination|
       SemApp.transaction do
+        # @sem_app.media.delete_all
         process_import!(destination)
       end
     end
@@ -67,7 +68,7 @@ private
     instance_data = media_data["instance"]
     instance      = media_data["instance_type"].constantize.new
 
-    instance.assign_attributes(instance_attributes(instance_data), without_protection: true)
+    instance.assign_attributes(instance_attributes(instance_data))
     instance.save!(validate: false)
 
     instance
@@ -75,7 +76,7 @@ private
 
   def process_media!(media_data, instance)
     media = Media.new(instance: instance, sem_app: @sem_app, position: last_position + 1)
-    media.assign_attributes(media_attributes(media_data), without_protection: true)
+    media.assign_attributes(media_attributes(media_data))
     media.save!(validate: false)
 
     media
@@ -88,7 +89,7 @@ private
     file         = File.new(zip_filename)
 
     attachment = FileAttachment.new(media: media, file: file)
-    attachment.assign_attributes(file_attachment_attributes(attachment_data), without_protection: true)
+    attachment.assign_attributes(file_attachment_attributes(attachment_data))
     attachment.save!(validate: false)
 
     attachment
