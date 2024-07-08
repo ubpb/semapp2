@@ -70,14 +70,14 @@ namespace :app do
 
       # Dump db on remote server
       on(server) do |host|
-        db_config = YAML.load(capture("cat #{shared_path}/config/database.yml"))[fetch(:rails_env)]
+        db_config = YAML.load(capture("cat #{shared_path}/config/database.yml"), aliases: true)[fetch(:rails_env)]
 
         host     = db_config["host"]
         database = db_config["database"]
         username = db_config["username"]
         password = db_config["password"]
 
-        execute("mysqldump -h #{host} -u #{username} -p#{password} -r #{remote_dump_file} #{database}")
+        execute("mysqldump --column-statistics=0 -h #{host} -u #{username} -p#{password} -r #{remote_dump_file} #{database}")
       end
 
       # Download file
@@ -87,18 +87,19 @@ namespace :app do
 
       # Restore dump locally
       run_locally do
-        db_config = YAML.load(capture(:cat, "config/database.yml"))["development"]
+        db_config = YAML.load(capture(:cat, "config/database.yml"), aliases: true)["development"]
 
         host     = db_config["host"] || "localhost"
         database = db_config["database"]
         username = db_config["username"]
         password = db_config["password"]
 
-        password_param = password ? "-p#{password}" : ""
+        username_param = username ? "-u #{username}" : ""
+        password_param = password ? "-p #{password}" : ""
 
-        execute("mysql -h #{host} -u #{username} #{password_param} -e \"DROP DATABASE IF EXISTS #{database}\"")
-        execute("mysql -h #{host} -u #{username} #{password_param} -e \"CREATE DATABASE #{database}\"")
-        execute("mysql -h #{host} -u #{username} #{password_param} #{database} < #{local_dump_file}")
+        execute("mysql -h #{host} #{username_param} #{password_param} -e \"DROP DATABASE IF EXISTS #{database}\"")
+        execute("mysql -h #{host} #{username_param} #{password_param} -e \"CREATE DATABASE #{database}\"")
+        execute("mysql -h #{host} #{username_param} #{password_param} #{database} < #{local_dump_file}")
       end
 
       # Delete dump on remote server
@@ -106,7 +107,7 @@ namespace :app do
         execute("rm #{remote_dump_file}")
       end
 
-      Delete dump locally
+      # Delete dump locally
       run_locally do
         execute("rm #{local_dump_file}")
       end
