@@ -49,6 +49,7 @@ private
       clone.sem_app          = @target_sem_app
       clone.file_attachments = media_file_attachments(media)
 
+      clone.file_attachments.each { |a| a.save!(validate: false) }
       clone.save!(validate: false)
     end
   end
