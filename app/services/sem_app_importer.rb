@@ -101,7 +101,7 @@ private
 
   def media_attributes(media_data)
     {}
-  en
+  end
 
   def instance_attributes(instance_data)
     instance_data.except("id")
