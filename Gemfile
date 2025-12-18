@@ -13,7 +13,7 @@ gem "cancancan",             "~> 3.5"
 gem "chunky_png",            "~> 1.3.8"
 gem "coffee-rails",          "~> 5.0.0"
 gem "deep_cloneable",        "~> 3.2.0"
-gem "dynamic_form",          "~> 1.3"  # provides the old f.error_messages method
+gem "dynamic_form",          "~> 1.3", github: "payrollhero/dynamic_form"  # provides the old f.error_messages method
 gem "formtastic",            "~> 5.0"
 gem "jbuilder",              "~> 2.12"
 gem "jquery-rails",          "~> 4.3"
@@ -40,7 +40,7 @@ group :production do
 end
 
 group :development, :test do
-  gem "debug", platforms: %i[mri mingw x64_mingw]
+  gem "debug", platforms: %i[mri windows]
 end
 
 group :development do
