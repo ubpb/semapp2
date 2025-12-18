@@ -1,9 +1,9 @@
 <% catalog_link_url = if media.respond_to?(:ils_id) %>
   <% "https://katalog.ub.uni-paderborn.de/local/r/#{media.ils_id.to_s.rjust(9, '0')}" %>
 <% elsif media.respond_to?(:source_signature) && media.source_signature.present? %>
-  <% "https://katalog.ub.uni-paderborn.de/local/s?sr[q,call_number]=#{media.source_signature}" %>
+  <% "https://katalog.ub.uni-paderborn.de/local/s?sr(q,call_number)=#{media.source_signature}" %>
 <% elsif media.respond_to?(:signature) && media.signature.present? %>
-  <% "https://katalog.ub.uni-paderborn.de/local/s?sr[q,call_number]=#{media.signature}"  %>
+  <% "https://katalog.ub.uni-paderborn.de/local/s?sr(q,call_number)=#{media.signature}"  %>
 <% end %>
 
 <% if catalog_link_url %>
